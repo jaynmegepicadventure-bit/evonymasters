@@ -47,7 +47,7 @@ const types = ['Regular', 'Boss', 'Event'];
       if(m.image){const img=element('img','monster-img');img.src=m.image;img.alt=`${m.name} monster`;img.loading='lazy';top.append(img);}else{const placeholder=element('div','monster-img','⚔');placeholder.setAttribute('aria-label','Monster image not yet available');top.append(placeholder);}
       const info=element('div');info.append(element('h3','',m.name),element('div','meta',`${m.type}${m.level==null?'':' · Level '+m.level}${m.event?' · '+m.event:''}`));
       const stats=element('div','stats');stats.append(element('span','pill','Stamina: '+format(m.stamina)),element('span','pill','Power: '+format(m.power)));info.append(stats);top.append(info);card.append(top);
-      const body=element('div','card-body');rewards(body,m,'guaranteed');rewards(body,m,'possible');card.append(body);results.append(card);
+      const body=element('div','card-body');rewards(body,m,'guaranteed');rewards(body,m,'possible');if(m.verification){const v=element('p','note',m.verification.inGameVerified?'Verified in game':'Guide-sourced · Not yet verified in game');body.append(v);for(const url of m.verification.sourceUrls||[]){if(!/^https:\/\//.test(url))continue;const a=element('a','note','View source ↗');a.href=url;a.target='_blank';a.rel='noopener noreferrer';body.append(a);}}card.append(body);results.append(card);
     }
   }
   for(const control of [query,item,type,sort])control.addEventListener(control===query?'input':'change',render);
