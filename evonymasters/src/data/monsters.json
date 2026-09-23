@@ -334,5 +334,518 @@
         "sourceUrl": "https://www.evonytkrguide.com/items/lv10_boss_monster_chest"
       }
     ]
+  },
+  {
+    "id": "lava-turtle-1",
+    "name": "Lava Turtle - Level 1",
+    "type": "Event",
+    "level": 1,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Lava Turtle",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_1"
+      ],
+      "notes": "Guide lists these resource-box totals in the event chest. Chest acquisition and event availability may vary; resources are not asserted as guaranteed per kill. Power and stamina pending verification."
+    },
+    "rewards": [
+      {
+        "itemId": "wood",
+        "quantity": 200000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_1"
+      },
+      {
+        "itemId": "food",
+        "quantity": 200000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_1"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 200000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_1"
+      },
+      {
+        "itemId": "ore",
+        "quantity": 200000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_1"
+      }
+    ]
+  },
+  {
+    "id": "lava-turtle-2",
+    "name": "Lava Turtle - Level 2",
+    "type": "Event",
+    "level": 2,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Lava Turtle",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_2"
+      ],
+      "notes": "Guide lists these resource-box totals in the event chest. Chest acquisition and event availability may vary; resources are not asserted as guaranteed per kill. Power and stamina pending verification."
+    },
+    "rewards": [
+      {
+        "itemId": "wood",
+        "quantity": 400000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_2"
+      },
+      {
+        "itemId": "food",
+        "quantity": 400000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_2"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 400000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_2"
+      },
+      {
+        "itemId": "ore",
+        "quantity": 400000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_2"
+      }
+    ]
+  },
+  {
+    "id": "lava-turtle-3",
+    "name": "Lava Turtle - Level 3",
+    "type": "Event",
+    "level": 3,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Lava Turtle",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_3"
+      ],
+      "notes": "Guide lists these resource-box totals in the event chest. Chest acquisition and event availability may vary; resources are not asserted as guaranteed per kill. Power and stamina pending verification."
+    },
+    "rewards": [
+      {
+        "itemId": "wood",
+        "quantity": 700000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_3"
+      },
+      {
+        "itemId": "food",
+        "quantity": 700000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_3"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 700000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_3"
+      },
+      {
+        "itemId": "ore",
+        "quantity": 700000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_3"
+      }
+    ]
+  },
+  {
+    "id": "lava-turtle-4",
+    "name": "Lava Turtle - Level 4",
+    "type": "Event",
+    "level": 4,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Lava Turtle",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_4"
+      ],
+      "notes": "Guide lists these resource-box totals in the event chest. Chest acquisition and event availability may vary; resources are not asserted as guaranteed per kill. Power and stamina pending verification."
+    },
+    "rewards": [
+      {
+        "itemId": "wood",
+        "quantity": 900000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_4"
+      },
+      {
+        "itemId": "food",
+        "quantity": 900000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_4"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 900000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_4"
+      },
+      {
+        "itemId": "ore",
+        "quantity": 900000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_4"
+      }
+    ]
+  },
+  {
+    "id": "ymir-1",
+    "name": "Ymir - Level 1",
+    "type": "Event",
+    "level": 1,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Ymir",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses/ymir_-_level_1"
+      ],
+      "notes": "Guide lists these resource-box totals in the event chest. Chest acquisition and event availability may vary; resources are not asserted as guaranteed per kill. Power and stamina pending verification."
+    },
+    "rewards": [
+      {
+        "itemId": "wood",
+        "quantity": 250000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_1"
+      },
+      {
+        "itemId": "food",
+        "quantity": 250000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_1"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 250000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_1"
+      },
+      {
+        "itemId": "ore",
+        "quantity": 250000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_1"
+      }
+    ]
+  },
+  {
+    "id": "ymir-2",
+    "name": "Ymir - Level 2",
+    "type": "Event",
+    "level": 2,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Ymir",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses/ymir_-_level_2"
+      ],
+      "notes": "Guide lists these resource-box totals in the event chest. Chest acquisition and event availability may vary; resources are not asserted as guaranteed per kill. Power and stamina pending verification."
+    },
+    "rewards": [
+      {
+        "itemId": "wood",
+        "quantity": 800000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_2"
+      },
+      {
+        "itemId": "food",
+        "quantity": 800000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_2"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 800000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_2"
+      },
+      {
+        "itemId": "ore",
+        "quantity": 800000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_2"
+      }
+    ]
+  },
+  {
+    "id": "ymir-3",
+    "name": "Ymir - Level 3",
+    "type": "Event",
+    "level": 3,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Ymir",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses/ymir_-_level_3"
+      ],
+      "notes": "Guide lists these resource-box totals in the event chest. Chest acquisition and event availability may vary; resources are not asserted as guaranteed per kill. Power and stamina pending verification."
+    },
+    "rewards": [
+      {
+        "itemId": "wood",
+        "quantity": 2000000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_3"
+      },
+      {
+        "itemId": "food",
+        "quantity": 2000000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_3"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 2000000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_3"
+      },
+      {
+        "itemId": "ore",
+        "quantity": 2000000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_3"
+      }
+    ]
+  },
+  {
+    "id": "ymir-4",
+    "name": "Ymir - Level 4",
+    "type": "Event",
+    "level": 4,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Ymir",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses/ymir_-_level_4"
+      ],
+      "notes": "Guide lists these resource-box totals in the event chest. Chest acquisition and event availability may vary; resources are not asserted as guaranteed per kill. Power and stamina pending verification."
+    },
+    "rewards": [
+      {
+        "itemId": "wood",
+        "quantity": 2200000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_4"
+      },
+      {
+        "itemId": "food",
+        "quantity": 2200000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_4"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 2200000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_4"
+      },
+      {
+        "itemId": "ore",
+        "quantity": 2200000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_4"
+      }
+    ]
+  },
+  {
+    "id": "ymir-5",
+    "name": "Ymir - Level 5",
+    "type": "Event",
+    "level": 5,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Ymir",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses/ymir_-_level_5"
+      ],
+      "notes": "Guide lists these resource-box totals in the event chest. Chest acquisition and event availability may vary; resources are not asserted as guaranteed per kill. Power and stamina pending verification."
+    },
+    "rewards": [
+      {
+        "itemId": "wood",
+        "quantity": 2500000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_5"
+      },
+      {
+        "itemId": "food",
+        "quantity": 2500000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_5"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 2500000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_5"
+      },
+      {
+        "itemId": "ore",
+        "quantity": 2500000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Resource boxes in event chest; conditional on obtaining chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_5"
+      }
+    ]
   }
 ]
