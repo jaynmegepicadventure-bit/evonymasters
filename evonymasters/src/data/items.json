@@ -218,5 +218,30 @@
     "id": "stamina",
     "name": "Stamina",
     "category": "Items"
+  },
+  {
+    "id": "lv1-boss-monster-chest",
+    "name": "Lv1 Boss Monster Chest",
+    "category": "Boss Chests"
+  },
+  {
+    "id": "lv2-boss-monster-chest",
+    "name": "Lv2 Boss Monster Chest",
+    "category": "Boss Chests"
+  },
+  {
+    "id": "lv3-boss-monster-chest",
+    "name": "Lv3 Boss Monster Chest",
+    "category": "Boss Chests"
+  },
+  {
+    "id": "lv4-boss-monster-chest",
+    "name": "Lv4 Boss Monster Chest",
+    "category": "Boss Chests"
+  },
+  {
+    "id": "lv10-boss-monster-chest",
+    "name": "Lv10 Boss Monster Chest",
+    "category": "Boss Chests"
   }
 ]
