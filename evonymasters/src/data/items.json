@@ -58,5 +58,170 @@
     "id": "artwork-fragment-chest-v",
     "name": "Artwork Fragment Chest V",
     "category": "Chests"
+  },
+  {
+    "id": "gold",
+    "name": "Gold",
+    "category": "Resources"
+  },
+  {
+    "id": "lumber",
+    "name": "Lumber / Wood",
+    "category": "Resources"
+  },
+  {
+    "id": "medal",
+    "name": "Medal",
+    "category": "Materials"
+  },
+  {
+    "id": "monarch-exp",
+    "name": "Monarch EXP",
+    "category": "Experience"
+  },
+  {
+    "id": "general-exp",
+    "name": "General EXP",
+    "category": "Experience"
+  },
+  {
+    "id": "spiritual-beast-exp",
+    "name": "Spiritual Beast EXP",
+    "category": "Experience"
+  },
+  {
+    "id": "prestige",
+    "name": "Prestige",
+    "category": "Progress"
+  },
+  {
+    "id": "alliance-honor",
+    "name": "Alliance Honor",
+    "category": "Progress"
+  },
+  {
+    "id": "alliance-points",
+    "name": "Alliance Points",
+    "category": "Progress"
+  },
+  {
+    "id": "material-chest-white",
+    "name": "White Material Chest",
+    "category": "Materials"
+  },
+  {
+    "id": "material-chest-green",
+    "name": "Green Material Chest",
+    "category": "Materials"
+  },
+  {
+    "id": "material-chest-blue",
+    "name": "Blue Material Chest",
+    "category": "Materials"
+  },
+  {
+    "id": "material-chest-large",
+    "name": "Large Material Chest",
+    "category": "Materials"
+  },
+  {
+    "id": "speedup-construction",
+    "name": "Construction Speedup",
+    "category": "Speedups"
+  },
+  {
+    "id": "speedup-research",
+    "name": "Research Speedup",
+    "category": "Speedups"
+  },
+  {
+    "id": "speedup-training",
+    "name": "Training Speedup",
+    "category": "Speedups"
+  },
+  {
+    "id": "speedup-healing",
+    "name": "Healing Speedup",
+    "category": "Speedups"
+  },
+  {
+    "id": "speedup-trap",
+    "name": "Trap Building Speedup",
+    "category": "Speedups"
+  },
+  {
+    "id": "speedup-crafting",
+    "name": "Crafting Speedup",
+    "category": "Speedups"
+  },
+  {
+    "id": "rare-treasure-map",
+    "name": "Rare Treasure Map",
+    "category": "Items"
+  },
+  {
+    "id": "artwork-fragment-chest-iv",
+    "name": "Artwork Fragment Chest IV",
+    "category": "Chests"
+  },
+  {
+    "id": "kings-scroll-chest",
+    "name": "King's Scroll Chest",
+    "category": "Chests"
+  },
+  {
+    "id": "dragon-scroll-chest",
+    "name": "Dragon Scroll Chest",
+    "category": "Chests"
+  },
+  {
+    "id": "achaemenidae-scroll-chest",
+    "name": "Achaemenidae Scroll Chest",
+    "category": "Chests"
+  },
+  {
+    "id": "research-stone",
+    "name": "Research Stone",
+    "category": "Materials"
+  },
+  {
+    "id": "tactic-scroll",
+    "name": "Tactic Scroll",
+    "category": "Materials"
+  },
+  {
+    "id": "runestone",
+    "name": "Runestone",
+    "category": "Materials"
+  },
+  {
+    "id": "source-of-life",
+    "name": "Source of Life",
+    "category": "Items"
+  },
+  {
+    "id": "blood-of-ares",
+    "name": "Blood of Ares",
+    "category": "Materials"
+  },
+  {
+    "id": "dragon-crystal",
+    "name": "Dragon Crystal",
+    "category": "Materials"
+  },
+  {
+    "id": "dragon-scale",
+    "name": "Dragon Scale",
+    "category": "Materials"
+  },
+  {
+    "id": "badge",
+    "name": "Badge",
+    "category": "Materials"
+  },
+  {
+    "id": "stamina",
+    "name": "Stamina",
+    "category": "Items"
   }
 ]
