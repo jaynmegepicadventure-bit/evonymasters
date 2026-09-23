@@ -1,1 +1,247 @@
-[]
+[
+  {
+    "id": "zombie",
+    "name": "Zombie",
+    "type": "Boss",
+    "level": 1,
+    "power": 36500,
+    "stamina": 15,
+    "image": null,
+    "event": null,
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-boss-monster-guide/"
+      ],
+      "notes": "Guide values; check current in-game monster and reward reports. Chest contents are not represented as direct drops."
+    },
+    "rewards": [
+      {
+        "itemId": "lv1-boss-monster-chest",
+        "quantity": 1,
+        "unit": null,
+        "kind": "guaranteed",
+        "notes": "Chest; contents are separate"
+      },
+      {
+        "itemId": "refining-stone",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "notes": null
+      },
+      {
+        "itemId": "common-treasure-map",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "notes": null
+      },
+      {
+        "itemId": "artwork-fragment-chest-iii",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "notes": null
+      }
+    ]
+  },
+  {
+    "id": "redcap",
+    "name": "Redcap",
+    "type": "Boss",
+    "level": 2,
+    "power": 219000,
+    "stamina": 15,
+    "image": null,
+    "event": null,
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-boss-monster-guide/"
+      ],
+      "notes": "Guide values; check current in-game monster and reward reports. Chest contents are not represented as direct drops."
+    },
+    "rewards": [
+      {
+        "itemId": "lv2-boss-monster-chest",
+        "quantity": 1,
+        "unit": null,
+        "kind": "guaranteed",
+        "notes": "Chest; contents are separate"
+      },
+      {
+        "itemId": "refining-stone",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "notes": null
+      },
+      {
+        "itemId": "common-treasure-map",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "notes": null
+      },
+      {
+        "itemId": "artwork-fragment-chest-iii",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "notes": null
+      }
+    ]
+  },
+  {
+    "id": "centaur",
+    "name": "Centaur",
+    "type": "Boss",
+    "level": 3,
+    "power": 328500,
+    "stamina": 15,
+    "image": null,
+    "event": null,
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-boss-monster-guide/"
+      ],
+      "notes": "Guide values; check current in-game monster and reward reports. Chest contents are not represented as direct drops."
+    },
+    "rewards": [
+      {
+        "itemId": "lv3-boss-monster-chest",
+        "quantity": 1,
+        "unit": null,
+        "kind": "guaranteed",
+        "notes": "Chest; contents are separate"
+      },
+      {
+        "itemId": "refining-stone",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "notes": null
+      },
+      {
+        "itemId": "common-treasure-map",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "notes": null
+      },
+      {
+        "itemId": "artwork-fragment-chest-iii",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "notes": null
+      }
+    ]
+  },
+  {
+    "id": "skeleton-dragon",
+    "name": "Skeleton Dragon",
+    "type": "Boss",
+    "level": 4,
+    "power": 787200,
+    "stamina": 15,
+    "image": null,
+    "event": null,
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-boss-monster-guide/"
+      ],
+      "notes": "Guide values; check current in-game monster and reward reports. Chest contents are not represented as direct drops."
+    },
+    "rewards": [
+      {
+        "itemId": "lv4-boss-monster-chest",
+        "quantity": 1,
+        "unit": null,
+        "kind": "guaranteed",
+        "notes": "Chest; contents are separate"
+      },
+      {
+        "itemId": "refining-stone",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "notes": null
+      },
+      {
+        "itemId": "uncommon-treasure-map",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "notes": null
+      },
+      {
+        "itemId": "artwork-fragment-chest-iii",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "notes": null
+      }
+    ]
+  },
+  {
+    "id": "griffin",
+    "name": "Griffin",
+    "type": "Boss",
+    "level": 10,
+    "power": 17900000,
+    "stamina": 20,
+    "image": null,
+    "event": null,
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-boss-monster-guide/"
+      ],
+      "notes": "Guide values; check current in-game monster and reward reports. Chest contents are not represented as direct drops."
+    },
+    "rewards": [
+      {
+        "itemId": "lv10-boss-monster-chest",
+        "quantity": 1,
+        "unit": null,
+        "kind": "guaranteed",
+        "notes": "Chest; contents are separate"
+      },
+      {
+        "itemId": "refining-stone",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "notes": null
+      },
+      {
+        "itemId": "epic-treasure-map",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "notes": null
+      },
+      {
+        "itemId": "artwork-fragment-chest-v",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "notes": null
+      }
+    ]
+  }
+]
