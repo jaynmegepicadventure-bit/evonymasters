@@ -1,1 +1,87 @@
-[{"id":"wood","name":"Wood","category":"Resources"},{"id":"food","name":"Food","category":"Resources"},{"id":"stone","name":"Stone","category":"Resources"},{"id":"ore","name":"Ore","category":"Resources"},{"id":"refining-stone","name":"Refining Stone","category":"Materials"},{"id":"speedup","name":"Speedup","category":"Speedups"},{"id":"gem","name":"Gem","category":"Currency"}]
+[
+  {
+    "id": "wood",
+    "name": "Wood",
+    "category": "Resources"
+  },
+  {
+    "id": "food",
+    "name": "Food",
+    "category": "Resources"
+  },
+  {
+    "id": "stone",
+    "name": "Stone",
+    "category": "Resources"
+  },
+  {
+    "id": "ore",
+    "name": "Ore",
+    "category": "Resources"
+  },
+  {
+    "id": "refining-stone",
+    "name": "Refining Stone",
+    "category": "Materials"
+  },
+  {
+    "id": "speedup",
+    "name": "Speedup",
+    "category": "Speedups"
+  },
+  {
+    "id": "gem",
+    "name": "Gem",
+    "category": "Currency"
+  },
+  {
+    "id": "common-treasure-map",
+    "name": "Common Treasure Map",
+    "category": "Items"
+  },
+  {
+    "id": "uncommon-treasure-map",
+    "name": "Uncommon Treasure Map",
+    "category": "Items"
+  },
+  {
+    "id": "epic-treasure-map",
+    "name": "Epic Treasure Map",
+    "category": "Items"
+  },
+  {
+    "id": "artwork-fragment-chest-iii",
+    "name": "Artwork Fragment Chest III",
+    "category": "Chests"
+  },
+  {
+    "id": "artwork-fragment-chest-v",
+    "name": "Artwork Fragment Chest V",
+    "category": "Chests"
+  },
+  {
+    "id": "lv1-boss-monster-chest",
+    "name": "Lv1 Boss Monster Chest",
+    "category": "Chests"
+  },
+  {
+    "id": "lv2-boss-monster-chest",
+    "name": "Lv2 Boss Monster Chest",
+    "category": "Chests"
+  },
+  {
+    "id": "lv3-boss-monster-chest",
+    "name": "Lv3 Boss Monster Chest",
+    "category": "Chests"
+  },
+  {
+    "id": "lv4-boss-monster-chest",
+    "name": "Lv4 Boss Monster Chest",
+    "category": "Chests"
+  },
+  {
+    "id": "lv10-boss-monster-chest",
+    "name": "Lv10 Boss Monster Chest",
+    "category": "Chests"
+  }
+]
