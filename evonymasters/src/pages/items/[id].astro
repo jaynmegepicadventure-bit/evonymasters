@@ -1,0 +1,11 @@
+---
+import monsters from '../../data/monsters.json';
+import items from '../../data/items.json';
+export function getStaticPaths(){return items.filter(item=>/^lv\d+-boss-monster-chest$/.test(item.id)).map(item=>({params:{id:item.id},props:{item}}));}
+const {item}=Astro.props;
+const bosses=monsters.filter(m=>m.rewards.some(r=>r.itemId===item.id));
+const level=Number(item.id.match(/^lv(\d+)/)?.[1]);
+const contents=monsters.filter(m=>m.level===level&&m.type==='Boss').flatMap(m=>m.rewards.filter(r=>r.origin==='boss_chest').map(r=>({...r,boss:m.name})));
+const byId=new Map(items.map(i=>[i.id,i]));
+---
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>{item.name} | evonymasters</title><style>:root{font-family:system-ui;color:#eaf0f8;background:#0c1726}body{margin:0}header,main,footer{padding:24px max(24px,calc((100vw - 1000px)/2))}header,footer{background:#11243a}a{color:#e6bc73}h1{font-size:clamp(2rem,5vw,3.5rem)}.panel{background:#152b43;border:1px solid #35516d;border-radius:16px;padding:22px;margin:20px 0}.reward{padding:10px 0;border-bottom:1px solid #35516d}.muted{color:#b6c8d9}</style></head><body><header><a href="/">← evonymasters Monster Finder</a></header><main><h1>{item.name}</h1><p class="muted">Chest acquisition and its contents are separate reward events. A chest listed as a possible drop is not guaranteed per kill.</p><section class="panel"><h2>Monsters that drop this chest</h2>{bosses.length?bosses.map(m=><div class="reward"><a href={'/bosses/'+m.id+'/'}>{m.name}</a> · {m.rewards.find(r=>r.itemId===item.id)?.kind}</div>):<p class="muted">No confirmed monster associations yet.</p>}</section><section class="panel"><h2>Items inside</h2>{contents.length?contents.map(r=><div class="reward">{byId.get(r.itemId)?.name||r.itemId}{r.quantity==null?'':' · '+new Intl.NumberFormat('en-US').format(r.quantity)+(r.unit?' '+r.unit:'')} · listed for {r.boss}{r.sourceUrl&&<span> · <a href={r.sourceUrl} target="_blank" rel="noopener noreferrer">Reference</a></span>}</div>):<p class="muted">Item-level contents have not been verified yet.</p>}</section></main><footer>Independent fan-made reference. Not affiliated with the game publisher.</footer></body></html>
