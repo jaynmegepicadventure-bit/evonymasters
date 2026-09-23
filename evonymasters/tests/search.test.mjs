@@ -17,7 +17,13 @@ for(const resource of ['wood','food','stone','ore'])test(`published ${resource} 
   assert.ok(found.length>0,`No monsters found for ${resource}`);
   assert.ok(found.every(m=>m.rewards.some(r=>r.itemId===resource&&r.sourceUrl&&r.origin==='other_chest')));
 });
-test('standard boss chests are not published as reward items',()=>{
-  assert.ok(publishedItems.every(i=>!/^lv\\d+-boss-monster-chest$/.test(i.id)));
-  assert.ok(publishedMonsters.every(m=>m.rewards.every(r=>!/^lv\\d+-boss-monster-chest$/.test(r.itemId))));
+test('boss chests link to their own catalog records',()=>{
+  assert.ok(publishedItems.some(i=>i.id==='lv10-boss-monster-chest'));
+  assert.ok(publishedMonsters.find(m=>m.id==='griffin').rewards.some(r=>r.itemId==='lv10-boss-monster-chest'));
+});
+
+test('main search matches item names when item catalog is supplied',()=>{
+  const found=searchMonsters(publishedMonsters,{query:'wood',items:publishedItems});
+  assert.ok(found.length>0);
+  assert.ok(found.every(m=>m.rewards.some(r=>r.itemId==='wood')));
 });
