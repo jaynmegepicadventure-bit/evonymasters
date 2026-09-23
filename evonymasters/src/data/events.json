@@ -120,5 +120,122 @@
       "Voyage to Civilizations: Golden Ship Wheel offers a chance at Coronation Fountain ornament and Golden Commemorative Coins for exchanges.",
       "King’s Party: milestone rewards include Great Sailing decoration, Civilization Scroll Chests and Margaret of Valois; Party Cake experience comes from Gem purchases."
     ]
+  },
+  {
+    "id": "strategic-stockpile",
+    "name": "Strategic Stockpile",
+    "category": "Event activity",
+    "date": "2025-05-27",
+    "summary": "A recurring activity featured in Civilization Celebration; rewards and availability may change by round.",
+    "how": "Purchase qualifying amounts of Basic Gems each day to reach the event milestones. Progress resets daily; claim rewards before reset.",
+    "rewards": [
+      "Daily Gem-purchase milestone rewards. The announcement does not list the exact reward items."
+    ],
+    "source": "https://info.topgamesinc.com/2025-first-server-merger-civilization-celebration-event/",
+    "parent": "Civilization Celebration"
+  },
+  {
+    "id": "golden-refining",
+    "name": "Golden Refining",
+    "category": "Event activity",
+    "date": "2025-05-27",
+    "summary": "A recurring activity featured in Civilization Celebration; rewards and availability may change by round.",
+    "how": "Complete the event's daily quests and claim their rewards before the daily reset.",
+    "rewards": [
+      "Daily quest rewards. The announcement does not specify the exact item quantities or types."
+    ],
+    "source": "https://info.topgamesinc.com/2025-first-server-merger-civilization-celebration-event/",
+    "parent": "Civilization Celebration"
+  },
+  {
+    "id": "strong-drink",
+    "name": "Strong Drink",
+    "category": "Event activity",
+    "date": "2025-05-27",
+    "summary": "A recurring activity featured in Civilization Celebration; rewards and availability may change by round.",
+    "how": "Consume Booze to complete event quests. Use event items before they expire.",
+    "rewards": [
+      "Rare items awarded through Booze-consumption quests; the announcement does not provide a complete item list."
+    ],
+    "source": "https://info.topgamesinc.com/2025-first-server-merger-civilization-celebration-event/",
+    "parent": "Civilization Celebration"
+  },
+  {
+    "id": "consuming-return",
+    "name": "Consuming Return",
+    "category": "Event activity",
+    "date": "2025-05-27",
+    "summary": "A recurring activity featured in Civilization Celebration; rewards and availability may change by round.",
+    "how": "Spend the specified amounts of Gold and qualifying Speedups during the event to reach consumption milestones.",
+    "rewards": [
+      "Consumption milestone rewards; the precise contents vary by round and are not listed in this announcement."
+    ],
+    "source": "https://info.topgamesinc.com/2025-first-server-merger-civilization-celebration-event/",
+    "parent": "Civilization Celebration"
+  },
+  {
+    "id": "wheel-of-civilization",
+    "name": "Wheel of Civilization",
+    "category": "Event activity",
+    "date": "2025-05-27",
+    "summary": "A recurring activity featured in Civilization Celebration; rewards and availability may change by round.",
+    "how": "Earn Noble Coins from monsters, resource spots or event packages and use them to spin the wheel.",
+    "rewards": [
+      "Chance to receive Civilization Scroll Fragment Chest (Conquest) or (Supremacy). Unused Noble Coins convert into Noble Coin Chests when the event ends."
+    ],
+    "source": "https://info.topgamesinc.com/2025-first-server-merger-civilization-celebration-event/",
+    "parent": "Civilization Celebration"
+  },
+  {
+    "id": "star-goddess-box",
+    "name": "Star Goddess’ Box",
+    "category": "Event activity",
+    "date": "2025-05-27",
+    "summary": "A recurring activity featured in Civilization Celebration; rewards and availability may change by round.",
+    "how": "Use Star Keys to open a Solar, Lunar or Star Box; check each box's prize pool before choosing.",
+    "rewards": [
+      "Featured grand prizes include Ocean Master (Permanent), Civilization Scroll Chest (Supremacy) and Galaxy Coins; prizes depend on the box opened."
+    ],
+    "source": "https://info.topgamesinc.com/2025-first-server-merger-civilization-celebration-event/",
+    "parent": "Civilization Celebration"
+  },
+  {
+    "id": "general-portrait-exhibition",
+    "name": "General Portrait Exhibition",
+    "category": "Event activity",
+    "date": "2025-05-27",
+    "summary": "A recurring activity featured in Civilization Celebration; rewards and availability may change by round.",
+    "how": "Collect General’s Invitations from Server Monarch Competition, Activity Chests or packages, then redeem them during the event.",
+    "rewards": [
+      "Redeem invitations for Historic Generals, resources or General Hall Historic General tokens. Featured generals vary by round."
+    ],
+    "source": "https://info.topgamesinc.com/2025-first-server-merger-civilization-celebration-event/",
+    "parent": "Civilization Celebration"
+  },
+  {
+    "id": "kings-scheme",
+    "name": "King’s Scheme",
+    "category": "Event activity",
+    "date": "2024-02-20",
+    "summary": "A recurring activity featured in Civilization Celebration; rewards and availability may change by round.",
+    "how": "Obtain General Mementos from the event sale and redeem them for an eligible general or general token.",
+    "rewards": [
+      "Selected generals or Common, Rare or Super Epic Historic General Tokens. Available generals change between rounds."
+    ],
+    "source": "https://info.topgamesinc.com/complete-quest-for-treasures-at-evonys-civilization-celebration/",
+    "parent": "Civilization Celebration"
+  },
+  {
+    "id": "quest-for-treasure",
+    "name": "Quest for Treasure",
+    "category": "Event activity",
+    "date": "2024-02-20",
+    "summary": "A recurring activity featured in Civilization Celebration; rewards and availability may change by round.",
+    "how": "Obtain Ancient Treasure Maps from event packages or boss monsters, follow the coordinates, and send troops to collect treasure. Defeat Desert Bandits for Treasure Clue Fragments.",
+    "rewards": [
+      "Treasure rewards, King Solomon’s Treasure from collected fragments, personal and Alliance point milestones, and end-of-event ranking rewards."
+    ],
+    "source": "https://info.topgamesinc.com/complete-quest-for-treasures-at-evonys-civilization-celebration/",
+    "parent": "Civilization Celebration"
   }
 ]
