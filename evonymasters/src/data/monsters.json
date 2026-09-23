@@ -898,8 +898,8 @@
     "name": "Werewolf",
     "type": "Boss",
     "level": 5,
-    "power": null,
-    "stamina": null,
+    "power": 1300000,
+    "stamina": 20,
     "image": null,
     "event": null,
     "updatedAt": "2026-09-23",
@@ -907,20 +907,173 @@
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/werewolf",
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses/werewolf"
       ],
-      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+      "notes": "Stats and explicitly listed rewards sourced from individual boss guide. Chest contents conditional on chest dropping; alliance package contents conditional on opening package. Unlisted rewards not inferred."
     },
-    "rewards": []
+    "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 1500,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/werewolf"
+      },
+      {
+        "itemId": "prestige",
+        "quantity": 150,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/werewolf"
+      },
+      {
+        "itemId": "alliance-honor",
+        "quantity": 150,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/werewolf"
+      },
+      {
+        "itemId": "alliance-points",
+        "quantity": 150,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/werewolf"
+      },
+      {
+        "itemId": "lv5-boss-monster-chest",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/werewolf"
+      },
+      {
+        "itemId": "medal",
+        "quantity": 3,
+        "unit": null,
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Chest contains all listed items; chest itself is a possible drop",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/werewolf"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 2500,
+        "unit": "EXP",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Chest contains all listed items; chest itself is a possible drop",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/werewolf"
+      },
+      {
+        "itemId": "material-chest-green",
+        "quantity": 5,
+        "unit": null,
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Chest contains all listed items; chest itself is a possible drop",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/werewolf"
+      },
+      {
+        "itemId": "speedup",
+        "quantity": 150,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Chest contains all listed items; chest itself is a possible drop",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/werewolf"
+      },
+      {
+        "itemId": "refining-stone",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/werewolf"
+      },
+      {
+        "itemId": "artwork-fragment-chest-iii",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/werewolf"
+      },
+      {
+        "itemId": "uncommon-treasure-map",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/werewolf"
+      },
+      {
+        "itemId": "spiritual-beast-exp",
+        "quantity": 1000,
+        "unit": "EXP",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/werewolf"
+      },
+      {
+        "itemId": "medium-alliance-boss-package",
+        "quantity": 1,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Awarded to alliance participants; contents vary",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/werewolf"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 10000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible 10,000 resource box in alliance boss package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/werewolf"
+      },
+      {
+        "itemId": "food",
+        "quantity": 10000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible 10,000 resource box in alliance boss package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/werewolf"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 10000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible 10,000 resource box in alliance boss package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/werewolf"
+      }
+    ]
   },
   {
     "id": "manticore",
     "name": "Manticore",
     "type": "Boss",
     "level": 6,
-    "power": null,
-    "stamina": null,
+    "power": 2200000,
+    "stamina": 20,
     "image": null,
     "event": null,
     "updatedAt": "2026-09-23",
@@ -928,20 +1081,92 @@
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/manticore",
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses/manticore"
       ],
-      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+      "notes": "Stats and explicitly listed rewards sourced from individual boss guide. Chest contents conditional on chest dropping; alliance package contents conditional on opening package. Unlisted rewards not inferred."
     },
-    "rewards": []
+    "rewards": [
+      {
+        "itemId": "lv6-boss-monster-chest",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/manticore"
+      },
+      {
+        "itemId": "refining-stone",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/manticore"
+      },
+      {
+        "itemId": "artwork-fragment-chest-iii",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/manticore"
+      },
+      {
+        "itemId": "rare-treasure-map",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/manticore"
+      },
+      {
+        "itemId": "medium-alliance-boss-package",
+        "quantity": 1,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Awarded to alliance participants; contents vary",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/manticore"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 10000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible 10,000 resource box in alliance boss package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/manticore"
+      },
+      {
+        "itemId": "food",
+        "quantity": 10000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible 10,000 resource box in alliance boss package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/manticore"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 10000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible 10,000 resource box in alliance boss package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/manticore"
+      }
+    ]
   },
   {
     "id": "yasha",
     "name": "Yasha",
     "type": "Boss",
     "level": 7,
-    "power": null,
-    "stamina": null,
+    "power": 3400000,
+    "stamina": 20,
     "image": null,
     "event": null,
     "updatedAt": "2026-09-23",
@@ -949,20 +1174,182 @@
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/yasha",
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses/yasha"
       ],
-      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+      "notes": "Stats and explicitly listed rewards sourced from individual boss guide. Chest contents conditional on chest dropping; alliance package contents conditional on opening package. Unlisted rewards not inferred."
     },
-    "rewards": []
+    "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 2200,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/yasha"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 2650,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/yasha"
+      },
+      {
+        "itemId": "prestige",
+        "quantity": 220,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/yasha"
+      },
+      {
+        "itemId": "alliance-honor",
+        "quantity": 220,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/yasha"
+      },
+      {
+        "itemId": "alliance-points",
+        "quantity": 220,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/yasha"
+      },
+      {
+        "itemId": "lv7-boss-monster-chest",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/yasha"
+      },
+      {
+        "itemId": "medal",
+        "quantity": 4,
+        "unit": null,
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Chest contains all listed items; chest itself is a possible drop",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/yasha"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 3000,
+        "unit": "EXP",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Chest contains all listed items; chest itself is a possible drop",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/yasha"
+      },
+      {
+        "itemId": "material-chest-blue",
+        "quantity": 3,
+        "unit": null,
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Chest contains all listed items; chest itself is a possible drop",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/yasha"
+      },
+      {
+        "itemId": "speedup",
+        "quantity": 240,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Chest contains all listed items; chest itself is a possible drop",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/yasha"
+      },
+      {
+        "itemId": "refining-stone",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/yasha"
+      },
+      {
+        "itemId": "artwork-fragment-chest-iv",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/yasha"
+      },
+      {
+        "itemId": "rare-treasure-map",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/yasha"
+      },
+      {
+        "itemId": "spiritual-beast-exp",
+        "quantity": 2000,
+        "unit": "EXP",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/yasha"
+      },
+      {
+        "itemId": "medium-alliance-boss-package",
+        "quantity": 1,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Awarded to alliance participants; contents vary",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/yasha"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 10000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible 10,000 resource box in alliance boss package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/yasha"
+      },
+      {
+        "itemId": "food",
+        "quantity": 10000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible 10,000 resource box in alliance boss package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/yasha"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 10000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible 10,000 resource box in alliance boss package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/yasha"
+      }
+    ]
   },
   {
     "id": "peryton",
     "name": "Peryton",
     "type": "Boss",
     "level": 8,
-    "power": null,
-    "stamina": null,
+    "power": 6500000,
+    "stamina": 20,
     "image": null,
     "event": null,
     "updatedAt": "2026-09-23",
@@ -970,20 +1357,83 @@
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/peryton",
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses/peryton"
       ],
-      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+      "notes": "Stats and explicitly listed rewards sourced from individual boss guide. Chest contents conditional on chest dropping; alliance package contents conditional on opening package. Unlisted rewards not inferred."
     },
-    "rewards": []
+    "rewards": [
+      {
+        "itemId": "lv8-boss-monster-chest",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/peryton"
+      },
+      {
+        "itemId": "refining-stone",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/peryton"
+      },
+      {
+        "itemId": "legendary-treasure-map",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/peryton"
+      },
+      {
+        "itemId": "medium-alliance-boss-package",
+        "quantity": 1,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Awarded to alliance participants; contents vary",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/peryton"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 10000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible 10,000 resource box in alliance boss package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/peryton"
+      },
+      {
+        "itemId": "food",
+        "quantity": 10000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible 10,000 resource box in alliance boss package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/peryton"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 10000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible 10,000 resource box in alliance boss package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/peryton"
+      }
+    ]
   },
   {
     "id": "minotaur",
     "name": "Minotaur",
     "type": "Boss",
     "level": 9,
-    "power": null,
-    "stamina": null,
+    "power": 9900000,
+    "stamina": 20,
     "image": null,
     "event": null,
     "updatedAt": "2026-09-23",
@@ -991,12 +1441,165 @@
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/minotaur",
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses/minotaur"
       ],
-      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+      "notes": "Stats and explicitly listed rewards sourced from individual boss guide. Chest contents conditional on chest dropping; alliance package contents conditional on opening package. Unlisted rewards not inferred."
     },
-    "rewards": []
+    "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 3000,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/minotaur"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 3510,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/minotaur"
+      },
+      {
+        "itemId": "prestige",
+        "quantity": 300,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/minotaur"
+      },
+      {
+        "itemId": "alliance-honor",
+        "quantity": 300,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/minotaur"
+      },
+      {
+        "itemId": "alliance-points",
+        "quantity": 300,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/minotaur"
+      },
+      {
+        "itemId": "lv9-boss-monster-chest",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/minotaur"
+      },
+      {
+        "itemId": "medal",
+        "quantity": 4,
+        "unit": null,
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Chest contains all listed items; chest itself is a possible drop",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/minotaur"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 4000,
+        "unit": "EXP",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Chest contains all listed items; chest itself is a possible drop",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/minotaur"
+      },
+      {
+        "itemId": "material-chest-blue",
+        "quantity": 5,
+        "unit": null,
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Chest contains all listed items; chest itself is a possible drop",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/minotaur"
+      },
+      {
+        "itemId": "speedup",
+        "quantity": 360,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Chest contains all listed items; chest itself is a possible drop",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/minotaur"
+      },
+      {
+        "itemId": "refining-stone",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/minotaur"
+      },
+      {
+        "itemId": "legendary-treasure-map",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/minotaur"
+      },
+      {
+        "itemId": "senior-alliance-boss-package",
+        "quantity": 1,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Awarded to alliance participants; contents vary",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/minotaur"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible 50,000 resource box in alliance boss package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/minotaur"
+      },
+      {
+        "itemId": "food",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible 50,000 resource box in alliance boss package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/minotaur"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible 50,000 resource box in alliance boss package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/minotaur"
+      },
+      {
+        "itemId": "ore",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible 50,000 resource box in alliance boss package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/minotaur"
+      }
+    ]
   },
   {
     "id": "ifrit",
