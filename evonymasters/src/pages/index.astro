@@ -1,4 +1,5 @@
 ---
+import SiteHeader from '../components/SiteHeader.astro';
 import monsters from '../data/monsters.json';
 const monsterCount = monsters.length;
 ---
@@ -14,7 +15,7 @@ const monsterCount = monsters.length;
 </style>
 </head>
 <body>
-<header><div class="wrap nav"><a class="brand" href="/">evony<span>masters</span></a><small>Independent Evony player reference</small></div></header>
+<SiteHeader active="home" />
 <main>
 <section class="hero"><div class="wrap">
 <div class="eyebrow">Evony: The King's Return · Player tools</div>
