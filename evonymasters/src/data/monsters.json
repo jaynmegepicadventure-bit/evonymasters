@@ -2387,8 +2387,8 @@
     "name": "Phoenix",
     "type": "Boss",
     "level": 15,
-    "power": null,
-    "stamina": null,
+    "power": 262700000,
+    "stamina": 40,
     "image": null,
     "event": null,
     "updatedAt": "2026-09-23",
@@ -2396,20 +2396,74 @@
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/phoenix",
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses/phoenix"
       ],
-      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+      "notes": "Listed potential drops from individual boss guide; chest contents and other reward amounts still being verified."
     },
-    "rewards": []
+    "rewards": [
+      {
+        "itemId": "general-exp",
+        "quantity": 10000,
+        "unit": "EXP",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/phoenix"
+      },
+      {
+        "itemId": "material-bag-silk-road",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/phoenix"
+      },
+      {
+        "itemId": "artwork-fragment-chest-v",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/phoenix"
+      },
+      {
+        "itemId": "dragon-scroll-chest",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/phoenix"
+      },
+      {
+        "itemId": "lv15-boss-monster-chest",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/phoenix"
+      },
+      {
+        "itemId": "achaemenidae-scroll-chest",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/phoenix"
+      }
+    ]
   },
   {
     "id": "jormungandr",
     "name": "Jormungandr",
     "type": "Boss",
     "level": 16,
-    "power": null,
-    "stamina": null,
+    "power": 394100000,
+    "stamina": 50,
     "image": null,
     "event": null,
     "updatedAt": "2026-09-23",
@@ -2417,12 +2471,75 @@
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/jormungandr",
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses/jormungandr"
       ],
-      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+      "notes": "Listed potential drops from individual boss guide; chest contents and other reward amounts still being verified."
     },
-    "rewards": []
+    "rewards": [
+      {
+        "itemId": "lv16-boss-monster-chest",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/jormungandr"
+      },
+      {
+        "itemId": "treasure-box",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/jormungandr"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 10000,
+        "unit": "EXP",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/jormungandr"
+      },
+      {
+        "itemId": "material-bag-silk-road",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/jormungandr"
+      },
+      {
+        "itemId": "artwork-fragment-chest-v",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/jormungandr"
+      },
+      {
+        "itemId": "dragon-scroll-chest",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/jormungandr"
+      },
+      {
+        "itemId": "achaemenidae-scroll-chest",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/jormungandr"
+      }
+    ]
   },
   {
     "id": "typhon",
@@ -2524,9 +2641,46 @@
       "sourceUrls": [
         "https://www.evonytkrguide.com/bosses/golem_-_level_1"
       ],
-      "notes": "Power and stamina verified against the individual boss guide; reward records are still pending."
+      "notes": "Listed potential drops from individual boss guide; chest contents and other reward amounts still being verified."
     },
-    "rewards": []
+    "rewards": [
+      {
+        "itemId": "refining-stone",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/golem_-_level_1"
+      },
+      {
+        "itemId": "spiritual-beast-exp",
+        "quantity": 5000,
+        "unit": "EXP",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/golem_-_level_1"
+      },
+      {
+        "itemId": "artwork-fragment-chest-v",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/golem_-_level_1"
+      },
+      {
+        "itemId": "junior-golem-chest",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/golem_-_level_1"
+      }
+    ]
   },
   {
     "id": "golem-2",
@@ -2604,9 +2758,55 @@
       "sourceUrls": [
         "https://www.evonytkrguide.com/bosses/golem_-_level_5"
       ],
-      "notes": "Power and stamina verified against the individual boss guide; reward records are still pending."
+      "notes": "Listed potential drops from individual boss guide; chest contents and other reward amounts still being verified."
     },
-    "rewards": []
+    "rewards": [
+      {
+        "itemId": "refining-stone",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/golem_-_level_5"
+      },
+      {
+        "itemId": "spiritual-beast-exp",
+        "quantity": 5000,
+        "unit": "EXP",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/golem_-_level_5"
+      },
+      {
+        "itemId": "artwork-fragment-chest-v",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/golem_-_level_5"
+      },
+      {
+        "itemId": "epic-golem-chest",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/golem_-_level_5"
+      },
+      {
+        "itemId": "treasure-box",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/golem_-_level_5"
+      }
+    ]
   },
   {
     "id": "cerberus-1",
@@ -2673,20 +2873,57 @@
     "name": "Junior Hydra",
     "type": "Event",
     "level": 1,
-    "power": null,
-    "stamina": null,
+    "power": 84900000,
+    "stamina": 20,
     "image": null,
     "event": "Hydra",
     "updatedAt": "2026-09-23",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses/junior_hydra"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Listed potential drops from individual boss guide; chest contents and other reward amounts still being verified."
     },
-    "rewards": []
+    "rewards": [
+      {
+        "itemId": "refining-stone",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/junior_hydra"
+      },
+      {
+        "itemId": "spiritual-beast-exp",
+        "quantity": 5000,
+        "unit": "EXP",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/junior_hydra"
+      },
+      {
+        "itemId": "artwork-fragment-chest-v",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/junior_hydra"
+      },
+      {
+        "itemId": "junior-hydra-chest",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/junior_hydra"
+      }
+    ]
   },
   {
     "id": "hydra-2",
@@ -2733,20 +2970,75 @@
     "name": "Junior Knight Bayard",
     "type": "Event",
     "level": 1,
-    "power": null,
-    "stamina": null,
+    "power": 65500000,
+    "stamina": 20,
     "image": null,
     "event": "Knight Bayard",
     "updatedAt": "2026-09-23",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses/junior_knight_bayard"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Listed potential drops from individual boss guide; chest contents and other reward amounts still being verified."
     },
-    "rewards": []
+    "rewards": [
+      {
+        "itemId": "senior-resources-chest",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/junior_knight_bayard"
+      },
+      {
+        "itemId": "material-chest-purple",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/junior_knight_bayard"
+      },
+      {
+        "itemId": "refining-stone",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/junior_knight_bayard"
+      },
+      {
+        "itemId": "pile-of-gold",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/junior_knight_bayard"
+      },
+      {
+        "itemId": "bulk-of-gold",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/junior_knight_bayard"
+      },
+      {
+        "itemId": "mass-of-gold",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/junior_knight_bayard"
+      }
+    ]
   },
   {
     "id": "knight-bayard-2",
@@ -2773,20 +3065,57 @@
     "name": "Junior Nian",
     "type": "Event",
     "level": 1,
-    "power": null,
-    "stamina": null,
+    "power": 59600000,
+    "stamina": 20,
     "image": null,
     "event": "Nian",
     "updatedAt": "2026-09-23",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses/junior_nian"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Listed potential drops from individual boss guide; chest contents and other reward amounts still being verified."
     },
-    "rewards": []
+    "rewards": [
+      {
+        "itemId": "junior-spring-festival-rewards",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/junior_nian"
+      },
+      {
+        "itemId": "refining-stone",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/junior_nian"
+      },
+      {
+        "itemId": "spiritual-beast-exp",
+        "quantity": 5000,
+        "unit": "EXP",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/junior_nian"
+      },
+      {
+        "itemId": "artwork-fragment-chest-v",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/junior_nian"
+      }
+    ]
   },
   {
     "id": "nian-2",
@@ -2799,14 +3128,51 @@
     "event": "Nian",
     "updatedAt": "2026-09-23",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses/medium_nian"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Listed potential drops from individual boss guide; chest contents and other reward amounts still being verified."
     },
-    "rewards": []
+    "rewards": [
+      {
+        "itemId": "medium-spring-festival-rewards",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/medium_nian"
+      },
+      {
+        "itemId": "refining-stone",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/medium_nian"
+      },
+      {
+        "itemId": "spiritual-beast-exp",
+        "quantity": 5000,
+        "unit": "EXP",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/medium_nian"
+      },
+      {
+        "itemId": "artwork-fragment-chest-v",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/medium_nian"
+      }
+    ]
   },
   {
     "id": "nian-3",
