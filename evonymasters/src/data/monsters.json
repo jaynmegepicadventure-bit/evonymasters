@@ -13,9 +13,10 @@
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://onechilledgamer.com/evony-boss-monster-guide/"
+        "https://onechilledgamer.com/evony-boss-monster-guide/",
+        "https://www.evonytkrguide.com/bosses/zombie"
       ],
-      "notes": "Guide-sourced monster statistics and listed direct drops; standard boss chest omitted. Chest contents will be added only after item-level verification."
+      "notes": "Guide-sourced. Boss chest is a possible monster drop; listed chest contents are conditional on obtaining the chest. Check current in-game rewards."
     },
     "rewards": [
       {
@@ -41,6 +42,42 @@
         "kind": "possible",
         "notes": null,
         "origin": "direct"
+      },
+      {
+        "itemId": "medal",
+        "quantity": 2,
+        "unit": null,
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Medals; listed contents if the boss chest drops",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/zombie"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 1000,
+        "unit": "EXP",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "2 × 500 General EXP; listed contents if the boss chest drops",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/zombie"
+      },
+      {
+        "itemId": "material-chest-white",
+        "quantity": 4,
+        "unit": null,
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "White Material Chest; listed contents if the boss chest drops",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/zombie"
+      },
+      {
+        "itemId": "speedup",
+        "quantity": 30,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "30 minutes; listed contents if the boss chest drops",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/zombie"
       }
     ]
   },
@@ -58,9 +95,10 @@
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://onechilledgamer.com/evony-boss-monster-guide/"
+        "https://onechilledgamer.com/evony-boss-monster-guide/",
+        "https://www.evonytkrguide.com/bosses/redcap"
       ],
-      "notes": "Guide-sourced monster statistics and listed direct drops; standard boss chest omitted. Chest contents will be added only after item-level verification."
+      "notes": "Guide-sourced. Boss chest is a possible monster drop; listed chest contents are conditional on obtaining the chest. Check current in-game rewards."
     },
     "rewards": [
       {
@@ -86,6 +124,42 @@
         "kind": "possible",
         "notes": null,
         "origin": "direct"
+      },
+      {
+        "itemId": "medal",
+        "quantity": 2,
+        "unit": null,
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Medals; listed contents if the boss chest drops",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/redcap"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 1500,
+        "unit": "EXP",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "3 × 500 General EXP; listed contents if the boss chest drops",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/redcap"
+      },
+      {
+        "itemId": "material-chest-white",
+        "quantity": 5,
+        "unit": null,
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "White Material Chest; listed contents if the boss chest drops",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/redcap"
+      },
+      {
+        "itemId": "speedup",
+        "quantity": 60,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "60 minutes; listed contents if the boss chest drops",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/redcap"
       }
     ]
   },
@@ -193,9 +267,10 @@
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://onechilledgamer.com/evony-boss-monster-guide/"
+        "https://onechilledgamer.com/evony-boss-monster-guide/",
+        "https://www.evonytkrguide.com/items/lv10_boss_monster_chest"
       ],
-      "notes": "Guide-sourced monster statistics and listed direct drops; standard boss chest omitted. Chest contents will be added only after item-level verification."
+      "notes": "Guide-sourced. Boss chest is a possible monster drop; listed chest contents are conditional on obtaining the chest. Check current in-game rewards."
     },
     "rewards": [
       {
@@ -221,6 +296,42 @@
         "kind": "possible",
         "notes": null,
         "origin": "direct"
+      },
+      {
+        "itemId": "medal",
+        "quantity": 5,
+        "unit": null,
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Medals; listed contents if the boss chest drops",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv10_boss_monster_chest"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 5000,
+        "unit": "EXP",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "1 × 5K General EXP; listed contents if the boss chest drops",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv10_boss_monster_chest"
+      },
+      {
+        "itemId": "material-chest-blue",
+        "quantity": 6,
+        "unit": null,
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Blue Material Chest; listed contents if the boss chest drops",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv10_boss_monster_chest"
+      },
+      {
+        "itemId": "speedup",
+        "quantity": 480,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "8 hours; listed contents if the boss chest drops",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv10_boss_monster_chest"
       }
     ]
   }
