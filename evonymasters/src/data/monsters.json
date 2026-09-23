@@ -1816,18 +1816,18 @@
     "name": "Golem - Level 1",
     "type": "Event",
     "level": 1,
-    "power": null,
-    "stamina": null,
+    "power": 12400000,
+    "stamina": 20,
     "image": null,
     "event": "Golem",
     "updatedAt": "2026-09-23",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses/golem_-_level_1"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Power and stamina verified against the individual boss guide; reward records are still pending."
     },
     "rewards": []
   },
@@ -1836,18 +1836,18 @@
     "name": "Golem - Level 2",
     "type": "Event",
     "level": 2,
-    "power": null,
-    "stamina": null,
+    "power": 22300000,
+    "stamina": 30,
     "image": null,
     "event": "Golem",
     "updatedAt": "2026-09-23",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses/golem_-_level_2"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Power and stamina verified against the individual boss guide; reward records are still pending."
     },
     "rewards": []
   },
@@ -1856,18 +1856,18 @@
     "name": "Golem - Level 3",
     "type": "Event",
     "level": 3,
-    "power": null,
-    "stamina": null,
+    "power": 74500000,
+    "stamina": 30,
     "image": null,
     "event": "Golem",
     "updatedAt": "2026-09-23",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses/golem_-_level_3"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Power and stamina verified against the individual boss guide; reward records are still pending."
     },
     "rewards": []
   },
@@ -1876,18 +1876,18 @@
     "name": "Golem - Level 4",
     "type": "Event",
     "level": 4,
-    "power": null,
-    "stamina": null,
+    "power": 147500000,
+    "stamina": 40,
     "image": null,
     "event": "Golem",
     "updatedAt": "2026-09-23",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses/golem_-_level_4"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Power and stamina verified against the individual boss guide; reward records are still pending."
     },
     "rewards": []
   },
@@ -1896,18 +1896,18 @@
     "name": "Golem - Level 5",
     "type": "Event",
     "level": 5,
-    "power": null,
-    "stamina": null,
+    "power": 225200000,
+    "stamina": 40,
     "image": null,
     "event": "Golem",
     "updatedAt": "2026-09-23",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses/golem_-_level_5"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Power and stamina verified against the individual boss guide; reward records are still pending."
     },
     "rewards": []
   },
@@ -1916,18 +1916,18 @@
     "name": "Junior Cerberus",
     "type": "Event",
     "level": 1,
-    "power": null,
-    "stamina": null,
+    "power": 86200000,
+    "stamina": 20,
     "image": null,
     "event": "Cerberus",
     "updatedAt": "2026-09-23",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses/junior_cerberus"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Power and stamina verified against the individual boss guide; reward records are still pending."
     },
     "rewards": []
   },
@@ -1936,18 +1936,18 @@
     "name": "Medium Cerberus",
     "type": "Event",
     "level": 2,
-    "power": null,
-    "stamina": null,
+    "power": 153400000,
+    "stamina": 30,
     "image": null,
     "event": "Cerberus",
     "updatedAt": "2026-09-23",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses/medium_cerberus"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Power and stamina verified against the individual boss guide; reward records are still pending."
     },
     "rewards": []
   },
@@ -1956,18 +1956,18 @@
     "name": "Senior Cerberus",
     "type": "Event",
     "level": 3,
-    "power": null,
-    "stamina": null,
+    "power": 234200000,
+    "stamina": 40,
     "image": null,
     "event": "Cerberus",
     "updatedAt": "2026-09-23",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses/senior_cerberus"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Power and stamina verified against the individual boss guide; reward records are still pending."
     },
     "rewards": []
   },
