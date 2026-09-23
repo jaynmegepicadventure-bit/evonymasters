@@ -847,5 +847,320 @@
         "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_5"
       }
     ]
+  },
+  {
+    "id": "werewolf",
+    "name": "Werewolf",
+    "type": "Boss",
+    "level": 5,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": null,
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses/werewolf",
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+    },
+    "rewards": []
+  },
+  {
+    "id": "manticore",
+    "name": "Manticore",
+    "type": "Boss",
+    "level": 6,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": null,
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses/manticore",
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+    },
+    "rewards": []
+  },
+  {
+    "id": "yasha",
+    "name": "Yasha",
+    "type": "Boss",
+    "level": 7,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": null,
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses/yasha",
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+    },
+    "rewards": []
+  },
+  {
+    "id": "peryton",
+    "name": "Peryton",
+    "type": "Boss",
+    "level": 8,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": null,
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses/peryton",
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+    },
+    "rewards": []
+  },
+  {
+    "id": "minotaur",
+    "name": "Minotaur",
+    "type": "Boss",
+    "level": 9,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": null,
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses/minotaur",
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+    },
+    "rewards": []
+  },
+  {
+    "id": "ifrit",
+    "name": "Ifrit",
+    "type": "Boss",
+    "level": 11,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": null,
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses/ifrit",
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+    },
+    "rewards": []
+  },
+  {
+    "id": "kamaitachi",
+    "name": "Kamaitachi",
+    "type": "Boss",
+    "level": 12,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": null,
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses/kamaitachi",
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+    },
+    "rewards": []
+  },
+  {
+    "id": "fafnir",
+    "name": "Fafnir",
+    "type": "Boss",
+    "level": 13,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": null,
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses/fafnir",
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+    },
+    "rewards": []
+  },
+  {
+    "id": "behemoth",
+    "name": "Behemoth",
+    "type": "Boss",
+    "level": 14,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": null,
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses/behemoth",
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+    },
+    "rewards": []
+  },
+  {
+    "id": "phoenix",
+    "name": "Phoenix",
+    "type": "Boss",
+    "level": 15,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": null,
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses/phoenix",
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+    },
+    "rewards": []
+  },
+  {
+    "id": "jormungandr",
+    "name": "Jormungandr",
+    "type": "Boss",
+    "level": 16,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": null,
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses/jormungandr",
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+    },
+    "rewards": []
+  },
+  {
+    "id": "typhon",
+    "name": "Typhon",
+    "type": "Boss",
+    "level": 17,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": null,
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses/typhon",
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+    },
+    "rewards": []
+  },
+  {
+    "id": "three",
+    "name": "Three",
+    "type": "Boss",
+    "level": null,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": null,
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses/three",
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+    },
+    "rewards": []
+  },
+  {
+    "id": "airavata",
+    "name": "Airavata",
+    "type": "Boss",
+    "level": null,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": null,
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses/airavata",
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+    },
+    "rewards": []
+  },
+  {
+    "id": "chimera",
+    "name": "Chimera",
+    "type": "Boss",
+    "level": null,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": null,
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses/chimera",
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+    },
+    "rewards": []
   }
 ]
