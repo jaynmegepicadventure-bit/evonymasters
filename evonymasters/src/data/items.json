@@ -243,5 +243,50 @@
     "id": "lv10-boss-monster-chest",
     "name": "Lv10 Boss Monster Chest",
     "category": "Boss Chests"
+  },
+  {
+    "id": "lv5-boss-monster-chest",
+    "name": "Lv5 Boss Monster Chest",
+    "category": "Boss Chests"
+  },
+  {
+    "id": "lv6-boss-monster-chest",
+    "name": "Lv6 Boss Monster Chest",
+    "category": "Boss Chests"
+  },
+  {
+    "id": "lv7-boss-monster-chest",
+    "name": "Lv7 Boss Monster Chest",
+    "category": "Boss Chests"
+  },
+  {
+    "id": "lv8-boss-monster-chest",
+    "name": "Lv8 Boss Monster Chest",
+    "category": "Boss Chests"
+  },
+  {
+    "id": "lv9-boss-monster-chest",
+    "name": "Lv9 Boss Monster Chest",
+    "category": "Boss Chests"
+  },
+  {
+    "id": "legendary-treasure-map",
+    "name": "Legendary Treasure Map",
+    "category": "Items"
+  },
+  {
+    "id": "warriors-scroll-chest",
+    "name": "Warrior's Scroll Chest",
+    "category": "Chests"
+  },
+  {
+    "id": "medium-alliance-boss-package",
+    "name": "Medium Alliance Boss Package",
+    "category": "Alliance Chests"
+  },
+  {
+    "id": "senior-alliance-boss-package",
+    "name": "Senior Alliance Boss Package",
+    "category": "Alliance Chests"
   }
 ]
