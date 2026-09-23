@@ -313,5 +313,70 @@
     "id": "material-bag-silk-road",
     "name": "Material Bag (Silk Road)",
     "category": "Chests"
+  },
+  {
+    "id": "junior-golem-chest",
+    "name": "Junior Golem Chest",
+    "category": "Chests"
+  },
+  {
+    "id": "epic-golem-chest",
+    "name": "Epic Golem Chest",
+    "category": "Chests"
+  },
+  {
+    "id": "treasure-box",
+    "name": "Treasure Box",
+    "category": "Chests"
+  },
+  {
+    "id": "junior-hydra-chest",
+    "name": "Junior Hydra Chest",
+    "category": "Chests"
+  },
+  {
+    "id": "senior-resources-chest",
+    "name": "Senior Resources Chest",
+    "category": "Chests"
+  },
+  {
+    "id": "material-chest-purple",
+    "name": "Purple Material Chest",
+    "category": "Chests"
+  },
+  {
+    "id": "pile-of-gold",
+    "name": "Pile of Gold",
+    "category": "Chests"
+  },
+  {
+    "id": "bulk-of-gold",
+    "name": "Bulk of Gold",
+    "category": "Chests"
+  },
+  {
+    "id": "mass-of-gold",
+    "name": "Mass of Gold",
+    "category": "Chests"
+  },
+  {
+    "id": "junior-spring-festival-rewards",
+    "name": "Junior Spring Festival Rewards",
+    "category": "Chests"
+  },
+  {
+    "id": "medium-spring-festival-rewards",
+    "name": "Medium Spring Festival Rewards",
+    "category": "Chests"
+  },
+  {
+    "id": "lv15-boss-monster-chest",
+    "name": "Lv15 Boss Monster Chest",
+    "category": "Chests"
+  },
+  {
+    "id": "lv16-boss-monster-chest",
+    "name": "Lv16 Boss Monster Chest",
+    "category": "Chests"
   }
 ]
