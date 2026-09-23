@@ -288,5 +288,30 @@
     "id": "senior-alliance-boss-package",
     "name": "Senior Alliance Boss Package",
     "category": "Alliance Chests"
+  },
+  {
+    "id": "lv11-boss-monster-chest",
+    "name": "Lv11 Boss Monster Chest",
+    "category": "Boss Chests"
+  },
+  {
+    "id": "lv12-boss-monster-chest",
+    "name": "Lv12 Boss Monster Chest",
+    "category": "Boss Chests"
+  },
+  {
+    "id": "lv13-boss-monster-chest",
+    "name": "Lv13 Boss Monster Chest",
+    "category": "Boss Chests"
+  },
+  {
+    "id": "lv14-boss-monster-chest",
+    "name": "Lv14 Boss Monster Chest",
+    "category": "Boss Chests"
+  },
+  {
+    "id": "material-bag-silk-road",
+    "name": "Material Bag (Silk Road)",
+    "category": "Chests"
   }
 ]
