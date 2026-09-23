@@ -7,3 +7,17 @@ test('type and keyword filters combine',()=>assert.deepEqual(searchMonsters(mons
 test('sort by stamina',()=>assert.deepEqual(searchMonsters(monsters,{sort:'stamina'}).map(m=>m.id),['b','a']));
 test('suggestions include matching item',()=>assert.deepEqual(suggestions(monsters,[{name:'Refining Stone'}],'ref'),['Refining Stone']));
 test('reject unknown reward IDs',()=>assert.equal(validateData(monsters,[{id:'stone'}]).some(e=>e.includes('Unknown reward')),true));
+
+import { readFileSync } from 'node:fs';
+const publishedMonsters=JSON.parse(readFileSync(new URL('../src/data/monsters.json',import.meta.url)));
+const publishedItems=JSON.parse(readFileSync(new URL('../src/data/items.json',import.meta.url)));
+test('published data passes validation',()=>assert.deepEqual(validateData(publishedMonsters,publishedItems),[]));
+for(const resource of ['wood','food','stone','ore'])test(`published ${resource} filter returns sourced monsters`,()=>{
+  const found=searchMonsters(publishedMonsters,{item:resource});
+  assert.ok(found.length>0,`No monsters found for ${resource}`);
+  assert.ok(found.every(m=>m.rewards.some(r=>r.itemId===resource&&r.sourceUrl&&r.origin==='other_chest')));
+});
+test('standard boss chests are not published as reward items',()=>{
+  assert.ok(publishedItems.every(i=>!/^lv\\d+-boss-monster-chest$/.test(i.id)));
+  assert.ok(publishedMonsters.every(m=>m.rewards.every(r=>!/^lv\\d+-boss-monster-chest$/.test(r.itemId))));
+});
