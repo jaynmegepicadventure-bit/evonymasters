@@ -10,7 +10,9 @@
       "Review the in-game event tasks and reward requirements before spending items.",
       "Check the event shop and expiration times before the event closes."
     ],
-    "source": "https://info.topgamesinc.com/evony-news/"
+    "source": "https://info.topgamesinc.com/evony-news/",
+    "rewards": [],
+    "rewardStatus": "Specific rewards pending verification from the individual announcement."
   },
   {
     "id": "historic-city-limited-recruit",
@@ -23,7 +25,9 @@
       "Check the current round's dates, city, featured generals and eligibility in game.",
       "Follow the round-specific requirements and claim or redeem rewards before its deadline."
     ],
-    "source": "https://info.topgamesinc.com/evony-news/"
+    "source": "https://info.topgamesinc.com/evony-news/",
+    "rewards": [],
+    "rewardStatus": "Specific rewards pending verification from the individual announcement."
   },
   {
     "id": "arena-glorious-attire-2026",
@@ -36,7 +40,9 @@
       "Review the current round's participation rules and reward milestones.",
       "Complete eligible activities and claim rewards before the event closes."
     ],
-    "source": "https://info.topgamesinc.com/evony-news/"
+    "source": "https://info.topgamesinc.com/evony-news/",
+    "rewards": [],
+    "rewardStatus": "Specific rewards pending verification from the individual announcement."
   },
   {
     "id": "running-of-the-bulls-2026",
@@ -49,7 +55,13 @@
       "For Alliance Carnival, obtain event items from eligible activities and exchange earned currency in its shop.",
       "For Alchemy Shop, complete daily tasks and spend event currency before it expires."
     ],
-    "source": "https://info.topgamesinc.com/join-evony-2026-running-of-the-bulls-and-redeem-plague-physician/"
+    "source": "https://info.topgamesinc.com/join-evony-2026-running-of-the-bulls-and-redeem-plague-physician/",
+    "rewards": [
+      "Alliance Carnival: Shield of Glory and Sword of Justice can be exchanged for Sakura Castle decoration, featured generals and skins; availability depends on earned points and shop inventory.",
+      "Wheel of Dragon War: possible wheel prizes include Dragon Pattern Chest, Excellent Dragon Coins and Gems; Dragon Soul Leaves come from event packages.",
+      "Alchemy Shop: Molten Ore from daily tasks can be exchanged for Alchemical Coins toward featured Monarch avatars, including Plague Physician, and Azure Capital castle decoration.",
+      "King’s Party: milestone rewards include Civilization Scroll Chests and Officer Equipment Scroll Chest; purchasing Gems is required to gain Party Cake experience."
+    ]
   },
   {
     "id": "fire-festival-2026",
@@ -62,7 +74,13 @@
       "Review the task and exchange requirements for each activity.",
       "Use limited-time event items before the announced conversion or expiration."
     ],
-    "source": "https://info.topgamesinc.com/join-evony-2026-fire-festival-to-get-new-avatar-plague-doctor/"
+    "source": "https://info.topgamesinc.com/join-evony-2026-fire-festival-to-get-new-avatar-plague-doctor/",
+    "rewards": [
+      "Voyage to Civilizations: Golden Ship Wheel gives a chance at the Elixir Furnace ornament and Golden Commemorative Coins; coins can be redeemed in the Civilization Museum.",
+      "Wheel of Dragon War: wheel prizes include Dragon Pattern Chest, Excellent Dragon Coins and Gems; spins require Dragon Soul Leaves from packages.",
+      "Alchemy Shop: daily tasks earn Molten Ore for Alchemical Coins; exchange options include Plague Doctor and other Monarch avatars and Azure Capital decoration.",
+      "King’s Party: milestone rewards include Civilization Scroll Chests, officer equipment scrolls and a choice of Egg Garden ornaments; Party Cake experience comes from Gem purchases."
+    ]
   },
   {
     "id": "starry-pilgrimage-2026",
@@ -75,7 +93,14 @@
       "Collect the activity items specified by the current event panel.",
       "Review the redemption period separately from the point-earning period."
     ],
-    "source": "https://info.topgamesinc.com/evony-2026-starry-pilgrimage-events-and-rewards-preview/"
+    "source": "https://info.topgamesinc.com/evony-2026-starry-pilgrimage-events-and-rewards-preview/",
+    "rewards": [
+      "Eran Collection: Sacred Flame Points unlock milestones and ranking rewards; featured prizes include Ancient City Gor – Lingering Flame decoration and Banu Goshasp champion skin.",
+      "Ode to Eran: Bull-Headed Maces earned from monsters, resource spots or packages can yield a Starry Pilgrimage Historic General Chest with a choice including Rostam.",
+      "Stars and Earth: participation can award up to 20 Bull-Headed Maces; Haoma for the storyline comes from Normal or Elite Nasu or packages.",
+      "Voyage to Civilizations: chance to obtain Sirius Rite ornament and Golden Commemorative Coins for Civilization Museum exchanges.",
+      "King’s Party: milestone rewards include Turan Strongbow, a Tishtrya general skin and Philippa; Party Cake experience comes from Gem purchases."
+    ]
   },
   {
     "id": "viking-festival-2026",
@@ -88,6 +113,12 @@
       "Review the event tasks, participation rules and reward requirements.",
       "Claim rewards before the event ends."
     ],
-    "source": "https://info.topgamesinc.com/evony-version-5-17-0-highlights-2026-viking-festival-dragon-talent-changes/"
+    "source": "https://info.topgamesinc.com/evony-version-5-17-0-highlights-2026-viking-festival-dragon-talent-changes/",
+    "rewards": [
+      "Divination of Fate: use Fate Cards from monster kills, gathering or purchases for a random prize; the featured prize is Moon Goddess – Artemis general skin.",
+      "Rainbow Crow Voyage: obtain Spiritual Beast Scales from bosses or packages, then exchange them for Rainbow Crow Token to unlock the Rainbow Crow spiritual beast.",
+      "Voyage to Civilizations: Golden Ship Wheel offers a chance at Coronation Fountain ornament and Golden Commemorative Coins for exchanges.",
+      "King’s Party: milestone rewards include Great Sailing decoration, Civilization Scroll Chests and Margaret of Valois; Party Cake experience comes from Gem purchases."
+    ]
   }
 ]
