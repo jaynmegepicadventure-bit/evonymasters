@@ -1606,8 +1606,8 @@
     "name": "Ifrit",
     "type": "Boss",
     "level": 11,
-    "power": null,
-    "stamina": null,
+    "power": 59600000,
+    "stamina": 30,
     "image": null,
     "event": null,
     "updatedAt": "2026-09-23",
@@ -1616,19 +1616,272 @@
       "inGameVerified": false,
       "sourceUrls": [
         "https://www.evonytkrguide.com/bosses/ifrit",
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/items/lv11_boss_monster_chest"
       ],
-      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+      "notes": "Power, stamina, chest contents and reward types from individual boss and chest guides. Chest is a possible boss drop; its listed contents are awarded when opened. Direct reward quantities left blank unless verified."
     },
-    "rewards": []
+    "rewards": [
+      {
+        "itemId": "lv11-boss-monster-chest",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ifrit"
+      },
+      {
+        "itemId": "gold",
+        "quantity": 100000,
+        "unit": null,
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv11_boss_monster_chest"
+      },
+      {
+        "itemId": "material-chest-blue",
+        "quantity": 8,
+        "unit": null,
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv11_boss_monster_chest"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 200000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv11_boss_monster_chest"
+      },
+      {
+        "itemId": "food",
+        "quantity": 200000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv11_boss_monster_chest"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 200000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv11_boss_monster_chest"
+      },
+      {
+        "itemId": "ore",
+        "quantity": 200000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv11_boss_monster_chest"
+      },
+      {
+        "itemId": "speedup-training",
+        "quantity": 120,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv11_boss_monster_chest"
+      },
+      {
+        "itemId": "speedup-construction",
+        "quantity": 120,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv11_boss_monster_chest"
+      },
+      {
+        "itemId": "speedup-research",
+        "quantity": 120,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv11_boss_monster_chest"
+      },
+      {
+        "itemId": "speedup-healing",
+        "quantity": 120,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv11_boss_monster_chest"
+      },
+      {
+        "itemId": "speedup-trap",
+        "quantity": 120,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv11_boss_monster_chest"
+      },
+      {
+        "itemId": "speedup-crafting",
+        "quantity": 120,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv11_boss_monster_chest"
+      },
+      {
+        "itemId": "kings-scroll-chest",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ifrit"
+      },
+      {
+        "itemId": "refining-stone",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ifrit"
+      },
+      {
+        "itemId": "spiritual-beast-exp",
+        "quantity": 5000,
+        "unit": "EXP",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ifrit"
+      },
+      {
+        "itemId": "artwork-fragment-chest-v",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ifrit"
+      },
+      {
+        "itemId": "epic-treasure-map",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ifrit"
+      },
+      {
+        "itemId": "senior-alliance-boss-package",
+        "quantity": 1,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Awarded to alliance participants",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ifrit"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible resource box from Senior Alliance Boss Package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ifrit"
+      },
+      {
+        "itemId": "food",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible resource box from Senior Alliance Boss Package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ifrit"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible resource box from Senior Alliance Boss Package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ifrit"
+      },
+      {
+        "itemId": "ore",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible resource box from Senior Alliance Boss Package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ifrit"
+      },
+      {
+        "itemId": "monarch-exp",
+        "quantity": 4000,
+        "unit": "EXP",
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ifrit"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 5200,
+        "unit": "EXP",
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ifrit"
+      },
+      {
+        "itemId": "prestige",
+        "quantity": 350,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ifrit"
+      },
+      {
+        "itemId": "alliance-honor",
+        "quantity": 400,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ifrit"
+      },
+      {
+        "itemId": "alliance-points",
+        "quantity": 400,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ifrit"
+      }
+    ]
   },
   {
     "id": "kamaitachi",
     "name": "Kamaitachi",
     "type": "Boss",
     "level": 12,
-    "power": null,
-    "stamina": null,
+    "power": 89400000,
+    "stamina": 35,
     "image": null,
     "event": null,
     "updatedAt": "2026-09-23",
@@ -1637,19 +1890,164 @@
       "inGameVerified": false,
       "sourceUrls": [
         "https://www.evonytkrguide.com/bosses/kamaitachi",
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/items/lv12_boss_monster_chest"
       ],
-      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+      "notes": "Power, stamina, chest contents and reward types from individual boss and chest guides. Chest is a possible boss drop; its listed contents are awarded when opened. Direct reward quantities left blank unless verified."
     },
-    "rewards": []
+    "rewards": [
+      {
+        "itemId": "lv12-boss-monster-chest",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/kamaitachi"
+      },
+      {
+        "itemId": "gold",
+        "quantity": 200000,
+        "unit": null,
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv12_boss_monster_chest"
+      },
+      {
+        "itemId": "material-chest-large",
+        "quantity": 4,
+        "unit": null,
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv12_boss_monster_chest"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 400000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv12_boss_monster_chest"
+      },
+      {
+        "itemId": "food",
+        "quantity": 400000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv12_boss_monster_chest"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 400000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv12_boss_monster_chest"
+      },
+      {
+        "itemId": "ore",
+        "quantity": 400000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv12_boss_monster_chest"
+      },
+      {
+        "itemId": "speedup",
+        "quantity": 600,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv12_boss_monster_chest"
+      },
+      {
+        "itemId": "dragon-scroll-chest",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/kamaitachi"
+      },
+      {
+        "itemId": "refining-stone",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/kamaitachi"
+      },
+      {
+        "itemId": "artwork-fragment-chest-v",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/kamaitachi"
+      },
+      {
+        "itemId": "senior-alliance-boss-package",
+        "quantity": 1,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Awarded to alliance participants",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/kamaitachi"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible resource box from Senior Alliance Boss Package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/kamaitachi"
+      },
+      {
+        "itemId": "food",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible resource box from Senior Alliance Boss Package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/kamaitachi"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible resource box from Senior Alliance Boss Package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/kamaitachi"
+      },
+      {
+        "itemId": "ore",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible resource box from Senior Alliance Boss Package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/kamaitachi"
+      }
+    ]
   },
   {
     "id": "fafnir",
     "name": "Fafnir",
     "type": "Boss",
     "level": 13,
-    "power": null,
-    "stamina": null,
+    "power": 120000000,
+    "stamina": 40,
     "image": null,
     "event": null,
     "updatedAt": "2026-09-23",
@@ -1658,19 +2056,164 @@
       "inGameVerified": false,
       "sourceUrls": [
         "https://www.evonytkrguide.com/bosses/fafnir",
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/items/lv13_boss_monster_chest"
       ],
-      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+      "notes": "Power, stamina, chest contents and reward types from individual boss and chest guides. Chest is a possible boss drop; its listed contents are awarded when opened. Direct reward quantities left blank unless verified."
     },
-    "rewards": []
+    "rewards": [
+      {
+        "itemId": "lv13-boss-monster-chest",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/fafnir"
+      },
+      {
+        "itemId": "gold",
+        "quantity": 200000,
+        "unit": null,
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv13_boss_monster_chest"
+      },
+      {
+        "itemId": "material-chest-large",
+        "quantity": 5,
+        "unit": null,
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv13_boss_monster_chest"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 500000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv13_boss_monster_chest"
+      },
+      {
+        "itemId": "food",
+        "quantity": 500000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv13_boss_monster_chest"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 500000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv13_boss_monster_chest"
+      },
+      {
+        "itemId": "ore",
+        "quantity": 500000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv13_boss_monster_chest"
+      },
+      {
+        "itemId": "speedup",
+        "quantity": 720,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv13_boss_monster_chest"
+      },
+      {
+        "itemId": "dragon-scroll-chest",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/fafnir"
+      },
+      {
+        "itemId": "refining-stone",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/fafnir"
+      },
+      {
+        "itemId": "artwork-fragment-chest-v",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/fafnir"
+      },
+      {
+        "itemId": "senior-alliance-boss-package",
+        "quantity": 1,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Awarded to alliance participants",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/fafnir"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible resource box from Senior Alliance Boss Package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/fafnir"
+      },
+      {
+        "itemId": "food",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible resource box from Senior Alliance Boss Package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/fafnir"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible resource box from Senior Alliance Boss Package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/fafnir"
+      },
+      {
+        "itemId": "ore",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible resource box from Senior Alliance Boss Package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/fafnir"
+      }
+    ]
   },
   {
     "id": "behemoth",
     "name": "Behemoth",
     "type": "Boss",
     "level": 14,
-    "power": null,
-    "stamina": null,
+    "power": 187700000,
+    "stamina": 40,
     "image": null,
     "event": null,
     "updatedAt": "2026-09-23",
@@ -1679,11 +2222,165 @@
       "inGameVerified": false,
       "sourceUrls": [
         "https://www.evonytkrguide.com/bosses/behemoth",
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/items/lv14_boss_monster_chest"
       ],
-      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
+      "notes": "Power, stamina, chest contents and reward types from individual boss and chest guides. Chest is a possible boss drop; its listed contents are awarded when opened. Direct reward quantities left blank unless verified."
     },
-    "rewards": []
+    "rewards": [
+      {
+        "itemId": "lv14-boss-monster-chest",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/behemoth"
+      },
+      {
+        "itemId": "gold",
+        "quantity": 300000,
+        "unit": null,
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv14_boss_monster_chest"
+      },
+      {
+        "itemId": "material-chest-large",
+        "quantity": 6,
+        "unit": null,
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv14_boss_monster_chest"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 700000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv14_boss_monster_chest"
+      },
+      {
+        "itemId": "food",
+        "quantity": 700000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv14_boss_monster_chest"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 700000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv14_boss_monster_chest"
+      },
+      {
+        "itemId": "ore",
+        "quantity": 700000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv14_boss_monster_chest"
+      },
+      {
+        "itemId": "speedup",
+        "quantity": 900,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "boss_chest",
+        "notes": "Included when the boss chest is obtained and opened",
+        "sourceUrl": "https://www.evonytkrguide.com/items/lv14_boss_monster_chest"
+      },
+      {
+        "itemId": "dragon-scroll-chest",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/behemoth"
+      },
+      {
+        "itemId": "achaemenidae-scroll-chest",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/behemoth"
+      },
+      {
+        "itemId": "artwork-fragment-chest-v",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/behemoth"
+      },
+      {
+        "itemId": "material-bag-silk-road",
+        "quantity": null,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/behemoth"
+      },
+      {
+        "itemId": "senior-alliance-boss-package",
+        "quantity": 1,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Awarded to alliance participants",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/behemoth"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible resource box from Senior Alliance Boss Package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/behemoth"
+      },
+      {
+        "itemId": "food",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible resource box from Senior Alliance Boss Package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/behemoth"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible resource box from Senior Alliance Boss Package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/behemoth"
+      },
+      {
+        "itemId": "ore",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "other_chest",
+        "notes": "Possible resource box from Senior Alliance Boss Package",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/behemoth"
+      }
+    ]
   },
   {
     "id": "phoenix",
