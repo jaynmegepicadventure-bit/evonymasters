@@ -20,6 +20,15 @@
     },
     "rewards": [
       {
+        "itemId": "lv1-boss-monster-chest",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Boss chest is listed as a potential drop; not confirmed guaranteed per kill",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/zombie"
+      },
+      {
         "itemId": "refining-stone",
         "quantity": null,
         "unit": null,
@@ -102,6 +111,15 @@
     },
     "rewards": [
       {
+        "itemId": "lv2-boss-monster-chest",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Boss chest is listed as a potential drop; not confirmed guaranteed per kill",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/redcap"
+      },
+      {
         "itemId": "refining-stone",
         "quantity": null,
         "unit": null,
@@ -183,6 +201,15 @@
     },
     "rewards": [
       {
+        "itemId": "lv3-boss-monster-chest",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Boss chest is listed as a potential drop; not confirmed guaranteed per kill",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/centaur"
+      },
+      {
         "itemId": "refining-stone",
         "quantity": null,
         "unit": null,
@@ -227,6 +254,15 @@
       "notes": "Guide-sourced monster statistics and listed direct drops; standard boss chest omitted. Chest contents will be added only after item-level verification."
     },
     "rewards": [
+      {
+        "itemId": "lv4-boss-monster-chest",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Boss chest is listed as a potential drop; not confirmed guaranteed per kill",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/skeleton-dragon"
+      },
       {
         "itemId": "refining-stone",
         "quantity": null,
@@ -273,6 +309,15 @@
       "notes": "Guide-sourced. Boss chest is a possible monster drop; listed chest contents are conditional on obtaining the chest. Check current in-game rewards."
     },
     "rewards": [
+      {
+        "itemId": "lv10-boss-monster-chest",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Boss chest is listed as a potential drop; not confirmed guaranteed per kill",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/griffin"
+      },
       {
         "itemId": "refining-stone",
         "quantity": null,
