@@ -40,7 +40,7 @@ const types = ['Regular', 'Boss', 'Event'];
     container.append(list);
   }
   function render(){
-    const filtered=searchMonsters(monsters,{query:query.value,item:item.value,type:type.value,sort:sort.value});
+    const filtered=searchMonsters(monsters,{query:query.value,item:item.value,type:type.value,sort:sort.value,items});
     results.replaceChildren(); count.textContent=`${filtered.length} monster${filtered.length===1?'':'s'}`;
     empty.hidden=filtered.length>0; emptyText.textContent=monsters.length?'Try a different keyword, reward or monster type.':'Our verified monster database is being prepared. Check back as records are added.';
     for(const m of filtered){
