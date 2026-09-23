@@ -1810,5 +1810,705 @@
       "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
     },
     "rewards": []
+  },
+  {
+    "id": "golem-1",
+    "name": "Golem - Level 1",
+    "type": "Event",
+    "level": 1,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Golem",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "golem-2",
+    "name": "Golem - Level 2",
+    "type": "Event",
+    "level": 2,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Golem",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "golem-3",
+    "name": "Golem - Level 3",
+    "type": "Event",
+    "level": 3,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Golem",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "golem-4",
+    "name": "Golem - Level 4",
+    "type": "Event",
+    "level": 4,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Golem",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "golem-5",
+    "name": "Golem - Level 5",
+    "type": "Event",
+    "level": 5,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Golem",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "cerberus-1",
+    "name": "Junior Cerberus",
+    "type": "Event",
+    "level": 1,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Cerberus",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "cerberus-2",
+    "name": "Medium Cerberus",
+    "type": "Event",
+    "level": 2,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Cerberus",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "cerberus-3",
+    "name": "Senior Cerberus",
+    "type": "Event",
+    "level": 3,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Cerberus",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "hydra-1",
+    "name": "Junior Hydra",
+    "type": "Event",
+    "level": 1,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Hydra",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "hydra-2",
+    "name": "Medium Hydra",
+    "type": "Event",
+    "level": 2,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Hydra",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "hydra-3",
+    "name": "Senior Hydra",
+    "type": "Event",
+    "level": 3,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Hydra",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "knight-bayard-1",
+    "name": "Junior Knight Bayard",
+    "type": "Event",
+    "level": 1,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Knight Bayard",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "knight-bayard-2",
+    "name": "Senior Bayar Knight",
+    "type": "Event",
+    "level": 2,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Knight Bayard",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "nian-1",
+    "name": "Junior Nian",
+    "type": "Event",
+    "level": 1,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Nian",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "nian-2",
+    "name": "Medium Nian",
+    "type": "Event",
+    "level": 2,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Nian",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "nian-3",
+    "name": "Senior Nian",
+    "type": "Event",
+    "level": 3,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Nian",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "pumpkin-monster-1",
+    "name": "Pumpkin Monster - Level 1",
+    "type": "Event",
+    "level": 1,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Pumpkin Monster",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "pumpkin-monster-2",
+    "name": "Pumpkin Monster - Level 2",
+    "type": "Event",
+    "level": 2,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Pumpkin Monster",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "pumpkin-monster-3",
+    "name": "Pumpkin Monster - Level 3",
+    "type": "Event",
+    "level": 3,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Pumpkin Monster",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "pumpkin-monster-4",
+    "name": "Pumpkin Monster - Level 4",
+    "type": "Event",
+    "level": 4,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Pumpkin Monster",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "pumpkin-monster-5",
+    "name": "Pumpkin Monster - Level 5",
+    "type": "Event",
+    "level": 5,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Pumpkin Monster",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "pumpkin-monster-6",
+    "name": "Pumpkin Monster - Level 6",
+    "type": "Event",
+    "level": 6,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Pumpkin Monster",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "royal-thief-1",
+    "name": "Royal Thief - Level 1",
+    "type": "Event",
+    "level": 1,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Royal Thief",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "viking-1",
+    "name": "Viking Icebreaker",
+    "type": "Event",
+    "level": 1,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Viking",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "viking-2",
+    "name": "Viking Berserker",
+    "type": "Event",
+    "level": 2,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Viking",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "viking-3",
+    "name": "Viking Chief",
+    "type": "Event",
+    "level": 3,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Viking",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "warlord-1",
+    "name": "Warlord - Level 1",
+    "type": "Event",
+    "level": 1,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Warlord",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "warlord-2",
+    "name": "Warlord - Level 2",
+    "type": "Event",
+    "level": 2,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Warlord",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "warlord-3",
+    "name": "Warlord - Level 3",
+    "type": "Event",
+    "level": 3,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Warlord",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "warlord-4",
+    "name": "Warlord - Level 4",
+    "type": "Event",
+    "level": 4,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Warlord",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "witch-1",
+    "name": "Witch - Level 1",
+    "type": "Event",
+    "level": 1,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Witch",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "witch-2",
+    "name": "Witch - Level 2",
+    "type": "Event",
+    "level": 2,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Witch",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "witch-3",
+    "name": "Witch - Level 3",
+    "type": "Event",
+    "level": 3,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Witch",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "witch-4",
+    "name": "Witch - Level 4",
+    "type": "Event",
+    "level": 4,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Witch",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
+  },
+  {
+    "id": "witch-5",
+    "name": "Witch - Level 5",
+    "type": "Event",
+    "level": 5,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "Witch",
+    "updatedAt": "2026-09-23",
+    "verification": {
+      "status": "roster-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://www.evonytkrguide.com/bosses"
+      ],
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+    },
+    "rewards": []
   }
 ]
