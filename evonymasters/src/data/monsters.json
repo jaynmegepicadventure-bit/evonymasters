@@ -15,36 +15,32 @@
       "sourceUrls": [
         "https://onechilledgamer.com/evony-boss-monster-guide/"
       ],
-      "notes": "Guide values; check current in-game monster and reward reports. Chest contents are not represented as direct drops."
+      "notes": "Guide-sourced monster statistics and listed direct drops; standard boss chest omitted. Chest contents will be added only after item-level verification."
     },
     "rewards": [
-      {
-        "itemId": "lv1-boss-monster-chest",
-        "quantity": 1,
-        "unit": null,
-        "kind": "guaranteed",
-        "notes": "Chest; contents are separate"
-      },
       {
         "itemId": "refining-stone",
         "quantity": null,
         "unit": null,
         "kind": "possible",
-        "notes": null
+        "notes": null,
+        "origin": "direct"
       },
       {
         "itemId": "common-treasure-map",
         "quantity": null,
         "unit": null,
         "kind": "possible",
-        "notes": null
+        "notes": null,
+        "origin": "direct"
       },
       {
         "itemId": "artwork-fragment-chest-iii",
         "quantity": null,
         "unit": null,
         "kind": "possible",
-        "notes": null
+        "notes": null,
+        "origin": "direct"
       }
     ]
   },
@@ -64,36 +60,32 @@
       "sourceUrls": [
         "https://onechilledgamer.com/evony-boss-monster-guide/"
       ],
-      "notes": "Guide values; check current in-game monster and reward reports. Chest contents are not represented as direct drops."
+      "notes": "Guide-sourced monster statistics and listed direct drops; standard boss chest omitted. Chest contents will be added only after item-level verification."
     },
     "rewards": [
-      {
-        "itemId": "lv2-boss-monster-chest",
-        "quantity": 1,
-        "unit": null,
-        "kind": "guaranteed",
-        "notes": "Chest; contents are separate"
-      },
       {
         "itemId": "refining-stone",
         "quantity": null,
         "unit": null,
         "kind": "possible",
-        "notes": null
+        "notes": null,
+        "origin": "direct"
       },
       {
         "itemId": "common-treasure-map",
         "quantity": null,
         "unit": null,
         "kind": "possible",
-        "notes": null
+        "notes": null,
+        "origin": "direct"
       },
       {
         "itemId": "artwork-fragment-chest-iii",
         "quantity": null,
         "unit": null,
         "kind": "possible",
-        "notes": null
+        "notes": null,
+        "origin": "direct"
       }
     ]
   },
@@ -113,36 +105,32 @@
       "sourceUrls": [
         "https://onechilledgamer.com/evony-boss-monster-guide/"
       ],
-      "notes": "Guide values; check current in-game monster and reward reports. Chest contents are not represented as direct drops."
+      "notes": "Guide-sourced monster statistics and listed direct drops; standard boss chest omitted. Chest contents will be added only after item-level verification."
     },
     "rewards": [
-      {
-        "itemId": "lv3-boss-monster-chest",
-        "quantity": 1,
-        "unit": null,
-        "kind": "guaranteed",
-        "notes": "Chest; contents are separate"
-      },
       {
         "itemId": "refining-stone",
         "quantity": null,
         "unit": null,
         "kind": "possible",
-        "notes": null
+        "notes": null,
+        "origin": "direct"
       },
       {
         "itemId": "common-treasure-map",
         "quantity": null,
         "unit": null,
         "kind": "possible",
-        "notes": null
+        "notes": null,
+        "origin": "direct"
       },
       {
         "itemId": "artwork-fragment-chest-iii",
         "quantity": null,
         "unit": null,
         "kind": "possible",
-        "notes": null
+        "notes": null,
+        "origin": "direct"
       }
     ]
   },
@@ -162,36 +150,32 @@
       "sourceUrls": [
         "https://onechilledgamer.com/evony-boss-monster-guide/"
       ],
-      "notes": "Guide values; check current in-game monster and reward reports. Chest contents are not represented as direct drops."
+      "notes": "Guide-sourced monster statistics and listed direct drops; standard boss chest omitted. Chest contents will be added only after item-level verification."
     },
     "rewards": [
-      {
-        "itemId": "lv4-boss-monster-chest",
-        "quantity": 1,
-        "unit": null,
-        "kind": "guaranteed",
-        "notes": "Chest; contents are separate"
-      },
       {
         "itemId": "refining-stone",
         "quantity": null,
         "unit": null,
         "kind": "possible",
-        "notes": null
+        "notes": null,
+        "origin": "direct"
       },
       {
         "itemId": "uncommon-treasure-map",
         "quantity": null,
         "unit": null,
         "kind": "possible",
-        "notes": null
+        "notes": null,
+        "origin": "direct"
       },
       {
         "itemId": "artwork-fragment-chest-iii",
         "quantity": null,
         "unit": null,
         "kind": "possible",
-        "notes": null
+        "notes": null,
+        "origin": "direct"
       }
     ]
   },
@@ -211,36 +195,32 @@
       "sourceUrls": [
         "https://onechilledgamer.com/evony-boss-monster-guide/"
       ],
-      "notes": "Guide values; check current in-game monster and reward reports. Chest contents are not represented as direct drops."
+      "notes": "Guide-sourced monster statistics and listed direct drops; standard boss chest omitted. Chest contents will be added only after item-level verification."
     },
     "rewards": [
-      {
-        "itemId": "lv10-boss-monster-chest",
-        "quantity": 1,
-        "unit": null,
-        "kind": "guaranteed",
-        "notes": "Chest; contents are separate"
-      },
       {
         "itemId": "refining-stone",
         "quantity": null,
         "unit": null,
         "kind": "possible",
-        "notes": null
+        "notes": null,
+        "origin": "direct"
       },
       {
         "itemId": "epic-treasure-map",
         "quantity": null,
         "unit": null,
         "kind": "possible",
-        "notes": null
+        "notes": null,
+        "origin": "direct"
       },
       {
         "itemId": "artwork-fragment-chest-v",
         "quantity": null,
         "unit": null,
         "kind": "possible",
-        "notes": null
+        "notes": null,
+        "origin": "direct"
       }
     ]
   }
