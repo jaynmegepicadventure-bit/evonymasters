@@ -1,0 +1,93 @@
+[
+  {
+    "id": "regata-storica-2026",
+    "name": "Regata Storica 2026",
+    "category": "Seasonal",
+    "date": "2026-09-11",
+    "summary": "Seasonal celebration featuring the Domain of Sea Spirit, decoration collection and Monarch images.",
+    "steps": [
+      "Open the event center and locate the Regata Storica activities available on your server.",
+      "Review the in-game event tasks and reward requirements before spending items.",
+      "Check the event shop and expiration times before the event closes."
+    ],
+    "source": "https://info.topgamesinc.com/evony-news/"
+  },
+  {
+    "id": "historic-city-limited-recruit",
+    "name": "Historic City & Limited Recruit",
+    "category": "Recruitment",
+    "date": "2026-09-04",
+    "summary": "Limited-time opportunities to compete for featured historic cities and recruit featured generals; the featured city and generals change by round.",
+    "steps": [
+      "Open the Historic City and Limited Recruit event panels.",
+      "Check the current round's dates, city, featured generals and eligibility in game.",
+      "Follow the round-specific requirements and claim or redeem rewards before its deadline."
+    ],
+    "source": "https://info.topgamesinc.com/evony-news/"
+  },
+  {
+    "id": "arena-glorious-attire-2026",
+    "name": "Arena & Glorious Attire 2026",
+    "category": "Competition",
+    "date": "2026-08-14",
+    "summary": "An announced round of Arena and Glorious Attire activities; rules and available rewards depend on the event round.",
+    "steps": [
+      "Open the Arena and Glorious Attire event panels when available.",
+      "Review the current round's participation rules and reward milestones.",
+      "Complete eligible activities and claim rewards before the event closes."
+    ],
+    "source": "https://info.topgamesinc.com/evony-news/"
+  },
+  {
+    "id": "running-of-the-bulls-2026",
+    "name": "Running of the Bulls 2026",
+    "category": "Seasonal",
+    "date": "2026-07-17",
+    "summary": "A seasonal event announcement that included Alliance Carnival, Wheel of Dragon War and Alchemy Shop activities.",
+    "steps": [
+      "Open the Event Center and check which associated activities are active.",
+      "For Alliance Carnival, obtain event items from eligible activities and exchange earned currency in its shop.",
+      "For Alchemy Shop, complete daily tasks and spend event currency before it expires."
+    ],
+    "source": "https://info.topgamesinc.com/join-evony-2026-running-of-the-bulls-and-redeem-plague-physician/"
+  },
+  {
+    "id": "fire-festival-2026",
+    "name": "Fire Festival 2026",
+    "category": "Seasonal",
+    "date": "2026-04-24",
+    "summary": "Seasonal activities included Voyage to Civilizations, Wheel of Dragon War and Shopping Spree.",
+    "steps": [
+      "Open the current event panels to check which activities are available.",
+      "Review the task and exchange requirements for each activity.",
+      "Use limited-time event items before the announced conversion or expiration."
+    ],
+    "source": "https://info.topgamesinc.com/join-evony-2026-fire-festival-to-get-new-avatar-plague-doctor/"
+  },
+  {
+    "id": "starry-pilgrimage-2026",
+    "name": "Starry Pilgrimage 2026",
+    "category": "Seasonal",
+    "date": "2026-02-27",
+    "summary": "The announced event included Stars and Earth, Ode to Eran and Plague of Carrion Flies.",
+    "steps": [
+      "Open Event Center → Starry Pilgrimage when the event is available.",
+      "Collect the activity items specified by the current event panel.",
+      "Review the redemption period separately from the point-earning period."
+    ],
+    "source": "https://info.topgamesinc.com/evony-2026-starry-pilgrimage-events-and-rewards-preview/"
+  },
+  {
+    "id": "viking-festival-2026",
+    "name": "Viking Festival 2026",
+    "category": "Seasonal",
+    "date": "2026-01-16",
+    "summary": "An officially announced Viking Festival round. Check in-game details for the rules of the current iteration.",
+    "steps": [
+      "Check the event center for the current Viking Festival activities.",
+      "Review the event tasks, participation rules and reward requirements.",
+      "Claim rewards before the event ends."
+    ],
+    "source": "https://info.topgamesinc.com/evony-version-5-17-0-highlights-2026-viking-festival-dragon-talent-changes/"
+  }
+]
