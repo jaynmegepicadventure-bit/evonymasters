@@ -34,7 +34,7 @@ const types = ['Regular', 'Boss', 'Event'];
     const list = element('div','reward-list');
     const matches = monster.rewards.filter(r=>r.kind===kind);
     if(!matches.length) list.append(element('span','meta','None verified'));
-    for(const r of matches){const label=byId.get(r.itemId)?.name || r.itemId;const isChest=/^lv\d+-boss-monster-chest$/.test(r.itemId);const reward=element(isChest?'a':'span','reward',`${label}${r.quantity == null?'':` · ${format(r.quantity)}${r.unit?' '+r.unit:''}`}${r.origin==='boss_chest'?' · from boss chest':r.origin==='other_chest'?' · from special chest':''}${r.notes?' · '+r.notes:''}`);if(isChest)reward.href='/items/'+r.itemId+'/';list.append(reward);}
+    for(const r of matches){const label=byId.get(r.itemId)?.name || r.itemId;const isChest=/^lv\d+-boss-monster-chest$/.test(r.itemId);const reward=element(isChest?'a':'span','reward',`${label}${r.quantity == null?'':` · ${format(r.quantity)}${r.unit?' '+r.unit:''}`}${r.origin==='boss_chest'?' · from boss chest':r.origin==='other_chest'?' · from special chest':''}${r.notes&&r.notes!=='Included when the boss chest is obtained and opened'?' · '+r.notes:''}`);if(isChest)reward.href='/items/'+r.itemId+'/';list.append(reward);}
     container.append(list);
   }
   function render(){
