@@ -378,5 +378,395 @@
     "id": "lv16-boss-monster-chest",
     "name": "Lv16 Boss Monster Chest",
     "category": "Chests"
+  },
+  {
+    "id": "achaemenidae-armor-scroll",
+    "name": "Achaemenidae Armor Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "achaemenidae-axe-scroll",
+    "name": "Achaemenidae Axe Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "achaemenidae-boots-scroll",
+    "name": "Achaemenidae Boots Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "achaemenidae-bow-scroll",
+    "name": "Achaemenidae Bow Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "achaemenidae-helmet-scroll",
+    "name": "Achaemenidae Helmet Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "achaemenidae-leg-armor-scroll",
+    "name": "Achaemenidae Leg Armor Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "achaemenidae-ring-scroll",
+    "name": "Achaemenidae Ring Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "achaemenidae-spear-scroll",
+    "name": "Achaemenidae Spear Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "achaemenidae-sword-scroll",
+    "name": "Achaemenidae Sword Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "ancient-greek-sculpture",
+    "name": "Ancient Greek Sculpture",
+    "category": "Items"
+  },
+  {
+    "id": "architectural-oil-painting",
+    "name": "Architectural Oil Painting",
+    "category": "Items"
+  },
+  {
+    "id": "bracelet",
+    "name": "Bracelet",
+    "category": "Items"
+  },
+  {
+    "id": "bronze-coin",
+    "name": "Bronze Coin",
+    "category": "Items"
+  },
+  {
+    "id": "bronze-cup",
+    "name": "Bronze Cup",
+    "category": "Items"
+  },
+  {
+    "id": "chinese-mask",
+    "name": "Chinese Mask",
+    "category": "Items"
+  },
+  {
+    "id": "chinese-sculpture",
+    "name": "Chinese Sculpture",
+    "category": "Items"
+  },
+  {
+    "id": "code-of-hammurabi-fragment",
+    "name": "Code Of Hammurabi Fragment",
+    "category": "Items"
+  },
+  {
+    "id": "copper-pot",
+    "name": "Copper Pot",
+    "category": "Items"
+  },
+  {
+    "id": "diamond-crown",
+    "name": "Diamond Crown",
+    "category": "Items"
+  },
+  {
+    "id": "dragon-armor-scroll",
+    "name": "Dragon Armor Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "dragon-axe-scroll",
+    "name": "Dragon Axe Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "dragon-boots-scroll",
+    "name": "Dragon Boots Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "dragon-bow-scroll",
+    "name": "Dragon Bow Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "dragon-helmet-scroll",
+    "name": "Dragon Helmet Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "dragon-leg-armor-scroll",
+    "name": "Dragon Leg Armor Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "dragon-ring-scroll",
+    "name": "Dragon Ring Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "dragon-spear-scroll",
+    "name": "Dragon Spear Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "dragon-sword-scroll",
+    "name": "Dragon Sword Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "earrings",
+    "name": "Earrings",
+    "category": "Items"
+  },
+  {
+    "id": "egyptian-mask",
+    "name": "Egyptian Mask",
+    "category": "Items"
+  },
+  {
+    "id": "egyptian-sculpture",
+    "name": "Egyptian Sculpture",
+    "category": "Items"
+  },
+  {
+    "id": "erhu-fiddle",
+    "name": "Erhu Fiddle",
+    "category": "Items"
+  },
+  {
+    "id": "faberge-egg-fragment",
+    "name": "Faberge Egg Fragment",
+    "category": "Items"
+  },
+  {
+    "id": "gem-crown",
+    "name": "Gem Crown",
+    "category": "Items"
+  },
+  {
+    "id": "globus-cruciger-fragment",
+    "name": "Globus Cruciger Fragment",
+    "category": "Items"
+  },
+  {
+    "id": "gold-coin",
+    "name": "Gold Coin",
+    "category": "Items"
+  },
+  {
+    "id": "golden-crown",
+    "name": "Golden Crown",
+    "category": "Items"
+  },
+  {
+    "id": "guitar",
+    "name": "Guitar",
+    "category": "Items"
+  },
+  {
+    "id": "guzheng",
+    "name": "Guzheng",
+    "category": "Items"
+  },
+  {
+    "id": "hero-armor-scroll",
+    "name": "Hero Armor Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "hero-leg-armor-scroll",
+    "name": "Hero Leg Armor Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "imperial-seal-fragment",
+    "name": "Imperial Seal Fragment",
+    "category": "Items"
+  },
+  {
+    "id": "indian-mask",
+    "name": "Indian Mask",
+    "category": "Items"
+  },
+  {
+    "id": "kings-axe-scroll",
+    "name": "King's Axe Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "kings-bow-scroll",
+    "name": "King's Bow Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "kings-ring-scroll",
+    "name": "King's Ring Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "kings-spear-scroll",
+    "name": "King's Spear Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "kings-sword-scroll",
+    "name": "King's Sword Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "knife-coin",
+    "name": "Knife Coin",
+    "category": "Items"
+  },
+  {
+    "id": "knights-armor",
+    "name": "Knight's Armor",
+    "category": "Items"
+  },
+  {
+    "id": "knights-helmet",
+    "name": "Knight's Helmet",
+    "category": "Items"
+  },
+  {
+    "id": "knights-leg-armor",
+    "name": "Knight's Leg Armor",
+    "category": "Items"
+  },
+  {
+    "id": "knights-sword",
+    "name": "Knight's Sword",
+    "category": "Items"
+  },
+  {
+    "id": "landscape-oil-painting",
+    "name": "Landscape Oil Painting",
+    "category": "Items"
+  },
+  {
+    "id": "large-material-chest",
+    "name": "Large Material Chest",
+    "category": "Chests"
+  },
+  {
+    "id": "legendary-boots-scroll",
+    "name": "Legendary Boots Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "legendary-helmet-scroll",
+    "name": "Legendary Helmet Scroll",
+    "category": "Scrolls"
+  },
+  {
+    "id": "luminous-cup",
+    "name": "Luminous Cup",
+    "category": "Items"
+  },
+  {
+    "id": "lv-dragon-scale",
+    "name": "Dragon Scale",
+    "category": "Materials"
+  },
+  {
+    "id": "lv17-boss-monster-chest",
+    "name": "Lv17 Boss Monster Chest",
+    "category": "Boss Chests"
+  },
+  {
+    "id": "mask-of-agamemnon-fragment",
+    "name": "Mask Of Agamemnon Fragment",
+    "category": "Items"
+  },
+  {
+    "id": "necklace",
+    "name": "Necklace",
+    "category": "Items"
+  },
+  {
+    "id": "pearl-crown",
+    "name": "Pearl Crown",
+    "category": "Items"
+  },
+  {
+    "id": "porcelain-cup",
+    "name": "Porcelain Cup",
+    "category": "Items"
+  },
+  {
+    "id": "porcelain-pot",
+    "name": "Porcelain Pot",
+    "category": "Items"
+  },
+  {
+    "id": "portrait-oil-painting",
+    "name": "Portrait Oil Painting",
+    "category": "Items"
+  },
+  {
+    "id": "ring",
+    "name": "Ring",
+    "category": "Items"
+  },
+  {
+    "id": "roman-mask",
+    "name": "Roman Mask",
+    "category": "Items"
+  },
+  {
+    "id": "roman-sculpture",
+    "name": "Roman Sculpture",
+    "category": "Items"
+  },
+  {
+    "id": "seven-branched-sword-fragment",
+    "name": "Seven Branched Sword Fragment",
+    "category": "Items"
+  },
+  {
+    "id": "silver-coin",
+    "name": "Silver Coin",
+    "category": "Items"
+  },
+  {
+    "id": "silver-cup",
+    "name": "Silver Cup",
+    "category": "Items"
+  },
+  {
+    "id": "silver-pot",
+    "name": "Silver Pot",
+    "category": "Items"
+  },
+  {
+    "id": "speedup-trap-building",
+    "name": "Trap Building Speedup",
+    "category": "Speedups"
+  },
+  {
+    "id": "steel-pot",
+    "name": "Steel Pot",
+    "category": "Items"
+  },
+  {
+    "id": "still-life-oil-painting",
+    "name": "Still Life Oil Painting",
+    "category": "Items"
+  },
+  {
+    "id": "tutankhamuns-dagger-fragment",
+    "name": "Tutankhamun's Dagger Fragment",
+    "category": "Items"
+  },
+  {
+    "id": "uhde",
+    "name": "Uhde",
+    "category": "Items"
   }
 ]
