@@ -56,9 +56,15 @@ const types = [{value:'Regular',label:'Regular'},{value:'Boss',label:'Boss'},{va
     container.append(list);
   }
   function render(){
+    const term=query.value.trim().toLocaleLowerCase();
+    if(!term){
+      results.replaceChildren();
+      count.textContent='';
+      empty.hidden=true;
+      return;
+    }
     const monsterType=type.value==='Event Activity'?'__none__':type.value;
     let filtered=type.value==='Event Activity'?[]:searchMonsters(monsters,{query:query.value,item:'',type:monsterType,sort:sort.value==='amount'?'name':sort.value,items});
-    const term=query.value.trim().toLocaleLowerCase();
     let matchingEvents=(type.value===''||type.value==='Event Activity')?events.filter(e=>eventMatches(e,term)):[];
     if(sort.value==='amount'){
       filtered.sort((a,b)=>Math.max(0,...matchingMonsterRewards(b,term).map(rewardAmount))-Math.max(0,...matchingMonsterRewards(a,term).map(rewardAmount)) || a.name.localeCompare(b.name));
