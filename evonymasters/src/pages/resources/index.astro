@@ -38,7 +38,8 @@ const types = [{value:'Regular',label:'Regular'},{value:'Boss',label:'Boss'},{va
     const label=byId.get(r.itemId)?.name || r.itemId;
     return normalize(label+' '+r.itemId).includes(normalize(term));
   };
-  const matchingMonsterRewards = (monster, term) => monster.rewards.filter(r=>rewardMatches(r,term));
+  const monsterNameMatches = (monster, term) => normalize(monster.name+' '+(monster.event||'')+' '+(monster.level==null?'':('lv '+monster.level+' level '+monster.level))).includes(normalize(term));
+  const matchingMonsterRewards = (monster, term) => monsterNameMatches(monster,term) ? monster.rewards : monster.rewards.filter(r=>rewardMatches(r,term));
   const rewardAmount = r => Number(r.quantity) || 0;
   const textAmount = value => {
     const match=value.replace(/,/g,'').match(/(?:x|×|·)?\\s*(\\d+(?:\\.\\d+)?)\\s*([KMB])?/i);
@@ -68,7 +69,7 @@ const types = [{value:'Regular',label:'Regular'},{value:'Boss',label:'Boss'},{va
     let matchingEvents=(type.value===''||type.value==='Event Activity')?events.filter(e=>eventMatches(e,term)):[];
     if(sort.value==='amount'){
       filtered.sort((a,b)=>Math.max(0,...matchingMonsterRewards(b,term).map(rewardAmount))-Math.max(0,...matchingMonsterRewards(a,term).map(rewardAmount)) || a.name.localeCompare(b.name));
-      matchingEvents.sort((a,b)=>Math.max(0,...eventRewards(b).filter(x=>!term||normalize(x).includes(normalize(term))).map(textAmount))-Math.max(0,...eventRewards(a).filter(x=>!term||normalize(x).includes(normalize(term))).map(textAmount)) || a.name.localeCompare(b.name));
+      matchingEvents.sort((a,b)=>Math.max(0,...eventRewards(b).filter(x=>normalize(b.name).includes(normalize(term))||normalize(x).includes(normalize(term))).map(textAmount))-Math.max(0,...eventRewards(a).filter(x=>normalize(a.name).includes(normalize(term))||normalize(x).includes(normalize(term))).map(textAmount)) || a.name.localeCompare(b.name));
     }else matchingEvents.sort((a,b)=>a.name.localeCompare(b.name));
     const total=filtered.length+matchingEvents.length;
     results.replaceChildren(); count.textContent=`${total} result${total===1?'':'s'}`;
@@ -94,7 +95,8 @@ const types = [{value:'Regular',label:'Regular'},{value:'Boss',label:'Boss'},{va
     }
 
     for(const e of matchingEvents){
-      for(const reward of eventRewards(e).filter(x=>!term||normalize(x).includes(normalize(term)))){
+      const eventNameMatch=normalize(e.name).includes(normalize(term));
+      for(const reward of eventRewards(e).filter(x=>eventNameMatch||normalize(x).includes(normalize(term)))){
         const row=document.createElement('tr');
         row.append(element('td','','Event'));
         const detail=element('td');const link=element('a','',e.name);link.href='/events/?q='+encodeURIComponent(query.value.trim()||e.name);detail.append(link);row.append(detail);
