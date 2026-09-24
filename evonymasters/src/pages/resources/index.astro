@@ -89,7 +89,8 @@ const types = [{value:'Regular',label:'Regular'},{value:'Boss',label:'Boss'},{va
         row.append(element('td','','No'));
         row.append(element('td','',byId.get(r.itemId)?.name || r.itemId));
         row.append(element('td','qty',r.quantity==null?'—':format(r.quantity)+(r.unit?' '+r.unit:'')));
-        const source=r.origin==='direct'?'Direct':r.origin==='boss_chest'?'Boss Chest':r.origin==='other_chest'?'Chest':'—';
+        const sourceBase=r.origin==='direct'?'Direct':r.origin==='boss_chest'?'Chest - Boss':r.origin==='other_chest'?'Chest - Boss':'—';
+        const source=(r.origin==='boss_chest'||r.origin==='other_chest')&&r.notes?sourceBase+' '+r.notes:sourceBase;
         row.append(element('td','source',source));
         row.append(element('td','cost',m.stamina==null?'—':format(m.stamina)+' Stamina'));
         tbody.append(row);
