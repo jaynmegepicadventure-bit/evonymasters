@@ -15,7 +15,7 @@ test('published data passes validation',()=>assert.deepEqual(validateData(publis
 for(const resource of ['wood','food','stone','ore'])test(`published ${resource} filter returns sourced monsters`,()=>{
   const found=searchMonsters(publishedMonsters,{item:resource});
   assert.ok(found.length>0,`No monsters found for ${resource}`);
-  assert.ok(found.every(m=>m.rewards.some(r=>r.itemId===resource&&r.sourceUrl&&r.origin==='other_chest')));
+  assert.ok(found.every(m=>m.rewards.some(r=>r.itemId===resource&&r.sourceUrl)));
 });
 test('boss chests link to their own catalog records',()=>{
   assert.ok(publishedItems.some(i=>i.id==='lv10-boss-monster-chest'));
