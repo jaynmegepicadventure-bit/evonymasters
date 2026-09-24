@@ -76,7 +76,7 @@ const types = [{value:'Regular',label:'Regular'},{value:'Boss',label:'Boss'},{va
     empty.hidden=total>0; emptyText.textContent='Try a different keyword, reward or type.';
     const table=element('table','results-table');
     const thead=document.createElement('thead');const headerRow=document.createElement('tr');
-    for(const label of ['Type','Details','Live','Resource Type','Quantity','Cost'])headerRow.append(element('th','',label));
+    for(const label of ['Type','Details','Live','Resource Type','Quantity','Source','Cost'])headerRow.append(element('th','',label));
     thead.append(headerRow);table.append(thead);
     const tbody=document.createElement('tbody');
 
@@ -89,6 +89,8 @@ const types = [{value:'Regular',label:'Regular'},{value:'Boss',label:'Boss'},{va
         row.append(element('td','','No'));
         row.append(element('td','',byId.get(r.itemId)?.name || r.itemId));
         row.append(element('td','qty',r.quantity==null?'—':format(r.quantity)+(r.unit?' '+r.unit:'')));
+        const source=r.origin==='direct'?'Direct':r.origin==='boss_chest'?'Boss Chest':r.origin==='other_chest'?'Chest':'—';
+        row.append(element('td','source',source));
         row.append(element('td','cost',m.stamina==null?'—':format(m.stamina)+' Stamina'));
         tbody.append(row);
       }
@@ -105,6 +107,7 @@ const types = [{value:'Regular',label:'Regular'},{value:'Boss',label:'Boss'},{va
         const resourceName=reward.replace(/(?:x|×|·)?\\s*[\\d,]+(?:\\.\\d+)?\\s*[KMB]?\\b/ig,'').replace(/^[ ·x×:-]+|[ ·x×:-]+$/g,'').trim() || reward;
         row.append(element('td','',resourceName));
         row.append(element('td','qty',amount?format(amount):'—'));
+        row.append(element('td','source','Direct'));
         row.append(element('td','cost','—'));
         tbody.append(row);
       }
