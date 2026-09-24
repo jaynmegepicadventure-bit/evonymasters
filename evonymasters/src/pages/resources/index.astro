@@ -84,7 +84,7 @@ const types = [{value:'Regular',label:'Regular'},{value:'Boss',label:'Boss'},{va
       for(const r of matches){
         const row=document.createElement('tr');
         row.append(element('td','',m.type==='Event'?'Event Monster':'Monster'));
-        const detail=element('td');const bossLink=element('a','',m.name);bossLink.href='/bosses/'+m.id+'/';detail.append(bossLink);row.append(detail);
+        const detail=element('td');const displayName=m.level==null?m.name:`${m.name} Lv ${m.level}`;const bossLink=element('a','',displayName);bossLink.href='/bosses/'+m.id+'/';detail.append(bossLink);row.append(detail);
         row.append(element('td','','No'));
         row.append(element('td','',byId.get(r.itemId)?.name || r.itemId));
         row.append(element('td','qty',r.quantity==null?'—':format(r.quantity)+(r.unit?' '+r.unit:'')));
