@@ -5407,69 +5407,6 @@
         "sourceUrl": "https://www.evonytkrguide.com/bosses/phoenix"
       },
       {
-        "itemId": "wood",
-        "quantity": 1000000,
-        "unit": "resources",
-        "kind": "possible",
-        "origin": "boss_chest",
-        "notes": "Listed contents of Lv15 Boss Monster Chest",
-        "sourceUrl": "https://www.evonytkrguide.com/bosses/phoenix"
-      },
-      {
-        "itemId": "gold",
-        "quantity": 300000,
-        "unit": "gold",
-        "kind": "possible",
-        "origin": "boss_chest",
-        "notes": "Listed contents of Lv15 Boss Monster Chest",
-        "sourceUrl": "https://www.evonytkrguide.com/bosses/phoenix"
-      },
-      {
-        "itemId": "large-material-chest",
-        "quantity": 7,
-        "unit": null,
-        "kind": "possible",
-        "origin": "boss_chest",
-        "notes": "Listed contents of Lv15 Boss Monster Chest",
-        "sourceUrl": "https://www.evonytkrguide.com/bosses/phoenix"
-      },
-      {
-        "itemId": "stone",
-        "quantity": 1000000,
-        "unit": "resources",
-        "kind": "possible",
-        "origin": "boss_chest",
-        "notes": "Listed contents of Lv15 Boss Monster Chest",
-        "sourceUrl": "https://www.evonytkrguide.com/bosses/phoenix"
-      },
-      {
-        "itemId": "ore",
-        "quantity": 1000000,
-        "unit": "resources",
-        "kind": "possible",
-        "origin": "boss_chest",
-        "notes": "Listed contents of Lv15 Boss Monster Chest",
-        "sourceUrl": "https://www.evonytkrguide.com/bosses/phoenix"
-      },
-      {
-        "itemId": "food",
-        "quantity": 1000000,
-        "unit": "resources",
-        "kind": "possible",
-        "origin": "boss_chest",
-        "notes": "Listed contents of Lv15 Boss Monster Chest",
-        "sourceUrl": "https://www.evonytkrguide.com/bosses/phoenix"
-      },
-      {
-        "itemId": "speedup",
-        "quantity": 1080,
-        "unit": "minutes",
-        "kind": "possible",
-        "origin": "boss_chest",
-        "notes": "Listed contents of Lv15 Boss Monster Chest",
-        "sourceUrl": "https://www.evonytkrguide.com/bosses/phoenix"
-      },
-      {
         "itemId": "knights-sword",
         "quantity": 1,
         "unit": null,
@@ -5845,6 +5782,69 @@
         "kind": "possible",
         "origin": "other_chest",
         "notes": "Possible content of Achaemenidae Scroll Chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/phoenix"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 1000000,
+        "unit": "resources",
+        "kind": "guaranteed",
+        "origin": "boss_chest",
+        "notes": "Listed contents of Lv15 Boss Monster Chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/phoenix"
+      },
+      {
+        "itemId": "gold",
+        "quantity": 300000,
+        "unit": "gold",
+        "kind": "guaranteed",
+        "origin": "boss_chest",
+        "notes": "Listed contents of Lv15 Boss Monster Chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/phoenix"
+      },
+      {
+        "itemId": "large-material-chest",
+        "quantity": 7,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "boss_chest",
+        "notes": "Listed contents of Lv15 Boss Monster Chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/phoenix"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 1000000,
+        "unit": "resources",
+        "kind": "guaranteed",
+        "origin": "boss_chest",
+        "notes": "Listed contents of Lv15 Boss Monster Chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/phoenix"
+      },
+      {
+        "itemId": "ore",
+        "quantity": 1000000,
+        "unit": "resources",
+        "kind": "guaranteed",
+        "origin": "boss_chest",
+        "notes": "Listed contents of Lv15 Boss Monster Chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/phoenix"
+      },
+      {
+        "itemId": "food",
+        "quantity": 1000000,
+        "unit": "resources",
+        "kind": "guaranteed",
+        "origin": "boss_chest",
+        "notes": "Listed contents of Lv15 Boss Monster Chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/phoenix"
+      },
+      {
+        "itemId": "speedup",
+        "quantity": 1080,
+        "unit": "minutes",
+        "kind": "guaranteed",
+        "origin": "boss_chest",
+        "notes": "Listed contents of Lv15 Boss Monster Chest",
         "sourceUrl": "https://www.evonytkrguide.com/bosses/phoenix"
       }
     ]
@@ -6371,6 +6371,69 @@
         "origin": "other_chest",
         "notes": "Possible content of Treasure Box",
         "sourceUrl": "https://www.evonytkrguide.com/bosses/jormungandr"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 1500000,
+        "unit": "resources",
+        "kind": "guaranteed",
+        "origin": "boss_chest",
+        "notes": "Listed contents of Lv16 Boss Monster Chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/jormungandr"
+      },
+      {
+        "itemId": "gold",
+        "quantity": 400000,
+        "unit": "gold",
+        "kind": "guaranteed",
+        "origin": "boss_chest",
+        "notes": "Listed contents of Lv16 Boss Monster Chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/jormungandr"
+      },
+      {
+        "itemId": "large-material-chest",
+        "quantity": 8,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "boss_chest",
+        "notes": "Listed contents of Lv16 Boss Monster Chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/jormungandr"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 1500000,
+        "unit": "resources",
+        "kind": "guaranteed",
+        "origin": "boss_chest",
+        "notes": "Listed contents of Lv16 Boss Monster Chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/jormungandr"
+      },
+      {
+        "itemId": "ore",
+        "quantity": 1500000,
+        "unit": "resources",
+        "kind": "guaranteed",
+        "origin": "boss_chest",
+        "notes": "Listed contents of Lv16 Boss Monster Chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/jormungandr"
+      },
+      {
+        "itemId": "food",
+        "quantity": 1500000,
+        "unit": "resources",
+        "kind": "guaranteed",
+        "origin": "boss_chest",
+        "notes": "Listed contents of Lv16 Boss Monster Chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/jormungandr"
+      },
+      {
+        "itemId": "speedup",
+        "quantity": 24,
+        "unit": "hours",
+        "kind": "guaranteed",
+        "origin": "boss_chest",
+        "notes": "Listed contents of Lv16 Boss Monster Chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/jormungandr"
       }
     ]
   },
@@ -6379,8 +6442,8 @@
     "name": "Typhon",
     "type": "Boss",
     "level": 17,
-    "power": null,
-    "stamina": null,
+    "power": 551800000,
+    "stamina": 50,
     "image": null,
     "event": null,
     "updatedAt": "2026-09-24",
@@ -6895,6 +6958,69 @@
         "kind": "possible",
         "origin": "other_chest",
         "notes": "Possible content of Treasure Box",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/typhon"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 2000000,
+        "unit": "resources",
+        "kind": "guaranteed",
+        "origin": "boss_chest",
+        "notes": "Listed contents of Lv17 Boss Monster Chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/typhon"
+      },
+      {
+        "itemId": "gold",
+        "quantity": 500000,
+        "unit": "gold",
+        "kind": "guaranteed",
+        "origin": "boss_chest",
+        "notes": "Listed contents of Lv17 Boss Monster Chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/typhon"
+      },
+      {
+        "itemId": "large-material-chest",
+        "quantity": 9,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "boss_chest",
+        "notes": "Listed contents of Lv17 Boss Monster Chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/typhon"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 2000000,
+        "unit": "resources",
+        "kind": "guaranteed",
+        "origin": "boss_chest",
+        "notes": "Listed contents of Lv17 Boss Monster Chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/typhon"
+      },
+      {
+        "itemId": "ore",
+        "quantity": 2000000,
+        "unit": "resources",
+        "kind": "guaranteed",
+        "origin": "boss_chest",
+        "notes": "Listed contents of Lv17 Boss Monster Chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/typhon"
+      },
+      {
+        "itemId": "food",
+        "quantity": 2000000,
+        "unit": "resources",
+        "kind": "guaranteed",
+        "origin": "boss_chest",
+        "notes": "Listed contents of Lv17 Boss Monster Chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/typhon"
+      },
+      {
+        "itemId": "speedup",
+        "quantity": 27,
+        "unit": "hours",
+        "kind": "guaranteed",
+        "origin": "boss_chest",
+        "notes": "Listed contents of Lv17 Boss Monster Chest",
         "sourceUrl": "https://www.evonytkrguide.com/bosses/typhon"
       }
     ]
