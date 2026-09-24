@@ -12,7 +12,7 @@ const types = [{value:'Regular',label:'Regular'},{value:'Boss',label:'Boss'},{va
 </style></head><body>
 <SiteHeader active="resources" />
 <main><section class="hero"><div class="wrap"><div class="eyebrow"><a href="/">Player tools</a> / Resource Finder</div><h1>Find the resource you are missing</h1><p class="intro">Search monsters and events by the resource or reward you need. Find where it drops or which event offers it.</p>
-<div class="panel"><div class="filters"><div><label for="query">Find your resource</label><input id="query" type="search" placeholder="Search monsters, events, resources or rewards…" list="suggestions" autocomplete="off"/><datalist id="suggestions"></datalist></div><div><label for="type">Type</label><select id="type"><option value="">All types</option>{types.map(type=><option value={type.value}>{type.label}</option>)}</select></div><div><label for="sort">Sort by</label><select id="sort"><option value="name">Name A–Z</option><option value="stamina">Lowest stamina</option><option value="power">Lowest power</option></select></div></div><p class="note">Search for the actual items, including recorded boss-chest contents and event rewards. Event rewards may depend on purchases, exchanges, milestones or chance; check the event requirements.</p></div></div></section>
+<div class="panel"><div class="filters"><div><label for="query">Find your resource</label><input id="query" type="search" placeholder="Search monsters, events, resources or rewards…" list="suggestions" autocomplete="off"/><datalist id="suggestions"></datalist></div><div><label for="type">Type</label><select id="type"><option value="">All types</option>{types.map(type=><option value={type.value}>{type.label}</option>)}</select></div><div><label for="sort">Sort by</label><select id="sort"><option value="amount">Largest amount</option><option value="name">Name A–Z</option><option value="stamina">Lowest stamina</option><option value="power">Lowest power</option></select></div></div><p class="note">Search for the actual items, including recorded boss-chest contents and event rewards. Event rewards may depend on purchases, exchanges, milestones or chance; check the event requirements.</p></div></div></section>
 <section class="wrap" aria-live="polite"><div class="results-head"><h2>Resource results</h2><span id="count" class="meta"></span></div><div id="results" class="grid"></div><div id="empty" class="empty" hidden><strong>No matching results</strong><span id="empty-text">Try another resource, reward, monster or event.</span></div></section></main>
 <footer><div class="wrap">evonymasters is an independent fan project and is not affiliated with or endorsed by the game publisher. Monster data may change with game updates.</div></footer>
 <script id="monster-data" type="application/json" set:html={JSON.stringify({monsters,items,events}).replace(/</g, "\\u003c")} />
@@ -32,20 +32,38 @@ const types = [{value:'Regular',label:'Regular'},{value:'Boss',label:'Boss'},{va
   const eventMatches = (e,term) => !term || [e.name,...eventRewards(e)].some(x=>x.toLocaleLowerCase().includes(term));
   const format = n => n == null ? 'Not verified' : new Intl.NumberFormat('en-US').format(n);
   function element(tag, className, value) { const el = document.createElement(tag); if(className) el.className=className; if(value != null) el.textContent=value; return el; }
-  function rewards(container, monster, kind) {
-    const title = element('p', 'reward-title '+(kind==='guaranteed'?'guaranteed':'possible'), kind==='guaranteed'?'Guaranteed rewards':'Possible drops');
+  const normalize = value => value.toLocaleLowerCase().trim().replace(/s\\b/g,'');
+  const rewardMatches = (r, term) => {
+    if(!term) return true;
+    const label=byId.get(r.itemId)?.name || r.itemId;
+    return normalize(label+' '+r.itemId).includes(normalize(term));
+  };
+  const matchingMonsterRewards = (monster, term) => monster.rewards.filter(r=>rewardMatches(r,term));
+  const rewardAmount = r => Number(r.quantity) || 0;
+  const textAmount = value => {
+    const match=value.replace(/,/g,'').match(/(?:x|×|·)?\\s*(\\d+(?:\\.\\d+)?)\\s*([KMB])?/i);
+    if(!match)return 0;
+    const mult={K:1e3,M:1e6,B:1e9}[match[2]?.toUpperCase()]||1;
+    return Number(match[1])*mult;
+  };
+  function rewards(container, monster, kind, term) {
+    const matches = monster.rewards.filter(r=>r.kind===kind && rewardMatches(r,term));
+    if(!matches.length) return;
+    const title = element('p', 'reward-title '+(kind==='guaranteed'?'guaranteed':'possible'), kind==='guaranteed'?'Guaranteed reward':'Matching drop');
     container.append(title);
     const list = element('div','reward-list');
-    const matches = monster.rewards.filter(r=>r.kind===kind);
-    if(!matches.length) list.append(element('span','meta','None verified'));
-    for(const r of matches){const label=byId.get(r.itemId)?.name || r.itemId;const isChest=/^lv\d+-boss-monster-chest$/.test(r.itemId);const reward=element(isChest?'a':'span','reward',`${label}${r.quantity == null?'':` · ${format(r.quantity)}${r.unit?' '+r.unit:''}`}${r.origin==='boss_chest'?' · from boss chest':r.origin==='other_chest'?' · from special chest':''}${r.notes&&r.notes!=='Included when the boss chest is obtained and opened'?' · '+r.notes:''}`);if(isChest)reward.href='/items/'+r.itemId+'/';list.append(reward);}
+    for(const r of matches){const label=byId.get(r.itemId)?.name || r.itemId;const isChest=/^lv\\d+-boss-monster-chest$/.test(r.itemId);const reward=element(isChest?'a':'span','reward',`${label}${r.quantity == null?'':` · ${format(r.quantity)}${r.unit?' '+r.unit:''}`}${r.origin==='boss_chest'?' · from boss chest':r.origin==='other_chest'?' · from special chest':''}${r.notes&&r.notes!=='Included when the boss chest is obtained and opened'?' · '+r.notes:''}`);if(isChest)reward.href='/items/'+r.itemId+'/';list.append(reward);}
     container.append(list);
   }
   function render(){
     const monsterType=type.value==='Event Activity'?'__none__':type.value;
-    const filtered=type.value==='Event Activity'?[]:searchMonsters(monsters,{query:query.value,item:'',type:monsterType,sort:sort.value,items});
+    let filtered=type.value==='Event Activity'?[]:searchMonsters(monsters,{query:query.value,item:'',type:monsterType,sort:sort.value==='amount'?'name':sort.value,items});
     const term=query.value.trim().toLocaleLowerCase();
-    const matchingEvents=(type.value===''||type.value==='Event Activity')?events.filter(e=>eventMatches(e,term)).sort((a,b)=>a.name.localeCompare(b.name)):[];
+    let matchingEvents=(type.value===''||type.value==='Event Activity')?events.filter(e=>eventMatches(e,term)):[];
+    if(sort.value==='amount'){
+      filtered.sort((a,b)=>Math.max(0,...matchingMonsterRewards(b,term).map(rewardAmount))-Math.max(0,...matchingMonsterRewards(a,term).map(rewardAmount)) || a.name.localeCompare(b.name));
+      matchingEvents.sort((a,b)=>Math.max(0,...eventRewards(b).filter(x=>!term||normalize(x).includes(normalize(term))).map(textAmount))-Math.max(0,...eventRewards(a).filter(x=>!term||normalize(x).includes(normalize(term))).map(textAmount)) || a.name.localeCompare(b.name));
+    }else matchingEvents.sort((a,b)=>a.name.localeCompare(b.name));
     const total=filtered.length+matchingEvents.length;
     results.replaceChildren(); count.textContent=`${total} result${total===1?'':'s'}`;
     empty.hidden=total>0; emptyText.textContent='Try a different keyword, reward or type.';
@@ -54,14 +72,14 @@ const types = [{value:'Regular',label:'Regular'},{value:'Boss',label:'Boss'},{va
       if(m.image){const img=element('img','monster-img');img.src=m.image;img.alt=`${m.name} monster`;img.loading='lazy';top.append(img);}else{const placeholder=element('div','monster-img','⚔');placeholder.setAttribute('aria-label','Monster image not yet available');top.append(placeholder);}
       const info=element('div');const heading=element('h3');const bossLink=element('a','',m.name);bossLink.href='/bosses/'+m.id+'/';heading.append(bossLink);info.append(heading,element('div','meta',`${m.type}${m.level==null?'':' · Level '+m.level}${m.event?' · '+m.event:''}`));
       const stats=element('div','stats');stats.append(element('span','pill','Stamina: '+format(m.stamina)),element('span','pill','Power: '+format(m.power)));info.append(stats);top.append(info);card.append(top);
-      const body=element('div','card-body');rewards(body,m,'guaranteed');rewards(body,m,'possible');if(m.verification){const v=element('p','note',m.verification.inGameVerified?'Verified in game':'Guide-sourced · Not yet verified in game');body.append(v);}card.append(body);results.append(card);
+      const body=element('div','card-body');rewards(body,m,'guaranteed',term);rewards(body,m,'possible',term);if(m.verification){const v=element('p','note',m.verification.inGameVerified?'Verified in game':'Guide-sourced · Not yet verified in game');body.append(v);}card.append(body);results.append(card);
     }
     for(const e of matchingEvents){
       const card=element('article','card');const top=element('div','card-top');
       const placeholder=element('div','monster-img','🎁');placeholder.setAttribute('aria-label','Event reward');top.append(placeholder);
       const info=element('div');const heading=element('h3');const link=element('a','',e.name);link.href='/events/?q='+encodeURIComponent(query.value.trim()||e.name);heading.append(link);info.append(heading,element('div','meta','Event'));top.append(info);card.append(top);
       const body=element('div','card-body');body.append(element('p','reward-title possible','Event rewards'));
-      const list=element('div','reward-list');for(const reward of eventRewards(e))list.append(element('span','reward',reward));body.append(list);
+      const list=element('div','reward-list');for(const reward of eventRewards(e).filter(x=>!term||normalize(x).includes(normalize(term))))list.append(element('span','reward',reward));body.append(list);
       if(e.notes)body.append(element('p','note',e.notes));card.append(body);results.append(card);
     }
   }
