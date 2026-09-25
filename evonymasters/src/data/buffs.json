@@ -23,7 +23,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/minamoto-no-yoshitsune",
-    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Assault | Bash | Battle of Dan-no-ura"
+    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Assault | Bash | Battle of Dan-no-ura",
+    "generalType": "Ranged",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -49,7 +54,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/minamoto-no-yoshitsune",
-    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Assault | Bash | Battle of Dan-no-ura"
+    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Assault | Bash | Battle of Dan-no-ura",
+    "generalType": "Ranged",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -75,7 +85,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/minamoto-no-yoshitsune",
-    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Assault | Bash | Battle of Dan-no-ura"
+    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Assault | Bash | Battle of Dan-no-ura",
+    "generalType": "Ranged",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -101,7 +116,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/minamoto-no-yoshitsune",
-    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Assault | Bash | Battle of Dan-no-ura"
+    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Assault | Bash | Battle of Dan-no-ura",
+    "generalType": "Ranged",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -127,7 +147,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/simeon-the-great",
-    "notes": "Specialties: Siege | Ranged Troop Formation | War God | Battle of Achelous"
+    "notes": "Specialties: Siege | Ranged Troop Formation | War God | Battle of Achelous",
+    "generalType": "Attacking Ranged",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -153,7 +178,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/simeon-the-great",
-    "notes": "Specialties: Siege | Ranged Troop Formation | War God | Battle of Achelous"
+    "notes": "Specialties: Siege | Ranged Troop Formation | War God | Battle of Achelous",
+    "generalType": "Attacking Ranged",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -179,7 +209,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/simeon-the-great",
-    "notes": "Specialties: Siege | Ranged Troop Formation | War God | Battle of Achelous"
+    "notes": "Specialties: Siege | Ranged Troop Formation | War God | Battle of Achelous",
+    "generalType": "Attacking Ranged",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -205,7 +240,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/simeon-the-great",
-    "notes": "Specialties: Siege | Ranged Troop Formation | War God | Battle of Achelous"
+    "notes": "Specialties: Siege | Ranged Troop Formation | War God | Battle of Achelous",
+    "generalType": "Attacking Ranged",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -231,7 +271,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alfred-the-great",
-    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Formation | Battle of Edington"
+    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Formation | Battle of Edington",
+    "generalType": "Attacking Ranged",
+    "leadership": 880,
+    "attack": 842,
+    "defense": 866,
+    "politics": 836
   },
   {
     "type": "General",
@@ -257,7 +302,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alfred-the-great",
-    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Formation | Battle of Edington"
+    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Formation | Battle of Edington",
+    "generalType": "Attacking Ranged",
+    "leadership": 880,
+    "attack": 842,
+    "defense": 866,
+    "politics": 836
   },
   {
     "type": "General",
@@ -283,7 +333,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alfred-the-great",
-    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Formation | Battle of Edington"
+    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Formation | Battle of Edington",
+    "generalType": "Attacking Ranged",
+    "leadership": 880,
+    "attack": 842,
+    "defense": 866,
+    "politics": 836
   },
   {
     "type": "General",
@@ -309,7 +364,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alfred-the-great",
-    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Formation | Battle of Edington"
+    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Formation | Battle of Edington",
+    "generalType": "Attacking Ranged",
+    "leadership": 880,
+    "attack": 842,
+    "defense": 866,
+    "politics": 836
   },
   {
     "type": "General",
@@ -335,7 +395,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alfred-the-great",
-    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Formation | Battle of Edington"
+    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Formation | Battle of Edington",
+    "generalType": "Attacking Ranged",
+    "leadership": 880,
+    "attack": 842,
+    "defense": 866,
+    "politics": 836
   },
   {
     "type": "General",
@@ -361,7 +426,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/princess-kaguya",
-    "notes": "Specialties: Siege | Ranged Troop Formation | War God | The Tale of the Bamboo Cutter"
+    "notes": "Specialties: Siege | Ranged Troop Formation | War God | The Tale of the Bamboo Cutter",
+    "generalType": "Attacking Ranged, Siege",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -387,7 +457,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/princess-kaguya",
-    "notes": "Specialties: Siege | Ranged Troop Formation | War God | The Tale of the Bamboo Cutter"
+    "notes": "Specialties: Siege | Ranged Troop Formation | War God | The Tale of the Bamboo Cutter",
+    "generalType": "Attacking Ranged, Siege",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -413,7 +488,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/princess-kaguya",
-    "notes": "Specialties: Siege | Ranged Troop Formation | War God | The Tale of the Bamboo Cutter"
+    "notes": "Specialties: Siege | Ranged Troop Formation | War God | The Tale of the Bamboo Cutter",
+    "generalType": "Attacking Ranged, Siege",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -439,7 +519,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/princess-kaguya",
-    "notes": "Specialties: Siege | Ranged Troop Formation | War God | The Tale of the Bamboo Cutter"
+    "notes": "Specialties: Siege | Ranged Troop Formation | War God | The Tale of the Bamboo Cutter",
+    "generalType": "Attacking Ranged, Siege",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -465,7 +550,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/princess-kaguya",
-    "notes": "Specialties: Siege | Ranged Troop Formation | War God | The Tale of the Bamboo Cutter"
+    "notes": "Specialties: Siege | Ranged Troop Formation | War God | The Tale of the Bamboo Cutter",
+    "generalType": "Attacking Ranged, Siege",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -491,7 +581,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/princess-kaguya",
-    "notes": "Specialties: Siege | Ranged Troop Formation | War God | The Tale of the Bamboo Cutter"
+    "notes": "Specialties: Siege | Ranged Troop Formation | War God | The Tale of the Bamboo Cutter",
+    "generalType": "Attacking Ranged, Siege",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -517,7 +612,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/elektra",
-    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Assault | Holy Knight"
+    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Assault | Holy Knight",
+    "generalType": "Attacking Ranged, Mounted",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -543,7 +643,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/elektra",
-    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Assault | Holy Knight"
+    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Assault | Holy Knight",
+    "generalType": "Attacking Ranged, Mounted",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -569,7 +674,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/elektra",
-    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Assault | Holy Knight"
+    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Assault | Holy Knight",
+    "generalType": "Attacking Ranged, Mounted",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -595,7 +705,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/elektra",
-    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Assault | Holy Knight"
+    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Assault | Holy Knight",
+    "generalType": "Attacking Ranged, Mounted",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -621,7 +736,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/elektra",
-    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Assault | Holy Knight"
+    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Assault | Holy Knight",
+    "generalType": "Attacking Ranged, Mounted",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -647,7 +767,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/elektra",
-    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Assault | Holy Knight"
+    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Assault | Holy Knight",
+    "generalType": "Attacking Ranged, Mounted",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -673,7 +798,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/zachary-taylor",
-    "notes": "Specialties: Ranged Troop Assault | Ambush | War God | Battle of Buena Vista"
+    "notes": "Specialties: Ranged Troop Assault | Ambush | War God | Battle of Buena Vista",
+    "generalType": "Defending Ranged, Siege",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -699,7 +829,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/zachary-taylor",
-    "notes": "Specialties: Ranged Troop Assault | Ambush | War God | Battle of Buena Vista"
+    "notes": "Specialties: Ranged Troop Assault | Ambush | War God | Battle of Buena Vista",
+    "generalType": "Defending Ranged, Siege",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -725,7 +860,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/zachary-taylor",
-    "notes": "Specialties: Ranged Troop Assault | Ambush | War God | Battle of Buena Vista"
+    "notes": "Specialties: Ranged Troop Assault | Ambush | War God | Battle of Buena Vista",
+    "generalType": "Defending Ranged, Siege",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -751,7 +891,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/zachary-taylor",
-    "notes": "Specialties: Ranged Troop Assault | Ambush | War God | Battle of Buena Vista"
+    "notes": "Specialties: Ranged Troop Assault | Ambush | War God | Battle of Buena Vista",
+    "generalType": "Defending Ranged, Siege",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -777,7 +922,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/zachary-taylor",
-    "notes": "Specialties: Ranged Troop Assault | Ambush | War God | Battle of Buena Vista"
+    "notes": "Specialties: Ranged Troop Assault | Ambush | War God | Battle of Buena Vista",
+    "generalType": "Defending Ranged, Siege",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -803,7 +953,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/ly-thuong-kiet",
-    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Formation | Fortification | Battle at the Nhu Nguyet River"
+    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Formation | Fortification | Battle at the Nhu Nguyet River",
+    "generalType": "Defending Ranged",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -829,7 +984,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/ly-thuong-kiet",
-    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Formation | Fortification | Battle at the Nhu Nguyet River"
+    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Formation | Fortification | Battle at the Nhu Nguyet River",
+    "generalType": "Defending Ranged",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -855,7 +1015,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/ly-thuong-kiet",
-    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Formation | Fortification | Battle at the Nhu Nguyet River"
+    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Formation | Fortification | Battle at the Nhu Nguyet River",
+    "generalType": "Defending Ranged",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -881,7 +1046,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/ly-thuong-kiet",
-    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Formation | Fortification | Battle at the Nhu Nguyet River"
+    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Formation | Fortification | Battle at the Nhu Nguyet River",
+    "generalType": "Defending Ranged",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -907,7 +1077,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/ly-thuong-kiet",
-    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Formation | Fortification | Battle at the Nhu Nguyet River"
+    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Formation | Fortification | Battle at the Nhu Nguyet River",
+    "generalType": "Defending Ranged",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -933,7 +1108,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/edward-the-black-prince",
-    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Assault | Suppress | Battle of Poitiers"
+    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Assault | Suppress | Battle of Poitiers",
+    "generalType": "Ranged",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -959,7 +1139,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/edward-the-black-prince",
-    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Assault | Suppress | Battle of Poitiers"
+    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Assault | Suppress | Battle of Poitiers",
+    "generalType": "Ranged",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -985,7 +1170,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/edward-the-black-prince",
-    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Assault | Suppress | Battle of Poitiers"
+    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Assault | Suppress | Battle of Poitiers",
+    "generalType": "Ranged",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -1011,7 +1201,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/edward-the-black-prince",
-    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Assault | Suppress | Battle of Poitiers"
+    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Assault | Suppress | Battle of Poitiers",
+    "generalType": "Ranged",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -1037,7 +1232,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/edward-the-black-prince",
-    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Assault | Suppress | Battle of Poitiers"
+    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Assault | Suppress | Battle of Poitiers",
+    "generalType": "Ranged",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -1063,7 +1263,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/gwanggaeto-the-great",
-    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Formation | Gwanggaeto the Great"
+    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Formation | Gwanggaeto the Great",
+    "generalType": "Ranged, Siege",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -1089,7 +1294,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/gwanggaeto-the-great",
-    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Formation | Gwanggaeto the Great"
+    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Formation | Gwanggaeto the Great",
+    "generalType": "Ranged, Siege",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -1115,7 +1325,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/gwanggaeto-the-great",
-    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Formation | Gwanggaeto the Great"
+    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Formation | Gwanggaeto the Great",
+    "generalType": "Ranged, Siege",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -1141,7 +1356,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/gwanggaeto-the-great",
-    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Formation | Gwanggaeto the Great"
+    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Formation | Gwanggaeto the Great",
+    "generalType": "Ranged, Siege",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -1167,7 +1387,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/gwanggaeto-the-great",
-    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Formation | Gwanggaeto the Great"
+    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Formation | Gwanggaeto the Great",
+    "generalType": "Ranged, Siege",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -1193,7 +1418,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/gwanggaeto-the-great",
-    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Formation | Gwanggaeto the Great"
+    "notes": "Specialties: Siege | Ranged Troop Ares | Ranged Troop Formation | Gwanggaeto the Great",
+    "generalType": "Ranged, Siege",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -1219,7 +1449,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/dmitry",
-    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Formation | Snipe | Battle of Kulikovo"
+    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Formation | Snipe | Battle of Kulikovo",
+    "generalType": "Reinforcing Ranged, Ground",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -1245,7 +1480,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/dmitry",
-    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Formation | Snipe | Battle of Kulikovo"
+    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Formation | Snipe | Battle of Kulikovo",
+    "generalType": "Reinforcing Ranged, Ground",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -1271,7 +1511,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/dmitry",
-    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Formation | Snipe | Battle of Kulikovo"
+    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Formation | Snipe | Battle of Kulikovo",
+    "generalType": "Reinforcing Ranged, Ground",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -1297,7 +1542,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/dmitry",
-    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Formation | Snipe | Battle of Kulikovo"
+    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Formation | Snipe | Battle of Kulikovo",
+    "generalType": "Reinforcing Ranged, Ground",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -1323,7 +1573,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/dmitry",
-    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Formation | Snipe | Battle of Kulikovo"
+    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Formation | Snipe | Battle of Kulikovo",
+    "generalType": "Reinforcing Ranged, Ground",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -1349,7 +1604,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/dmitry",
-    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Formation | Snipe | Battle of Kulikovo"
+    "notes": "Specialties: Ranged Troop Ares | Ranged Troop Formation | Snipe | Battle of Kulikovo",
+    "generalType": "Reinforcing Ranged, Ground",
+    "leadership": null,
+    "attack": null,
+    "defense": null,
+    "politics": null
   },
   {
     "type": "General",
@@ -1375,7 +1635,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/abd-al-rahman-i",
-    "notes": "Specialties: Ground Troop Assault | Trapping | Sage | Conquest of Spain; Special skill: Increases ground troops' attack, defense and HP by 5%, and ground troops' training speed by 20% when General is the Barracks Officer."
+    "notes": "Specialties: Ground Troop Assault | Trapping | Sage | Conquest of Spain; Special skill: Increases ground troops' attack, defense and HP by 5%, and ground troops' training speed by 20% when General is the Barracks Officer.",
+    "generalType": "Ground",
+    "leadership": 857,
+    "attack": 803,
+    "defense": 850,
+    "politics": 848
   },
   {
     "type": "General",
@@ -1401,7 +1666,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/abd-al-rahman-i",
-    "notes": "Specialties: Ground Troop Assault | Trapping | Sage | Conquest of Spain; Special skill: Increases ground troops' attack, defense and HP by 5%, and ground troops' training speed by 20% when General is the Barracks Officer."
+    "notes": "Specialties: Ground Troop Assault | Trapping | Sage | Conquest of Spain; Special skill: Increases ground troops' attack, defense and HP by 5%, and ground troops' training speed by 20% when General is the Barracks Officer.",
+    "generalType": "Ground",
+    "leadership": 857,
+    "attack": 803,
+    "defense": 850,
+    "politics": 848
   },
   {
     "type": "General",
@@ -1427,7 +1697,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/abd-al-rahman-i",
-    "notes": "Specialties: Ground Troop Assault | Trapping | Sage | Conquest of Spain; Special skill: Increases ground troops' attack, defense and HP by 5%, and ground troops' training speed by 20% when General is the Barracks Officer."
+    "notes": "Specialties: Ground Troop Assault | Trapping | Sage | Conquest of Spain; Special skill: Increases ground troops' attack, defense and HP by 5%, and ground troops' training speed by 20% when General is the Barracks Officer.",
+    "generalType": "Ground",
+    "leadership": 857,
+    "attack": 803,
+    "defense": 850,
+    "politics": 848
   },
   {
     "type": "General",
@@ -1453,7 +1728,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/abd-al-rahman-i",
-    "notes": "Specialties: Ground Troop Assault | Trapping | Sage | Conquest of Spain; Special skill: Increases ground troops' attack, defense and HP by 5%, and ground troops' training speed by 20% when General is the Barracks Officer."
+    "notes": "Specialties: Ground Troop Assault | Trapping | Sage | Conquest of Spain; Special skill: Increases ground troops' attack, defense and HP by 5%, and ground troops' training speed by 20% when General is the Barracks Officer.",
+    "generalType": "Ground",
+    "leadership": 857,
+    "attack": 803,
+    "defense": 850,
+    "politics": 848
   },
   {
     "type": "General",
@@ -1479,7 +1759,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/abd-al-rahman-i",
-    "notes": "Specialties: Ground Troop Assault | Trapping | Sage | Conquest of Spain; Special skill: Increases ground troops' attack, defense and HP by 5%, and ground troops' training speed by 20% when General is the Barracks Officer."
+    "notes": "Specialties: Ground Troop Assault | Trapping | Sage | Conquest of Spain; Special skill: Increases ground troops' attack, defense and HP by 5%, and ground troops' training speed by 20% when General is the Barracks Officer.",
+    "generalType": "Ground",
+    "leadership": 857,
+    "attack": 803,
+    "defense": 850,
+    "politics": 848
   },
   {
     "type": "General",
@@ -1505,7 +1790,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/abd-al-rahman-i",
-    "notes": "Specialties: Ground Troop Assault | Trapping | Sage | Conquest of Spain; Special skill: Increases ground troops' attack, defense and HP by 5%, and ground troops' training speed by 20% when General is the Barracks Officer."
+    "notes": "Specialties: Ground Troop Assault | Trapping | Sage | Conquest of Spain; Special skill: Increases ground troops' attack, defense and HP by 5%, and ground troops' training speed by 20% when General is the Barracks Officer.",
+    "generalType": "Ground",
+    "leadership": 857,
+    "attack": 803,
+    "defense": 850,
+    "politics": 848
   },
   {
     "type": "General",
@@ -1531,7 +1821,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/abd-al-rahman-i",
-    "notes": "Specialties: Ground Troop Assault | Trapping | Sage | Conquest of Spain; Special skill: Increases ground troops' attack, defense and HP by 5%, and ground troops' training speed by 20% when General is the Barracks Officer."
+    "notes": "Specialties: Ground Troop Assault | Trapping | Sage | Conquest of Spain; Special skill: Increases ground troops' attack, defense and HP by 5%, and ground troops' training speed by 20% when General is the Barracks Officer.",
+    "generalType": "Ground",
+    "leadership": 857,
+    "attack": 803,
+    "defense": 850,
+    "politics": 848
   },
   {
     "type": "General",
@@ -1557,7 +1852,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/aethelflaed",
-    "notes": "Specialties: Mounted Troop Ares | Hunter | Fortune | Lord of the Mercians; Special skill: Increases mounted troops' attack and defense by 55% when General is leading the army to attack Monsters."
+    "notes": "Specialties: Mounted Troop Ares | Hunter | Fortune | Lord of the Mercians; Special skill: Increases mounted troops' attack and defense by 55% when General is leading the army to attack Monsters.",
+    "generalType": "Monsters, Attacking Mounted, Ground",
+    "leadership": 868,
+    "attack": 849,
+    "defense": 886,
+    "politics": 827
   },
   {
     "type": "General",
@@ -1583,7 +1883,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/aethelflaed",
-    "notes": "Specialties: Mounted Troop Ares | Hunter | Fortune | Lord of the Mercians; Special skill: Increases mounted troops' attack and defense by 55% when General is leading the army to attack Monsters."
+    "notes": "Specialties: Mounted Troop Ares | Hunter | Fortune | Lord of the Mercians; Special skill: Increases mounted troops' attack and defense by 55% when General is leading the army to attack Monsters.",
+    "generalType": "Monsters, Attacking Mounted, Ground",
+    "leadership": 868,
+    "attack": 849,
+    "defense": 886,
+    "politics": 827
   },
   {
     "type": "General",
@@ -1609,7 +1914,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/aethelflaed",
-    "notes": "Specialties: Mounted Troop Ares | Hunter | Fortune | Lord of the Mercians; Special skill: Increases mounted troops' attack and defense by 55% when General is leading the army to attack Monsters."
+    "notes": "Specialties: Mounted Troop Ares | Hunter | Fortune | Lord of the Mercians; Special skill: Increases mounted troops' attack and defense by 55% when General is leading the army to attack Monsters.",
+    "generalType": "Monsters, Attacking Mounted, Ground",
+    "leadership": 868,
+    "attack": 849,
+    "defense": 886,
+    "politics": 827
   },
   {
     "type": "General",
@@ -1635,7 +1945,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/aethelflaed",
-    "notes": "Specialties: Mounted Troop Ares | Hunter | Fortune | Lord of the Mercians; Special skill: Increases mounted troops' attack and defense by 55% when General is leading the army to attack Monsters."
+    "notes": "Specialties: Mounted Troop Ares | Hunter | Fortune | Lord of the Mercians; Special skill: Increases mounted troops' attack and defense by 55% when General is leading the army to attack Monsters.",
+    "generalType": "Monsters, Attacking Mounted, Ground",
+    "leadership": 868,
+    "attack": 849,
+    "defense": 886,
+    "politics": 827
   },
   {
     "type": "General",
@@ -1661,7 +1976,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/aethelflaed",
-    "notes": "Specialties: Mounted Troop Ares | Hunter | Fortune | Lord of the Mercians; Special skill: Increases mounted troops' attack and defense by 55% when General is leading the army to attack Monsters."
+    "notes": "Specialties: Mounted Troop Ares | Hunter | Fortune | Lord of the Mercians; Special skill: Increases mounted troops' attack and defense by 55% when General is leading the army to attack Monsters.",
+    "generalType": "Monsters, Attacking Mounted, Ground",
+    "leadership": 868,
+    "attack": 849,
+    "defense": 886,
+    "politics": 827
   },
   {
     "type": "General",
@@ -1687,7 +2007,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/aethelflaed",
-    "notes": "Specialties: Mounted Troop Ares | Hunter | Fortune | Lord of the Mercians; Special skill: Increases mounted troops' attack and defense by 55% when General is leading the army to attack Monsters."
+    "notes": "Specialties: Mounted Troop Ares | Hunter | Fortune | Lord of the Mercians; Special skill: Increases mounted troops' attack and defense by 55% when General is leading the army to attack Monsters.",
+    "generalType": "Monsters, Attacking Mounted, Ground",
+    "leadership": 868,
+    "attack": 849,
+    "defense": 886,
+    "politics": 827
   },
   {
     "type": "General",
@@ -1713,7 +2038,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/aethelflaed",
-    "notes": "Specialties: Mounted Troop Ares | Hunter | Fortune | Lord of the Mercians; Special skill: Increases mounted troops' attack and defense by 55% when General is leading the army to attack Monsters."
+    "notes": "Specialties: Mounted Troop Ares | Hunter | Fortune | Lord of the Mercians; Special skill: Increases mounted troops' attack and defense by 55% when General is leading the army to attack Monsters.",
+    "generalType": "Monsters, Attacking Mounted, Ground",
+    "leadership": 868,
+    "attack": 849,
+    "defense": 886,
+    "politics": 827
   },
   {
     "type": "General",
@@ -1739,7 +2069,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alessandra",
-    "notes": "Specialties: Ground Troop Ares | Ground Troop Defense | Formation | Wild Hunt Valkyrie; Special skill: Increases the March Size by 8% and ground troops' attack and HP by 30% when General is leading the army to attack."
+    "notes": "Specialties: Ground Troop Ares | Ground Troop Defense | Formation | Wild Hunt Valkyrie; Special skill: Increases the March Size by 8% and ground troops' attack and HP by 30% when General is leading the army to attack.",
+    "generalType": "Attacking Ground",
+    "leadership": 872,
+    "attack": 865,
+    "defense": 886,
+    "politics": 828
   },
   {
     "type": "General",
@@ -1765,7 +2100,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alessandra",
-    "notes": "Specialties: Ground Troop Ares | Ground Troop Defense | Formation | Wild Hunt Valkyrie; Special skill: Increases the March Size by 8% and ground troops' attack and HP by 30% when General is leading the army to attack."
+    "notes": "Specialties: Ground Troop Ares | Ground Troop Defense | Formation | Wild Hunt Valkyrie; Special skill: Increases the March Size by 8% and ground troops' attack and HP by 30% when General is leading the army to attack.",
+    "generalType": "Attacking Ground",
+    "leadership": 872,
+    "attack": 865,
+    "defense": 886,
+    "politics": 828
   },
   {
     "type": "General",
@@ -1791,7 +2131,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alessandra",
-    "notes": "Specialties: Ground Troop Ares | Ground Troop Defense | Formation | Wild Hunt Valkyrie; Special skill: Increases the March Size by 8% and ground troops' attack and HP by 30% when General is leading the army to attack."
+    "notes": "Specialties: Ground Troop Ares | Ground Troop Defense | Formation | Wild Hunt Valkyrie; Special skill: Increases the March Size by 8% and ground troops' attack and HP by 30% when General is leading the army to attack.",
+    "generalType": "Attacking Ground",
+    "leadership": 872,
+    "attack": 865,
+    "defense": 886,
+    "politics": 828
   },
   {
     "type": "General",
@@ -1817,7 +2162,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alessandra",
-    "notes": "Specialties: Ground Troop Ares | Ground Troop Defense | Formation | Wild Hunt Valkyrie; Special skill: Increases the March Size by 8% and ground troops' attack and HP by 30% when General is leading the army to attack."
+    "notes": "Specialties: Ground Troop Ares | Ground Troop Defense | Formation | Wild Hunt Valkyrie; Special skill: Increases the March Size by 8% and ground troops' attack and HP by 30% when General is leading the army to attack.",
+    "generalType": "Attacking Ground",
+    "leadership": 872,
+    "attack": 865,
+    "defense": 886,
+    "politics": 828
   },
   {
     "type": "General",
@@ -1843,7 +2193,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alessandra",
-    "notes": "Specialties: Ground Troop Ares | Ground Troop Defense | Formation | Wild Hunt Valkyrie; Special skill: Increases the March Size by 8% and ground troops' attack and HP by 30% when General is leading the army to attack."
+    "notes": "Specialties: Ground Troop Ares | Ground Troop Defense | Formation | Wild Hunt Valkyrie; Special skill: Increases the March Size by 8% and ground troops' attack and HP by 30% when General is leading the army to attack.",
+    "generalType": "Attacking Ground",
+    "leadership": 872,
+    "attack": 865,
+    "defense": 886,
+    "politics": 828
   },
   {
     "type": "General",
@@ -1869,7 +2224,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alexander-nevsky",
-    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle on the Ice; Special skill: Increases your ground troops and mounted troops' defense by 10% and also reduces enemy ranged troops and siege machines' attack by -10% when General is leading the army."
+    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle on the Ice; Special skill: Increases your ground troops and mounted troops' defense by 10% and also reduces enemy ranged troops and siege machines' attack by -10% when General is leading the army.",
+    "generalType": "Ground, Mounted",
+    "leadership": 887,
+    "attack": 809,
+    "defense": 830,
+    "politics": 800
   },
   {
     "type": "General",
@@ -1895,7 +2255,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alexander-nevsky",
-    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle on the Ice; Special skill: Increases your ground troops and mounted troops' defense by 10% and also reduces enemy ranged troops and siege machines' attack by -10% when General is leading the army."
+    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle on the Ice; Special skill: Increases your ground troops and mounted troops' defense by 10% and also reduces enemy ranged troops and siege machines' attack by -10% when General is leading the army.",
+    "generalType": "Ground, Mounted",
+    "leadership": 887,
+    "attack": 809,
+    "defense": 830,
+    "politics": 800
   },
   {
     "type": "General",
@@ -1921,7 +2286,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alexander-nevsky",
-    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle on the Ice; Special skill: Increases your ground troops and mounted troops' defense by 10% and also reduces enemy ranged troops and siege machines' attack by -10% when General is leading the army."
+    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle on the Ice; Special skill: Increases your ground troops and mounted troops' defense by 10% and also reduces enemy ranged troops and siege machines' attack by -10% when General is leading the army.",
+    "generalType": "Ground, Mounted",
+    "leadership": 887,
+    "attack": 809,
+    "defense": 830,
+    "politics": 800
   },
   {
     "type": "General",
@@ -1947,7 +2317,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alexander-nevsky",
-    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle on the Ice; Special skill: Increases your ground troops and mounted troops' defense by 10% and also reduces enemy ranged troops and siege machines' attack by -10% when General is leading the army."
+    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle on the Ice; Special skill: Increases your ground troops and mounted troops' defense by 10% and also reduces enemy ranged troops and siege machines' attack by -10% when General is leading the army.",
+    "generalType": "Ground, Mounted",
+    "leadership": 887,
+    "attack": 809,
+    "defense": 830,
+    "politics": 800
   },
   {
     "type": "General",
@@ -1973,7 +2348,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alexander-nevsky",
-    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle on the Ice; Special skill: Increases your ground troops and mounted troops' defense by 10% and also reduces enemy ranged troops and siege machines' attack by -10% when General is leading the army."
+    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle on the Ice; Special skill: Increases your ground troops and mounted troops' defense by 10% and also reduces enemy ranged troops and siege machines' attack by -10% when General is leading the army.",
+    "generalType": "Ground, Mounted",
+    "leadership": 887,
+    "attack": 809,
+    "defense": 830,
+    "politics": 800
   },
   {
     "type": "General",
@@ -1999,7 +2379,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alexander-nevsky",
-    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle on the Ice; Special skill: Increases your ground troops and mounted troops' defense by 10% and also reduces enemy ranged troops and siege machines' attack by -10% when General is leading the army."
+    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle on the Ice; Special skill: Increases your ground troops and mounted troops' defense by 10% and also reduces enemy ranged troops and siege machines' attack by -10% when General is leading the army.",
+    "generalType": "Ground, Mounted",
+    "leadership": 887,
+    "attack": 809,
+    "defense": 830,
+    "politics": 800
   },
   {
     "type": "General",
@@ -2025,7 +2410,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alexander-nevsky",
-    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle on the Ice; Special skill: Increases your ground troops and mounted troops' defense by 10% and also reduces enemy ranged troops and siege machines' attack by -10% when General is leading the army."
+    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle on the Ice; Special skill: Increases your ground troops and mounted troops' defense by 10% and also reduces enemy ranged troops and siege machines' attack by -10% when General is leading the army.",
+    "generalType": "Ground, Mounted",
+    "leadership": 887,
+    "attack": 809,
+    "defense": 830,
+    "politics": 800
   },
   {
     "type": "General",
@@ -2051,7 +2441,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alexander-nevsky",
-    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle on the Ice; Special skill: Increases your ground troops and mounted troops' defense by 10% and also reduces enemy ranged troops and siege machines' attack by -10% when General is leading the army."
+    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle on the Ice; Special skill: Increases your ground troops and mounted troops' defense by 10% and also reduces enemy ranged troops and siege machines' attack by -10% when General is leading the army.",
+    "generalType": "Ground, Mounted",
+    "leadership": 887,
+    "attack": 809,
+    "defense": 830,
+    "politics": 800
   },
   {
     "type": "General",
@@ -2077,7 +2472,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alexander-suvorov",
-    "notes": "Specialties: Siege Machine Formation | Sabotage | Unparalleled Leader; Special skill: Increases Siege Machine Defense by 35% when General is leading the army."
+    "notes": "Specialties: Siege Machine Formation | Sabotage | Unparalleled Leader; Special skill: Increases Siege Machine Defense by 35% when General is leading the army.",
+    "generalType": "Siege",
+    "leadership": 856,
+    "attack": 757,
+    "defense": 680,
+    "politics": 516
   },
   {
     "type": "General",
@@ -2103,7 +2503,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alexander-suvorov",
-    "notes": "Specialties: Siege Machine Formation | Sabotage | Unparalleled Leader; Special skill: Increases Siege Machine Defense by 35% when General is leading the army."
+    "notes": "Specialties: Siege Machine Formation | Sabotage | Unparalleled Leader; Special skill: Increases Siege Machine Defense by 35% when General is leading the army.",
+    "generalType": "Siege",
+    "leadership": 856,
+    "attack": 757,
+    "defense": 680,
+    "politics": 516
   },
   {
     "type": "General",
@@ -2129,7 +2534,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alexander-suvorov",
-    "notes": "Specialties: Siege Machine Formation | Sabotage | Unparalleled Leader; Special skill: Increases Siege Machine Defense by 35% when General is leading the army."
+    "notes": "Specialties: Siege Machine Formation | Sabotage | Unparalleled Leader; Special skill: Increases Siege Machine Defense by 35% when General is leading the army.",
+    "generalType": "Siege",
+    "leadership": 856,
+    "attack": 757,
+    "defense": 680,
+    "politics": 516
   },
   {
     "type": "General",
@@ -2155,7 +2565,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alexander-suvorov",
-    "notes": "Specialties: Siege Machine Formation | Sabotage | Unparalleled Leader; Special skill: Increases Siege Machine Defense by 35% when General is leading the army."
+    "notes": "Specialties: Siege Machine Formation | Sabotage | Unparalleled Leader; Special skill: Increases Siege Machine Defense by 35% when General is leading the army.",
+    "generalType": "Siege",
+    "leadership": 856,
+    "attack": 757,
+    "defense": 680,
+    "politics": 516
   },
   {
     "type": "General",
@@ -2181,7 +2596,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alexander-the-great",
-    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Annihilation | Battle of Gaugamela; Special skill: Increases ground troops' attack by 20% when General is leading the army to attack. Increases Rally Capacity by 15% when General is leading the army to launch Alliance War."
+    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Annihilation | Battle of Gaugamela; Special skill: Increases ground troops' attack by 20% when General is leading the army to attack. Increases Rally Capacity by 15% when General is leading the army to launch Alliance War.",
+    "generalType": "Attacking Ground",
+    "leadership": 905,
+    "attack": 882,
+    "defense": 848,
+    "politics": 814
   },
   {
     "type": "General",
@@ -2207,7 +2627,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alexander-the-great",
-    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Annihilation | Battle of Gaugamela; Special skill: Increases ground troops' attack by 20% when General is leading the army to attack. Increases Rally Capacity by 15% when General is leading the army to launch Alliance War."
+    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Annihilation | Battle of Gaugamela; Special skill: Increases ground troops' attack by 20% when General is leading the army to attack. Increases Rally Capacity by 15% when General is leading the army to launch Alliance War.",
+    "generalType": "Attacking Ground",
+    "leadership": 905,
+    "attack": 882,
+    "defense": 848,
+    "politics": 814
   },
   {
     "type": "General",
@@ -2233,7 +2658,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alexander-the-great",
-    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Annihilation | Battle of Gaugamela; Special skill: Increases ground troops' attack by 20% when General is leading the army to attack. Increases Rally Capacity by 15% when General is leading the army to launch Alliance War."
+    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Annihilation | Battle of Gaugamela; Special skill: Increases ground troops' attack by 20% when General is leading the army to attack. Increases Rally Capacity by 15% when General is leading the army to launch Alliance War.",
+    "generalType": "Attacking Ground",
+    "leadership": 905,
+    "attack": 882,
+    "defense": 848,
+    "politics": 814
   },
   {
     "type": "General",
@@ -2259,7 +2689,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alexander-the-great",
-    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Annihilation | Battle of Gaugamela; Special skill: Increases ground troops' attack by 20% when General is leading the army to attack. Increases Rally Capacity by 15% when General is leading the army to launch Alliance War."
+    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Annihilation | Battle of Gaugamela; Special skill: Increases ground troops' attack by 20% when General is leading the army to attack. Increases Rally Capacity by 15% when General is leading the army to launch Alliance War.",
+    "generalType": "Attacking Ground",
+    "leadership": 905,
+    "attack": 882,
+    "defense": 848,
+    "politics": 814
   },
   {
     "type": "General",
@@ -2285,7 +2720,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alexander-the-great",
-    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Annihilation | Battle of Gaugamela; Special skill: Increases ground troops' attack by 20% when General is leading the army to attack. Increases Rally Capacity by 15% when General is leading the army to launch Alliance War."
+    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Annihilation | Battle of Gaugamela; Special skill: Increases ground troops' attack by 20% when General is leading the army to attack. Increases Rally Capacity by 15% when General is leading the army to launch Alliance War.",
+    "generalType": "Attacking Ground",
+    "leadership": 905,
+    "attack": 882,
+    "defense": 848,
+    "politics": 814
   },
   {
     "type": "General",
@@ -2311,7 +2751,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/alexander-the-great",
-    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Annihilation | Battle of Gaugamela; Special skill: Increases ground troops' attack by 20% when General is leading the army to attack. Increases Rally Capacity by 15% when General is leading the army to launch Alliance War."
+    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Annihilation | Battle of Gaugamela; Special skill: Increases ground troops' attack by 20% when General is leading the army to attack. Increases Rally Capacity by 15% when General is leading the army to launch Alliance War.",
+    "generalType": "Attacking Ground",
+    "leadership": 905,
+    "attack": 882,
+    "defense": 848,
+    "politics": 814
   },
   {
     "type": "General",
@@ -2337,7 +2782,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/amir-timur",
-    "notes": "Specialties: Ground Troop Assault | Jungle | King's Ambition | Battle of the Terek River; Special skill: Increases Troop Load by 100% when General is leading the army."
+    "notes": "Specialties: Ground Troop Assault | Jungle | King's Ambition | Battle of the Terek River; Special skill: Increases Troop Load by 100% when General is leading the army.",
+    "generalType": "Ground",
+    "leadership": 856,
+    "attack": 826,
+    "defense": 810,
+    "politics": 788
   },
   {
     "type": "General",
@@ -2363,7 +2813,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/amir-timur",
-    "notes": "Specialties: Ground Troop Assault | Jungle | King's Ambition | Battle of the Terek River; Special skill: Increases Troop Load by 100% when General is leading the army."
+    "notes": "Specialties: Ground Troop Assault | Jungle | King's Ambition | Battle of the Terek River; Special skill: Increases Troop Load by 100% when General is leading the army.",
+    "generalType": "Ground",
+    "leadership": 856,
+    "attack": 826,
+    "defense": 810,
+    "politics": 788
   },
   {
     "type": "General",
@@ -2389,7 +2844,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/amir-timur",
-    "notes": "Specialties: Ground Troop Assault | Jungle | King's Ambition | Battle of the Terek River; Special skill: Increases Troop Load by 100% when General is leading the army."
+    "notes": "Specialties: Ground Troop Assault | Jungle | King's Ambition | Battle of the Terek River; Special skill: Increases Troop Load by 100% when General is leading the army.",
+    "generalType": "Ground",
+    "leadership": 856,
+    "attack": 826,
+    "defense": 810,
+    "politics": 788
   },
   {
     "type": "General",
@@ -2415,7 +2875,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/amir-timur",
-    "notes": "Specialties: Ground Troop Assault | Jungle | King's Ambition | Battle of the Terek River; Special skill: Increases Troop Load by 100% when General is leading the army."
+    "notes": "Specialties: Ground Troop Assault | Jungle | King's Ambition | Battle of the Terek River; Special skill: Increases Troop Load by 100% when General is leading the army.",
+    "generalType": "Ground",
+    "leadership": 856,
+    "attack": 826,
+    "defense": 810,
+    "politics": 788
   },
   {
     "type": "General",
@@ -2441,7 +2906,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/amir-timur",
-    "notes": "Specialties: Ground Troop Assault | Jungle | King's Ambition | Battle of the Terek River; Special skill: Increases Troop Load by 100% when General is leading the army."
+    "notes": "Specialties: Ground Troop Assault | Jungle | King's Ambition | Battle of the Terek River; Special skill: Increases Troop Load by 100% when General is leading the army.",
+    "generalType": "Ground",
+    "leadership": 856,
+    "attack": 826,
+    "defense": 810,
+    "politics": 788
   },
   {
     "type": "General",
@@ -2467,7 +2937,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/amir-timur",
-    "notes": "Specialties: Ground Troop Assault | Jungle | King's Ambition | Battle of the Terek River; Special skill: Increases Troop Load by 100% when General is leading the army."
+    "notes": "Specialties: Ground Troop Assault | Jungle | King's Ambition | Battle of the Terek River; Special skill: Increases Troop Load by 100% when General is leading the army.",
+    "generalType": "Ground",
+    "leadership": 856,
+    "attack": 826,
+    "defense": 810,
+    "politics": 788
   },
   {
     "type": "General",
@@ -2493,7 +2968,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/amir-timur",
-    "notes": "Specialties: Ground Troop Assault | Jungle | King's Ambition | Battle of the Terek River; Special skill: Increases Troop Load by 100% when General is leading the army."
+    "notes": "Specialties: Ground Troop Assault | Jungle | King's Ambition | Battle of the Terek River; Special skill: Increases Troop Load by 100% when General is leading the army.",
+    "generalType": "Ground",
+    "leadership": 856,
+    "attack": 826,
+    "defense": 810,
+    "politics": 788
   },
   {
     "type": "General",
@@ -2519,7 +2999,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/amr-ibn-al-as",
-    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Suppress | Siege of Babylon Fortress; Special skill: Reduces enemy ranged troops and siege machines' attack by -15% and enemy ground troops' attack by -25% when General is leading the army."
+    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Suppress | Siege of Babylon Fortress; Special skill: Reduces enemy ranged troops and siege machines' attack by -15% and enemy ground troops' attack by -25% when General is leading the army.",
+    "generalType": "Ground",
+    "leadership": 884,
+    "attack": 820,
+    "defense": 824,
+    "politics": 898
   },
   {
     "type": "General",
@@ -2545,7 +3030,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/amr-ibn-al-as",
-    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Suppress | Siege of Babylon Fortress; Special skill: Reduces enemy ranged troops and siege machines' attack by -15% and enemy ground troops' attack by -25% when General is leading the army."
+    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Suppress | Siege of Babylon Fortress; Special skill: Reduces enemy ranged troops and siege machines' attack by -15% and enemy ground troops' attack by -25% when General is leading the army.",
+    "generalType": "Ground",
+    "leadership": 884,
+    "attack": 820,
+    "defense": 824,
+    "politics": 898
   },
   {
     "type": "General",
@@ -2571,7 +3061,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/amr-ibn-al-as",
-    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Suppress | Siege of Babylon Fortress; Special skill: Reduces enemy ranged troops and siege machines' attack by -15% and enemy ground troops' attack by -25% when General is leading the army."
+    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Suppress | Siege of Babylon Fortress; Special skill: Reduces enemy ranged troops and siege machines' attack by -15% and enemy ground troops' attack by -25% when General is leading the army.",
+    "generalType": "Ground",
+    "leadership": 884,
+    "attack": 820,
+    "defense": 824,
+    "politics": 898
   },
   {
     "type": "General",
@@ -2597,7 +3092,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/amr-ibn-al-as",
-    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Suppress | Siege of Babylon Fortress; Special skill: Reduces enemy ranged troops and siege machines' attack by -15% and enemy ground troops' attack by -25% when General is leading the army."
+    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Suppress | Siege of Babylon Fortress; Special skill: Reduces enemy ranged troops and siege machines' attack by -15% and enemy ground troops' attack by -25% when General is leading the army.",
+    "generalType": "Ground",
+    "leadership": 884,
+    "attack": 820,
+    "defense": 824,
+    "politics": 898
   },
   {
     "type": "General",
@@ -2623,7 +3123,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/amr-ibn-al-as",
-    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Suppress | Siege of Babylon Fortress; Special skill: Reduces enemy ranged troops and siege machines' attack by -15% and enemy ground troops' attack by -25% when General is leading the army."
+    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Suppress | Siege of Babylon Fortress; Special skill: Reduces enemy ranged troops and siege machines' attack by -15% and enemy ground troops' attack by -25% when General is leading the army.",
+    "generalType": "Ground",
+    "leadership": 884,
+    "attack": 820,
+    "defense": 824,
+    "politics": 898
   },
   {
     "type": "General",
@@ -2649,7 +3154,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/amr-ibn-al-as",
-    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Suppress | Siege of Babylon Fortress; Special skill: Reduces enemy ranged troops and siege machines' attack by -15% and enemy ground troops' attack by -25% when General is leading the army."
+    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Suppress | Siege of Babylon Fortress; Special skill: Reduces enemy ranged troops and siege machines' attack by -15% and enemy ground troops' attack by -25% when General is leading the army.",
+    "generalType": "Ground",
+    "leadership": 884,
+    "attack": 820,
+    "defense": 824,
+    "politics": 898
   },
   {
     "type": "General",
@@ -2675,7 +3185,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/amr-ibn-al-as",
-    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Suppress | Siege of Babylon Fortress; Special skill: Reduces enemy ranged troops and siege machines' attack by -15% and enemy ground troops' attack by -25% when General is leading the army."
+    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Suppress | Siege of Babylon Fortress; Special skill: Reduces enemy ranged troops and siege machines' attack by -15% and enemy ground troops' attack by -25% when General is leading the army.",
+    "generalType": "Ground",
+    "leadership": 884,
+    "attack": 820,
+    "defense": 824,
+    "politics": 898
   },
   {
     "type": "General",
@@ -2701,7 +3216,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/amr-ibn-al-as",
-    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Suppress | Siege of Babylon Fortress; Special skill: Reduces enemy ranged troops and siege machines' attack by -15% and enemy ground troops' attack by -25% when General is leading the army."
+    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Suppress | Siege of Babylon Fortress; Special skill: Reduces enemy ranged troops and siege machines' attack by -15% and enemy ground troops' attack by -25% when General is leading the army.",
+    "generalType": "Ground",
+    "leadership": 884,
+    "attack": 820,
+    "defense": 824,
+    "politics": 898
   },
   {
     "type": "General",
@@ -2727,7 +3247,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/amr-ibn-al-as",
-    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Suppress | Siege of Babylon Fortress; Special skill: Reduces enemy ranged troops and siege machines' attack by -15% and enemy ground troops' attack by -25% when General is leading the army."
+    "notes": "Specialties: Ground Troop Ares | Ground Troop Assault | Suppress | Siege of Babylon Fortress; Special skill: Reduces enemy ranged troops and siege machines' attack by -15% and enemy ground troops' attack by -25% when General is leading the army.",
+    "generalType": "Ground",
+    "leadership": 884,
+    "attack": 820,
+    "defense": 824,
+    "politics": 898
   },
   {
     "type": "General",
@@ -2753,7 +3278,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/andrew-jackson",
-    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of New Orleans; Special skill: Increases your ranged troops' attack by 20% and turns 20% of enemy's wounded defending troops into dead when General is leading the army to attack."
+    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of New Orleans; Special skill: Increases your ranged troops' attack by 20% and turns 20% of enemy's wounded defending troops into dead when General is leading the army to attack.",
+    "generalType": "Attacking Ranged",
+    "leadership": 855,
+    "attack": 789,
+    "defense": 815,
+    "politics": 839
   },
   {
     "type": "General",
@@ -2779,7 +3309,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/andrew-jackson",
-    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of New Orleans; Special skill: Increases your ranged troops' attack by 20% and turns 20% of enemy's wounded defending troops into dead when General is leading the army to attack."
+    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of New Orleans; Special skill: Increases your ranged troops' attack by 20% and turns 20% of enemy's wounded defending troops into dead when General is leading the army to attack.",
+    "generalType": "Attacking Ranged",
+    "leadership": 855,
+    "attack": 789,
+    "defense": 815,
+    "politics": 839
   },
   {
     "type": "General",
@@ -2805,7 +3340,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/andrew-jackson",
-    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of New Orleans; Special skill: Increases your ranged troops' attack by 20% and turns 20% of enemy's wounded defending troops into dead when General is leading the army to attack."
+    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of New Orleans; Special skill: Increases your ranged troops' attack by 20% and turns 20% of enemy's wounded defending troops into dead when General is leading the army to attack.",
+    "generalType": "Attacking Ranged",
+    "leadership": 855,
+    "attack": 789,
+    "defense": 815,
+    "politics": 839
   },
   {
     "type": "General",
@@ -2831,7 +3371,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/andrew-jackson",
-    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of New Orleans; Special skill: Increases your ranged troops' attack by 20% and turns 20% of enemy's wounded defending troops into dead when General is leading the army to attack."
+    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of New Orleans; Special skill: Increases your ranged troops' attack by 20% and turns 20% of enemy's wounded defending troops into dead when General is leading the army to attack.",
+    "generalType": "Attacking Ranged",
+    "leadership": 855,
+    "attack": 789,
+    "defense": 815,
+    "politics": 839
   },
   {
     "type": "General",
@@ -2857,7 +3402,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/andrew-jackson",
-    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of New Orleans; Special skill: Increases your ranged troops' attack by 20% and turns 20% of enemy's wounded defending troops into dead when General is leading the army to attack."
+    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of New Orleans; Special skill: Increases your ranged troops' attack by 20% and turns 20% of enemy's wounded defending troops into dead when General is leading the army to attack.",
+    "generalType": "Attacking Ranged",
+    "leadership": 855,
+    "attack": 789,
+    "defense": 815,
+    "politics": 839
   },
   {
     "type": "General",
@@ -2883,7 +3433,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/andrew-jackson",
-    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of New Orleans; Special skill: Increases your ranged troops' attack by 20% and turns 20% of enemy's wounded defending troops into dead when General is leading the army to attack."
+    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of New Orleans; Special skill: Increases your ranged troops' attack by 20% and turns 20% of enemy's wounded defending troops into dead when General is leading the army to attack.",
+    "generalType": "Attacking Ranged",
+    "leadership": 855,
+    "attack": 789,
+    "defense": 815,
+    "politics": 839
   },
   {
     "type": "General",
@@ -2909,7 +3464,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/andrew-jackson",
-    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of New Orleans; Special skill: Increases your ranged troops' attack by 20% and turns 20% of enemy's wounded defending troops into dead when General is leading the army to attack."
+    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of New Orleans; Special skill: Increases your ranged troops' attack by 20% and turns 20% of enemy's wounded defending troops into dead when General is leading the army to attack.",
+    "generalType": "Attacking Ranged",
+    "leadership": 855,
+    "attack": 789,
+    "defense": 815,
+    "politics": 839
   },
   {
     "type": "General",
@@ -2935,7 +3495,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/antara",
-    "notes": "Specialties: Ranged Troop Defense | Bash | Unparalleled Leader; Special skill: Increases Ranged Troop Attack by 35% when General is leading the army."
+    "notes": "Specialties: Ranged Troop Defense | Bash | Unparalleled Leader; Special skill: Increases Ranged Troop Attack by 35% when General is leading the army.",
+    "generalType": "Ranged",
+    "leadership": 758,
+    "attack": 758,
+    "defense": 770,
+    "politics": 595
   },
   {
     "type": "General",
@@ -2961,7 +3526,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/antara",
-    "notes": "Specialties: Ranged Troop Defense | Bash | Unparalleled Leader; Special skill: Increases Ranged Troop Attack by 35% when General is leading the army."
+    "notes": "Specialties: Ranged Troop Defense | Bash | Unparalleled Leader; Special skill: Increases Ranged Troop Attack by 35% when General is leading the army.",
+    "generalType": "Ranged",
+    "leadership": 758,
+    "attack": 758,
+    "defense": 770,
+    "politics": 595
   },
   {
     "type": "General",
@@ -2987,7 +3557,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/antara",
-    "notes": "Specialties: Ranged Troop Defense | Bash | Unparalleled Leader; Special skill: Increases Ranged Troop Attack by 35% when General is leading the army."
+    "notes": "Specialties: Ranged Troop Defense | Bash | Unparalleled Leader; Special skill: Increases Ranged Troop Attack by 35% when General is leading the army.",
+    "generalType": "Ranged",
+    "leadership": 758,
+    "attack": 758,
+    "defense": 770,
+    "politics": 595
   },
   {
     "type": "General",
@@ -3013,7 +3588,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/antara",
-    "notes": "Specialties: Ranged Troop Defense | Bash | Unparalleled Leader; Special skill: Increases Ranged Troop Attack by 35% when General is leading the army."
+    "notes": "Specialties: Ranged Troop Defense | Bash | Unparalleled Leader; Special skill: Increases Ranged Troop Attack by 35% when General is leading the army.",
+    "generalType": "Ranged",
+    "leadership": 758,
+    "attack": 758,
+    "defense": 770,
+    "politics": 595
   },
   {
     "type": "General",
@@ -3039,7 +3619,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/antara",
-    "notes": "Specialties: Ranged Troop Defense | Bash | Unparalleled Leader; Special skill: Increases Ranged Troop Attack by 35% when General is leading the army."
+    "notes": "Specialties: Ranged Troop Defense | Bash | Unparalleled Leader; Special skill: Increases Ranged Troop Attack by 35% when General is leading the army.",
+    "generalType": "Ranged",
+    "leadership": 758,
+    "attack": 758,
+    "defense": 770,
+    "politics": 595
   },
   {
     "type": "General",
@@ -3065,7 +3650,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/arminius",
-    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of the Teutoburg Forest; Special skill: Reduces enemy ground troops and mounted troops' HP by -10% and enemy ranged troops and siege machines' attack by -15% when General is leading the army."
+    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of the Teutoburg Forest; Special skill: Reduces enemy ground troops and mounted troops' HP by -10% and enemy ranged troops and siege machines' attack by -15% when General is leading the army.",
+    "generalType": "Ranged",
+    "leadership": 853,
+    "attack": 825,
+    "defense": 827,
+    "politics": 875
   },
   {
     "type": "General",
@@ -3091,7 +3681,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/arminius",
-    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of the Teutoburg Forest; Special skill: Reduces enemy ground troops and mounted troops' HP by -10% and enemy ranged troops and siege machines' attack by -15% when General is leading the army."
+    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of the Teutoburg Forest; Special skill: Reduces enemy ground troops and mounted troops' HP by -10% and enemy ranged troops and siege machines' attack by -15% when General is leading the army.",
+    "generalType": "Ranged",
+    "leadership": 853,
+    "attack": 825,
+    "defense": 827,
+    "politics": 875
   },
   {
     "type": "General",
@@ -3117,7 +3712,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/arminius",
-    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of the Teutoburg Forest; Special skill: Reduces enemy ground troops and mounted troops' HP by -10% and enemy ranged troops and siege machines' attack by -15% when General is leading the army."
+    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of the Teutoburg Forest; Special skill: Reduces enemy ground troops and mounted troops' HP by -10% and enemy ranged troops and siege machines' attack by -15% when General is leading the army.",
+    "generalType": "Ranged",
+    "leadership": 853,
+    "attack": 825,
+    "defense": 827,
+    "politics": 875
   },
   {
     "type": "General",
@@ -3143,7 +3743,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/arminius",
-    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of the Teutoburg Forest; Special skill: Reduces enemy ground troops and mounted troops' HP by -10% and enemy ranged troops and siege machines' attack by -15% when General is leading the army."
+    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of the Teutoburg Forest; Special skill: Reduces enemy ground troops and mounted troops' HP by -10% and enemy ranged troops and siege machines' attack by -15% when General is leading the army.",
+    "generalType": "Ranged",
+    "leadership": 853,
+    "attack": 825,
+    "defense": 827,
+    "politics": 875
   },
   {
     "type": "General",
@@ -3169,7 +3774,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/arminius",
-    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of the Teutoburg Forest; Special skill: Reduces enemy ground troops and mounted troops' HP by -10% and enemy ranged troops and siege machines' attack by -15% when General is leading the army."
+    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of the Teutoburg Forest; Special skill: Reduces enemy ground troops and mounted troops' HP by -10% and enemy ranged troops and siege machines' attack by -15% when General is leading the army.",
+    "generalType": "Ranged",
+    "leadership": 853,
+    "attack": 825,
+    "defense": 827,
+    "politics": 875
   },
   {
     "type": "General",
@@ -3195,7 +3805,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/arminius",
-    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of the Teutoburg Forest; Special skill: Reduces enemy ground troops and mounted troops' HP by -10% and enemy ranged troops and siege machines' attack by -15% when General is leading the army."
+    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of the Teutoburg Forest; Special skill: Reduces enemy ground troops and mounted troops' HP by -10% and enemy ranged troops and siege machines' attack by -15% when General is leading the army.",
+    "generalType": "Ranged",
+    "leadership": 853,
+    "attack": 825,
+    "defense": 827,
+    "politics": 875
   },
   {
     "type": "General",
@@ -3221,7 +3836,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/arminius",
-    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of the Teutoburg Forest; Special skill: Reduces enemy ground troops and mounted troops' HP by -10% and enemy ranged troops and siege machines' attack by -15% when General is leading the army."
+    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of the Teutoburg Forest; Special skill: Reduces enemy ground troops and mounted troops' HP by -10% and enemy ranged troops and siege machines' attack by -15% when General is leading the army.",
+    "generalType": "Ranged",
+    "leadership": 853,
+    "attack": 825,
+    "defense": 827,
+    "politics": 875
   },
   {
     "type": "General",
@@ -3247,7 +3867,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/arminius",
-    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of the Teutoburg Forest; Special skill: Reduces enemy ground troops and mounted troops' HP by -10% and enemy ranged troops and siege machines' attack by -15% when General is leading the army."
+    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of the Teutoburg Forest; Special skill: Reduces enemy ground troops and mounted troops' HP by -10% and enemy ranged troops and siege machines' attack by -15% when General is leading the army.",
+    "generalType": "Ranged",
+    "leadership": 853,
+    "attack": 825,
+    "defense": 827,
+    "politics": 875
   },
   {
     "type": "General",
@@ -3273,7 +3898,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/arminius",
-    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of the Teutoburg Forest; Special skill: Reduces enemy ground troops and mounted troops' HP by -10% and enemy ranged troops and siege machines' attack by -15% when General is leading the army."
+    "notes": "Specialties: Ranged Troop Assault | Snipe | Iron Warrior | Battle of the Teutoburg Forest; Special skill: Reduces enemy ground troops and mounted troops' HP by -10% and enemy ranged troops and siege machines' attack by -15% when General is leading the army.",
+    "generalType": "Ranged",
+    "leadership": 853,
+    "attack": 825,
+    "defense": 827,
+    "politics": 875
   },
   {
     "type": "General",
@@ -3299,7 +3929,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/ashoka",
-    "notes": "Specialties: Ranged Troop Formation | Bash | Sage | Maurya Dynasty; Special skill: Increases ranged troops' attack by 20% and reduces enemy ground troops' HP by -15% when the General is the Keep Officer."
+    "notes": "Specialties: Ranged Troop Formation | Bash | Sage | Maurya Dynasty; Special skill: Increases ranged troops' attack by 20% and reduces enemy ground troops' HP by -15% when the General is the Keep Officer.",
+    "generalType": "Defending Ranged",
+    "leadership": 878,
+    "attack": 808,
+    "defense": 817,
+    "politics": 887
   },
   {
     "type": "General",
@@ -3325,7 +3960,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/ashoka",
-    "notes": "Specialties: Ranged Troop Formation | Bash | Sage | Maurya Dynasty; Special skill: Increases ranged troops' attack by 20% and reduces enemy ground troops' HP by -15% when the General is the Keep Officer."
+    "notes": "Specialties: Ranged Troop Formation | Bash | Sage | Maurya Dynasty; Special skill: Increases ranged troops' attack by 20% and reduces enemy ground troops' HP by -15% when the General is the Keep Officer.",
+    "generalType": "Defending Ranged",
+    "leadership": 878,
+    "attack": 808,
+    "defense": 817,
+    "politics": 887
   },
   {
     "type": "General",
@@ -3351,7 +3991,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/ashoka",
-    "notes": "Specialties: Ranged Troop Formation | Bash | Sage | Maurya Dynasty; Special skill: Increases ranged troops' attack by 20% and reduces enemy ground troops' HP by -15% when the General is the Keep Officer."
+    "notes": "Specialties: Ranged Troop Formation | Bash | Sage | Maurya Dynasty; Special skill: Increases ranged troops' attack by 20% and reduces enemy ground troops' HP by -15% when the General is the Keep Officer.",
+    "generalType": "Defending Ranged",
+    "leadership": 878,
+    "attack": 808,
+    "defense": 817,
+    "politics": 887
   },
   {
     "type": "General",
@@ -3377,7 +4022,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/ashoka",
-    "notes": "Specialties: Ranged Troop Formation | Bash | Sage | Maurya Dynasty; Special skill: Increases ranged troops' attack by 20% and reduces enemy ground troops' HP by -15% when the General is the Keep Officer."
+    "notes": "Specialties: Ranged Troop Formation | Bash | Sage | Maurya Dynasty; Special skill: Increases ranged troops' attack by 20% and reduces enemy ground troops' HP by -15% when the General is the Keep Officer.",
+    "generalType": "Defending Ranged",
+    "leadership": 878,
+    "attack": 808,
+    "defense": 817,
+    "politics": 887
   },
   {
     "type": "General",
@@ -3403,7 +4053,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/ashoka",
-    "notes": "Specialties: Ranged Troop Formation | Bash | Sage | Maurya Dynasty; Special skill: Increases ranged troops' attack by 20% and reduces enemy ground troops' HP by -15% when the General is the Keep Officer."
+    "notes": "Specialties: Ranged Troop Formation | Bash | Sage | Maurya Dynasty; Special skill: Increases ranged troops' attack by 20% and reduces enemy ground troops' HP by -15% when the General is the Keep Officer.",
+    "generalType": "Defending Ranged",
+    "leadership": 878,
+    "attack": 808,
+    "defense": 817,
+    "politics": 887
   },
   {
     "type": "General",
@@ -3429,7 +4084,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/askia-muhammad-i",
-    "notes": "Specialties: Siege Machine Defense | Trapping | Sage | King of Gold"
+    "notes": "Specialties: Siege Machine Defense | Trapping | Sage | King of Gold",
+    "generalType": "Defending Siege",
+    "leadership": 817,
+    "attack": 788,
+    "defense": 793,
+    "politics": 856
   },
   {
     "type": "General",
@@ -3455,7 +4115,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/askia-muhammad-i",
-    "notes": "Specialties: Siege Machine Defense | Trapping | Sage | King of Gold"
+    "notes": "Specialties: Siege Machine Defense | Trapping | Sage | King of Gold",
+    "generalType": "Defending Siege",
+    "leadership": 817,
+    "attack": 788,
+    "defense": 793,
+    "politics": 856
   },
   {
     "type": "General",
@@ -3481,7 +4146,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/askia-muhammad-i",
-    "notes": "Specialties: Siege Machine Defense | Trapping | Sage | King of Gold"
+    "notes": "Specialties: Siege Machine Defense | Trapping | Sage | King of Gold",
+    "generalType": "Defending Siege",
+    "leadership": 817,
+    "attack": 788,
+    "defense": 793,
+    "politics": 856
   },
   {
     "type": "General",
@@ -3507,7 +4177,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/askia-muhammad-i",
-    "notes": "Specialties: Siege Machine Defense | Trapping | Sage | King of Gold"
+    "notes": "Specialties: Siege Machine Defense | Trapping | Sage | King of Gold",
+    "generalType": "Defending Siege",
+    "leadership": 817,
+    "attack": 788,
+    "defense": 793,
+    "politics": 856
   },
   {
     "type": "General",
@@ -3533,7 +4208,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/askia-muhammad-i",
-    "notes": "Specialties: Siege Machine Defense | Trapping | Sage | King of Gold"
+    "notes": "Specialties: Siege Machine Defense | Trapping | Sage | King of Gold",
+    "generalType": "Defending Siege",
+    "leadership": 817,
+    "attack": 788,
+    "defense": 793,
+    "politics": 856
   },
   {
     "type": "General",
@@ -3559,7 +4239,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/askia-muhammad-i",
-    "notes": "Specialties: Siege Machine Defense | Trapping | Sage | King of Gold"
+    "notes": "Specialties: Siege Machine Defense | Trapping | Sage | King of Gold",
+    "generalType": "Defending Siege",
+    "leadership": 817,
+    "attack": 788,
+    "defense": 793,
+    "politics": 856
   },
   {
     "type": "General",
@@ -3585,7 +4270,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/askia-muhammad-i",
-    "notes": "Specialties: Siege Machine Defense | Trapping | Sage | King of Gold"
+    "notes": "Specialties: Siege Machine Defense | Trapping | Sage | King of Gold",
+    "generalType": "Defending Siege",
+    "leadership": 817,
+    "attack": 788,
+    "defense": 793,
+    "politics": 856
   },
   {
     "type": "General",
@@ -3611,7 +4301,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/askia-muhammad-i",
-    "notes": "Specialties: Siege Machine Defense | Trapping | Sage | King of Gold"
+    "notes": "Specialties: Siege Machine Defense | Trapping | Sage | King of Gold",
+    "generalType": "Defending Siege",
+    "leadership": 817,
+    "attack": 788,
+    "defense": 793,
+    "politics": 856
   },
   {
     "type": "General",
@@ -3637,7 +4332,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/attila",
-    "notes": "Specialties: Mounted Troop Formation | Jungle | King's Ambition; Special skill: Increases Troop Load by 75% when General is leading the army."
+    "notes": "Specialties: Mounted Troop Formation | Jungle | King's Ambition; Special skill: Increases Troop Load by 75% when General is leading the army.",
+    "generalType": "Mounted",
+    "leadership": 750,
+    "attack": 720,
+    "defense": 803,
+    "politics": 567
   },
   {
     "type": "General",
@@ -3663,7 +4363,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/attila",
-    "notes": "Specialties: Mounted Troop Formation | Jungle | King's Ambition; Special skill: Increases Troop Load by 75% when General is leading the army."
+    "notes": "Specialties: Mounted Troop Formation | Jungle | King's Ambition; Special skill: Increases Troop Load by 75% when General is leading the army.",
+    "generalType": "Mounted",
+    "leadership": 750,
+    "attack": 720,
+    "defense": 803,
+    "politics": 567
   },
   {
     "type": "General",
@@ -3689,7 +4394,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/attila",
-    "notes": "Specialties: Mounted Troop Formation | Jungle | King's Ambition; Special skill: Increases Troop Load by 75% when General is leading the army."
+    "notes": "Specialties: Mounted Troop Formation | Jungle | King's Ambition; Special skill: Increases Troop Load by 75% when General is leading the army.",
+    "generalType": "Mounted",
+    "leadership": 750,
+    "attack": 720,
+    "defense": 803,
+    "politics": 567
   },
   {
     "type": "General",
@@ -3715,7 +4425,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/attila",
-    "notes": "Specialties: Mounted Troop Formation | Jungle | King's Ambition; Special skill: Increases Troop Load by 75% when General is leading the army."
+    "notes": "Specialties: Mounted Troop Formation | Jungle | King's Ambition; Special skill: Increases Troop Load by 75% when General is leading the army.",
+    "generalType": "Mounted",
+    "leadership": 750,
+    "attack": 720,
+    "defense": 803,
+    "politics": 567
   },
   {
     "type": "General",
@@ -3741,7 +4456,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/attila",
-    "notes": "Specialties: Mounted Troop Formation | Jungle | King's Ambition; Special skill: Increases Troop Load by 75% when General is leading the army."
+    "notes": "Specialties: Mounted Troop Formation | Jungle | King's Ambition; Special skill: Increases Troop Load by 75% when General is leading the army.",
+    "generalType": "Mounted",
+    "leadership": 750,
+    "attack": 720,
+    "defense": 803,
+    "politics": 567
   },
   {
     "type": "General",
@@ -3767,7 +4487,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/baibars",
-    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Formation | Suppress | Battle of Ain Zara; Special skill: Grants you a 25% Double Items Drop Rate from Monsters when General is leading the army."
+    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Formation | Suppress | Battle of Ain Zara; Special skill: Grants you a 25% Double Items Drop Rate from Monsters when General is leading the army.",
+    "generalType": "Mounted",
+    "leadership": 821,
+    "attack": 771,
+    "defense": 771,
+    "politics": 795
   },
   {
     "type": "General",
@@ -3793,7 +4518,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/baibars",
-    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Formation | Suppress | Battle of Ain Zara; Special skill: Grants you a 25% Double Items Drop Rate from Monsters when General is leading the army."
+    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Formation | Suppress | Battle of Ain Zara; Special skill: Grants you a 25% Double Items Drop Rate from Monsters when General is leading the army.",
+    "generalType": "Mounted",
+    "leadership": 821,
+    "attack": 771,
+    "defense": 771,
+    "politics": 795
   },
   {
     "type": "General",
@@ -3819,7 +4549,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/baibars",
-    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Formation | Suppress | Battle of Ain Zara; Special skill: Grants you a 25% Double Items Drop Rate from Monsters when General is leading the army."
+    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Formation | Suppress | Battle of Ain Zara; Special skill: Grants you a 25% Double Items Drop Rate from Monsters when General is leading the army.",
+    "generalType": "Mounted",
+    "leadership": 821,
+    "attack": 771,
+    "defense": 771,
+    "politics": 795
   },
   {
     "type": "General",
@@ -3845,7 +4580,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/baibars",
-    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Formation | Suppress | Battle of Ain Zara; Special skill: Grants you a 25% Double Items Drop Rate from Monsters when General is leading the army."
+    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Formation | Suppress | Battle of Ain Zara; Special skill: Grants you a 25% Double Items Drop Rate from Monsters when General is leading the army.",
+    "generalType": "Mounted",
+    "leadership": 821,
+    "attack": 771,
+    "defense": 771,
+    "politics": 795
   },
   {
     "type": "General",
@@ -3871,7 +4611,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/baibars",
-    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Formation | Suppress | Battle of Ain Zara; Special skill: Grants you a 25% Double Items Drop Rate from Monsters when General is leading the army."
+    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Formation | Suppress | Battle of Ain Zara; Special skill: Grants you a 25% Double Items Drop Rate from Monsters when General is leading the army.",
+    "generalType": "Mounted",
+    "leadership": 821,
+    "attack": 771,
+    "defense": 771,
+    "politics": 795
   },
   {
     "type": "General",
@@ -3897,7 +4642,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/baibars",
-    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Formation | Suppress | Battle of Ain Zara; Special skill: Grants you a 25% Double Items Drop Rate from Monsters when General is leading the army."
+    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Formation | Suppress | Battle of Ain Zara; Special skill: Grants you a 25% Double Items Drop Rate from Monsters when General is leading the army.",
+    "generalType": "Mounted",
+    "leadership": 821,
+    "attack": 771,
+    "defense": 771,
+    "politics": 795
   },
   {
     "type": "General",
@@ -3923,7 +4673,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/baldwin-iv",
-    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Assault | Snipe | Battle of Montgisard; Special skill: Reduces enemy ranged troops' attack by -30% and enemy siege machines' attack by -20% when General is leading the army."
+    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Assault | Snipe | Battle of Montgisard; Special skill: Reduces enemy ranged troops' attack by -30% and enemy siege machines' attack by -20% when General is leading the army.",
+    "generalType": "Mounted",
+    "leadership": 850,
+    "attack": 841,
+    "defense": 888,
+    "politics": 838
   },
   {
     "type": "General",
@@ -3949,7 +4704,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/baldwin-iv",
-    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Assault | Snipe | Battle of Montgisard; Special skill: Reduces enemy ranged troops' attack by -30% and enemy siege machines' attack by -20% when General is leading the army."
+    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Assault | Snipe | Battle of Montgisard; Special skill: Reduces enemy ranged troops' attack by -30% and enemy siege machines' attack by -20% when General is leading the army.",
+    "generalType": "Mounted",
+    "leadership": 850,
+    "attack": 841,
+    "defense": 888,
+    "politics": 838
   },
   {
     "type": "General",
@@ -3975,7 +4735,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/baldwin-iv",
-    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Assault | Snipe | Battle of Montgisard; Special skill: Reduces enemy ranged troops' attack by -30% and enemy siege machines' attack by -20% when General is leading the army."
+    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Assault | Snipe | Battle of Montgisard; Special skill: Reduces enemy ranged troops' attack by -30% and enemy siege machines' attack by -20% when General is leading the army.",
+    "generalType": "Mounted",
+    "leadership": 850,
+    "attack": 841,
+    "defense": 888,
+    "politics": 838
   },
   {
     "type": "General",
@@ -4001,7 +4766,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/baldwin-iv",
-    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Assault | Snipe | Battle of Montgisard; Special skill: Reduces enemy ranged troops' attack by -30% and enemy siege machines' attack by -20% when General is leading the army."
+    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Assault | Snipe | Battle of Montgisard; Special skill: Reduces enemy ranged troops' attack by -30% and enemy siege machines' attack by -20% when General is leading the army.",
+    "generalType": "Mounted",
+    "leadership": 850,
+    "attack": 841,
+    "defense": 888,
+    "politics": 838
   },
   {
     "type": "General",
@@ -4027,7 +4797,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/baldwin-iv",
-    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Assault | Snipe | Battle of Montgisard; Special skill: Reduces enemy ranged troops' attack by -30% and enemy siege machines' attack by -20% when General is leading the army."
+    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Assault | Snipe | Battle of Montgisard; Special skill: Reduces enemy ranged troops' attack by -30% and enemy siege machines' attack by -20% when General is leading the army.",
+    "generalType": "Mounted",
+    "leadership": 850,
+    "attack": 841,
+    "defense": 888,
+    "politics": 838
   },
   {
     "type": "General",
@@ -4053,7 +4828,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/baldwin-iv",
-    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Assault | Snipe | Battle of Montgisard; Special skill: Reduces enemy ranged troops' attack by -30% and enemy siege machines' attack by -20% when General is leading the army."
+    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Assault | Snipe | Battle of Montgisard; Special skill: Reduces enemy ranged troops' attack by -30% and enemy siege machines' attack by -20% when General is leading the army.",
+    "generalType": "Mounted",
+    "leadership": 850,
+    "attack": 841,
+    "defense": 888,
+    "politics": 838
   },
   {
     "type": "General",
@@ -4079,7 +4859,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/baldwin-iv",
-    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Assault | Snipe | Battle of Montgisard; Special skill: Reduces enemy ranged troops' attack by -30% and enemy siege machines' attack by -20% when General is leading the army."
+    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Assault | Snipe | Battle of Montgisard; Special skill: Reduces enemy ranged troops' attack by -30% and enemy siege machines' attack by -20% when General is leading the army.",
+    "generalType": "Mounted",
+    "leadership": 850,
+    "attack": 841,
+    "defense": 888,
+    "politics": 838
   },
   {
     "type": "General",
@@ -4105,7 +4890,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/baldwin-iv",
-    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Assault | Snipe | Battle of Montgisard; Special skill: Reduces enemy ranged troops' attack by -30% and enemy siege machines' attack by -20% when General is leading the army."
+    "notes": "Specialties: Mounted Troop Ares | Mounted Troop Assault | Snipe | Battle of Montgisard; Special skill: Reduces enemy ranged troops' attack by -30% and enemy siege machines' attack by -20% when General is leading the army.",
+    "generalType": "Mounted",
+    "leadership": 850,
+    "attack": 841,
+    "defense": 888,
+    "politics": 838
   },
   {
     "type": "General",
@@ -4131,7 +4921,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/ban-chao",
-    "notes": "Specialties: Ground Troop Assault | Sabotage | Sage | Guard the Western Regions; Special skill: Reduces enemy mounted troops' attack by -20% and increases your in city ranged troops' attack by 20% when General is the Archer Tower Officer."
+    "notes": "Specialties: Ground Troop Assault | Sabotage | Sage | Guard the Western Regions; Special skill: Reduces enemy mounted troops' attack by -20% and increases your in city ranged troops' attack by 20% when General is the Archer Tower Officer.",
+    "generalType": "Defending Ground",
+    "leadership": 806,
+    "attack": 799,
+    "defense": 813,
+    "politics": 868
   },
   {
     "type": "General",
@@ -4157,7 +4952,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/ban-chao",
-    "notes": "Specialties: Ground Troop Assault | Sabotage | Sage | Guard the Western Regions; Special skill: Reduces enemy mounted troops' attack by -20% and increases your in city ranged troops' attack by 20% when General is the Archer Tower Officer."
+    "notes": "Specialties: Ground Troop Assault | Sabotage | Sage | Guard the Western Regions; Special skill: Reduces enemy mounted troops' attack by -20% and increases your in city ranged troops' attack by 20% when General is the Archer Tower Officer.",
+    "generalType": "Defending Ground",
+    "leadership": 806,
+    "attack": 799,
+    "defense": 813,
+    "politics": 868
   },
   {
     "type": "General",
@@ -4183,7 +4983,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/ban-chao",
-    "notes": "Specialties: Ground Troop Assault | Sabotage | Sage | Guard the Western Regions; Special skill: Reduces enemy mounted troops' attack by -20% and increases your in city ranged troops' attack by 20% when General is the Archer Tower Officer."
+    "notes": "Specialties: Ground Troop Assault | Sabotage | Sage | Guard the Western Regions; Special skill: Reduces enemy mounted troops' attack by -20% and increases your in city ranged troops' attack by 20% when General is the Archer Tower Officer.",
+    "generalType": "Defending Ground",
+    "leadership": 806,
+    "attack": 799,
+    "defense": 813,
+    "politics": 868
   },
   {
     "type": "General",
@@ -4209,7 +5014,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/ban-chao",
-    "notes": "Specialties: Ground Troop Assault | Sabotage | Sage | Guard the Western Regions; Special skill: Reduces enemy mounted troops' attack by -20% and increases your in city ranged troops' attack by 20% when General is the Archer Tower Officer."
+    "notes": "Specialties: Ground Troop Assault | Sabotage | Sage | Guard the Western Regions; Special skill: Reduces enemy mounted troops' attack by -20% and increases your in city ranged troops' attack by 20% when General is the Archer Tower Officer.",
+    "generalType": "Defending Ground",
+    "leadership": 806,
+    "attack": 799,
+    "defense": 813,
+    "politics": 868
   },
   {
     "type": "General",
@@ -4235,7 +5045,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/ban-chao",
-    "notes": "Specialties: Ground Troop Assault | Sabotage | Sage | Guard the Western Regions; Special skill: Reduces enemy mounted troops' attack by -20% and increases your in city ranged troops' attack by 20% when General is the Archer Tower Officer."
+    "notes": "Specialties: Ground Troop Assault | Sabotage | Sage | Guard the Western Regions; Special skill: Reduces enemy mounted troops' attack by -20% and increases your in city ranged troops' attack by 20% when General is the Archer Tower Officer.",
+    "generalType": "Defending Ground",
+    "leadership": 806,
+    "attack": 799,
+    "defense": 813,
+    "politics": 868
   },
   {
     "type": "General",
@@ -4261,7 +5076,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/ban-chao",
-    "notes": "Specialties: Ground Troop Assault | Sabotage | Sage | Guard the Western Regions; Special skill: Reduces enemy mounted troops' attack by -20% and increases your in city ranged troops' attack by 20% when General is the Archer Tower Officer."
+    "notes": "Specialties: Ground Troop Assault | Sabotage | Sage | Guard the Western Regions; Special skill: Reduces enemy mounted troops' attack by -20% and increases your in city ranged troops' attack by 20% when General is the Archer Tower Officer.",
+    "generalType": "Defending Ground",
+    "leadership": 806,
+    "attack": 799,
+    "defense": 813,
+    "politics": 868
   },
   {
     "type": "General",
@@ -4287,7 +5107,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/barbarossa",
-    "notes": "Specialties: Mounted Troop Assault | Annihilation | Iron Warrior | Crusaders; Special skill: Increases the March Size by 10% and mounted troops' attack by 15% when General is leading the army to attack."
+    "notes": "Specialties: Mounted Troop Assault | Annihilation | Iron Warrior | Crusaders; Special skill: Increases the March Size by 10% and mounted troops' attack by 15% when General is leading the army to attack.",
+    "generalType": "Attacking Mounted",
+    "leadership": 889,
+    "attack": 820,
+    "defense": 825,
+    "politics": 842
   },
   {
     "type": "General",
@@ -4313,7 +5138,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/barbarossa",
-    "notes": "Specialties: Mounted Troop Assault | Annihilation | Iron Warrior | Crusaders; Special skill: Increases the March Size by 10% and mounted troops' attack by 15% when General is leading the army to attack."
+    "notes": "Specialties: Mounted Troop Assault | Annihilation | Iron Warrior | Crusaders; Special skill: Increases the March Size by 10% and mounted troops' attack by 15% when General is leading the army to attack.",
+    "generalType": "Attacking Mounted",
+    "leadership": 889,
+    "attack": 820,
+    "defense": 825,
+    "politics": 842
   },
   {
     "type": "General",
@@ -4339,7 +5169,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/barbarossa",
-    "notes": "Specialties: Mounted Troop Assault | Annihilation | Iron Warrior | Crusaders; Special skill: Increases the March Size by 10% and mounted troops' attack by 15% when General is leading the army to attack."
+    "notes": "Specialties: Mounted Troop Assault | Annihilation | Iron Warrior | Crusaders; Special skill: Increases the March Size by 10% and mounted troops' attack by 15% when General is leading the army to attack.",
+    "generalType": "Attacking Mounted",
+    "leadership": 889,
+    "attack": 820,
+    "defense": 825,
+    "politics": 842
   },
   {
     "type": "General",
@@ -4365,7 +5200,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/barbarossa",
-    "notes": "Specialties: Mounted Troop Assault | Annihilation | Iron Warrior | Crusaders; Special skill: Increases the March Size by 10% and mounted troops' attack by 15% when General is leading the army to attack."
+    "notes": "Specialties: Mounted Troop Assault | Annihilation | Iron Warrior | Crusaders; Special skill: Increases the March Size by 10% and mounted troops' attack by 15% when General is leading the army to attack.",
+    "generalType": "Attacking Mounted",
+    "leadership": 889,
+    "attack": 820,
+    "defense": 825,
+    "politics": 842
   },
   {
     "type": "General",
@@ -4391,7 +5231,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/barbarossa",
-    "notes": "Specialties: Mounted Troop Assault | Annihilation | Iron Warrior | Crusaders; Special skill: Increases the March Size by 10% and mounted troops' attack by 15% when General is leading the army to attack."
+    "notes": "Specialties: Mounted Troop Assault | Annihilation | Iron Warrior | Crusaders; Special skill: Increases the March Size by 10% and mounted troops' attack by 15% when General is leading the army to attack.",
+    "generalType": "Attacking Mounted",
+    "leadership": 889,
+    "attack": 820,
+    "defense": 825,
+    "politics": 842
   },
   {
     "type": "General",
@@ -4417,7 +5262,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/barbarossa",
-    "notes": "Specialties: Mounted Troop Assault | Annihilation | Iron Warrior | Crusaders; Special skill: Increases the March Size by 10% and mounted troops' attack by 15% when General is leading the army to attack."
+    "notes": "Specialties: Mounted Troop Assault | Annihilation | Iron Warrior | Crusaders; Special skill: Increases the March Size by 10% and mounted troops' attack by 15% when General is leading the army to attack.",
+    "generalType": "Attacking Mounted",
+    "leadership": 889,
+    "attack": 820,
+    "defense": 825,
+    "politics": 842
   },
   {
     "type": "General",
@@ -4443,7 +5293,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/barbarossa",
-    "notes": "Specialties: Mounted Troop Assault | Annihilation | Iron Warrior | Crusaders; Special skill: Increases the March Size by 10% and mounted troops' attack by 15% when General is leading the army to attack."
+    "notes": "Specialties: Mounted Troop Assault | Annihilation | Iron Warrior | Crusaders; Special skill: Increases the March Size by 10% and mounted troops' attack by 15% when General is leading the army to attack.",
+    "generalType": "Attacking Mounted",
+    "leadership": 889,
+    "attack": 820,
+    "defense": 825,
+    "politics": 842
   },
   {
     "type": "General",
@@ -4469,7 +5324,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/barbarossa",
-    "notes": "Specialties: Mounted Troop Assault | Annihilation | Iron Warrior | Crusaders; Special skill: Increases the March Size by 10% and mounted troops' attack by 15% when General is leading the army to attack."
+    "notes": "Specialties: Mounted Troop Assault | Annihilation | Iron Warrior | Crusaders; Special skill: Increases the March Size by 10% and mounted troops' attack by 15% when General is leading the army to attack.",
+    "generalType": "Attacking Mounted",
+    "leadership": 889,
+    "attack": 820,
+    "defense": 825,
+    "politics": 842
   },
   {
     "type": "General",
@@ -4495,7 +5355,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/basil-ii",
-    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle of Kleidion; Special skill: Increases ground troops and mounted troops' attack by 30% and increases ground troops and mounted troops defense by 15% when General is leading the army to attack."
+    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle of Kleidion; Special skill: Increases ground troops and mounted troops' attack by 30% and increases ground troops and mounted troops defense by 15% when General is leading the army to attack.",
+    "generalType": "Attacking Ground, Mounted",
+    "leadership": 872,
+    "attack": 884,
+    "defense": 864,
+    "politics": 830
   },
   {
     "type": "General",
@@ -4521,7 +5386,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/basil-ii",
-    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle of Kleidion; Special skill: Increases ground troops and mounted troops' attack by 30% and increases ground troops and mounted troops defense by 15% when General is leading the army to attack."
+    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle of Kleidion; Special skill: Increases ground troops and mounted troops' attack by 30% and increases ground troops and mounted troops defense by 15% when General is leading the army to attack.",
+    "generalType": "Attacking Ground, Mounted",
+    "leadership": 872,
+    "attack": 884,
+    "defense": 864,
+    "politics": 830
   },
   {
     "type": "General",
@@ -4547,7 +5417,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/basil-ii",
-    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle of Kleidion; Special skill: Increases ground troops and mounted troops' attack by 30% and increases ground troops and mounted troops defense by 15% when General is leading the army to attack."
+    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle of Kleidion; Special skill: Increases ground troops and mounted troops' attack by 30% and increases ground troops and mounted troops defense by 15% when General is leading the army to attack.",
+    "generalType": "Attacking Ground, Mounted",
+    "leadership": 872,
+    "attack": 884,
+    "defense": 864,
+    "politics": 830
   },
   {
     "type": "General",
@@ -4573,7 +5448,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/basil-ii",
-    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle of Kleidion; Special skill: Increases ground troops and mounted troops' attack by 30% and increases ground troops and mounted troops defense by 15% when General is leading the army to attack."
+    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle of Kleidion; Special skill: Increases ground troops and mounted troops' attack by 30% and increases ground troops and mounted troops defense by 15% when General is leading the army to attack.",
+    "generalType": "Attacking Ground, Mounted",
+    "leadership": 872,
+    "attack": 884,
+    "defense": 864,
+    "politics": 830
   },
   {
     "type": "General",
@@ -4599,7 +5479,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/basil-ii",
-    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle of Kleidion; Special skill: Increases ground troops and mounted troops' attack by 30% and increases ground troops and mounted troops defense by 15% when General is leading the army to attack."
+    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle of Kleidion; Special skill: Increases ground troops and mounted troops' attack by 30% and increases ground troops and mounted troops defense by 15% when General is leading the army to attack.",
+    "generalType": "Attacking Ground, Mounted",
+    "leadership": 872,
+    "attack": 884,
+    "defense": 864,
+    "politics": 830
   },
   {
     "type": "General",
@@ -4625,7 +5510,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/basil-ii",
-    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle of Kleidion; Special skill: Increases ground troops and mounted troops' attack by 30% and increases ground troops and mounted troops defense by 15% when General is leading the army to attack."
+    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle of Kleidion; Special skill: Increases ground troops and mounted troops' attack by 30% and increases ground troops and mounted troops defense by 15% when General is leading the army to attack.",
+    "generalType": "Attacking Ground, Mounted",
+    "leadership": 872,
+    "attack": 884,
+    "defense": 864,
+    "politics": 830
   },
   {
     "type": "General",
@@ -4651,7 +5541,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/basil-ii",
-    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle of Kleidion; Special skill: Increases ground troops and mounted troops' attack by 30% and increases ground troops and mounted troops defense by 15% when General is leading the army to attack."
+    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle of Kleidion; Special skill: Increases ground troops and mounted troops' attack by 30% and increases ground troops and mounted troops defense by 15% when General is leading the army to attack.",
+    "generalType": "Attacking Ground, Mounted",
+    "leadership": 872,
+    "attack": 884,
+    "defense": 864,
+    "politics": 830
   },
   {
     "type": "General",
@@ -4677,7 +5572,12 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/basil-ii",
-    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle of Kleidion; Special skill: Increases ground troops and mounted troops' attack by 30% and increases ground troops and mounted troops defense by 15% when General is leading the army to attack."
+    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle of Kleidion; Special skill: Increases ground troops and mounted troops' attack by 30% and increases ground troops and mounted troops defense by 15% when General is leading the army to attack.",
+    "generalType": "Attacking Ground, Mounted",
+    "leadership": 872,
+    "attack": 884,
+    "defense": 864,
+    "politics": 830
   },
   {
     "type": "General",
@@ -4703,6 +5603,11 @@
     "covenant4": null,
     "covenant5": null,
     "sourceUrl": "https://www.evonytkrguide.com/generals/basil-ii",
-    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle of Kleidion; Special skill: Increases ground troops and mounted troops' attack by 30% and increases ground troops and mounted troops defense by 15% when General is leading the army to attack."
+    "notes": "Specialties: Ground Troop Defense | Snipe | War God | Battle of Kleidion; Special skill: Increases ground troops and mounted troops' attack by 30% and increases ground troops and mounted troops defense by 15% when General is leading the army to attack.",
+    "generalType": "Attacking Ground, Mounted",
+    "leadership": 872,
+    "attack": 884,
+    "defense": 864,
+    "politics": 830
   }
 ]
