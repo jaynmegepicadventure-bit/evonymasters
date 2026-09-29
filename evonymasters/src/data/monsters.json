@@ -1510,7 +1510,7 @@
     "type": "Event",
     "level": 1,
     "power": 12400000,
-    "stamina": null,
+    "stamina": 20,
     "image": null,
     "event": "Lava Turtle",
     "updatedAt": "2026-09-29",
@@ -1609,7 +1609,7 @@
     "type": "Event",
     "level": 2,
     "power": 22300000,
-    "stamina": null,
+    "stamina": 30,
     "image": null,
     "event": "Lava Turtle",
     "updatedAt": "2026-09-29",
@@ -1708,7 +1708,7 @@
     "type": "Event",
     "level": 3,
     "power": 74500000,
-    "stamina": null,
+    "stamina": 30,
     "image": null,
     "event": "Lava Turtle",
     "updatedAt": "2026-09-29",
@@ -1807,7 +1807,7 @@
     "type": "Event",
     "level": 4,
     "power": null,
-    "stamina": null,
+    "stamina": 40,
     "image": null,
     "event": "Lava Turtle",
     "updatedAt": "2026-09-29",
@@ -1906,7 +1906,7 @@
     "type": "Event",
     "level": 1,
     "power": 22300000,
-    "stamina": null,
+    "stamina": 20,
     "image": null,
     "event": "Ymir",
     "updatedAt": "2026-09-29",
@@ -2005,7 +2005,7 @@
     "type": "Event",
     "level": 2,
     "power": 42800000,
-    "stamina": null,
+    "stamina": 30,
     "image": null,
     "event": "Ymir",
     "updatedAt": "2026-09-29",
@@ -2104,7 +2104,7 @@
     "type": "Event",
     "level": 3,
     "power": 107200000,
-    "stamina": null,
+    "stamina": 30,
     "image": null,
     "event": "Ymir",
     "updatedAt": "2026-09-29",
@@ -2199,7 +2199,7 @@
     "type": "Event",
     "level": 4,
     "power": 206400000,
-    "stamina": null,
+    "stamina": 40,
     "image": null,
     "event": "Ymir",
     "updatedAt": "2026-09-29",
@@ -2298,7 +2298,7 @@
     "type": "Event",
     "level": 5,
     "power": 361300000,
-    "stamina": null,
+    "stamina": 40,
     "image": null,
     "event": "Ymir",
     "updatedAt": "2026-09-29",
@@ -8766,7 +8766,7 @@
     "type": "Event",
     "level": 2,
     "power": 120600000,
-    "stamina": null,
+    "stamina": 30,
     "image": null,
     "event": "Hydra",
     "updatedAt": "2026-09-29",
@@ -8775,7 +8775,8 @@
       "inGameVerified": false,
       "sourceUrls": [
         "https://www.evonytkrguide.com/bosses",
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://www.evonytkrguide.com/bosses/medium_hydra"
       ],
       "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
@@ -8840,7 +8841,7 @@
     "type": "Event",
     "level": 3,
     "power": 198900000,
-    "stamina": null,
+    "stamina": 40,
     "image": null,
     "event": "Hydra",
     "updatedAt": "2026-09-29",
@@ -8849,7 +8850,8 @@
       "inGameVerified": false,
       "sourceUrls": [
         "https://www.evonytkrguide.com/bosses",
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://www.evonytkrguide.com/bosses/senior_hydra"
       ],
       "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
@@ -9016,7 +9018,7 @@
     "type": "Event",
     "level": 2,
     "power": 147500000,
-    "stamina": null,
+    "stamina": 30,
     "image": null,
     "event": "Knight Bayard",
     "updatedAt": "2026-09-29",
@@ -9025,7 +9027,8 @@
       "inGameVerified": false,
       "sourceUrls": [
         "https://www.evonytkrguide.com/bosses",
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://www.evonytkrguide.com/bosses/senior_bayar_knight"
       ],
       "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
@@ -9170,7 +9173,7 @@
     "type": "Event",
     "level": 2,
     "power": 71500000,
-    "stamina": null,
+    "stamina": 25,
     "image": null,
     "event": "Nian",
     "updatedAt": "2026-09-29",
@@ -9281,7 +9284,7 @@
     "type": "Event",
     "level": 3,
     "power": 89400000,
-    "stamina": null,
+    "stamina": 30,
     "image": null,
     "event": "Nian",
     "updatedAt": "2026-09-29",
@@ -9290,7 +9293,8 @@
       "inGameVerified": false,
       "sourceUrls": [
         "https://www.evonytkrguide.com/bosses",
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://www.evonytkrguide.com/bosses/senior_nian"
       ],
       "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
@@ -9675,7 +9679,7 @@
     "type": "Event",
     "level": 1,
     "power": 13600000,
-    "stamina": null,
+    "stamina": 20,
     "image": null,
     "event": "Royal Thief",
     "updatedAt": "2026-09-29",
@@ -9684,7 +9688,8 @@
       "inGameVerified": false,
       "sourceUrls": [
         "https://www.evonytkrguide.com/bosses",
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://www.evonytkrguide.com/bosses/royal_thief"
       ],
       "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
@@ -9729,7 +9734,7 @@
     "type": "Event",
     "level": 1,
     "power": null,
-    "stamina": null,
+    "stamina": 10,
     "image": null,
     "event": "Viking",
     "updatedAt": "2026-09-29",
@@ -9738,9 +9743,10 @@
       "inGameVerified": false,
       "sourceUrls": [
         "https://www.evonytkrguide.com/bosses",
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://onechilledgamer.com/evony-viking-challenge-guide/"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified. Attack costs 10 stamina; summoning costs another 5."
     },
     "rewards": [],
     "chests": [
@@ -9832,7 +9838,7 @@
     "type": "Event",
     "level": 2,
     "power": null,
-    "stamina": null,
+    "stamina": 10,
     "image": null,
     "event": "Viking",
     "updatedAt": "2026-09-29",
@@ -9841,9 +9847,10 @@
       "inGameVerified": false,
       "sourceUrls": [
         "https://www.evonytkrguide.com/bosses",
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://onechilledgamer.com/evony-viking-challenge-guide/"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified. Attack costs 10 stamina; summoning costs another 5."
     },
     "rewards": [],
     "chests": [
@@ -9935,7 +9942,7 @@
     "type": "Event",
     "level": 3,
     "power": null,
-    "stamina": null,
+    "stamina": 10,
     "image": null,
     "event": "Viking",
     "updatedAt": "2026-09-29",
@@ -9944,9 +9951,10 @@
       "inGameVerified": false,
       "sourceUrls": [
         "https://www.evonytkrguide.com/bosses",
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://onechilledgamer.com/evony-viking-challenge-guide/"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified. Attack costs 10 stamina; summoning costs another 5."
     },
     "rewards": [],
     "chests": [
@@ -10038,7 +10046,7 @@
     "type": "Event",
     "level": 1,
     "power": 13000000,
-    "stamina": null,
+    "stamina": 20,
     "image": null,
     "event": "Warlord",
     "updatedAt": "2026-09-29",
@@ -10047,7 +10055,8 @@
       "inGameVerified": false,
       "sourceUrls": [
         "https://www.evonytkrguide.com/bosses",
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://www.evonytkrguide.com/bosses/warlord_-_level_1"
       ],
       "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
@@ -10092,7 +10101,8 @@
         ],
         "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
       }
-    ]
+    ],
+    "live": true
   },
   {
     "id": "warlord-2",
@@ -10100,7 +10110,7 @@
     "type": "Event",
     "level": 2,
     "power": 24600000,
-    "stamina": null,
+    "stamina": 30,
     "image": null,
     "event": "Warlord",
     "updatedAt": "2026-09-29",
@@ -10109,7 +10119,8 @@
       "inGameVerified": false,
       "sourceUrls": [
         "https://www.evonytkrguide.com/bosses",
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://www.evonytkrguide.com/bosses/warlord_-_level_2"
       ],
       "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
@@ -10154,7 +10165,8 @@
         ],
         "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
       }
-    ]
+    ],
+    "live": true
   },
   {
     "id": "warlord-3",
@@ -10162,7 +10174,7 @@
     "type": "Event",
     "level": 3,
     "power": 85600000,
-    "stamina": null,
+    "stamina": 30,
     "image": null,
     "event": "Warlord",
     "updatedAt": "2026-09-29",
@@ -10171,7 +10183,8 @@
       "inGameVerified": false,
       "sourceUrls": [
         "https://www.evonytkrguide.com/bosses",
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://www.evonytkrguide.com/bosses/warlord_-_level_3"
       ],
       "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
@@ -10216,7 +10229,8 @@
         ],
         "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
       }
-    ]
+    ],
+    "live": true
   },
   {
     "id": "warlord-4",
@@ -10224,7 +10238,7 @@
     "type": "Event",
     "level": 4,
     "power": 154800000,
-    "stamina": null,
+    "stamina": 40,
     "image": null,
     "event": "Warlord",
     "updatedAt": "2026-09-29",
@@ -10233,7 +10247,8 @@
       "inGameVerified": false,
       "sourceUrls": [
         "https://www.evonytkrguide.com/bosses",
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://www.evonytkrguide.com/bosses/warlord_-_level_4"
       ],
       "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
@@ -10278,7 +10293,8 @@
         ],
         "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
       }
-    ]
+    ],
+    "live": true
   },
   {
     "id": "witch-1",
@@ -10286,7 +10302,7 @@
     "type": "Event",
     "level": 1,
     "power": 13000000,
-    "stamina": null,
+    "stamina": 20,
     "image": null,
     "event": "Witch",
     "updatedAt": "2026-09-29",
@@ -10295,7 +10311,8 @@
       "inGameVerified": false,
       "sourceUrls": [
         "https://www.evonytkrguide.com/bosses",
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://www.evonytkrguide.com/bosses/witch_-_level_1"
       ],
       "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
@@ -10348,7 +10365,7 @@
     "type": "Event",
     "level": 2,
     "power": 24600000,
-    "stamina": null,
+    "stamina": 30,
     "image": null,
     "event": "Witch",
     "updatedAt": "2026-09-29",
@@ -10357,7 +10374,8 @@
       "inGameVerified": false,
       "sourceUrls": [
         "https://www.evonytkrguide.com/bosses",
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://www.evonytkrguide.com/bosses/witch_-_level_2"
       ],
       "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
@@ -10410,7 +10428,7 @@
     "type": "Event",
     "level": 3,
     "power": 85600000,
-    "stamina": null,
+    "stamina": 30,
     "image": null,
     "event": "Witch",
     "updatedAt": "2026-09-29",
@@ -10419,7 +10437,8 @@
       "inGameVerified": false,
       "sourceUrls": [
         "https://www.evonytkrguide.com/bosses",
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://www.evonytkrguide.com/bosses/witch_-_level_3"
       ],
       "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
@@ -10472,7 +10491,7 @@
     "type": "Event",
     "level": 4,
     "power": 154800000,
-    "stamina": null,
+    "stamina": 40,
     "image": null,
     "event": "Witch",
     "updatedAt": "2026-09-29",
@@ -10481,7 +10500,8 @@
       "inGameVerified": false,
       "sourceUrls": [
         "https://www.evonytkrguide.com/bosses",
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://www.evonytkrguide.com/bosses/witch_-_level_4"
       ],
       "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
@@ -10534,7 +10554,7 @@
     "type": "Event",
     "level": 5,
     "power": 225200000,
-    "stamina": null,
+    "stamina": 40,
     "image": null,
     "event": "Witch",
     "updatedAt": "2026-09-29",
@@ -10543,7 +10563,8 @@
       "inGameVerified": false,
       "sourceUrls": [
         "https://www.evonytkrguide.com/bosses",
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://www.evonytkrguide.com/bosses/witch_-_level_5"
       ],
       "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
@@ -10710,7 +10731,8 @@
         ],
         "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
       }
-    ]
+    ],
+    "live": true
   },
   {
     "id": "warlord-6",
@@ -10771,7 +10793,8 @@
         ],
         "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
       }
-    ]
+    ],
+    "live": true
   },
   {
     "id": "bayar-knight-3",
@@ -10863,7 +10886,7 @@
     "type": "Event",
     "level": 1,
     "power": 200000,
-    "stamina": null,
+    "stamina": 20,
     "image": null,
     "event": "Greedy Goblin",
     "updatedAt": "2026-09-29",
@@ -10871,9 +10894,10 @@
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://evony-the-kings-return.fandom.com/wiki/Beginners"
       ],
-      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed. The source gives a general Goblin cost, not a per-level confirmation."
     },
     "rewards": [],
     "chests": [
@@ -10896,7 +10920,7 @@
     "type": "Event",
     "level": 4,
     "power": 320000,
-    "stamina": null,
+    "stamina": 20,
     "image": null,
     "event": "Greedy Goblin",
     "updatedAt": "2026-09-29",
@@ -10904,9 +10928,10 @@
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://evony-the-kings-return.fandom.com/wiki/Beginners"
       ],
-      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed. The source gives a general Goblin cost, not a per-level confirmation."
     },
     "rewards": [],
     "chests": [
@@ -10929,7 +10954,7 @@
     "type": "Event",
     "level": 7,
     "power": 500000,
-    "stamina": null,
+    "stamina": 20,
     "image": null,
     "event": "Greedy Goblin",
     "updatedAt": "2026-09-29",
@@ -10937,9 +10962,10 @@
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://evony-the-kings-return.fandom.com/wiki/Beginners"
       ],
-      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed. The source gives a general Goblin cost, not a per-level confirmation."
     },
     "rewards": [],
     "chests": [
@@ -11388,7 +11414,7 @@
     "type": "Event",
     "level": 1,
     "power": 22300000,
-    "stamina": null,
+    "stamina": 20,
     "image": null,
     "event": "Pan",
     "updatedAt": "2026-09-29",
@@ -11396,9 +11422,10 @@
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://theriagames.com/guide/bosses/"
       ],
-      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed. Stamina inferred from published speed-up minutes per stamina."
     },
     "rewards": [],
     "chests": [
@@ -11453,7 +11480,7 @@
     "type": "Event",
     "level": 2,
     "power": 42800000,
-    "stamina": null,
+    "stamina": 30,
     "image": null,
     "event": "Pan",
     "updatedAt": "2026-09-29",
@@ -11461,9 +11488,10 @@
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://theriagames.com/guide/bosses/"
       ],
-      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed. Stamina inferred from published speed-up minutes per stamina."
     },
     "rewards": [],
     "chests": [
@@ -11518,7 +11546,7 @@
     "type": "Event",
     "level": 3,
     "power": 122900000,
-    "stamina": null,
+    "stamina": 30,
     "image": null,
     "event": "Pan",
     "updatedAt": "2026-09-29",
@@ -11526,9 +11554,10 @@
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://theriagames.com/guide/bosses/"
       ],
-      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed. Stamina inferred from published speed-up minutes per stamina."
     },
     "rewards": [],
     "chests": [
@@ -11583,7 +11612,7 @@
     "type": "Event",
     "level": 4,
     "power": 206400000,
-    "stamina": null,
+    "stamina": 40,
     "image": null,
     "event": "Pan",
     "updatedAt": "2026-09-29",
@@ -11591,9 +11620,10 @@
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://theriagames.com/guide/bosses/"
       ],
-      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed. Stamina inferred from published speed-up minutes per stamina."
     },
     "rewards": [],
     "chests": [
@@ -11656,7 +11686,7 @@
     "type": "Event",
     "level": 5,
     "power": 361300000,
-    "stamina": null,
+    "stamina": 40,
     "image": null,
     "event": "Pan",
     "updatedAt": "2026-09-29",
@@ -11664,9 +11694,10 @@
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://theriagames.com/guide/bosses/"
       ],
-      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed. Stamina inferred from published speed-up minutes per stamina."
     },
     "rewards": [],
     "chests": [
@@ -11733,7 +11764,7 @@
     "type": "Event",
     "level": 6,
     "power": 711100000,
-    "stamina": null,
+    "stamina": 40,
     "image": null,
     "event": "Pan",
     "updatedAt": "2026-09-29",
@@ -11741,9 +11772,10 @@
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://theriagames.com/guide/bosses/"
       ],
-      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed. Stamina inferred from published speed-up minutes per stamina."
     },
     "rewards": [],
     "chests": [
@@ -11949,7 +11981,7 @@
     "type": "Event",
     "level": 2,
     "power": 186100,
-    "stamina": null,
+    "stamina": 15,
     "image": null,
     "event": "Fenrir",
     "updatedAt": "2026-09-29",
@@ -11957,7 +11989,8 @@
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://theriagames.com/guide/evony-boss-database/"
       ],
       "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
@@ -12002,7 +12035,7 @@
     "type": "Event",
     "level": 3,
     "power": 492700,
-    "stamina": null,
+    "stamina": 15,
     "image": null,
     "event": "Fenrir",
     "updatedAt": "2026-09-29",
@@ -12010,7 +12043,8 @@
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://onechilledgamer.com/evony-event-monster-guide/"
+        "https://onechilledgamer.com/evony-event-monster-guide/",
+        "https://theriagames.com/guide/evony-boss-database/"
       ],
       "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
