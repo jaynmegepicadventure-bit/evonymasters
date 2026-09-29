@@ -92,7 +92,7 @@ const types = [{value:'Regular',label:'Regular'},{value:'Boss',label:'Boss'},{va
       if(!(m.chests||[]).length && !m.rewards.length){
         const row=document.createElement('tr');row.append(element('td','',m.type==='Event'?'Event Monster':'Monster'));
         const detail=element('td');const link=element('a','',displayName);link.href='/bosses/'+m.id+'/';detail.append(link);row.append(detail);
-        row.append(element('td','','No'));row.append(element('td','','Chest rewards not documented'));
+        row.append(element('td','',m.live===true?'Yes':'No'));row.append(element('td','','Chest rewards not documented'));
         row.append(element('td','qty','—'));row.append(element('td','source','—'));row.append(element('td','cost',m.stamina==null?'—':format(m.stamina)+' Stamina'));
         tbody.append(row);
       }
@@ -100,7 +100,7 @@ const types = [{value:'Regular',label:'Regular'},{value:'Boss',label:'Boss'},{va
         const row=document.createElement('tr');
         row.append(element('td','',m.type==='Event'?'Event Monster':'Monster'));
         const detail=element('td');const link=element('a','',displayName);link.href='/bosses/'+m.id+'/';detail.append(link);row.append(detail);
-        row.append(element('td','','No'));
+        row.append(element('td','',m.live===true?'Yes':'No'));
         const resource=element('td');resource.append(element('div','chest-name',chest.name));
         const full=monsterNameMatches(m,term)||normalize(chest.name).includes(normalize(term));
         const contents=full?chest.contents:chest.contents.filter(x=>normalize(x.name).includes(normalize(term)));
@@ -118,7 +118,7 @@ const types = [{value:'Regular',label:'Regular'},{value:'Boss',label:'Boss'},{va
         const row=document.createElement('tr');
         row.append(element('td','',m.type==='Event'?'Event Monster':'Monster'));
         const detail=element('td');const bossLink=element('a','',displayName);bossLink.href='/bosses/'+m.id+'/';detail.append(bossLink);row.append(detail);
-        row.append(element('td','','No'));
+        row.append(element('td','',m.live===true?'Yes':'No'));
         row.append(element('td','',byId.get(r.itemId)?.name || r.itemId));
         row.append(element('td','qty',r.quantity==null?'—':format(r.quantity)+(r.unit?' '+r.unit:'')));
         const sourceBase=r.origin==='direct'?'Direct':r.origin==='boss_chest'?'Chest - Boss':r.origin==='other_chest'?'Chest - Boss':'—';
