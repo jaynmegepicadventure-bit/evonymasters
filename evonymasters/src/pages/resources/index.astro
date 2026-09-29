@@ -93,7 +93,7 @@ const types = [{value:'Regular',label:'Regular'},{value:'Boss',label:'Boss'},{va
         const row=document.createElement('tr');row.append(element('td','',m.type==='Event'?'Event Monster':'Monster'));
         const detail=element('td');const link=element('a','',displayName);link.href='/bosses/'+m.id+'/';detail.append(link);row.append(detail);
         row.append(element('td','',m.live===true?'Yes':'No'));row.append(element('td','','Chest rewards not documented'));
-        row.append(element('td','qty','—'));row.append(element('td','source','—'));row.append(element('td','cost',m.stamina==null?'—':format(m.stamina)+' Stamina'));
+        row.append(element('td','qty','—'));row.append(element('td','source','—'));row.append(element('td','cost',m.stamina==null?'Not verified':format(m.stamina)+' Stamina'));
         tbody.append(row);
       }
       for(const chest of matchingMonsterChests(m,term)){
@@ -110,7 +110,7 @@ const types = [{value:'Regular',label:'Regular'},{value:'Boss',label:'Boss'},{va
         resource.append(list);row.append(resource);
         row.append(element('td','qty',chest.quantity==null?'—':format(chest.quantity)));
         row.append(element('td','source','Chest contents'));
-        row.append(element('td','cost',m.stamina==null?'—':format(m.stamina)+' Stamina'));
+        row.append(element('td','cost',m.stamina==null?'Not verified':format(m.stamina)+' Stamina'));
         tbody.append(row);
       }
       const matches=matchingMonsterRewards(m,term);
@@ -124,7 +124,7 @@ const types = [{value:'Regular',label:'Regular'},{value:'Boss',label:'Boss'},{va
         const sourceBase=r.origin==='direct'?'Direct':r.origin==='boss_chest'?'Chest - Boss':r.origin==='other_chest'?'Chest - Boss':'—';
         const source=(r.origin==='boss_chest'||r.origin==='other_chest')&&r.notes?sourceBase+' '+r.notes:sourceBase;
         row.append(element('td','source',source));
-        row.append(element('td','cost',m.stamina==null?'—':format(m.stamina)+' Stamina'));
+        row.append(element('td','cost',m.stamina==null?'Not verified':format(m.stamina)+' Stamina'));
         tbody.append(row);
       }
     }
