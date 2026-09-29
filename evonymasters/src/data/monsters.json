@@ -234,6 +234,34 @@
         "notes": "Possible content of Artwork Fragment Chest III",
         "sourceUrl": "https://www.evonytkrguide.com/bosses/zombie"
       }
+    ],
+    "chests": [
+      {
+        "name": "B1 Chest",
+        "itemId": "lv1-boss-monster-chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Medal",
+            "quantity": 2
+          },
+          {
+            "name": "General EXP",
+            "quantity": 1000,
+            "unit": "EXP"
+          },
+          {
+            "name": "White Material Chest",
+            "quantity": 4
+          },
+          {
+            "name": "Speedup",
+            "quantity": 30,
+            "unit": "minutes"
+          }
+        ],
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/zombie"
+      }
     ]
   },
   {
@@ -469,6 +497,34 @@
         "kind": "possible",
         "origin": "other_chest",
         "notes": "Possible content of Artwork Fragment Chest III",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/redcap"
+      }
+    ],
+    "chests": [
+      {
+        "name": "B2 Chest",
+        "itemId": "lv2-boss-monster-chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Medal",
+            "quantity": 2
+          },
+          {
+            "name": "General EXP",
+            "quantity": 1500,
+            "unit": "EXP"
+          },
+          {
+            "name": "White Material Chest",
+            "quantity": 5
+          },
+          {
+            "name": "Speedup",
+            "quantity": 60,
+            "unit": "minutes"
+          }
+        ],
         "sourceUrl": "https://www.evonytkrguide.com/bosses/redcap"
       }
     ]
@@ -708,6 +764,34 @@
         "notes": "Possible content of Artwork Fragment Chest III",
         "sourceUrl": "https://www.evonytkrguide.com/bosses/centaur"
       }
+    ],
+    "chests": [
+      {
+        "name": "B3 Chest",
+        "itemId": "lv3-boss-monster-chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Medal",
+            "quantity": 2
+          },
+          {
+            "name": "General EXP",
+            "quantity": 2000,
+            "unit": "EXP"
+          },
+          {
+            "name": "Green Material Chest",
+            "quantity": 3
+          },
+          {
+            "name": "Speedup",
+            "quantity": 90,
+            "unit": "minutes"
+          }
+        ],
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/centaur"
+      }
     ]
   },
   {
@@ -943,6 +1027,34 @@
         "kind": "possible",
         "origin": "other_chest",
         "notes": "Possible content of Artwork Fragment Chest III",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/skeleton_dragon"
+      }
+    ],
+    "chests": [
+      {
+        "name": "B4 Chest",
+        "itemId": "lv4-boss-monster-chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Medal",
+            "quantity": 3
+          },
+          {
+            "name": "General EXP",
+            "quantity": 2000,
+            "unit": "EXP"
+          },
+          {
+            "name": "Green Material Chest",
+            "quantity": 4
+          },
+          {
+            "name": "Speedup",
+            "quantity": 120,
+            "unit": "minutes"
+          }
+        ],
         "sourceUrl": "https://www.evonytkrguide.com/bosses/skeleton_dragon"
       }
     ]
@@ -1362,6 +1474,34 @@
         "notes": "Possible content of King's Scroll Chest",
         "sourceUrl": "https://www.evonytkrguide.com/bosses/griffin"
       }
+    ],
+    "chests": [
+      {
+        "name": "B10 Chest",
+        "itemId": "lv10-boss-monster-chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Medal",
+            "quantity": 5
+          },
+          {
+            "name": "General EXP",
+            "quantity": 5000,
+            "unit": "EXP"
+          },
+          {
+            "name": "Blue Material Chest",
+            "quantity": 6
+          },
+          {
+            "name": "Speedup",
+            "quantity": 480,
+            "unit": "minutes"
+          }
+        ],
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/griffin"
+      }
     ]
   },
   {
@@ -1369,18 +1509,19 @@
     "name": "Lava Turtle - Level 1",
     "type": "Event",
     "level": 1,
-    "power": null,
+    "power": 12400000,
     "stamina": null,
     "image": null,
     "event": "Lava Turtle",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_1"
+        "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_1",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Guide lists these resource-box totals in the event chest. Chest acquisition and event availability may vary; resources are not asserted as guaranteed per kill. Power and stamina pending verification."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
     "rewards": [
       {
@@ -1418,6 +1559,47 @@
         "origin": "other_chest",
         "notes": "Resource boxes in event chest; conditional on obtaining chest",
         "sourceUrl": "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_1"
+      }
+    ],
+    "chests": [
+      {
+        "name": "Lava Turtle Level 1 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 5
+          },
+          {
+            "name": "50k Food Box",
+            "quantity": 4
+          },
+          {
+            "name": "50k Lumber Box",
+            "quantity": 4
+          },
+          {
+            "name": "50k Stone Box",
+            "quantity": 4
+          },
+          {
+            "name": "50k Ore Box",
+            "quantity": 4
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 3
+          },
+          {
+            "name": "1hr Construction Speedup",
+            "quantity": 2
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
       }
     ]
   },
@@ -1426,18 +1608,19 @@
     "name": "Lava Turtle - Level 2",
     "type": "Event",
     "level": 2,
-    "power": null,
+    "power": 22300000,
     "stamina": null,
     "image": null,
     "event": "Lava Turtle",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_2"
+        "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_2",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Guide lists these resource-box totals in the event chest. Chest acquisition and event availability may vary; resources are not asserted as guaranteed per kill. Power and stamina pending verification."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
     "rewards": [
       {
@@ -1476,6 +1659,47 @@
         "notes": "Resource boxes in event chest; conditional on obtaining chest",
         "sourceUrl": "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_2"
       }
+    ],
+    "chests": [
+      {
+        "name": "Lava Turtle Level 2 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 10
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 4
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 4
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 4
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 4
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 6
+          },
+          {
+            "name": "3hr Heaking Speedup",
+            "quantity": 2
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
     ]
   },
   {
@@ -1483,18 +1707,19 @@
     "name": "Lava Turtle - Level 3",
     "type": "Event",
     "level": 3,
-    "power": null,
+    "power": 74500000,
     "stamina": null,
     "image": null,
     "event": "Lava Turtle",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_3"
+        "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_3",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Guide lists these resource-box totals in the event chest. Chest acquisition and event availability may vary; resources are not asserted as guaranteed per kill. Power and stamina pending verification."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
     "rewards": [
       {
@@ -1532,6 +1757,47 @@
         "origin": "other_chest",
         "notes": "Resource boxes in event chest; conditional on obtaining chest",
         "sourceUrl": "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_3"
+      }
+    ],
+    "chests": [
+      {
+        "name": "Lava Turtle Level 3 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 5
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 7
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 7
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 7
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 7
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 9
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
       }
     ]
   },
@@ -1544,14 +1810,15 @@
     "stamina": null,
     "image": null,
     "event": "Lava Turtle",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_4"
+        "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_4",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Guide lists these resource-box totals in the event chest. Chest acquisition and event availability may vary; resources are not asserted as guaranteed per kill. Power and stamina pending verification."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
     "rewards": [
       {
@@ -1589,6 +1856,47 @@
         "origin": "other_chest",
         "notes": "Resource boxes in event chest; conditional on obtaining chest",
         "sourceUrl": "https://www.evonytkrguide.com/bosses/lava_turtle_-_level_4"
+      }
+    ],
+    "chests": [
+      {
+        "name": "Lava Turtle Level 4 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 6
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 9
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 9
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 9
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 9
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 10
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 4
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
       }
     ]
   },
@@ -1597,18 +1905,19 @@
     "name": "Ymir - Level 1",
     "type": "Event",
     "level": 1,
-    "power": null,
+    "power": 22300000,
     "stamina": null,
     "image": null,
     "event": "Ymir",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/ymir_-_level_1"
+        "https://www.evonytkrguide.com/bosses/ymir_-_level_1",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Guide lists these resource-box totals in the event chest. Chest acquisition and event availability may vary; resources are not asserted as guaranteed per kill. Power and stamina pending verification."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
     "rewards": [
       {
@@ -1646,6 +1955,47 @@
         "origin": "other_chest",
         "notes": "Resource boxes in event chest; conditional on obtaining chest",
         "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_1"
+      }
+    ],
+    "chests": [
+      {
+        "name": "Ymir Level 1 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 7
+          },
+          {
+            "name": "50k Food Box",
+            "quantity": 5
+          },
+          {
+            "name": "50k Lumber Box",
+            "quantity": 5
+          },
+          {
+            "name": "50k Stone Box",
+            "quantity": 5
+          },
+          {
+            "name": "50k Ore Box",
+            "quantity": 5
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 4
+          },
+          {
+            "name": "1hr Construction Speedup",
+            "quantity": 4
+          },
+          {
+            "name": "1hr Training Speedup",
+            "quantity": 4
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
       }
     ]
   },
@@ -1654,18 +2004,19 @@
     "name": "Ymir - Level 2",
     "type": "Event",
     "level": 2,
-    "power": null,
+    "power": 42800000,
     "stamina": null,
     "image": null,
     "event": "Ymir",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/ymir_-_level_2"
+        "https://www.evonytkrguide.com/bosses/ymir_-_level_2",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Guide lists these resource-box totals in the event chest. Chest acquisition and event availability may vary; resources are not asserted as guaranteed per kill. Power and stamina pending verification."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
     "rewards": [
       {
@@ -1703,6 +2054,47 @@
         "origin": "other_chest",
         "notes": "Resource boxes in event chest; conditional on obtaining chest",
         "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_2"
+      }
+    ],
+    "chests": [
+      {
+        "name": "Ymir Level 2 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 13
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 8
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 8
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 8
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 8
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 8
+          },
+          {
+            "name": "3hr Healing Speedup",
+            "quantity": 5
+          },
+          {
+            "name": "3hr Research Speedup",
+            "quantity": 5
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
       }
     ]
   },
@@ -1711,18 +2103,19 @@
     "name": "Ymir - Level 3",
     "type": "Event",
     "level": 3,
-    "power": null,
+    "power": 107200000,
     "stamina": null,
     "image": null,
     "event": "Ymir",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/ymir_-_level_3"
+        "https://www.evonytkrguide.com/bosses/ymir_-_level_3",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Guide lists these resource-box totals in the event chest. Chest acquisition and event availability may vary; resources are not asserted as guaranteed per kill. Power and stamina pending verification."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
     "rewards": [
       {
@@ -1760,6 +2153,43 @@
         "origin": "other_chest",
         "notes": "Resource boxes in event chest; conditional on obtaining chest",
         "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_3"
+      }
+    ],
+    "chests": [
+      {
+        "name": "Ymir Level 3 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 9
+          },
+          {
+            "name": "500k Food Box",
+            "quantity": 4
+          },
+          {
+            "name": "500k Lumber Box",
+            "quantity": 4
+          },
+          {
+            "name": "500k Stone Box",
+            "quantity": 4
+          },
+          {
+            "name": "500k Ore Box",
+            "quantity": 4
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 12
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 8
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
       }
     ]
   },
@@ -1768,18 +2198,19 @@
     "name": "Ymir - Level 4",
     "type": "Event",
     "level": 4,
-    "power": null,
+    "power": 206400000,
     "stamina": null,
     "image": null,
     "event": "Ymir",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/ymir_-_level_4"
+        "https://www.evonytkrguide.com/bosses/ymir_-_level_4",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Guide lists these resource-box totals in the event chest. Chest acquisition and event availability may vary; resources are not asserted as guaranteed per kill. Power and stamina pending verification."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
     "rewards": [
       {
@@ -1818,6 +2249,47 @@
         "notes": "Resource boxes in event chest; conditional on obtaining chest",
         "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_4"
       }
+    ],
+    "chests": [
+      {
+        "name": "Ymir Level 4 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 10
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 22
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 22
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 22
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 22
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 13
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 8
+          },
+          {
+            "name": "Tactic Scroll",
+            "quantity": 3
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
     ]
   },
   {
@@ -1825,18 +2297,19 @@
     "name": "Ymir - Level 5",
     "type": "Event",
     "level": 5,
-    "power": null,
+    "power": 361300000,
     "stamina": null,
     "image": null,
     "event": "Ymir",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/ymir_-_level_5"
+        "https://www.evonytkrguide.com/bosses/ymir_-_level_5",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Guide lists these resource-box totals in the event chest. Chest acquisition and event availability may vary; resources are not asserted as guaranteed per kill. Power and stamina pending verification."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
     "rewards": [
       {
@@ -1874,6 +2347,47 @@
         "origin": "other_chest",
         "notes": "Resource boxes in event chest; conditional on obtaining chest",
         "sourceUrl": "https://www.evonytkrguide.com/bosses/ymir_-_level_5"
+      }
+    ],
+    "chests": [
+      {
+        "name": "Ymir Level 5 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 12
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 25
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 25
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 25
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 25
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 15
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 12
+          },
+          {
+            "name": "Tactic Scroll",
+            "quantity": 5
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
       }
     ]
   },
@@ -2130,6 +2644,34 @@
         "notes": "Possible content of Artwork Fragment Chest III",
         "sourceUrl": "https://www.evonytkrguide.com/bosses/werewolf"
       }
+    ],
+    "chests": [
+      {
+        "name": "B5 Chest",
+        "itemId": "lv5-boss-monster-chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Medal",
+            "quantity": 3
+          },
+          {
+            "name": "General EXP",
+            "quantity": 2500,
+            "unit": "EXP"
+          },
+          {
+            "name": "Green Material Chest",
+            "quantity": 5
+          },
+          {
+            "name": "Speedup",
+            "quantity": 150,
+            "unit": "minutes"
+          }
+        ],
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/werewolf"
+      }
     ]
   },
   {
@@ -2383,6 +2925,34 @@
         "kind": "possible",
         "origin": "other_chest",
         "notes": "Possible content of Artwork Fragment Chest III",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/manticore"
+      }
+    ],
+    "chests": [
+      {
+        "name": "B6 Chest",
+        "itemId": "lv6-boss-monster-chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Medal",
+            "quantity": 3
+          },
+          {
+            "name": "General EXP",
+            "quantity": 3000,
+            "unit": "EXP"
+          },
+          {
+            "name": "Blue Material Chest",
+            "quantity": 2
+          },
+          {
+            "name": "Speedup",
+            "quantity": 180,
+            "unit": "minutes"
+          }
+        ],
         "sourceUrl": "https://www.evonytkrguide.com/bosses/manticore"
       }
     ]
@@ -2710,6 +3280,34 @@
         "kind": "possible",
         "origin": "other_chest",
         "notes": "Possible content of Artwork Fragment Chest IV",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/yasha"
+      }
+    ],
+    "chests": [
+      {
+        "name": "B7 Chest",
+        "itemId": "lv7-boss-monster-chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Medal",
+            "quantity": 4
+          },
+          {
+            "name": "General EXP",
+            "quantity": 3000,
+            "unit": "EXP"
+          },
+          {
+            "name": "Blue Material Chest",
+            "quantity": 3
+          },
+          {
+            "name": "Speedup",
+            "quantity": 240,
+            "unit": "minutes"
+          }
+        ],
         "sourceUrl": "https://www.evonytkrguide.com/bosses/yasha"
       }
     ]
@@ -3048,6 +3646,34 @@
         "notes": "Possible content of Artwork Fragment Chest IV",
         "sourceUrl": "https://www.evonytkrguide.com/bosses/peryton"
       }
+    ],
+    "chests": [
+      {
+        "name": "B8 Chest",
+        "itemId": "lv8-boss-monster-chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Medal",
+            "quantity": 4
+          },
+          {
+            "name": "General EXP",
+            "quantity": 4000,
+            "unit": "EXP"
+          },
+          {
+            "name": "Blue Material Chest",
+            "quantity": 4
+          },
+          {
+            "name": "Speedup",
+            "quantity": 300,
+            "unit": "minutes"
+          }
+        ],
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/peryton"
+      }
     ]
   },
   {
@@ -3382,6 +4008,34 @@
         "kind": "possible",
         "origin": "other_chest",
         "notes": "Possible content of Artwork Fragment Chest V",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/minotaur"
+      }
+    ],
+    "chests": [
+      {
+        "name": "B9 Chest",
+        "itemId": "lv9-boss-monster-chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Medal",
+            "quantity": 4
+          },
+          {
+            "name": "General EXP",
+            "quantity": 4000,
+            "unit": "EXP"
+          },
+          {
+            "name": "Blue Material Chest",
+            "quantity": 5
+          },
+          {
+            "name": "Speedup",
+            "quantity": 360,
+            "unit": "minutes"
+          }
+        ],
         "sourceUrl": "https://www.evonytkrguide.com/bosses/minotaur"
       }
     ]
@@ -3873,6 +4527,75 @@
         "notes": "Possible content of King's Scroll Chest",
         "sourceUrl": "https://www.evonytkrguide.com/bosses/ifrit"
       }
+    ],
+    "chests": [
+      {
+        "name": "B11 Chest",
+        "itemId": "lv11-boss-monster-chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Gold",
+            "quantity": 100000,
+            "unit": "gold"
+          },
+          {
+            "name": "Blue Material Chest",
+            "quantity": 8
+          },
+          {
+            "name": "Stone",
+            "quantity": 200000,
+            "unit": "resources"
+          },
+          {
+            "name": "Ore",
+            "quantity": 200000,
+            "unit": "resources"
+          },
+          {
+            "name": "Food",
+            "quantity": 200000,
+            "unit": "resources"
+          },
+          {
+            "name": "Wood / Lumber",
+            "quantity": 200000,
+            "unit": "resources"
+          },
+          {
+            "name": "Training Speedup",
+            "quantity": 120,
+            "unit": "minutes"
+          },
+          {
+            "name": "Construction Speedup",
+            "quantity": 120,
+            "unit": "minutes"
+          },
+          {
+            "name": "Research Speedup",
+            "quantity": 120,
+            "unit": "minutes"
+          },
+          {
+            "name": "Healing Speedup",
+            "quantity": 120,
+            "unit": "minutes"
+          },
+          {
+            "name": "Trap Building Speedup",
+            "quantity": 120,
+            "unit": "minutes"
+          },
+          {
+            "name": "Crafting Speedup",
+            "quantity": 120,
+            "unit": "minutes"
+          }
+        ],
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/ifrit"
+      }
     ]
   },
   {
@@ -4297,6 +5020,50 @@
         "kind": "possible",
         "origin": "other_chest",
         "notes": "Possible content of Dragon Scroll Chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/kamaitachi"
+      }
+    ],
+    "chests": [
+      {
+        "name": "B12 Chest",
+        "itemId": "lv12-boss-monster-chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Gold",
+            "quantity": 200000,
+            "unit": "gold"
+          },
+          {
+            "name": "Large Material Chest",
+            "quantity": 4
+          },
+          {
+            "name": "Stone",
+            "quantity": 400000,
+            "unit": "resources"
+          },
+          {
+            "name": "Ore",
+            "quantity": 400000,
+            "unit": "resources"
+          },
+          {
+            "name": "Food",
+            "quantity": 400000,
+            "unit": "resources"
+          },
+          {
+            "name": "Wood / Lumber",
+            "quantity": 400000,
+            "unit": "resources"
+          },
+          {
+            "name": "Speedup",
+            "quantity": 600,
+            "unit": "minutes"
+          }
+        ],
         "sourceUrl": "https://www.evonytkrguide.com/bosses/kamaitachi"
       }
     ]
@@ -4815,6 +5582,50 @@
         "notes": "Possible content of Achaemenidae Scroll Chest",
         "sourceUrl": "https://www.evonytkrguide.com/bosses/fafnir"
       }
+    ],
+    "chests": [
+      {
+        "name": "B13 Chest",
+        "itemId": "lv13-boss-monster-chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Wood / Lumber",
+            "quantity": 500000,
+            "unit": "resources"
+          },
+          {
+            "name": "Gold",
+            "quantity": 200000,
+            "unit": "gold"
+          },
+          {
+            "name": "Large Material Chest",
+            "quantity": 5
+          },
+          {
+            "name": "Stone",
+            "quantity": 500000,
+            "unit": "resources"
+          },
+          {
+            "name": "Ore",
+            "quantity": 500000,
+            "unit": "resources"
+          },
+          {
+            "name": "Food",
+            "quantity": 500000,
+            "unit": "resources"
+          },
+          {
+            "name": "Speedup",
+            "quantity": 720,
+            "unit": "minutes"
+          }
+        ],
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/fafnir"
+      }
     ]
   },
   {
@@ -5331,6 +6142,50 @@
         "notes": "Possible content of Achaemenidae Scroll Chest",
         "sourceUrl": "https://www.evonytkrguide.com/bosses/behemoth"
       }
+    ],
+    "chests": [
+      {
+        "name": "B14 Chest",
+        "itemId": "lv14-boss-monster-chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Gold",
+            "quantity": 300000,
+            "unit": "gold"
+          },
+          {
+            "name": "Large Material Chest",
+            "quantity": 6
+          },
+          {
+            "name": "Stone",
+            "quantity": 700000,
+            "unit": "resources"
+          },
+          {
+            "name": "Ore",
+            "quantity": 700000,
+            "unit": "resources"
+          },
+          {
+            "name": "Food",
+            "quantity": 700000,
+            "unit": "resources"
+          },
+          {
+            "name": "Wood / Lumber",
+            "quantity": 700000,
+            "unit": "resources"
+          },
+          {
+            "name": "Speedup",
+            "quantity": 900,
+            "unit": "minutes"
+          }
+        ],
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/behemoth"
+      }
     ]
   },
   {
@@ -5845,6 +6700,50 @@
         "kind": "guaranteed",
         "origin": "boss_chest",
         "notes": "Listed contents of Lv15 Boss Monster Chest",
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/phoenix"
+      }
+    ],
+    "chests": [
+      {
+        "name": "B15 Chest",
+        "itemId": "lv15-boss-monster-chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Wood / Lumber",
+            "quantity": 1000000,
+            "unit": "resources"
+          },
+          {
+            "name": "Gold",
+            "quantity": 300000,
+            "unit": "gold"
+          },
+          {
+            "name": "Large Material Chest",
+            "quantity": 7
+          },
+          {
+            "name": "Stone",
+            "quantity": 1000000,
+            "unit": "resources"
+          },
+          {
+            "name": "Ore",
+            "quantity": 1000000,
+            "unit": "resources"
+          },
+          {
+            "name": "Food",
+            "quantity": 1000000,
+            "unit": "resources"
+          },
+          {
+            "name": "Speedup",
+            "quantity": 1080,
+            "unit": "minutes"
+          }
+        ],
         "sourceUrl": "https://www.evonytkrguide.com/bosses/phoenix"
       }
     ]
@@ -6435,6 +7334,50 @@
         "notes": "Listed contents of Lv16 Boss Monster Chest",
         "sourceUrl": "https://www.evonytkrguide.com/bosses/jormungandr"
       }
+    ],
+    "chests": [
+      {
+        "name": "B16 Chest",
+        "itemId": "lv16-boss-monster-chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Wood / Lumber",
+            "quantity": 1500000,
+            "unit": "resources"
+          },
+          {
+            "name": "Gold",
+            "quantity": 400000,
+            "unit": "gold"
+          },
+          {
+            "name": "Large Material Chest",
+            "quantity": 8
+          },
+          {
+            "name": "Stone",
+            "quantity": 1500000,
+            "unit": "resources"
+          },
+          {
+            "name": "Ore",
+            "quantity": 1500000,
+            "unit": "resources"
+          },
+          {
+            "name": "Food",
+            "quantity": 1500000,
+            "unit": "resources"
+          },
+          {
+            "name": "Speedup",
+            "quantity": 24,
+            "unit": "hours"
+          }
+        ],
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/jormungandr"
+      }
     ]
   },
   {
@@ -7023,6 +7966,50 @@
         "notes": "Listed contents of Lv17 Boss Monster Chest",
         "sourceUrl": "https://www.evonytkrguide.com/bosses/typhon"
       }
+    ],
+    "chests": [
+      {
+        "name": "B17 Chest",
+        "itemId": "lv17-boss-monster-chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Wood / Lumber",
+            "quantity": 2000000,
+            "unit": "resources"
+          },
+          {
+            "name": "Gold",
+            "quantity": 500000,
+            "unit": "gold"
+          },
+          {
+            "name": "Large Material Chest",
+            "quantity": 9
+          },
+          {
+            "name": "Stone",
+            "quantity": 2000000,
+            "unit": "resources"
+          },
+          {
+            "name": "Ore",
+            "quantity": 2000000,
+            "unit": "resources"
+          },
+          {
+            "name": "Food",
+            "quantity": 2000000,
+            "unit": "resources"
+          },
+          {
+            "name": "Speedup",
+            "quantity": 27,
+            "unit": "hours"
+          }
+        ],
+        "sourceUrl": "https://www.evonytkrguide.com/bosses/typhon"
+      }
     ]
   },
   {
@@ -7044,7 +8031,8 @@
       ],
       "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": []
   },
   {
     "id": "airavata",
@@ -7065,7 +8053,8 @@
       ],
       "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": []
   },
   {
     "id": "chimera",
@@ -7086,7 +8075,8 @@
       ],
       "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": []
   },
   {
     "id": "golem-1",
@@ -7097,14 +8087,15 @@
     "stamina": 20,
     "image": null,
     "event": "Golem",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/golem_-_level_1"
+        "https://www.evonytkrguide.com/bosses/golem_-_level_1",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Listed potential drops from individual boss guide; chest contents and other reward amounts still being verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
     "rewards": [
       {
@@ -7143,6 +8134,43 @@
         "notes": null,
         "sourceUrl": "https://www.evonytkrguide.com/bosses/golem_-_level_1"
       }
+    ],
+    "chests": [
+      {
+        "name": "Golem Level 1 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 5
+          },
+          {
+            "name": "50k Food Box",
+            "quantity": 4
+          },
+          {
+            "name": "50k Lumber Box",
+            "quantity": 4
+          },
+          {
+            "name": "50k Stone Box",
+            "quantity": 4
+          },
+          {
+            "name": "50k Ore Box",
+            "quantity": 4
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 3
+          },
+          {
+            "name": "10k Gold",
+            "quantity": 4
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
     ]
   },
   {
@@ -7154,16 +8182,54 @@
     "stamina": 30,
     "image": null,
     "event": "Golem",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/golem_-_level_2"
+        "https://www.evonytkrguide.com/bosses/golem_-_level_2",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Power and stamina verified against the individual boss guide; reward records are still pending."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Golem Level 2 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 10
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 4
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 4
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 4
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 4
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 6
+          },
+          {
+            "name": "1hr Speedup",
+            "quantity": 5
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
   },
   {
     "id": "golem-3",
@@ -7174,16 +8240,54 @@
     "stamina": 30,
     "image": null,
     "event": "Golem",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/golem_-_level_3"
+        "https://www.evonytkrguide.com/bosses/golem_-_level_3",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Power and stamina verified against the individual boss guide; reward records are still pending."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Golem Level 3 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 5
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 7
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 7
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 7
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 7
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 9
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 3
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
   },
   {
     "id": "golem-4",
@@ -7194,16 +8298,54 @@
     "stamina": 40,
     "image": null,
     "event": "Golem",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/golem_-_level_4"
+        "https://www.evonytkrguide.com/bosses/golem_-_level_4",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Power and stamina verified against the individual boss guide; reward records are still pending."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Golem Level 4 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 6
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 9
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 9
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 9
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 9
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 10
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 4
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
   },
   {
     "id": "golem-5",
@@ -7214,14 +8356,15 @@
     "stamina": 40,
     "image": null,
     "event": "Golem",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/golem_-_level_5"
+        "https://www.evonytkrguide.com/bosses/golem_-_level_5",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Listed potential drops from individual boss guide; chest contents and other reward amounts still being verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
     "rewards": [
       {
@@ -7269,6 +8412,43 @@
         "notes": null,
         "sourceUrl": "https://www.evonytkrguide.com/bosses/golem_-_level_5"
       }
+    ],
+    "chests": [
+      {
+        "name": "Golem Level 5 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 7
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 10
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 10
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 10
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 10
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 12
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 5
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
     ]
   },
   {
@@ -7276,20 +8456,66 @@
     "name": "Junior Cerberus",
     "type": "Event",
     "level": 1,
-    "power": 86200000,
+    "power": 68200000,
     "stamina": 20,
     "image": null,
     "event": "Cerberus",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/junior_cerberus"
+        "https://www.evonytkrguide.com/bosses/junior_cerberus",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Power and stamina verified against the individual boss guide; reward records are still pending."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Cerberus Level 1 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "15min Speedup",
+            "quantity": 30
+          },
+          {
+            "name": "30min Speedup",
+            "quantity": 15
+          },
+          {
+            "name": "1hr Training Speedup",
+            "quantity": 6
+          },
+          {
+            "name": "1hr Healing Speedup",
+            "quantity": 6
+          },
+          {
+            "name": "1hr Research Speedup",
+            "quantity": 6
+          },
+          {
+            "name": "1hr Construction Speedup",
+            "quantity": 10
+          },
+          {
+            "name": "1hr Trap Speedup",
+            "quantity": 6
+          },
+          {
+            "name": "1hr Crafting Speedup",
+            "quantity": 6
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 3
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
   },
   {
     "id": "cerberus-2",
@@ -7300,16 +8526,62 @@
     "stamina": 30,
     "image": null,
     "event": "Cerberus",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/medium_cerberus"
+        "https://www.evonytkrguide.com/bosses/medium_cerberus",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Power and stamina verified against the individual boss guide; reward records are still pending."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Cerberus Level 2 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "30min Speedup",
+            "quantity": 30
+          },
+          {
+            "name": "1hr Speedup",
+            "quantity": 15
+          },
+          {
+            "name": "3hr Training Speedup",
+            "quantity": 4
+          },
+          {
+            "name": "3hr Healing Speedup",
+            "quantity": 4
+          },
+          {
+            "name": "3hr Research Speedup",
+            "quantity": 4
+          },
+          {
+            "name": "3hr Construction Speedup",
+            "quantity": 6
+          },
+          {
+            "name": "3hr Trap Speedup",
+            "quantity": 4
+          },
+          {
+            "name": "3hr Crafting Speedup",
+            "quantity": 4
+          },
+          {
+            "name": "8hr Speedup",
+            "quantity": 2
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
   },
   {
     "id": "cerberus-3",
@@ -7320,16 +8592,62 @@
     "stamina": 40,
     "image": null,
     "event": "Cerberus",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/senior_cerberus"
+        "https://www.evonytkrguide.com/bosses/senior_cerberus",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Power and stamina verified against the individual boss guide; reward records are still pending."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Cerberus Level 3 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "1hr Speedup",
+            "quantity": 30
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 15
+          },
+          {
+            "name": "8hr Training Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "8hr Healing Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "8hr Research Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "8hr Construction Speedup",
+            "quantity": 4
+          },
+          {
+            "name": "8hr Trap Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "8hr Crafting Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "12hr Speedup",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
   },
   {
     "id": "hydra-1",
@@ -7340,14 +8658,15 @@
     "stamina": 20,
     "image": null,
     "event": "Hydra",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/junior_hydra"
+        "https://www.evonytkrguide.com/bosses/junior_hydra",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Listed potential drops from individual boss guide; chest contents and other reward amounts still being verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
     "rewards": [
       {
@@ -7386,6 +8705,59 @@
         "notes": null,
         "sourceUrl": "https://www.evonytkrguide.com/bosses/junior_hydra"
       }
+    ],
+    "chests": [
+      {
+        "name": "Hydra Level 1 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 6
+          },
+          {
+            "name": "1hr Speedup",
+            "quantity": 5
+          },
+          {
+            "name": "2k General EXP",
+            "quantity": 5
+          },
+          {
+            "name": "1k Monarch EXP",
+            "quantity": 5
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 3
+          },
+          {
+            "name": "500 Chips",
+            "quantity": 1
+          },
+          {
+            "name": "Magic Artwork Chest",
+            "quantity": 3
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 5
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 5
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 5
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 5
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
     ]
   },
   {
@@ -7393,40 +8765,152 @@
     "name": "Medium Hydra",
     "type": "Event",
     "level": 2,
-    "power": null,
+    "power": 120600000,
     "stamina": null,
     "image": null,
     "event": "Hydra",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Hydra Level 2 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 10
+          },
+          {
+            "name": "1hr Speedup",
+            "quantity": 8
+          },
+          {
+            "name": "2k General EXP",
+            "quantity": 8
+          },
+          {
+            "name": "1k Monarch EXP",
+            "quantity": 8
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 5
+          },
+          {
+            "name": "500 Chips",
+            "quantity": 1
+          },
+          {
+            "name": "Royal Waybill",
+            "quantity": 1
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 7
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 7
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 7
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 7
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
   },
   {
     "id": "hydra-3",
     "name": "Senior Hydra",
     "type": "Event",
     "level": 3,
-    "power": null,
+    "power": 198900000,
     "stamina": null,
     "image": null,
     "event": "Hydra",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Hydra Level 3 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 15
+          },
+          {
+            "name": "1hr Speedup",
+            "quantity": 12
+          },
+          {
+            "name": "2k General EXP",
+            "quantity": 12
+          },
+          {
+            "name": "1k Monarch EXP",
+            "quantity": 12
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 8
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 3
+          },
+          {
+            "name": "500 Chips",
+            "quantity": 2
+          },
+          {
+            "name": "Royal Waybill",
+            "quantity": 2
+          },
+          {
+            "name": "500k Food Box",
+            "quantity": 2
+          },
+          {
+            "name": "500k Lumber Box",
+            "quantity": 2
+          },
+          {
+            "name": "500k Stone Box",
+            "quantity": 2
+          },
+          {
+            "name": "500k Ore Box",
+            "quantity": 2
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
   },
   {
     "id": "knight-bayard-1",
@@ -7437,14 +8921,15 @@
     "stamina": 20,
     "image": null,
     "event": "Knight Bayard",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/junior_knight_bayard"
+        "https://www.evonytkrguide.com/bosses/junior_knight_bayard",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Listed potential drops from individual boss guide; chest contents and other reward amounts still being verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
     "rewards": [
       {
@@ -7501,6 +8986,28 @@
         "notes": null,
         "sourceUrl": "https://www.evonytkrguide.com/bosses/junior_knight_bayard"
       }
+    ],
+    "chests": [
+      {
+        "name": "Bayar Knight Level 1 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Pile of Gold",
+            "quantity": 2
+          },
+          {
+            "name": "Bulk of Gold",
+            "quantity": 2
+          },
+          {
+            "name": "Mass of Gold",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/",
+        "notes": "Random gold chest rewards; listed gold boxes have their own random contents."
+      }
     ]
   },
   {
@@ -7508,20 +9015,43 @@
     "name": "Senior Bayar Knight",
     "type": "Event",
     "level": 2,
-    "power": null,
+    "power": 147500000,
     "stamina": null,
     "image": null,
     "event": "Knight Bayard",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Bayar Knight Level 2 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Pile of Gold",
+            "quantity": 1
+          },
+          {
+            "name": "Bulk of Gold",
+            "quantity": 2
+          },
+          {
+            "name": "Mass of Gold",
+            "quantity": 2
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/",
+        "notes": "Random gold chest rewards; listed gold boxes have their own random contents."
+      }
+    ]
   },
   {
     "id": "nian-1",
@@ -7532,14 +9062,15 @@
     "stamina": 20,
     "image": null,
     "event": "Nian",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/junior_nian"
+        "https://www.evonytkrguide.com/bosses/junior_nian",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Listed potential drops from individual boss guide; chest contents and other reward amounts still being verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
     "rewards": [
       {
@@ -7578,6 +9109,59 @@
         "notes": null,
         "sourceUrl": "https://www.evonytkrguide.com/bosses/junior_nian"
       }
+    ],
+    "chests": [
+      {
+        "name": "Nian Level 1 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 10
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 2
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 2
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 2
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 2
+          },
+          {
+            "name": "1hr Training Speedup",
+            "quantity": 2
+          },
+          {
+            "name": "1hr Healing Speedup",
+            "quantity": 2
+          },
+          {
+            "name": "1hr Construction Speedup",
+            "quantity": 2
+          },
+          {
+            "name": "1hr Trap Speedup",
+            "quantity": 2
+          },
+          {
+            "name": "1hr Research Speedup",
+            "quantity": 2
+          },
+          {
+            "name": "100k Gold",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
     ]
   },
   {
@@ -7585,18 +9169,19 @@
     "name": "Medium Nian",
     "type": "Event",
     "level": 2,
-    "power": null,
+    "power": 71500000,
     "stamina": null,
     "image": null,
     "event": "Nian",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/medium_nian"
+        "https://www.evonytkrguide.com/bosses/medium_nian",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Listed potential drops from individual boss guide; chest contents and other reward amounts still being verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
     "rewards": [
       {
@@ -7635,6 +9220,59 @@
         "notes": null,
         "sourceUrl": "https://www.evonytkrguide.com/bosses/medium_nian"
       }
+    ],
+    "chests": [
+      {
+        "name": "Nian Level 2 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 5
+          },
+          {
+            "name": "500k Food Box",
+            "quantity": 1
+          },
+          {
+            "name": "500k Lumber Box",
+            "quantity": 1
+          },
+          {
+            "name": "500k Stone Box",
+            "quantity": 1
+          },
+          {
+            "name": "500k Ore Box",
+            "quantity": 1
+          },
+          {
+            "name": "1hr Training Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "1hr Healing Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "1hr Construction Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "1hr Trap Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "1hr Research Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "100k Gold",
+            "quantity": 2
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
     ]
   },
   {
@@ -7642,160 +9280,448 @@
     "name": "Senior Nian",
     "type": "Event",
     "level": 3,
-    "power": null,
+    "power": 89400000,
     "stamina": null,
     "image": null,
     "event": "Nian",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Nian Level 3 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 9
+          },
+          {
+            "name": "500k Food Box",
+            "quantity": 2
+          },
+          {
+            "name": "500k Lumber Box",
+            "quantity": 2
+          },
+          {
+            "name": "500k Stone Box",
+            "quantity": 2
+          },
+          {
+            "name": "500k Ore Box",
+            "quantity": 2
+          },
+          {
+            "name": "1hr Training Speedup",
+            "quantity": 4
+          },
+          {
+            "name": "1hr Healing Speedup",
+            "quantity": 4
+          },
+          {
+            "name": "1hr Construction Speedup",
+            "quantity": 4
+          },
+          {
+            "name": "1hr Trap Speedup",
+            "quantity": 4
+          },
+          {
+            "name": "1hr Research Speedup",
+            "quantity": 4
+          },
+          {
+            "name": "100k Gold",
+            "quantity": 3
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
   },
   {
     "id": "pumpkin-monster-1",
     "name": "Pumpkin Monster - Level 1",
     "type": "Event",
     "level": 1,
-    "power": null,
+    "power": 708500,
     "stamina": null,
     "image": null,
     "event": "Pumpkin Monster",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Pumpkin Monster Level 1 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Green Material Chest",
+            "quantity": 4
+          },
+          {
+            "name": "Medal",
+            "quantity": 3
+          },
+          {
+            "name": "1hr Speedup",
+            "quantity": 2
+          },
+          {
+            "name": "500 General EXP",
+            "quantity": 4
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
   },
   {
     "id": "pumpkin-monster-2",
     "name": "Pumpkin Monster - Level 2",
     "type": "Event",
     "level": 2,
-    "power": null,
+    "power": 1900000,
     "stamina": null,
     "image": null,
     "event": "Pumpkin Monster",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Pumpkin Monster Level 2 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 2
+          },
+          {
+            "name": "Medal",
+            "quantity": 3
+          },
+          {
+            "name": "1hr Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "1K General EXP",
+            "quantity": 3
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
   },
   {
     "id": "pumpkin-monster-3",
     "name": "Pumpkin Monster - Level 3",
     "type": "Event",
     "level": 3,
-    "power": null,
+    "power": 5900000,
     "stamina": null,
     "image": null,
     "event": "Pumpkin Monster",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Pumpkin Monster Level 3 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 4
+          },
+          {
+            "name": "Medal",
+            "quantity": 4
+          },
+          {
+            "name": "1hr Speedup",
+            "quantity": 5
+          },
+          {
+            "name": "2K General EXP",
+            "quantity": 2
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
   },
   {
     "id": "pumpkin-monster-4",
     "name": "Pumpkin Monster - Level 4",
     "type": "Event",
     "level": 4,
-    "power": null,
+    "power": 16100000,
     "stamina": null,
     "image": null,
     "event": "Pumpkin Monster",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Pumpkin Monster Level 4 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 6
+          },
+          {
+            "name": "Medal",
+            "quantity": 5
+          },
+          {
+            "name": "8hr Speedup",
+            "quantity": 1
+          },
+          {
+            "name": "5K General EXP",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
   },
   {
     "id": "pumpkin-monster-5",
     "name": "Pumpkin Monster - Level 5",
     "type": "Event",
     "level": 5,
-    "power": null,
+    "power": 53600000,
     "stamina": null,
     "image": null,
     "event": "Pumpkin Monster",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Pumpkin Monster Level 5 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 8
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 2
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 2
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 2
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 2
+          },
+          {
+            "name": "1hr Training Speedup",
+            "quantity": 2
+          },
+          {
+            "name": "1hr Healing Speedup",
+            "quantity": 2
+          },
+          {
+            "name": "1hr Research Speedup",
+            "quantity": 2
+          },
+          {
+            "name": "1hr Construction Speedup",
+            "quantity": 2
+          },
+          {
+            "name": "1hr Trap Speedup",
+            "quantity": 2
+          },
+          {
+            "name": "1hr Crafting Speedup",
+            "quantity": 2
+          },
+          {
+            "name": "100k Gold",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
   },
   {
     "id": "pumpkin-monster-6",
     "name": "Pumpkin Monster - Level 6",
     "type": "Event",
     "level": 6,
-    "power": null,
+    "power": 80400000,
     "stamina": null,
     "image": null,
     "event": "Pumpkin Monster",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Pumpkin Monster Level 6 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 4
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 4
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 4
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 4
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 4
+          },
+          {
+            "name": "1hr Speedup",
+            "quantity": 10
+          },
+          {
+            "name": "100k Gold",
+            "quantity": 2
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
   },
   {
     "id": "royal-thief-1",
     "name": "Royal Thief - Level 1",
     "type": "Event",
     "level": 1,
-    "power": null,
+    "power": 13600000,
     "stamina": null,
     "image": null,
     "event": "Royal Thief",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Royal Thief Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Super Resource Chest",
+            "quantity": 5
+          },
+          {
+            "name": "100k Gold",
+            "quantity": 5
+          },
+          {
+            "name": "Blue Material Chest",
+            "quantity": 5
+          },
+          {
+            "name": "Medal",
+            "quantity": 4
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 2
+          },
+          {
+            "name": "2k General EXP",
+            "quantity": 2
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
   },
   {
     "id": "viking-1",
@@ -7806,16 +9732,99 @@
     "stamina": null,
     "image": null,
     "event": "Viking",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
       "status": "roster-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
       "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Small Viking Gold Chest",
+        "quantity": null,
+        "contents": [
+          {
+            "name": "10k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "50k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "100k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "100 Chips",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/",
+        "notes": "Possible chest; guide does not assign chest size to this Viking tier."
+      },
+      {
+        "name": "Medium Viking Gold Chest",
+        "quantity": null,
+        "contents": [
+          {
+            "name": "100k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "200k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "500k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "1m Gold",
+            "quantity": 1
+          },
+          {
+            "name": "500 Chips",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/",
+        "notes": "Possible chest; guide does not assign chest size to this Viking tier."
+      },
+      {
+        "name": "Large Viking Gold Chest",
+        "quantity": null,
+        "contents": [
+          {
+            "name": "200k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "500k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "1m Gold",
+            "quantity": 1
+          },
+          {
+            "name": "4m Gold",
+            "quantity": 1
+          },
+          {
+            "name": "1k Chips",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/",
+        "notes": "Possible chest; guide does not assign chest size to this Viking tier."
+      }
+    ]
   },
   {
     "id": "viking-2",
@@ -7826,16 +9835,99 @@
     "stamina": null,
     "image": null,
     "event": "Viking",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
       "status": "roster-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
       "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Small Viking Gold Chest",
+        "quantity": null,
+        "contents": [
+          {
+            "name": "10k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "50k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "100k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "100 Chips",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/",
+        "notes": "Possible chest; guide does not assign chest size to this Viking tier."
+      },
+      {
+        "name": "Medium Viking Gold Chest",
+        "quantity": null,
+        "contents": [
+          {
+            "name": "100k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "200k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "500k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "1m Gold",
+            "quantity": 1
+          },
+          {
+            "name": "500 Chips",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/",
+        "notes": "Possible chest; guide does not assign chest size to this Viking tier."
+      },
+      {
+        "name": "Large Viking Gold Chest",
+        "quantity": null,
+        "contents": [
+          {
+            "name": "200k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "500k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "1m Gold",
+            "quantity": 1
+          },
+          {
+            "name": "4m Gold",
+            "quantity": 1
+          },
+          {
+            "name": "1k Chips",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/",
+        "notes": "Possible chest; guide does not assign chest size to this Viking tier."
+      }
+    ]
   },
   {
     "id": "viking-3",
@@ -7846,195 +9938,2677 @@
     "stamina": null,
     "image": null,
     "event": "Viking",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
       "status": "roster-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
       "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Small Viking Gold Chest",
+        "quantity": null,
+        "contents": [
+          {
+            "name": "10k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "50k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "100k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "100 Chips",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/",
+        "notes": "Possible chest; guide does not assign chest size to this Viking tier."
+      },
+      {
+        "name": "Medium Viking Gold Chest",
+        "quantity": null,
+        "contents": [
+          {
+            "name": "100k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "200k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "500k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "1m Gold",
+            "quantity": 1
+          },
+          {
+            "name": "500 Chips",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/",
+        "notes": "Possible chest; guide does not assign chest size to this Viking tier."
+      },
+      {
+        "name": "Large Viking Gold Chest",
+        "quantity": null,
+        "contents": [
+          {
+            "name": "200k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "500k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "1m Gold",
+            "quantity": 1
+          },
+          {
+            "name": "4m Gold",
+            "quantity": 1
+          },
+          {
+            "name": "1k Chips",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/",
+        "notes": "Possible chest; guide does not assign chest size to this Viking tier."
+      }
+    ]
   },
   {
     "id": "warlord-1",
     "name": "Warlord - Level 1",
     "type": "Event",
     "level": 1,
-    "power": null,
+    "power": 13000000,
     "stamina": null,
     "image": null,
     "event": "Warlord",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Warlord Level 1 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 5
+          },
+          {
+            "name": "50k Food Box",
+            "quantity": 4
+          },
+          {
+            "name": "50k Lumber Box",
+            "quantity": 4
+          },
+          {
+            "name": "50k Stone Box",
+            "quantity": 4
+          },
+          {
+            "name": "50k Ore Box",
+            "quantity": 4
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 3
+          },
+          {
+            "name": "50k Gold",
+            "quantity": 1
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
   },
   {
     "id": "warlord-2",
     "name": "Warlord - Level 2",
     "type": "Event",
     "level": 2,
-    "power": null,
+    "power": 24600000,
     "stamina": null,
     "image": null,
     "event": "Warlord",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Warlord Level 2 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 10
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 6
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 6
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 6
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 6
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 6
+          },
+          {
+            "name": "3hr Healing Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
   },
   {
     "id": "warlord-3",
     "name": "Warlord - Level 3",
     "type": "Event",
     "level": 3,
-    "power": null,
+    "power": 85600000,
     "stamina": null,
     "image": null,
     "event": "Warlord",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Warlord Level 3 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 7
+          },
+          {
+            "name": "500k Food Box",
+            "quantity": 3
+          },
+          {
+            "name": "500k Lumber Box",
+            "quantity": 3
+          },
+          {
+            "name": "500k Stone Box",
+            "quantity": 3
+          },
+          {
+            "name": "500k Ore Box",
+            "quantity": 3
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 9
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 4
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 2
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
   },
   {
     "id": "warlord-4",
     "name": "Warlord - Level 4",
     "type": "Event",
     "level": 4,
-    "power": null,
+    "power": 154800000,
     "stamina": null,
     "image": null,
     "event": "Warlord",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Warlord Level 4 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 8
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 17
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 17
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 17
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 17
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 10
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 5
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 2
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
   },
   {
     "id": "witch-1",
     "name": "Witch - Level 1",
     "type": "Event",
     "level": 1,
-    "power": null,
+    "power": 13000000,
     "stamina": null,
     "image": null,
     "event": "Witch",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Witch Level 1 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 5
+          },
+          {
+            "name": "50k Food Box",
+            "quantity": 4
+          },
+          {
+            "name": "50k Lumber Box",
+            "quantity": 4
+          },
+          {
+            "name": "50k Stone Box",
+            "quantity": 4
+          },
+          {
+            "name": "50k Ore Box",
+            "quantity": 4
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 3
+          },
+          {
+            "name": "1hr Construction Speedup",
+            "quantity": 2
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
   },
   {
     "id": "witch-2",
     "name": "Witch - Level 2",
     "type": "Event",
     "level": 2,
-    "power": null,
+    "power": 24600000,
     "stamina": null,
     "image": null,
     "event": "Witch",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Witch Level 2 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 10
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 6
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 6
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 6
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 6
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 6
+          },
+          {
+            "name": "3hr Healing Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
   },
   {
     "id": "witch-3",
     "name": "Witch - Level 3",
     "type": "Event",
     "level": 3,
-    "power": null,
+    "power": 85600000,
     "stamina": null,
     "image": null,
     "event": "Witch",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Witch Level 3 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 7
+          },
+          {
+            "name": "500k Food Box",
+            "quantity": 3
+          },
+          {
+            "name": "500k Lumber Box",
+            "quantity": 3
+          },
+          {
+            "name": "500k Stone Box",
+            "quantity": 3
+          },
+          {
+            "name": "500k Ore Box",
+            "quantity": 3
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 9
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 4
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 2
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
   },
   {
     "id": "witch-4",
     "name": "Witch - Level 4",
     "type": "Event",
     "level": 4,
-    "power": null,
+    "power": 154800000,
     "stamina": null,
     "image": null,
     "event": "Witch",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Witch Level 4 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 8
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 17
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 17
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 17
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 17
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 10
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 5
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 2
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
   },
   {
     "id": "witch-5",
     "name": "Witch - Level 5",
     "type": "Event",
     "level": 5,
-    "power": null,
+    "power": 225200000,
     "stamina": null,
     "image": null,
     "event": "Witch",
-    "updatedAt": "2026-09-23",
+    "updatedAt": "2026-09-29",
     "verification": {
-      "status": "roster-sourced",
+      "status": "guide-sourced",
       "inGameVerified": false,
       "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses"
+        "https://www.evonytkrguide.com/bosses",
+        "https://onechilledgamer.com/evony-event-monster-guide/"
       ],
-      "notes": "Event monster identity and level sourced from guide roster; individual stats, rewards and availability not yet verified."
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
     },
-    "rewards": []
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Witch Level 5 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 10
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 20
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 20
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 20
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 20
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 12
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 5
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 2
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "lava-turtle-5",
+    "name": "Lava Turtle Lv5",
+    "type": "Event",
+    "level": 5,
+    "power": 225200000,
+    "stamina": null,
+    "image": null,
+    "event": "Lava Turtle",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Lava Turtle Level 5 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 8
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 10
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 10
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 10
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 10
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 12
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 5
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 2
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "warlord-5",
+    "name": "Warlord Lv5",
+    "type": "Event",
+    "level": 5,
+    "power": 225200000,
+    "stamina": null,
+    "image": null,
+    "event": "Warlord",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Warlord Level 5 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 10
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 20
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 20
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 20
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 20
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 12
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 5
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 2
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "warlord-6",
+    "name": "Warlord Lv6",
+    "type": "Event",
+    "level": 6,
+    "power": 668100000,
+    "stamina": null,
+    "image": null,
+    "event": "Warlord",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Warlord Level 6 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 11
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 21
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 21
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 21
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 21
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 14
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 6
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 2
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "bayar-knight-3",
+    "name": "Bayar Knight Lv3",
+    "type": "Event",
+    "level": 3,
+    "power": 225200000,
+    "stamina": null,
+    "image": null,
+    "event": "Bayar Knight",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Bayar Knight Level 3 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Bulk of Gold",
+            "quantity": 3
+          },
+          {
+            "name": "Mass of Gold",
+            "quantity": 2
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/",
+        "notes": "Random gold chest rewards; listed gold boxes have their own random contents."
+      }
+    ]
+  },
+  {
+    "id": "bayar-knight-4",
+    "name": "Bayar Knight Lv4",
+    "type": "Event",
+    "level": 4,
+    "power": 668100000,
+    "stamina": null,
+    "image": null,
+    "event": "Bayar Knight",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Bayar Knight Level 4 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Pile of Gold",
+            "quantity": 1
+          },
+          {
+            "name": "Bulk of Gold",
+            "quantity": 1
+          },
+          {
+            "name": "Mass of Gold",
+            "quantity": 1
+          },
+          {
+            "name": "Immense of Gold",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/",
+        "notes": "Random gold chest rewards; listed gold boxes have their own random contents."
+      }
+    ]
+  },
+  {
+    "id": "greedy-goblin-1",
+    "name": "Greedy Goblin Lv1",
+    "type": "Event",
+    "level": 1,
+    "power": 200000,
+    "stamina": null,
+    "image": null,
+    "event": "Greedy Goblin",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Greedy Goblin Level 1 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "100k Gold",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "greedy-goblin-4",
+    "name": "Greedy Goblin Lv4",
+    "type": "Event",
+    "level": 4,
+    "power": 320000,
+    "stamina": null,
+    "image": null,
+    "event": "Greedy Goblin",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Greedy Goblin Level 4 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "100k Gold",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "greedy-goblin-7",
+    "name": "Greedy Goblin Lv7",
+    "type": "Event",
+    "level": 7,
+    "power": 500000,
+    "stamina": null,
+    "image": null,
+    "event": "Greedy Goblin",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Greedy Goblin Level 7 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "100k Gold",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "nian-4",
+    "name": "Nian Lv4",
+    "type": "Event",
+    "level": 4,
+    "power": 134100000,
+    "stamina": null,
+    "image": null,
+    "event": "Nian",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Nian Level 4 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 10
+          },
+          {
+            "name": "500k Food Box",
+            "quantity": 3
+          },
+          {
+            "name": "500k Lumber Box",
+            "quantity": 3
+          },
+          {
+            "name": "500k Stone Box",
+            "quantity": 3
+          },
+          {
+            "name": "500k Ore Box",
+            "quantity": 3
+          },
+          {
+            "name": "1hr Training Speedup",
+            "quantity": 5
+          },
+          {
+            "name": "1hr Healing Speedup",
+            "quantity": 5
+          },
+          {
+            "name": "1hr Construction Speedup",
+            "quantity": 5
+          },
+          {
+            "name": "1hr Trap Speedup",
+            "quantity": 5
+          },
+          {
+            "name": "1hr Research Speedup",
+            "quantity": 5
+          },
+          {
+            "name": "100k Gold",
+            "quantity": 5
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "nian-5",
+    "name": "Nian Lv5",
+    "type": "Event",
+    "level": 5,
+    "power": 236500000,
+    "stamina": null,
+    "image": null,
+    "event": "Nian",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Nian Level 5 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 14
+          },
+          {
+            "name": "500k Food Box",
+            "quantity": 4
+          },
+          {
+            "name": "500k Lumber Box",
+            "quantity": 4
+          },
+          {
+            "name": "500k Stone Box",
+            "quantity": 4
+          },
+          {
+            "name": "500k Ore Box",
+            "quantity": 4
+          },
+          {
+            "name": "3hr Training Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "3hr Healing Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "3hr Construction Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "3hr TrapSpeedup",
+            "quantity": 3
+          },
+          {
+            "name": "3hr Research Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "200k Gold",
+            "quantity": 4
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "hydra-4",
+    "name": "Hydra Lv4",
+    "type": "Event",
+    "level": 4,
+    "power": 328400000,
+    "stamina": null,
+    "image": null,
+    "event": "Hydra",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Hydra Level 4 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 20
+          },
+          {
+            "name": "1hr Speedup",
+            "quantity": 16
+          },
+          {
+            "name": "2k General EXP",
+            "quantity": 16
+          },
+          {
+            "name": "1k Monarch EXP",
+            "quantity": 16
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 12
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 5
+          },
+          {
+            "name": "500 Chips",
+            "quantity": 3
+          },
+          {
+            "name": "Royal Waybill",
+            "quantity": 3
+          },
+          {
+            "name": "500k Food Box",
+            "quantity": 3
+          },
+          {
+            "name": "500k Lumber Box",
+            "quantity": 3
+          },
+          {
+            "name": "500k Stone Box",
+            "quantity": 3
+          },
+          {
+            "name": "500k Ore Box",
+            "quantity": 3
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "hydra-5",
+    "name": "Hydra Lv5",
+    "type": "Event",
+    "level": 5,
+    "power": 678800000,
+    "stamina": null,
+    "image": null,
+    "event": "Hydra",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Hydra Level 5 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 21
+          },
+          {
+            "name": "1hr Speedup",
+            "quantity": 17
+          },
+          {
+            "name": "2k General EXP",
+            "quantity": 17
+          },
+          {
+            "name": "1k Monarch EXP",
+            "quantity": 17
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 13
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 5
+          },
+          {
+            "name": "500 Chips",
+            "quantity": 3
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 4
+          },
+          {
+            "name": "500k Food Box",
+            "quantity": 3
+          },
+          {
+            "name": "500k Lumber Box",
+            "quantity": 3
+          },
+          {
+            "name": "500k Stone Box",
+            "quantity": 3
+          },
+          {
+            "name": "500k Ore Box",
+            "quantity": 3
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "cerberus-4",
+    "name": "Cerberus Lv4",
+    "type": "Event",
+    "level": 4,
+    "power": 694900000,
+    "stamina": null,
+    "image": null,
+    "event": "Cerberus",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Cerberus Level 4 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "1hr Speedup",
+            "quantity": 33
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 17
+          },
+          {
+            "name": "8hr Training Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "8hr Healing Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "8hr Research Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "8hr Construction Speedup",
+            "quantity": 4
+          },
+          {
+            "name": "8hr Trap Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "8hr Crafting Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "12hr Speedup",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "ymir-6",
+    "name": "Ymir Lv6",
+    "type": "Event",
+    "level": 6,
+    "power": 722600000,
+    "stamina": null,
+    "image": null,
+    "event": "Ymir",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Ymir Level 6 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 13
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 25
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 25
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 25
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 25
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 16
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 13
+          },
+          {
+            "name": "Tactic Scroll",
+            "quantity": 5
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "pan-1",
+    "name": "Pan Lv1",
+    "type": "Event",
+    "level": 1,
+    "power": 22300000,
+    "stamina": null,
+    "image": null,
+    "event": "Pan",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Pan Level 1 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 7
+          },
+          {
+            "name": "30m Speedup",
+            "quantity": 8
+          },
+          {
+            "name": "1hr Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "Senior Resource Chest",
+            "quantity": 4
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 4
+          },
+          {
+            "name": "1hr Construction Speedup",
+            "quantity": 4
+          },
+          {
+            "name": "1hr Research Speedup",
+            "quantity": 4
+          },
+          {
+            "name": "1hr Training Speedup",
+            "quantity": 4
+          },
+          {
+            "name": "1hr Healing Speedup",
+            "quantity": 4
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "pan-2",
+    "name": "Pan Lv2",
+    "type": "Event",
+    "level": 2,
+    "power": 42800000,
+    "stamina": null,
+    "image": null,
+    "event": "Pan",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Pan Level 2 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 13
+          },
+          {
+            "name": "30m Speedup",
+            "quantity": 26
+          },
+          {
+            "name": "1hr Speedup",
+            "quantity": 10
+          },
+          {
+            "name": "Senior Resource Chest",
+            "quantity": 13
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 5
+          },
+          {
+            "name": "1hr Construction Speedup",
+            "quantity": 11
+          },
+          {
+            "name": "1hr Research Speedup",
+            "quantity": 11
+          },
+          {
+            "name": "1hr Training Speedup",
+            "quantity": 11
+          },
+          {
+            "name": "1hr Healing Speedup",
+            "quantity": 11
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "pan-3",
+    "name": "Pan Lv3",
+    "type": "Event",
+    "level": 3,
+    "power": 122900000,
+    "stamina": null,
+    "image": null,
+    "event": "Pan",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Pan Level 3 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 9
+          },
+          {
+            "name": "1hr Speedup",
+            "quantity": 28
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 10
+          },
+          {
+            "name": "Senior Resource Chest",
+            "quantity": 30
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 12
+          },
+          {
+            "name": "3hr Construction Speedup",
+            "quantity": 8
+          },
+          {
+            "name": "3hr Research Speedup",
+            "quantity": 8
+          },
+          {
+            "name": "3hr Training Speedup",
+            "quantity": 8
+          },
+          {
+            "name": "3hr Healing Speedup",
+            "quantity": 8
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "pan-4",
+    "name": "Pan Lv4",
+    "type": "Event",
+    "level": 4,
+    "power": 206400000,
+    "stamina": null,
+    "image": null,
+    "event": "Pan",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Pan Level 4 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 10
+          },
+          {
+            "name": "1hr Speedup",
+            "quantity": 28
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 12
+          },
+          {
+            "name": "Special Resource Chest",
+            "quantity": 17
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 1
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 15
+          },
+          {
+            "name": "3hr Construction Speedup",
+            "quantity": 10
+          },
+          {
+            "name": "3hr Research Speedup",
+            "quantity": 10
+          },
+          {
+            "name": "3hr Training Speedup",
+            "quantity": 10
+          },
+          {
+            "name": "3hr Healing Speedup",
+            "quantity": 10
+          },
+          {
+            "name": "Tactic Scroll",
+            "quantity": 3
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "pan-5",
+    "name": "Pan Lv5",
+    "type": "Event",
+    "level": 5,
+    "power": 361300000,
+    "stamina": null,
+    "image": null,
+    "event": "Pan",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Pan Level 5 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 12
+          },
+          {
+            "name": "1hr Speedup",
+            "quantity": 19
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 10
+          },
+          {
+            "name": "12hr Speedup",
+            "quantity": 2
+          },
+          {
+            "name": "Special Resource Chest",
+            "quantity": 20
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 2
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 20
+          },
+          {
+            "name": "3hr Construction Speedup",
+            "quantity": 11
+          },
+          {
+            "name": "3hr Research Speedup",
+            "quantity": 11
+          },
+          {
+            "name": "3hr Training Speedup",
+            "quantity": 11
+          },
+          {
+            "name": "3hr Healing Speedup",
+            "quantity": 11
+          },
+          {
+            "name": "Tactic Scroll",
+            "quantity": 5
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "pan-6",
+    "name": "Pan Lv6",
+    "type": "Event",
+    "level": 6,
+    "power": 711100000,
+    "stamina": null,
+    "image": null,
+    "event": "Pan",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Pan Level 6 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 12
+          },
+          {
+            "name": "1hr Speedup",
+            "quantity": 20
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 12
+          },
+          {
+            "name": "Special Resource Chest",
+            "quantity": 22
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 3
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 22
+          },
+          {
+            "name": "3hr Construction Speedup",
+            "quantity": 12
+          },
+          {
+            "name": "3hr Research Speedup",
+            "quantity": 12
+          },
+          {
+            "name": "3hr Training Speedup",
+            "quantity": 12
+          },
+          {
+            "name": "3hr Healing Speedup",
+            "quantity": 12
+          },
+          {
+            "name": "Tactic Scroll",
+            "quantity": 5
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "garuda-1",
+    "name": "Garuda Lv1",
+    "type": "Event",
+    "level": 1,
+    "power": 1300000,
+    "stamina": null,
+    "image": null,
+    "event": "Garuda",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Garuda Level 1 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Green Material Chest",
+            "quantity": 7
+          },
+          {
+            "name": "Medal",
+            "quantity": 3
+          },
+          {
+            "name": "Senior Resources Chest",
+            "quantity": 5
+          },
+          {
+            "name": "500 General EXP",
+            "quantity": 4
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "garuda-2",
+    "name": "Garuda Lv2",
+    "type": "Event",
+    "level": 2,
+    "power": 1700000,
+    "stamina": null,
+    "image": null,
+    "event": "Garuda",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Garuda Level 2 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 2
+          },
+          {
+            "name": "Medal",
+            "quantity": 3
+          },
+          {
+            "name": "Senior Resources Chest",
+            "quantity": 8
+          },
+          {
+            "name": "1k General EXP",
+            "quantity": 3
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "fenrir-1",
+    "name": "Fenrir Lv1",
+    "type": "Event",
+    "level": 1,
+    "power": 27400,
+    "stamina": null,
+    "image": null,
+    "event": "Fenrir",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Fenrir Level 1 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Green Material Chest",
+            "quantity": 1
+          },
+          {
+            "name": "5min Speedup",
+            "quantity": 1
+          },
+          {
+            "name": "500 General EXP",
+            "quantity": 1
+          },
+          {
+            "name": "50k Food Box",
+            "quantity": 1
+          },
+          {
+            "name": "50k Lumber Box",
+            "quantity": 1
+          },
+          {
+            "name": "Medal",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "fenrir-2",
+    "name": "Fenrir Lv2",
+    "type": "Event",
+    "level": 2,
+    "power": 186100,
+    "stamina": null,
+    "image": null,
+    "event": "Fenrir",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Fenrir Level 2 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Green Material Chest",
+            "quantity": 1
+          },
+          {
+            "name": "5min Speedup",
+            "quantity": 1
+          },
+          {
+            "name": "500 General EXP",
+            "quantity": 1
+          },
+          {
+            "name": "50k Stone Box",
+            "quantity": 1
+          },
+          {
+            "name": "50k Ore Box",
+            "quantity": 1
+          },
+          {
+            "name": "Medal",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "fenrir-3",
+    "name": "Fenrir Lv3",
+    "type": "Event",
+    "level": 3,
+    "power": 492700,
+    "stamina": null,
+    "image": null,
+    "event": "Fenrir",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Fenrir Level 3 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Green Material Chest",
+            "quantity": 1
+          },
+          {
+            "name": "5min Speedup",
+            "quantity": 1
+          },
+          {
+            "name": "500 General EXP",
+            "quantity": 1
+          },
+          {
+            "name": "500 Monarch EXP",
+            "quantity": 1
+          },
+          {
+            "name": "Senior Resources Chest",
+            "quantity": 1
+          },
+          {
+            "name": "Medal",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "shadow-of-nine-tails-1",
+    "name": "Shadow of Nine-tails Lv1",
+    "type": "Event",
+    "level": 1,
+    "power": 12400000,
+    "stamina": null,
+    "image": null,
+    "event": "Shadow of Nine-tails",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Shadow of Nine-tails Level 1 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 5
+          },
+          {
+            "name": "50k Food Box",
+            "quantity": 4
+          },
+          {
+            "name": "50k Lumber Box",
+            "quantity": 4
+          },
+          {
+            "name": "50k Stone Box",
+            "quantity": 4
+          },
+          {
+            "name": "50k Ore Box",
+            "quantity": 4
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 3
+          },
+          {
+            "name": "1hr Construction Speedup",
+            "quantity": 2
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "shadow-of-nine-tails-2",
+    "name": "Shadow of Nine-tails Lv2",
+    "type": "Event",
+    "level": 2,
+    "power": 22300000,
+    "stamina": null,
+    "image": null,
+    "event": "Shadow of Nine-tails",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Shadow of Nine-tails Level 2 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 10
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 4
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 4
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 4
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 4
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 6
+          },
+          {
+            "name": "3hr Construction Speedup",
+            "quantity": 2
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "shadow-of-nine-tails-3",
+    "name": "Shadow of Nine-tails Lv3",
+    "type": "Event",
+    "level": 3,
+    "power": 74500000,
+    "stamina": null,
+    "image": null,
+    "event": "Shadow of Nine-tails",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Shadow of Nine-tails Level 3 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 5
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 7
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 7
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 7
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 7
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 9
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 3
+          },
+          {
+            "name": "Research Stone",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "sphinx-1",
+    "name": "Sphinx Lv1",
+    "type": "Event",
+    "level": 1,
+    "power": 12400000,
+    "stamina": null,
+    "image": null,
+    "event": "Sphinx",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Sphinx Level 1 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 5
+          },
+          {
+            "name": "50k Food Box",
+            "quantity": 5
+          },
+          {
+            "name": "50k Lumber Box",
+            "quantity": 5
+          },
+          {
+            "name": "50k Stone Box",
+            "quantity": 5
+          },
+          {
+            "name": "50k Ore Box",
+            "quantity": 5
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 3
+          },
+          {
+            "name": "1hr Construction Speedup",
+            "quantity": 1
+          },
+          {
+            "name": "1hr Research Speedup",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "sphinx-2",
+    "name": "Sphinx Lv2",
+    "type": "Event",
+    "level": 2,
+    "power": 22300000,
+    "stamina": null,
+    "image": null,
+    "event": "Sphinx",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Sphinx Level 2 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Blue Material Chest",
+            "quantity": 10
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 5
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 5
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 5
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 5
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 6
+          },
+          {
+            "name": "3hr Healing Speedup",
+            "quantity": 2
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "sphinx-3",
+    "name": "Sphinx Lv3",
+    "type": "Event",
+    "level": 3,
+    "power": 74500000,
+    "stamina": null,
+    "image": null,
+    "event": "Sphinx",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Sphinx Level 3 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 5
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 8
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 8
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 8
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 8
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 9
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 3
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "sphinx-4",
+    "name": "Sphinx Lv4",
+    "type": "Event",
+    "level": 4,
+    "power": 147500000,
+    "stamina": null,
+    "image": null,
+    "event": "Sphinx",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Sphinx Level 4 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 6
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 10
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 10
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 10
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 10
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 10
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 4
+          },
+          {
+            "name": "Source of Life",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "sphinx-5",
+    "name": "Sphinx Lv5",
+    "type": "Event",
+    "level": 5,
+    "power": 225200000,
+    "stamina": null,
+    "image": null,
+    "event": "Sphinx",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Sphinx Level 5 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 8
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 11
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 11
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 11
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 11
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 12
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 5
+          },
+          {
+            "name": "Source of Life",
+            "quantity": 1
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "sphinx-6",
+    "name": "Sphinx Lv6",
+    "type": "Event",
+    "level": 6,
+    "power": 472900000,
+    "stamina": null,
+    "image": null,
+    "event": "Sphinx",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Chest contents and power from the One Chilled Gamer event monster guide. Stamina and current event availability are not confirmed."
+    },
+    "rewards": [],
+    "chests": [
+      {
+        "name": "Sphinx Level 6 Chest",
+        "quantity": 1,
+        "contents": [
+          {
+            "name": "Large Material Chest",
+            "quantity": 10
+          },
+          {
+            "name": "100k Food Box",
+            "quantity": 15
+          },
+          {
+            "name": "100k Lumber Box",
+            "quantity": 15
+          },
+          {
+            "name": "100k Stone Box",
+            "quantity": 15
+          },
+          {
+            "name": "100k Ore Box",
+            "quantity": 15
+          },
+          {
+            "name": "Refining Stone",
+            "quantity": 14
+          },
+          {
+            "name": "3hr Speedup",
+            "quantity": 6
+          },
+          {
+            "name": "Source of Life",
+            "quantity": 2
+          }
+        ],
+        "sourceUrl": "https://onechilledgamer.com/evony-event-monster-guide/"
+      }
+    ]
+  },
+  {
+    "id": "world-boss",
+    "name": "World Boss",
+    "type": "Event",
+    "level": null,
+    "power": null,
+    "stamina": null,
+    "image": null,
+    "event": "World Boss",
+    "updatedAt": "2026-09-29",
+    "verification": {
+      "status": "guide-sourced",
+      "inGameVerified": false,
+      "sourceUrls": [
+        "https://onechilledgamer.com/evony-event-monster-guide/"
+      ],
+      "notes": "Listed in the event monster guide, which does not give a chest table or power for World Boss."
+    },
+    "rewards": [],
+    "chests": []
   }
 ]
