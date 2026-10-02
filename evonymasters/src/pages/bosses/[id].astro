@@ -6,6 +6,7 @@ const {monster}=Astro.props;
 const byId=new Map(items.map(i=>[i.id,i]));
 const fmt=n=>n==null?'Not yet verified':new Intl.NumberFormat('en-US').format(n);
 const chestIds=new Set((monster.chests||[]).map(c=>c.itemId));
+const stats='stats' in monster ? monster.stats : null;
 const otherRewards=monster.rewards.filter(r=>r.origin!=='boss_chest' && !(r.origin==='direct'&&chestIds.has(r.itemId)));
 ---
 <!doctype html>
@@ -15,9 +16,10 @@ const otherRewards=monster.rewards.filter(r=>r.origin!=='boss_chest' && !(r.orig
 <main><h1>{monster.name}</h1>{monster.image&&<img class="boss-image" src={monster.image} alt={monster.name+" boss artwork"} loading="lazy"/>}
 <p class="muted">{monster.type}{monster.level==null?'':' · Level '+monster.level}{monster.event?' · '+monster.event:''}</p>
 <div class="panel stats"><span>Power: {fmt(monster.power)}</span><span>Stamina: {fmt(monster.stamina)}</span></div>
+{stats&&<section class="panel"><h2>Monster stats</h2><div class="stats"><span>Monarch EXP: {fmt(stats.monarchExp)}</span><span>General EXP: {fmt(stats.generalExp)}</span><span>Prestige: {fmt(stats.prestige)}</span><span>Alliance Points: {fmt(stats.alliancePoints)}</span><span>Alliance Honor: {fmt(stats.allianceHonor)}</span></div></section>}
 <section class="panel"><h2>Monster chests</h2>
 {(monster.chests||[]).length===0?<p class="muted">Chest details have not been documented for this monster.</p>:(monster.chests||[]).map(chest=><div class="chest"><h3>{chest.name}</h3>{chest.contents.length?<ul>{chest.contents.map(item=><li>{item.name}{item.quantity==null?'':' x'+fmt(item.quantity)}{item.unit?' '+item.unit:''}</li>)}</ul>:<p class="muted">Contents not documented.</p>}{chest.notes&&<p class="muted">{chest.notes}</p>}{chest.sourceUrl&&<p><a href={chest.sourceUrl}>Chest source</a></p>}</div>)}
 </section>
-<section class="panel"><h2>Other recorded rewards</h2>{otherRewards.length===0?<p class="muted">No additional rewards documented.</p>:otherRewards.map(r=><div class="reward">{byId.get(r.itemId)?.name||r.itemId}{r.quantity==null?'':' · '+fmt(r.quantity)+(r.unit?' '+r.unit:'')}{r.origin==='other_chest'?' · from another chest':''}</div>)}</section>
+<section class="panel"><h2>Other recorded rewards</h2>{otherRewards.length===0?<p class="muted">No additional rewards documented.</p>:(["guaranteed","possible"] as const).map(kind=>otherRewards.some(r=>r.kind===kind)&&<div><h3>{kind==="guaranteed"?"Base rewards":"Possible drops"}</h3>{otherRewards.filter(r=>r.kind===kind).map(r=><div class="reward">{byId.get(r.itemId)?.name||r.itemId}{r.quantity==null?'':' · '+fmt(r.quantity)+(r.unit?' '+r.unit:'')}{r.origin==='other_chest'?' · from another chest':''}{r.notes?' · '+r.notes:''}</div>)}</div>)}</section>
 <p class="muted">Data status: {monster.verification?.inGameVerified?'Verified in game':'Guide sourced; not yet verified in game'}. Rewards and events may change.</p>
 </main><footer>Independent fan made reference. Not affiliated with the game publisher.</footer></body></html>
