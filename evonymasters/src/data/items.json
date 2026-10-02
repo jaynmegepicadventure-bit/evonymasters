@@ -768,5 +768,25 @@
     "id": "uhde",
     "name": "Uhde",
     "category": "Items"
+  },
+  {
+    "id": "artwork-fragment-chest-i",
+    "name": "Artwork Fragment Chest I",
+    "category": "Chests"
+  },
+  {
+    "id": "artwork-fragment-chest-ii",
+    "name": "Artwork Fragment Chest II",
+    "category": "Chests"
+  },
+  {
+    "id": "general-exp-double",
+    "name": "2x General EXP",
+    "category": "Boosts"
+  },
+  {
+    "id": "artwork-reward-unspecified",
+    "name": "Artwork reward (tier unspecified)",
+    "category": "Chests"
   }
 ]
