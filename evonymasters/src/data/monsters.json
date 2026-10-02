@@ -12671,7 +12671,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -12679,20 +12679,72 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 100,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 100,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-white",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 1000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 1K Wood / Lumber box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "food",
+        "quantity": 1000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 1K Food box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 100,
+      "generalExp": 100,
+      "prestige": 10,
+      "alliancePoints": 10,
+      "allianceHonor": 10
+    }
   },
   {
     "id": "regular-robber-2",
@@ -12703,7 +12755,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -12711,20 +12763,72 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 110,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 110,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-white",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 100,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 100 General EXP item",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 1000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 1K Wood / Lumber box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 110,
+      "generalExp": 110,
+      "prestige": 11,
+      "alliancePoints": 10,
+      "allianceHonor": 10
+    }
   },
   {
     "id": "regular-robber-3",
@@ -12735,7 +12839,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -12743,20 +12847,72 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 120,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 120,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-white",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "monarch-exp",
+        "quantity": 50,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 50 Monarch EXP item",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "food",
+        "quantity": 1000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 1K Food box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 120,
+      "generalExp": 120,
+      "prestige": 12,
+      "alliancePoints": 10,
+      "allianceHonor": 10
+    }
   },
   {
     "id": "regular-murderous-warrior-4",
@@ -12767,7 +12923,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -12775,20 +12931,72 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 130,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 130,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-white",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "speedup-trap-building",
+        "quantity": 5,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 5 minute trap speedup",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 1000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 1K Wood / Lumber box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 130,
+      "generalExp": 130,
+      "prestige": 13,
+      "alliancePoints": 10,
+      "allianceHonor": 10
+    }
   },
   {
     "id": "regular-murderous-warrior-5",
@@ -12799,7 +13007,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -12807,20 +13015,72 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 140,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 140,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-white",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "speedup-healing",
+        "quantity": 5,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 5 minute healing speedup",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "food",
+        "quantity": 1000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 1K Food box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 140,
+      "generalExp": 140,
+      "prestige": 14,
+      "alliancePoints": 10,
+      "allianceHonor": 10
+    }
   },
   {
     "id": "regular-golden-skull-cup-warrior-6",
@@ -12831,7 +13091,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -12839,20 +13099,72 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 150,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 150,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-white",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "food",
+        "quantity": 5000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 5K Food box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 5000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 5K Wood / Lumber box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 150,
+      "generalExp": 150,
+      "prestige": 15,
+      "alliancePoints": 20,
+      "allianceHonor": 20
+    }
   },
   {
     "id": "regular-bandit-7",
@@ -12863,7 +13175,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -12871,20 +13183,81 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 160,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 160,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-white",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "speedup-training",
+        "quantity": 5,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 5 minute training speedup",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 5000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 5K Wood / Lumber box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "artwork-fragment-chest-i",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 160,
+      "generalExp": 160,
+      "prestige": 16,
+      "alliancePoints": 20,
+      "allianceHonor": 20
+    }
   },
   {
     "id": "regular-bandit-8",
@@ -12895,7 +13268,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -12903,20 +13276,72 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 170,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 170,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-white",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "speedup-crafting",
+        "quantity": 5,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 5 minute crafting speedup",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "food",
+        "quantity": 5000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 5K Food box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 170,
+      "generalExp": 170,
+      "prestige": 17,
+      "alliancePoints": 20,
+      "allianceHonor": 20
+    }
   },
   {
     "id": "regular-bandit-9",
@@ -12927,7 +13352,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -12935,20 +13360,72 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 180,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 180,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-white",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "food",
+        "quantity": 10000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 10K Food box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 5000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 5K Wood / Lumber box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 180,
+      "generalExp": 180,
+      "prestige": 18,
+      "alliancePoints": 20,
+      "allianceHonor": 20
+    }
   },
   {
     "id": "regular-dark-warrior-10",
@@ -12959,7 +13436,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -12967,20 +13444,72 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 190,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 190,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-white",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "speedup-construction",
+        "quantity": 5,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 5 minute construction speedup",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 5000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 5K Stone box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 190,
+      "generalExp": 190,
+      "prestige": 19,
+      "alliancePoints": 20,
+      "allianceHonor": 20
+    }
   },
   {
     "id": "regular-dark-warrior-11",
@@ -12991,7 +13520,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -12999,20 +13528,81 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 200,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 200,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-green",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "food",
+        "quantity": 10000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 10K Food box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 10000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 10K Wood / Lumber box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "artwork-fragment-chest-i",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 200,
+      "generalExp": 200,
+      "prestige": 20,
+      "alliancePoints": 30,
+      "allianceHonor": 30
+    }
   },
   {
     "id": "regular-dark-warrior-12",
@@ -13023,7 +13613,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13031,20 +13621,81 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 210,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 210,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-green",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "speedup-training",
+        "quantity": 10,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 10 minute training speedup",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 10000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 10K Wood / Lumber box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "artwork-fragment-chest-i",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 210,
+      "generalExp": 210,
+      "prestige": 21,
+      "alliancePoints": 30,
+      "allianceHonor": 30
+    }
   },
   {
     "id": "regular-crafty-ranger-13",
@@ -13055,7 +13706,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13063,20 +13714,81 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 220,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 220,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-green",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 1000,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 1000 General EXP item",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "food",
+        "quantity": 10000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 10K Food box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "artwork-fragment-chest-i",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 220,
+      "generalExp": 220,
+      "prestige": 22,
+      "alliancePoints": 30,
+      "allianceHonor": 30
+    }
   },
   {
     "id": "regular-crafty-ranger-14",
@@ -13087,7 +13799,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13095,20 +13807,81 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 230,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 230,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-green",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "speedup-healing",
+        "quantity": 10,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 10 minute healing speedup",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 10000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 10K Stone box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "artwork-fragment-chest-i",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 230,
+      "generalExp": 230,
+      "prestige": 23,
+      "alliancePoints": 30,
+      "allianceHonor": 30
+    }
   },
   {
     "id": "regular-crafty-ranger-15",
@@ -13119,7 +13892,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13127,20 +13900,81 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 240,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 240,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-green",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "monarch-exp",
+        "quantity": 500,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 500 Monarch EXP item",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 10000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 10K Wood / Lumber box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "artwork-fragment-chest-i",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 240,
+      "generalExp": 240,
+      "prestige": 24,
+      "alliancePoints": 30,
+      "allianceHonor": 30
+    }
   },
   {
     "id": "regular-hypocritical-knight-16",
@@ -13151,7 +13985,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13159,20 +13993,81 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 250,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 250,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-green",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "speedup-training",
+        "quantity": 15,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 15 minute training speedup",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "food",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 50K Food box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "artwork-fragment-chest-i",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 250,
+      "generalExp": 250,
+      "prestige": 25,
+      "alliancePoints": 40,
+      "allianceHonor": 40
+    }
   },
   {
     "id": "regular-hypocritical-knight-17",
@@ -13183,7 +14078,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13191,20 +14086,90 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 260,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 260,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-blue",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "speedup-healing",
+        "quantity": 15,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 15 minute healing speedup",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 50K Wood / Lumber box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "artwork-fragment-chest-i",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "artwork-fragment-chest-iv",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 260,
+      "generalExp": 260,
+      "prestige": 26,
+      "alliancePoints": 40,
+      "allianceHonor": 40
+    }
   },
   {
     "id": "regular-hypocritical-knight-18",
@@ -13215,7 +14180,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13223,20 +14188,63 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 270,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 288,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-blue",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 50K Stone box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 270,
+      "generalExp": 288,
+      "prestige": 27,
+      "alliancePoints": 40,
+      "allianceHonor": 40
+    }
   },
   {
     "id": "regular-renegade-19",
@@ -13247,7 +14255,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13255,20 +14263,90 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 280,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 493,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-blue",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "food",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 50K Food box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "ore",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 50K Ore box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "artwork-fragment-chest-i",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "artwork-fragment-chest-iv",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 280,
+      "generalExp": 493,
+      "prestige": 28,
+      "alliancePoints": 40,
+      "allianceHonor": 40
+    }
   },
   {
     "id": "regular-barbarian-19",
@@ -13279,7 +14357,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13287,20 +14365,54 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 280,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 381,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "ore",
+        "quantity": 50000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 50K Ore box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 280,
+      "generalExp": 381,
+      "prestige": 28,
+      "alliancePoints": 40,
+      "allianceHonor": 40
+    }
   },
   {
     "id": "regular-renegade-20",
@@ -13311,7 +14423,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13319,20 +14431,36 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
       {
-        "itemId": "medal",
-        "quantity": 1,
+        "itemId": "monarch-exp",
+        "quantity": 290,
         "unit": null,
-        "kind": "possible",
+        "kind": "guaranteed",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 511,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 290,
+      "generalExp": 511,
+      "prestige": 29,
+      "alliancePoints": 40,
+      "allianceHonor": 40
+    }
   },
   {
     "id": "regular-barbarian-20",
@@ -13343,7 +14471,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13351,20 +14479,54 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
       {
-        "itemId": "medal",
+        "itemId": "monarch-exp",
+        "quantity": 290,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 412,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-blue",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 1000,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 1000 General EXP item",
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 290,
+      "generalExp": 412,
+      "prestige": 29,
+      "alliancePoints": 40,
+      "allianceHonor": 40
+    }
   },
   {
     "id": "regular-renegade-21",
@@ -13375,7 +14537,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13383,20 +14545,54 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 300,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 347,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-blue",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 300,
+      "generalExp": 347,
+      "prestige": 30,
+      "alliancePoints": 50,
+      "allianceHonor": 50
+    }
   },
   {
     "id": "regular-barbarian-21",
@@ -13407,7 +14603,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13415,20 +14611,45 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 300,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 347,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 300,
+      "generalExp": 347,
+      "prestige": 30,
+      "alliancePoints": 50,
+      "allianceHonor": 50
+    }
   },
   {
     "id": "regular-bloody-gladiator-22",
@@ -13439,7 +14660,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13447,19 +14668,9 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Power and 6 stamina from published lists. Level-specific experience, points, and drops are not verified."
     },
-    "rewards": [
-      {
-        "itemId": "medal",
-        "quantity": 1,
-        "unit": null,
-        "kind": "possible",
-        "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
-        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
-      }
-    ],
+    "rewards": [],
     "chests": []
   },
   {
@@ -13471,7 +14682,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13479,20 +14690,90 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 310,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 546,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-blue",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "speedup-healing",
+        "quantity": 30,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 30 minute healing speedup",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 100000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 100K Wood / Lumber box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "artwork-fragment-chest-ii",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "artwork-fragment-chest-iv",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 310,
+      "generalExp": 546,
+      "prestige": 31,
+      "alliancePoints": 50,
+      "allianceHonor": 50
+    }
   },
   {
     "id": "regular-bloody-gladiator-23",
@@ -13503,7 +14784,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13511,20 +14792,36 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
       {
-        "itemId": "medal",
-        "quantity": 1,
+        "itemId": "monarch-exp",
+        "quantity": 320,
         "unit": null,
-        "kind": "possible",
+        "kind": "guaranteed",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 564,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 320,
+      "generalExp": 564,
+      "prestige": 32,
+      "alliancePoints": 50,
+      "allianceHonor": 50
+    }
   },
   {
     "id": "regular-invader-23",
@@ -13535,7 +14832,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13543,19 +14840,9 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Power and 6 stamina from published lists. Level-specific experience, points, and drops are not verified."
     },
-    "rewards": [
-      {
-        "itemId": "medal",
-        "quantity": 1,
-        "unit": null,
-        "kind": "possible",
-        "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
-        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
-      }
-    ],
+    "rewards": [],
     "chests": []
   },
   {
@@ -13567,7 +14854,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13575,19 +14862,9 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Power and 6 stamina from published lists. Level-specific experience, points, and drops are not verified."
     },
-    "rewards": [
-      {
-        "itemId": "medal",
-        "quantity": 1,
-        "unit": null,
-        "kind": "possible",
-        "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
-        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
-      }
-    ],
+    "rewards": [],
     "chests": []
   },
   {
@@ -13599,7 +14876,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13607,19 +14884,9 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Power and 6 stamina from published lists. Level-specific experience, points, and drops are not verified."
     },
-    "rewards": [
-      {
-        "itemId": "medal",
-        "quantity": 1,
-        "unit": null,
-        "kind": "possible",
-        "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
-        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
-      }
-    ],
+    "rewards": [],
     "chests": []
   },
   {
@@ -13631,7 +14898,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13639,20 +14906,54 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 350,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 504,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "artwork-fragment-chest-ii",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 350,
+      "generalExp": 504,
+      "prestige": 35,
+      "alliancePoints": 50,
+      "allianceHonor": 50
+    }
   },
   {
     "id": "regular-invader-25",
@@ -13663,7 +14964,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13671,20 +14972,90 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 350,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 616,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-blue",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "speedup-research",
+        "quantity": 30,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 30 minute research speedup",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "food",
+        "quantity": 100000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 100K Food box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "artwork-fragment-chest-ii",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "artwork-fragment-chest-v",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 350,
+      "generalExp": 616,
+      "prestige": 35,
+      "alliancePoints": 50,
+      "allianceHonor": 50
+    }
   },
   {
     "id": "regular-furious-archer-26",
@@ -13695,7 +15066,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13703,20 +15074,90 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 370,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 533,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-blue",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "speedup-construction",
+        "quantity": 30,
+        "unit": "minutes",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 30 minute construction speedup",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "food",
+        "quantity": 500000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 500K Food box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "artwork-fragment-chest-ii",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "artwork-fragment-chest-v",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 370,
+      "generalExp": 533,
+      "prestige": 37,
+      "alliancePoints": 50,
+      "allianceHonor": 50
+    }
   },
   {
     "id": "regular-ferocious-knight-27",
@@ -13727,7 +15168,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13735,20 +15176,90 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 390,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 687,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-blue",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "wood",
+        "quantity": 500000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 500K Wood / Lumber box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "artwork-fragment-chest-ii",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "artwork-fragment-chest-v",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp-double",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 2x General EXP item; duration not specified",
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 390,
+      "generalExp": 687,
+      "prestige": 39,
+      "alliancePoints": 50,
+      "allianceHonor": 50
+    }
   },
   {
     "id": "regular-dark-army-28",
@@ -13759,7 +15270,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13767,20 +15278,72 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 410,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 615,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-blue",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "monarch-exp",
+        "quantity": 1000,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 1000 Monarch EXP item",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "artwork-reward-unspecified",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Artwork reward listed without a chest tier",
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 410,
+      "generalExp": 615,
+      "prestige": 41,
+      "alliancePoints": 50,
+      "allianceHonor": 50
+    }
   },
   {
     "id": "regular-demon-crossbowman-29",
@@ -13791,7 +15354,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13799,19 +15362,9 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Power and 6 stamina from published lists. Level-specific experience, points, and drops are not verified."
     },
-    "rewards": [
-      {
-        "itemId": "medal",
-        "quantity": 1,
-        "unit": null,
-        "kind": "possible",
-        "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
-        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
-      }
-    ],
+    "rewards": [],
     "chests": []
   },
   {
@@ -13823,7 +15376,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13831,20 +15384,72 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 450,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 450,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-large",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "food",
+        "quantity": 500000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 500K Food box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "artwork-fragment-chest-v",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 450,
+      "generalExp": 450,
+      "prestige": 45,
+      "alliancePoints": 50,
+      "allianceHonor": 50
+    }
   },
   {
     "id": "regular-evil-knight-31",
@@ -13855,7 +15460,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13863,20 +15468,45 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 2600,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 729,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 2600,
+      "generalExp": 729,
+      "prestige": 47,
+      "alliancePoints": 50,
+      "allianceHonor": 50
+    }
   },
   {
     "id": "regular-evil-knight-32",
@@ -13887,7 +15517,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13895,20 +15525,54 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 2600,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 760,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "artwork-fragment-chest-iii",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 2600,
+      "generalExp": 760,
+      "prestige": 49,
+      "alliancePoints": 50,
+      "allianceHonor": 50
+    }
   },
   {
     "id": "regular-inferno-warrior-33",
@@ -13919,7 +15583,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13927,19 +15591,9 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Power and 6 stamina from published lists. Level-specific experience, points, and drops are not verified."
     },
-    "rewards": [
-      {
-        "itemId": "medal",
-        "quantity": 1,
-        "unit": null,
-        "kind": "possible",
-        "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
-        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
-      }
-    ],
+    "rewards": [],
     "chests": []
   },
   {
@@ -13951,7 +15605,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13959,20 +15613,63 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Normal monster power and 6 stamina from the power list; experience, points and possible drops transcribed from the supplied Normal Monsters table. Drops are possible, not guaranteed. Rounded power values are approximate."
     },
     "rewards": [
+      {
+        "itemId": "monarch-exp",
+        "quantity": 2600,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base Monarch EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "general-exp",
+        "quantity": 822,
+        "unit": null,
+        "kind": "guaranteed",
+        "origin": "direct",
+        "notes": "Base General EXP from normal monster table",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "material-chest-large",
+        "quantity": 1,
+        "unit": null,
+        "kind": "possible",
+        "origin": "direct",
+        "notes": null,
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
+      {
+        "itemId": "stone",
+        "quantity": 100000,
+        "unit": "resources",
+        "kind": "possible",
+        "origin": "direct",
+        "notes": "Possible 100K Stone box/drop",
+        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
+      },
       {
         "itemId": "medal",
         "quantity": 1,
         "unit": null,
         "kind": "possible",
         "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
+        "notes": null,
         "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       }
     ],
-    "chests": []
+    "chests": [],
+    "stats": {
+      "monarchExp": 2600,
+      "generalExp": 822,
+      "prestige": 53,
+      "alliancePoints": 50,
+      "allianceHonor": 50
+    }
   },
   {
     "id": "regular-wraith-hunter-35",
@@ -13983,7 +15680,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -13991,19 +15688,9 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Power and 6 stamina from published lists. Level-specific experience, points, and drops are not verified."
     },
-    "rewards": [
-      {
-        "itemId": "medal",
-        "quantity": 1,
-        "unit": null,
-        "kind": "possible",
-        "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
-        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
-      }
-    ],
+    "rewards": [],
     "chests": []
   },
   {
@@ -14015,7 +15702,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -14023,19 +15710,9 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Power and 6 stamina from published lists. Level-specific experience, points, and drops are not verified."
     },
-    "rewards": [
-      {
-        "itemId": "medal",
-        "quantity": 1,
-        "unit": null,
-        "kind": "possible",
-        "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
-        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
-      }
-    ],
+    "rewards": [],
     "chests": []
   },
   {
@@ -14047,7 +15724,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -14055,19 +15732,9 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Power and 6 stamina from published lists. Level-specific experience, points, and drops are not verified."
     },
-    "rewards": [
-      {
-        "itemId": "medal",
-        "quantity": 1,
-        "unit": null,
-        "kind": "possible",
-        "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
-        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
-      }
-    ],
+    "rewards": [],
     "chests": []
   },
   {
@@ -14079,7 +15746,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -14087,19 +15754,9 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Power and 6 stamina from published lists. Level-specific experience, points, and drops are not verified."
     },
-    "rewards": [
-      {
-        "itemId": "medal",
-        "quantity": 1,
-        "unit": null,
-        "kind": "possible",
-        "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
-        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
-      }
-    ],
+    "rewards": [],
     "chests": []
   },
   {
@@ -14111,7 +15768,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -14119,19 +15776,9 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Power and 6 stamina from published lists. Level-specific experience, points, and drops are not verified."
     },
-    "rewards": [
-      {
-        "itemId": "medal",
-        "quantity": 1,
-        "unit": null,
-        "kind": "possible",
-        "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
-        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
-      }
-    ],
+    "rewards": [],
     "chests": []
   },
   {
@@ -14143,7 +15790,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -14151,19 +15798,9 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Power and 6 stamina from published lists. Level-specific experience, points, and drops are not verified."
     },
-    "rewards": [
-      {
-        "itemId": "medal",
-        "quantity": 1,
-        "unit": null,
-        "kind": "possible",
-        "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
-        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
-      }
-    ],
+    "rewards": [],
     "chests": []
   },
   {
@@ -14175,7 +15812,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -14183,19 +15820,9 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Power and 6 stamina from published lists. Level-specific experience, points, and drops are not verified."
     },
-    "rewards": [
-      {
-        "itemId": "medal",
-        "quantity": 1,
-        "unit": null,
-        "kind": "possible",
-        "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
-        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
-      }
-    ],
+    "rewards": [],
     "chests": []
   },
   {
@@ -14207,7 +15834,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -14215,19 +15842,9 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Power and 6 stamina from published lists. Level-specific experience, points, and drops are not verified."
     },
-    "rewards": [
-      {
-        "itemId": "medal",
-        "quantity": 1,
-        "unit": null,
-        "kind": "possible",
-        "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
-        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
-      }
-    ],
+    "rewards": [],
     "chests": []
   },
   {
@@ -14239,7 +15856,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -14247,19 +15864,9 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Power and 6 stamina from published lists. Level-specific experience, points, and drops are not verified."
     },
-    "rewards": [
-      {
-        "itemId": "medal",
-        "quantity": 1,
-        "unit": null,
-        "kind": "possible",
-        "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
-        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
-      }
-    ],
+    "rewards": [],
     "chests": []
   },
   {
@@ -14271,7 +15878,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -14279,19 +15886,9 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Power and 6 stamina from published lists. Level-specific experience, points, and drops are not verified."
     },
-    "rewards": [
-      {
-        "itemId": "medal",
-        "quantity": 1,
-        "unit": null,
-        "kind": "possible",
-        "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
-        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
-      }
-    ],
+    "rewards": [],
     "chests": []
   },
   {
@@ -14303,7 +15900,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -14311,19 +15908,9 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Power and 6 stamina from published lists. Level-specific experience, points, and drops are not verified."
     },
-    "rewards": [
-      {
-        "itemId": "medal",
-        "quantity": 1,
-        "unit": null,
-        "kind": "possible",
-        "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
-        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
-      }
-    ],
+    "rewards": [],
     "chests": []
   },
   {
@@ -14335,7 +15922,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -14343,19 +15930,9 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Power and 6 stamina from published lists. Level-specific experience, points, and drops are not verified."
     },
-    "rewards": [
-      {
-        "itemId": "medal",
-        "quantity": 1,
-        "unit": null,
-        "kind": "possible",
-        "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
-        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
-      }
-    ],
+    "rewards": [],
     "chests": []
   },
   {
@@ -14367,7 +15944,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -14375,19 +15952,9 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Power and 6 stamina from published lists. Level-specific experience, points, and drops are not verified."
     },
-    "rewards": [
-      {
-        "itemId": "medal",
-        "quantity": 1,
-        "unit": null,
-        "kind": "possible",
-        "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
-        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
-      }
-    ],
+    "rewards": [],
     "chests": []
   },
   {
@@ -14399,7 +15966,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -14407,19 +15974,9 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Power and 6 stamina from published lists. Level-specific experience, points, and drops are not verified."
     },
-    "rewards": [
-      {
-        "itemId": "medal",
-        "quantity": 1,
-        "unit": null,
-        "kind": "possible",
-        "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
-        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
-      }
-    ],
+    "rewards": [],
     "chests": []
   },
   {
@@ -14431,7 +15988,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -14439,19 +15996,9 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Power and 6 stamina from published lists. Level-specific experience, points, and drops are not verified."
     },
-    "rewards": [
-      {
-        "itemId": "medal",
-        "quantity": 1,
-        "unit": null,
-        "kind": "possible",
-        "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
-        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
-      }
-    ],
+    "rewards": [],
     "chests": []
   },
   {
@@ -14463,7 +16010,7 @@
     "stamina": 6,
     "image": null,
     "event": null,
-    "updatedAt": "2026-09-29",
+    "updatedAt": "2026-10-02",
     "verification": {
       "status": "guide-sourced",
       "inGameVerified": false,
@@ -14471,19 +16018,9 @@
         "https://evonyguidewiki.com/en/boss-power-list-en/",
         "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
       ],
-      "notes": "Power as listed in the guide, sometimes rounded. Normal monster attacks cost 6 stamina. Medal is a common possible reward; other level-specific drops have not been confirmed."
+      "notes": "Power and 6 stamina from published lists. Level-specific experience, points, and drops are not verified."
     },
-    "rewards": [
-      {
-        "itemId": "medal",
-        "quantity": 1,
-        "unit": null,
-        "kind": "possible",
-        "origin": "direct",
-        "notes": "Common possible reward; not guaranteed",
-        "sourceUrl": "https://evony-the-kings-return.fandom.com/wiki/Normal_Monsters"
-      }
-    ],
+    "rewards": [],
     "chests": []
   }
 ]
