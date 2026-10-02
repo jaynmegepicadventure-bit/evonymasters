@@ -1,0 +1,74 @@
+---
+import SiteHeader from '../../components/SiteHeader.astro';
+import buffs from '../../data/buffs.json';
+
+const slugify = name => name.toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+export function getStaticPaths() {
+  const groups = new Map();
+  for (const row of buffs.filter(row => row.type === 'General')) {
+    if (!groups.has(row.name)) groups.set(row.name, []);
+    groups.get(row.name).push(row);
+  }
+  return [...groups].map(([name, rows]) => ({params: {slug: slugify(name)}, props: {name, rows}}));
+}
+const {name, rows} = Astro.props;
+const first = rows[0];
+const fmt = value => new Intl.NumberFormat('en-US', {maximumFractionDigits: 2}).format(value);
+const percent = value => (value == null ? '—' : fmt(value) + '%');
+const stat = (label, value) => ({label, value: value == null ? '—' : fmt(value)});
+const attributes = [first.leadership, first.attack, first.defense, first.politics].every(value => value != null)
+  ? {label: 'Level 35 · 5★ attributes', values: [stat('Leadership', first.leadership), stat('Attack', first.attack), stat('Defense', first.defense), stat('Politics', first.politics)]}
+  : [first.baseLeadership, first.baseAttack, first.baseDefense, first.basePolitics].every(value => value != null)
+    ? {label: 'Base attributes', values: [stat('Leadership', first.baseLeadership), stat('Attack', first.baseAttack), stat('Defense', first.baseDefense), stat('Politics', first.basePolitics)]}
+    : null;
+const growth = [first.growthLeadership, first.growthAttack, first.growthDefense, first.growthPolitics].some(value => value != null)
+  ? [stat('Leadership', first.growthLeadership), stat('Attack', first.growthAttack), stat('Defense', first.growthDefense), stat('Politics', first.growthPolitics)]
+  : null;
+const troopNames = [['Ground Troop', 'Ground'], ['Mounted Troop', 'Mounted / cavalry'], ['Ranged Troop', 'Ranged / archers'], ['Siege Machine', 'Siege'], ['All Troops', 'All troops']];
+const bucket = row => {
+  const name = row.buffName || '';
+  // Only unambiguous, single-effect rows can contribute to a numeric total.
+  const match = name.match(/^(?:(Enemy|In-Rally|In-City) )?(Ground Troop|Mounted Troop|Ranged Troop|Siege Machine|All Troops) (Attack|Defense|HP)$/i);
+  if (!match || !Number.isFinite(Number(row.buffValue)) || row.unit !== 'percent') return null;
+  const condition = (row.condition || '').toLowerCase();
+  let situation = 'General';
+  if (/monster/.test(condition)) situation = 'Against monsters';
+  else if (/reinforc/.test(condition)) situation = 'Reinforcing';
+  else if (/defen|in.city|main city/.test(condition) || match[1]?.toLowerCase() === 'in-city') situation = 'Defending';
+  else if (/rally/.test(condition) || match[1]?.toLowerCase() === 'in-rally') situation = 'In rally';
+  else if (/attack/.test(condition)) situation = 'Attacking';
+  else if (/march/.test(condition)) situation = 'Marching';
+  else if (condition) situation = 'Other condition';
+  const troop = troopNames.find(([key]) => key.toLowerCase() === match[2].toLowerCase())?.[1];
+  return {troop, effect: match[3].toUpperCase() === 'HP' ? 'HP' : match[3][0].toUpperCase() + match[3].slice(1).toLowerCase(), situation, direction: row.buffDebuff?.toLowerCase() === 'debuff' || match[1]?.toLowerCase() === 'enemy' ? 'Debuff' : 'Buff'};
+};
+const totals = new Map();
+for (const row of rows) {
+  const group = bucket(row);
+  if (!group) continue;
+  const key = [group.troop, group.situation, group.direction, group.effect].join('|');
+  if (!totals.has(key)) totals.set(key, {...group, value: 0, count: 0});
+  const total = totals.get(key);
+  total.value += Number(row.buffValue);
+  total.count++;
+}
+const order = ['Ground', 'Mounted / cavalry', 'Ranged / archers', 'Siege', 'All troops'];
+const summary = [...totals.values()].sort((a, b) => order.indexOf(a.troop) - order.indexOf(b.troop) || a.situation.localeCompare(b.situation) || a.direction.localeCompare(b.direction) || a.effect.localeCompare(b.effect));
+const breakdownFields = [['General buff', 'generalBuff'], ['Specialty 1', 'specialty1'], ['Specialty 2', 'specialty2'], ['Specialty 3', 'specialty3'], ['Specialty 4', 'specialty4'], ...[1,2,3,4,5].map(n => [n + '★ ascension', 'star' + n]), ...[1,2,3,4,5,6].map(n => ['Covenant ' + n, 'covenant' + n]), ['Skin', 'skinBuff']];
+---
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="description" content={'Recorded attributes and buffs for ' + name + ' in Evony.'}/><link rel="icon" href="/favicon.svg"/><title>{name} | evonymasters</title>
+<style is:global>
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#eaf0f8;background:#0c1726}*{box-sizing:border-box}body{margin:0}a{color:inherit}.wrap{max-width:1150px;margin:auto;padding:0 22px}.hero{padding:55px 0 35px;background:radial-gradient(circle at 80% 10%,#234667 0,transparent 55%)}.eyebrow{color:#e6bc73;text-transform:uppercase;letter-spacing:.13em;font-size:.8rem;font-weight:800}.eyebrow a{text-decoration:none}h1{font-size:clamp(2.3rem,5vw,4rem);letter-spacing:-.045em;margin:12px 0}h2{font-size:1.5rem;margin:0 0 12px}.intro,.note{color:#b6c8d9;line-height:1.65}.intro{font-size:1.05rem;max-width:780px}.section{margin:30px 0 42px}.panel{background:#152b43;border:1px solid #35516d;border-radius:18px;padding:24px}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.stat{background:#10243a;border:1px solid #35516d;border-radius:11px;padding:16px}.stat strong{display:block;color:#f2ce88;font-size:1.4rem;margin-top:5px}.meta{color:#a9bed1;font-size:.86rem}.grid{overflow-x:auto;border:1px solid #35516d;border-radius:18px;background:#152b43}.results-table{width:100%;border-collapse:collapse;min-width:680px}.results-table th,.results-table td{padding:13px 17px;text-align:left;vertical-align:top;border-bottom:1px solid #2d465f}.results-table th{background:#10243a;color:#e6bc73;text-transform:uppercase;letter-spacing:.08em;font-size:.75rem;white-space:nowrap}.results-table tbody tr:hover{background:#203b55}.results-table tbody tr:last-child td{border-bottom:0}.value{color:#f2ce88;font-weight:800;white-space:nowrap}.pieces{color:#b6c8d9;font-size:.85rem;line-height:1.55}.pieces span{display:block}.source{display:inline-block;color:#e6bc73;margin-top:10px}footer{border-top:1px solid #30445c;padding:24px 0;color:#a9bdcf;font-size:.82rem}@media(max-width:700px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.panel{padding:17px}.hero{padding-top:35px}}@media(max-width:420px){.stats{grid-template-columns:1fr 1fr}}
+</style></head><body>
+<SiteHeader active="generals" />
+<main><section class="hero"><div class="wrap"><div class="eyebrow"><a href="/">Player tools</a> / <a href="/generals/">Generals</a></div><h1>{name}</h1><p class="intro">{first.generalType || 'General'} · {rows.length} recorded effect{rows.length === 1 ? '' : 's'}. Review attributes, grouped buff totals and the complete source entries below.</p></div></section>
+<div class="wrap">
+{attributes && <section class="section"><h2>{attributes.label}</h2><div class="stats">{attributes.values.map(item => <div class="stat"><span class="meta">{item.label}</span><strong>{item.value}</strong></div>)}</div></section>}
+{growth && <section class="section"><h2>Attribute growth</h2><div class="stats">{growth.map(item => <div class="stat"><span class="meta">{item.label}</span><strong>{item.value}</strong></div>)}</div></section>}
+<section class="section"><h2>Recorded troop totals</h2><p class="note">Percentages add matching recorded rows by troop, effect and situation. Conditional buffs, debuffs and unclassified effects stay separate. These are catalog sums, not a guaranteed in-game build total; requirements and overlapping source entries may affect what applies.</p>
+{summary.length ? <div class="grid"><table class="results-table"><thead><tr><th>Troop type</th><th>Situation</th><th>Buff / Debuff</th><th>Stat</th><th>Recorded sum</th><th>Entries</th></tr></thead><tbody>{summary.map(item => <tr><td>{item.troop}</td><td>{item.situation}</td><td>{item.direction}</td><td>{item.effect}</td><td class="value">{percent(item.value)}</td><td>{item.count}</td></tr>)}</tbody></table></div> : <p class="panel">No single-effect troop values have been recorded for this general.</p>}</section>
+<section class="section"><h2>All recorded effects</h2><div class="grid"><table class="results-table"><thead><tr><th>Effect</th><th>Buff / Debuff</th><th>Value</th><th>Condition</th><th>Source breakdown</th></tr></thead><tbody>{rows.map(row => <tr><td>{row.buffName}</td><td>{row.buffDebuff || 'Buff'}</td><td class="value">{row.buffDebuff?.toLowerCase() === 'debuff' ? '−' : '+'}{row.unit === 'percent' ? percent(row.buffValue) : row.buffValue == null ? '—' : fmt(row.buffValue) + (row.unit ? ' ' + row.unit : '')}</td><td>{row.condition || '—'}</td><td class="pieces">{breakdownFields.filter(([, key]) => row[key] != null).map(([label,key]) => <span>{label}: {row.unit === 'percent' ? percent(row[key]) : fmt(row[key])}</span>)}{row.notes && <span>{row.notes}</span>}</td></tr>)}</tbody></table></div>
+{first.sourceUrl && <a class="source" href={first.sourceUrl} target="_blank" rel="noopener noreferrer">Source data ↗</a>}</section>
+</div></main><footer><div class="wrap">evonymasters is an independent fan project and is not affiliated with or endorsed by the game publisher.</div></footer>
+</body></html>
