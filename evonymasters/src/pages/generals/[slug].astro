@@ -2,8 +2,8 @@
 import SiteHeader from '../../components/SiteHeader.astro';
 import buffs from '../../data/buffs.json';
 
-const slugify = name => name.toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 export function getStaticPaths() {
+  const slugify = name => name.toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   const groups = new Map();
   for (const row of buffs.filter(row => row.type === 'General')) {
     if (!groups.has(row.name)) groups.set(row.name, []);
