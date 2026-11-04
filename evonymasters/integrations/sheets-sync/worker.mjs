@@ -3,7 +3,9 @@
 // Bind DATA (KV namespace) and SYNC_SECRET (Worker secret).
 const MAX_BYTES = 5_000_000;
 const HEADERS = { "content-type": "application/json; charset=utf-8", "cache-control": "no-store", "x-content-type-options": "nosniff" };
-const reply = (obj, status = 200) => new Response(JSON.stringify(obj), { status, headers: HEADERS });
+const PUBLIC_ORIGINS = new Set(['https://evonymasters.jaynmegepicadventure.workers.dev']);
+const publicHeaders = origin => PUBLIC_ORIGINS.has(origin) ? {'access-control-allow-origin':origin,'vary':'Origin'} : {};
+const reply = (obj, status = 200, headers = {}) => new Response(JSON.stringify(obj), { status, headers: {...HEADERS,...headers} });
 const clean = x => String(x ?? "").trim();
 const norm = x => clean(x).toLocaleLowerCase("en").replace(/\s+/g, " ");
 const fields = {
@@ -45,6 +47,7 @@ const trimRow = (source, row, item, classification, route) => ({
   source, name: clean(source==="monster" ? row["Monster Name"] : source==="event" ? row["EVENT NAME"] : row["Box Name"]),
   item, quantity: clean(row.Quantity ?? row.QUANTITY), classification:clean(classification), route,
   level: clean(row["Monster Level"] ?? row.LEVEL ?? row.Level), event:clean(row.Event ?? row.EVENT),
+  monsterType: clean(row["Monster Type"]), stamina: clean(row.Stamina ?? row.STAMINA),
 });
 function search(snapshot, query) {
   const q=norm(query); const found=[];const boxLookup=new Map();
@@ -86,6 +89,11 @@ function search(snapshot, query) {
 export default {
  async fetch(request, env) {
   const url=new URL(request.url);
+  const origin=request.headers.get("origin")||"";
+  if(url.pathname==="/v1/search" && request.method==="OPTIONS") {
+    if(!PUBLIC_ORIGINS.has(origin)) return new Response(null,{status:403});
+    return new Response(null,{status:204,headers:{...publicHeaders(origin),"access-control-allow-methods":"GET, OPTIONS","access-control-allow-headers":"content-type","access-control-max-age":"3600"}});
+  }
   if(url.pathname==="/health" && request.method==="GET")return reply({status:"ok"});
   if(!env.DATA || !env.SYNC_SECRET)return reply({error:"Worker is not configured"},503);
   if(url.pathname==="/v1/sync" && request.method==="POST"){
@@ -103,11 +111,11 @@ export default {
   }
   if(url.pathname==="/v1/search"&&request.method==="GET"){
     const q=clean(url.searchParams.get("q"));
-    if(q.length<3||q.length>100)return reply({error:"Query must be 3–100 characters"},400);
+    if(q.length<3||q.length>100)return reply({error:"Query must be 3–100 characters"},400,publicHeaders(origin));
     const raw=await env.DATA.get("latest");
-    if(!raw)return reply({error:"No validated data available"},503);
+    if(!raw)return reply({error:"No validated data available"},503,publicHeaders(origin));
     const snapshot=JSON.parse(raw);
-    return reply({results:search(snapshot,q),updatedAt:snapshot.importedAt});
+    return reply({results:search(snapshot,q),updatedAt:snapshot.importedAt},200,publicHeaders(origin));
   }
   return reply({error:"Not found"},404);
  }
