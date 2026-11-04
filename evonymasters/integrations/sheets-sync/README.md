@@ -29,3 +29,10 @@ This folder is a **separate Cloudflare Worker** proof of concept. The production
 - The importer requires every populated event row to have EVENT NAME and ITEM, every populated monster row to have Monster Name and Reward Item, and every populated box row to have Box Name and Reward Item. Correct invalid spreadsheet rows before syncing.
 - Avoid storing private information in the reward sheet: the search API is publicly callable, even though the spreadsheet itself is private.
 - No deployment, secrets, KV namespace, or production integration is performed by this commit.
+
+## Resource Finder integration (pending review)
+- The development branch now imports `src/lib/live-resource-search.mjs` from the Resource Finder and queries `GET /v1/search` only when a visitor enters at least three characters.
+- The sync Worker permits browser CORS reads from **only** `https://evonymasters.jaynmegepicadventure.workers.dev`. The Worker must be re-deployed with the **latest** `worker.mjs` before this browser integration works. Do not replace the existing website Worker.
+- Existing local JSON results are the fallback when the live service is unavailable; no blanket source-data export is added.
+- This still requires verification of the live response, browser console, type filters, and performance before merging the draft PR.
+- Avoid merging until the owner confirms the updated Worker is installed and end-to-end search works. The original website continues serving its previous version until then.
