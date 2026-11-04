@@ -1,18 +1,10 @@
 // Progressive enhancement: Google Sheets-backed search with existing JSON results as fallback.
 // Only user queries are sent. Never fetch the private spreadsheet or a bulk dataset.
 const ENDPOINT = 'https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev/v1/search';
-const allowed = {
-  '': ['monster', 'event'],
-  Regular: ['monster'],
-  Boss: ['monster'],
-  Event: ['monster'],
-  'Event Activity': ['event'],
-};
 function typeMatches(row, selected) {
   if (!selected) return true;
   if (selected === 'Event Activity') return row.source === 'event';
-  // Current search API doesn't include monster type; don't mislabel Boss/Regular/Event.
-  return row.source === 'monster' && selected === 'Boss';
+  return row.source === 'monster' && String(row.monsterType || '').toLowerCase() === selected.toLowerCase();
 }
 function cell(tag, value, css) {
   const el = document.createElement(tag);
@@ -20,7 +12,7 @@ function cell(tag, value, css) {
   el.textContent = String(value ?? '');
   return el;
 }
-function makeTable(rows, currentQuery) {
+function makeTable(rows) {
   const table = document.createElement('table');
   table.className = 'results-table';
   const thead = document.createElement('thead');
@@ -49,7 +41,7 @@ export function installLiveResourceSearch({query, type, results, count, empty, e
     clearTimeout(timer);
     const serial = ++requestSerial;
     const term = query.value.trim();
-    if (term.length < 3 || (type.value && type.value !== 'Event Activity' && type.value !== 'Boss')) return; // local fallback
+    if (term.length < 3) return; // local fallback
     timer = setTimeout(async () => {
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 5500);
@@ -62,7 +54,7 @@ export function installLiveResourceSearch({query, type, results, count, empty, e
         if (!Array.isArray(payload.results)) throw new Error('Invalid live search response');
         const selected = payload.results.filter(r => typeMatches(r, type.value));
         results.replaceChildren();
-        if (selected.length) results.append(makeTable(selected, term));
+        if (selected.length) results.append(makeTable(selected));
         count.textContent = selected.length + ' live result' + (selected.length === 1 ? '' : 's');
         empty.hidden = selected.length > 0;
         if (!selected.length) emptyText.textContent = 'No matching rewards in the current spreadsheet.';
