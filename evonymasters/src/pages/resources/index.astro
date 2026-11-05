@@ -2,205 +2,222 @@
 import SiteHeader from '../../components/SiteHeader.astro';
 ---
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<meta name="description" content="Discover Evony rewards by item, monster, event and chest. Compare guaranteed and possible rewards without an endless list." />
-<link rel="icon" href="/favicon.svg" />
-<title>Item Finder | EvonyMasters</title>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content="Search Evony rewards and compare quantities, frequencies and ways to obtain them from monsters, events, tasks and boxes."/>
+<link rel="icon" href="/favicon.svg"/><title>Item Finder | EvonyMasters</title>
 <style is:global>
-:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#0c1726;color:#edf2f8}*{box-sizing:border-box}
-body{margin:0}a{color:inherit}.wrap{max-width:1140px;margin:0 auto;padding:0 22px}
-.hero{background:linear-gradient(155deg,#14263b,#0f233b 72%);border-bottom:1px solid #37516e;padding:50px 0 34px}
-.label-line{font-size:.82rem;color:#efc476;letter-spacing:.15em;font-weight:850;text-transform:uppercase}
-h1{font-size:clamp(2.25rem,5vw,3.7rem);margin:12px 0 10px;letter-spacing:-.04em}
-.intro{color:#bdcee1;max-width:690px;line-height:1.6}
-.search-box{background:#fff;border:2px solid transparent;display:flex;align-items:center;gap:10px;border-radius:15px;padding:5px 15px;max-width:920px;margin-top:27px;color:#334155}
-.search-box:focus-within{border-color:#f2c876}.search-box svg{width:22px;height:22px;flex:none}
-.search-box input{border:0;outline:0;flex:1;min-height:56px;font-size:1.16rem;background:transparent;color:#17263b;min-width:0}
-.search-box input::placeholder{color:#6e7d90}
-.notice{font-size:.87rem;line-height:1.6;color:#bfd1e1;margin:12px 0 0}
-.workspace{padding:24px 0 65px}.filter-panel{background:#152b42;border:1px solid #35516d;border-radius:16px;padding:22px}
-.filter-panel h2{margin:0 0 12px;font-size:1rem;color:#f0d18e}
-.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
-.filter{font:inherit;border:1px solid #5b748d;border-radius:999px;padding:9px 15px;background:#102238;color:#d5e2f0;cursor:pointer;font-size:.92rem}
-.filter:hover{background:#25425c}.filter[aria-pressed="true"]{background:#f3c974;color:#1a2735;border-color:#f3c974;font-weight:850}
-.field{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
-.field label{color:#d5e2ef;font-size:.87rem;font-weight:800}
-.field select{background:#102238;color:white;border:1px solid #59748d;border-radius:8px;padding:10px 13px;font:inherit}
-.field small{color:#b6cce1}.results-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin:25px 0 16px}
-.results-header h2{font-size:1.35rem;margin:0}.results-header p{color:#b9cbdc;font-size:.85rem;margin:4px 0 0}
-.group-list{display:grid;gap:12px}.group-card{border-radius:14px;border:1px solid #3d5874;background:#152c44;overflow:hidden}
-.group-card summary{list-style:none;display:flex;align-items:center;gap:14px;padding:17px 20px;cursor:pointer}
-.group-card summary::-webkit-details-marker{display:none}.group-card summary:focus-visible{outline:3px solid #f3c974;outline-offset:-3px}
-.group-card[open] summary{border-bottom:1px solid #35536e}.source-icon{width:45px;height:45px;display:grid;place-items:center;border-radius:11px;background:#233f59;font-size:1.35rem;flex:none}
-.source-info{flex:1;min-width:0}.source-info strong{font-size:1.05rem;color:#fff}.source-info small{display:block;color:#b9cddf;margin-top:5px;line-height:1.4}
-.group-count{font-size:.8rem;color:#f1cf85;background:#2c4054;border-radius:99px;padding:7px 9px;white-space:nowrap}
-.chevron{color:#a7bed3}.group-card[open] .chevron{transform:rotate(180deg)}
-.reward-list{padding:12px 18px 20px}.reward-row{border-bottom:1px solid #314d69;padding:11px 3px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:start}
-.reward-row:last-child{border-bottom:0}.reward-name{font-weight:740}.reward-path{font-size:.79rem;line-height:1.55;color:#adbed0;margin-top:5px;overflow-wrap:anywhere}
-.reward-meta{text-align:right}.amount{color:#f5cf84;font-weight:850}.drop{display:block;font-size:.76rem;margin-top:5px;color:#e4d5b3}
-.drop.guaranteed{color:#a2e6af}.drop.possible{color:#f4cd80}
-.summary-note{font-size:.8rem;color:#abc2d7;margin-top:12px;line-height:1.5}
-.empty{padding:40px 22px;border:1px dashed #4f718d;border-radius:14px;color:#c9d9e7;text-align:center;line-height:1.6}
-#load-more{display:block;margin:22px auto 0;border:1px solid #bd974d;background:#f1c675;border-radius:8px;padding:12px 26px;color:#14253c;cursor:pointer;font-weight:850}
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#0c1726;color:#ecf1f9}
+*{box-sizing:border-box}body{margin:0}a{color:inherit}.wrap{max-width:1300px;margin:0 auto;padding:0 22px}
+.hero{background:linear-gradient(110deg,#13273e,#102137 70%,#1b3347);border-bottom:1px solid #37516b;padding:28px 0 24px}
+.eyebrow{color:#f2c778;font-size:.76rem;font-weight:850;letter-spacing:.13em;text-transform:uppercase}
+h1{font-size:clamp(2rem,4.2vw,3rem);letter-spacing:-.043em;line-height:1.1;margin:8px 0}
+.intro{color:#c3d0dc;margin:0;line-height:1.6;max-width:780px;font-size:.98rem}
+.searchbox{max-width:960px;margin-top:18px;background:#f9fbfd;border:2px solid transparent;border-radius:12px;padding:0 12px;display:flex;align-items:center;gap:12px;color:#4a6276}
+.searchbox:focus-within{border-color:#f4c971}
+.searchbox input{min-width:0;flex:1;border:0;background:transparent;color:#15283f;outline:0;padding:15px 0;font:inherit;font-size:1.08rem}
+.searchbox button{font:inherit;background:#e4e9ed;color:#3c5569;border:0;border-radius:50%;height:28px;width:28px;cursor:pointer}
+.searchbox button[hidden]{display:none}
+.toolbar{padding:16px 0 12px;border-bottom:1px solid #2d455e;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{border:1px solid #55728b;border-radius:999px;background:#12263b;color:#dfecf7;padding:10px 16px;font:inherit;cursor:pointer;font-size:.9rem}
+.tab:hover{background:#27425e}.tab[aria-selected="true"]{background:#f3c76e;color:#17273a;border-color:#f3c76e;font-weight:850}
+.sort-hint{color:#9fb7ce;font-size:.78rem}
+.heading{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:9px;margin:20px 0 13px}
+.heading h2{font-size:1.3rem;margin:0}
+.heading p{font-size:.86rem;color:#b0c5d8;margin:4px 0 0}
+.sync{font-size:.75rem;color:#9db4c9}
+.table-frame{overflow-x:auto;border:1px solid #3e5974;border-radius:14px;background:linear-gradient(180deg,#152c45,#11263c)}
+.results-table{border-collapse:separate;border-spacing:0;width:100%;min-width:990px}
+.results-table th{background:#18324d;border-bottom:1px solid #59748c;padding:13px 14px;text-align:left;white-space:nowrap}
+.results-table th button{font:inherit;font-weight:780;color:#e9c77c;border:0;background:transparent;text-align:left;cursor:pointer;padding:0}
+.results-table th button:hover{text-decoration:underline}
+.results-table th button:focus-visible{outline:2px solid #f4c877;outline-offset:4px}
+.results-table th .arrow{display:inline-block;margin-left:6px;font-size:.75rem}
+.results-table td{padding:10px 14px;border-bottom:1px solid #304c66;vertical-align:middle;font-size:.86rem}
+.results-table tbody tr:last-child td{border-bottom:0}
+.results-table tbody tr.main-row:hover{background:#213b55}
+.source{display:flex;align-items:center;gap:10px;min-width:230px}
+.source img{width:74px;height:54px;object-fit:cover;border-radius:8px;border:1px solid #50738d;background:#1d374f;flex:none}
+.name{font-weight:820;color:#fff;font-size:.92rem;line-height:1.25}
+.sub{font-size:.75rem;color:#b1c7d8;margin-top:4px}
+.link-detail{display:inline-block;padding:0;border:0;background:transparent;color:#e7bd6b;font:inherit;cursor:pointer;font-size:.75rem;margin-top:5px;text-decoration:underline;text-underline-offset:3px}
+.qty{font-weight:850;color:#f4ca78;font-size:1.05rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+.meta{color:#cbd9e6;font-size:.84rem}
+.chance{display:inline-block;border-radius:999px;padding:5px 10px;white-space:nowrap;background:#324963;color:#e2ebf3;font-size:.76rem}
+.chance.guaranteed{background:#18533c;color:#b9f6c9}
+.chance.possible{background:#57441e;color:#ffe0a1}
+.chance.mixed{background:#504b36;color:#f6db9f}
+.note{max-width:310px;line-height:1.5;color:#cfdeeb}
+.detail-row{background:#1b344d}.detail-row td{padding:14px 22px 17px}
+.detail-content{display:flex;flex-wrap:wrap;gap:20px;align-items:start;color:#c5daea}
+.detail-content ul{padding-left:20px;margin:8px 0;line-height:1.6}
+.detail-content small{color:#b1c4d7}
+.empty{border:1px dashed #4c6680;border-radius:13px;padding:32px;text-align:center;color:#c5d8e6}
 [hidden]{display:none!important}
-footer{border-top:1px solid #29425d;padding:24px 0;color:#afc3d4;font-size:.83rem;line-height:1.55}
-@media(max-width:570px){.hero{padding-top:34px}.filter-panel{padding:16px}.group-card summary{padding:14px}.group-count{font-size:.7rem}.source-icon{width:36px;height:36px}.reward-list{padding:10px 13px 15px}.search-box input{font-size:1rem}}
-</style>
-</head>
-<body>
-<SiteHeader active="resources" />
-<main>
-<section class="hero"><div class="wrap">
-<div class="label-line">Player tools / Item Finder</div>
+.load{display:block;margin:18px auto 35px;padding:11px 24px;border:1px solid #e0b66d;border-radius:9px;background:#f0c670;color:#13253a;font:inherit;font-weight:800;cursor:pointer}
+footer{border-top:1px solid #314c66;color:#abc1d4;font-size:.82rem;padding:23px 0;line-height:1.6}
+@media(max-width:700px){.hero{padding-top:26px}.wrap{padding:0 14px}.tabs{gap:6px}.tab{padding:8px 12px}.table-frame{margin:0 -14px;border-radius:0}.heading{margin-top:17px}.results-table{min-width:860px}}
+</style></head><body>
+<SiteHeader active="resources"/>
+<main><section class="hero"><div class="wrap">
+<div class="eyebrow">Player Tools / Item Finder</div>
 <h1>Find your rewards</h1>
-<p class="intro">Find which bosses, events, tasks and boxes offer the item you need. Results are grouped by source, so you can compare opportunities without scrolling through hundreds of repeated rewards.</p>
-<div class="search-box">
-<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="10.8" cy="10.8" r="7"/><path d="m16 16 5 5"/></svg>
-<label for="query" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px">Search for a reward or source</label>
-<input id="query" type="search" placeholder="Try Refining Stone, Gems, Ymir…" list="item-suggestions" autocomplete="off" />
-<datalist id="item-suggestions"></datalist>
+<p class="intro">Compare where to get an item, how much is listed, and how often sources recur.</p>
+<div class="searchbox"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
+<label for="query" style="position:absolute;width:1px;height:1px;clip:rect(0,0,0,0);overflow:hidden">Find a reward</label>
+<input id="query" type="search" list="item-suggestions" placeholder="Search Gems, Refining Stone, Source of Life…" autocomplete="off"/>
+<button id="clear-search" type="button" aria-label="Clear search" hidden>×</button>
+<datalist id="item-suggestions"></datalist></div></div></section>
+<section class="wrap"><div class="toolbar">
+<div class="tabs" id="tabs" role="tablist" aria-label="Reward source">
+<button class="tab" role="tab" type="button" aria-selected="true" data-type="all">All</button>
+<button class="tab" role="tab" type="button" aria-selected="false" data-type="events">Events</button>
+<button class="tab" role="tab" type="button" aria-selected="false" data-type="all-bosses">Bosses</button>
+<button class="tab" role="tab" type="button" aria-selected="false" data-type="tasks">Tasks</button>
+<button class="tab" role="tab" type="button" aria-selected="false" data-type="boxes">Boxes</button>
+</div><span class="sort-hint">Click a column heading to sort all matching sources</span>
 </div>
-<p class="notice">Rewards depend on in-game conditions. “Possible” means a chance of receiving an item, not a guaranteed quantity. Events are not assumed to be active unless verified.</p>
-</div></section>
-<section class="workspace wrap">
-<div class="filter-panel">
-<h2>Where can I get it?</h2>
-<div id="type-filters" class="filter-row" aria-label="Reward source">
-<button class="filter" type="button" aria-pressed="true" data-type="all">All sources</button>
-<button class="filter" type="button" aria-pressed="false" data-type="events">Events & tasks</button>
-<button class="filter" type="button" aria-pressed="false" data-type="bosses">Bosses</button>
-<button class="filter" type="button" aria-pressed="false" data-type="event-bosses">Event bosses</button>
-<button class="filter" type="button" aria-pressed="false" data-type="regular">Regular monsters</button>
-<button class="filter" type="button" aria-pressed="false" data-type="boxes">Boxes</button>
-</div>
-<div class="field">
-<label for="drop-filter">Reward chance</label>
-<select id="drop-filter"><option value="all">All rewards</option><option value="Guaranteed">Guaranteed only</option><option value="Possible">Possible drops only</option><option value="Unspecified">Not classified</option></select>
-<small>Unknown rewards are never counted as guaranteed.</small>
-</div>
-</div>
-<div class="results-header">
-<div><h2 id="heading">Search for an item to get started</h2><p id="description">Results are grouped by monster, event/activity or reward box.</p></div>
-<p id="sync-status" aria-live="polite"></p>
-</div>
-<div id="feedback" class="empty">Type at least two characters to find reward sources. Your private spreadsheet is not exposed to visitors.</div>
-<div id="results" class="group-list" aria-live="polite"></div>
-<button id="load-more" type="button" hidden>Show more sources</button>
+<div class="heading"><div><h2 id="results-heading">Find an item to get started</h2><p id="results-description">Browse recorded reward sources by quantity and source type.</p></div><span class="sync" id="sync-status"></span></div>
+<div id="empty" class="empty">Start typing an item name to see where it can be obtained.</div>
+<div class="table-frame" id="table-frame" hidden>
+<table class="results-table" aria-label="Item Finder comparison results"><thead><tr>
+<th scope="col"><button data-sort="source" type="button">Source <span class="arrow"></span></button></th>
+<th scope="col"><button data-sort="type" type="button">Type <span class="arrow"></span></button></th>
+<th scope="col"><button data-sort="quantity" type="button">Quantity <span class="arrow"></span></button></th>
+<th scope="col"><button data-sort="frequency" type="button">Frequency <span class="arrow"></span></button></th>
+<th scope="col"><button data-sort="chance" type="button">Reward chance <span class="arrow"></span></button></th>
+<th scope="col"><button data-sort="notes" type="button">Notes / How to obtain <span class="arrow"></span></button></th>
+</tr></thead><tbody id="results"></tbody></table></div>
+<button id="load-more" class="load" type="button" hidden>Show more sources</button>
 </section></main>
-<footer><div class="wrap">EvonyMasters is an independent fan project. Data is maintained in a private spreadsheet and may change with game updates. Free-to-play eligibility and current availability are not yet verified for every source.</div></footer>
+<footer><div class="wrap">EvonyMasters is an independent fan project. Quantities, conditions and drop information come from the community-maintained rewards dataset; some values are unclassified.</div></footer>
 <script is:inline>
-const API='https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev';
-const query=document.querySelector('#query');
-const filters=document.querySelector('#type-filters');
-const drop=document.querySelector('#drop-filter');
-const results=document.querySelector('#results');
-const heading=document.querySelector('#heading');
-const desc=document.querySelector('#description');
-const feedback=document.querySelector('#feedback');
-const more=document.querySelector('#load-more');
-const syncStatus=document.querySelector('#sync-status');
-const datalist=document.querySelector('#item-suggestions');
-const labels={'events':'Event / activity',bosses:'Boss monster','event-bosses':'Event boss',regular:'Regular monster',boxes:'Reward box'};
-const emojis={'events':'📅',bosses:'⚔️','event-bosses':'🐉',regular:'🧭',boxes:'📦'};
-let type='all',page=0,serial=0,loadTimer,suggestTimer,abort,hasMore=false;
-const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=String(text);return n;};
-const safe = value=>String(value??'').trim();
-function groupCard(group){
-  const details=el('details','group-card');
-  const summary=el('summary');
-  const glyph=el('span','source-icon',emojis[group.source]||'🎁');
-  glyph.setAttribute('aria-hidden','true');
-  const info=el('div','source-info');
-  info.append(el('strong','',group.title));
-  const context=group.context||{};
-  const parts=[labels[group.source]||group.source];
-  if(context.level)parts.push('Lv '+context.level);
-  if(context.subEvent)parts.push(context.subEvent);
-  if(context.detail)parts.push(context.detail);
-  if(context.frequency)parts.push(context.frequency);
-  if(context.stamina)parts.push(context.stamina+' stamina');
-  info.append(el('small','',parts.join(' · ')));
-  summary.append(glyph,info,el('span','group-count',group.matchingRewards+' matching '+(group.matchingRewards===1?'reward':'rewards')),el('span','chevron','⌄'));
-  details.append(summary);
-  const body=el('div','reward-list');
-  for(const reward of group.items||[]){
-    const line=el('div','reward-row');
-    const left=el('div');
-    left.append(el('div','reward-name',reward.item));
-    if(reward.route?.length>1)left.append(el('div','reward-path','Via: '+reward.route.join(' → ')));
-    const right=el('div','reward-meta');
-    right.append(el('div','amount',reward.quantity||'Variable'));
-    const kind=safe(reward.classification)||'Unspecified';
-    right.append(el('span','drop '+kind.toLowerCase(),kind));
-    line.append(left,right);body.append(line);
-  }
-  if(group.matchingRewards>(group.items||[]).length)body.append(el('p','summary-note','More matching entries exist for this source. Refine the item search to narrow the details.'));
-  if(group.source==='events')body.append(el('p','summary-note','Availability and F2P eligibility are not yet verified. Check the event requirements in-game.'));
-  if(group.source==='boxes')body.append(el('p','summary-note','This box may be obtainable from multiple sources. A match inside the box does not guarantee you will obtain the box.'));
-  details.append(body);
-  return details;
+(()=>{
+"use strict";
+const API="https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev";
+const query=document.getElementById("query"),clear=document.getElementById("clear-search"),tabs=document.getElementById("tabs"),
+frame=document.getElementById("table-frame"),tbody=document.getElementById("results"),heading=document.getElementById("results-heading"),
+desc=document.getElementById("results-description"),status=document.getElementById("sync-status"),empty=document.getElementById("empty"),
+more=document.getElementById("load-more"),suggestions=document.getElementById("item-suggestions");
+let type="all",sort="suggested",direction="asc",page=0,token=0,controller=null,delay=null,suggestDelay=null,hasMore=false,recordCount=0;
+const names={events:"Event",tasks:"Task",bosses:"Boss","event-bosses":"Event boss",regular:"Regular monster",boxes:"Box"};
+const art={
+ "alchemy shop":"alchemy-shop","astral oracle":"astral-oracle","grace of star trail":"grace-of-star-trail",
+ "crazy eggs":"crazy-eggs","feasting revelry":"feasting-revelry",ymir:"ymir",zombie:"zombie"
+};
+const toText=x=>String(x??"").trim();
+const node=(tag,className,content)=>{const n=document.createElement(tag);if(className)n.className=className;if(content!==undefined)n.textContent=toText(content);return n;};
+const artwork=row=>{
+ const key=toText(row.title).toLowerCase().replace(/[^a-z0-9 ]/g,"").replace(/\s+/g," ").trim();
+ const fallback=row.source==="boxes"?"box":row.source==="tasks"?"task":["bosses","event-bosses","regular"].includes(row.source)?"boss":"event";
+ return "/images/item-finder/"+(art[key]||fallback)+".svg";
+};
+const label=row=>names[row.source]||row.source;
+function detailedRow(row){
+ const details=node("tr","detail-row");const td=node("td");td.colSpan=6;
+ const contents=node("div","detail-content");const wrap=node("div");
+ wrap.append(node("strong","",row.title+" · Recorded rewards"));
+ const ul=node("ul");
+ for(const item of row.items||[]){
+  const quantity=toText(item.quantity)||"Variable";
+  const description=item.item+" × "+quantity+" · "+item.classification+(item.route?.length>1?" · Via "+item.route.join(" → "):"");
+  ul.append(node("li","",description));
+ }
+ wrap.append(ul);
+ if(row.matchingRewards>(row.items||[]).length)wrap.append(node("small","","Additional reward records exist. Refine your search for more specific matches."));
+ contents.append(wrap);td.append(contents);details.append(td);return details;
 }
-async function load({append=false}={}){
-  const term=query.value.trim();
-  if(!append){page=0;allCount=0;results.replaceChildren();more.hidden=true;}
-  if(term.length<2){feedback.hidden=false;feedback.textContent='Type at least two characters to find reward sources.';heading.textContent='Search for an item to get started';desc.textContent='Results are grouped by monster, event/activity or reward box.';syncStatus.textContent='';return;}
-  if(abort)abort.abort();
-  abort=new AbortController();const current=++serial;
-  feedback.hidden=false;feedback.textContent='Searching rewards…';
-  heading.textContent='Results for “'+term+'”';
-  const params=new URLSearchParams({q:term,type,drop:drop.value,page:String(page)});
-  try{
-    const response=await fetch(API+'/v2/search?'+params,{signal:abort.signal});
-    if(!response.ok)throw Error('Search service returned '+response.status);
-    const data=await response.json();
-    if(current!==serial)return;
-    if(!Array.isArray(data.groups))throw Error('Unexpected search response');
-    for(const group of data.groups)results.append(groupCard(group));
-    hasMore=Boolean(data.hasMore);
-    more.hidden=!hasMore;
-    desc.textContent=data.total+' matching '+(data.total===1?'source':'sources')+' · '+results.childElementCount+' shown. Expand a source to see its rewards.';
-    syncStatus.textContent=data.updatedAt?'Data synced: '+new Date(data.updatedAt).toLocaleString():'';
-    if(!data.groups.length&&!append){feedback.hidden=false;feedback.textContent='No matching sources. Try a different item name or change the filters.';}
-    else feedback.hidden=true;
-  }catch(error){
-    if(error.name==='AbortError')return;
-    if(append){feedback.hidden=false;feedback.textContent='Could not load more results. Try again.';}
-    else{feedback.hidden=false;feedback.textContent='Live rewards are temporarily unavailable. Please try again shortly.';desc.textContent='The private spreadsheet has not been exposed.';}
-  }
+function resultRow(row){
+ const tr=node("tr","main-row");
+ const source=node("td");
+ const sourceLine=node("div","source");
+ const img=document.createElement("img");img.src=artwork(row);img.alt="";img.loading="lazy";img.width=74;img.height=54;
+ const info=node("div");info.append(node("div","name",row.title));
+ const level=toText(row.context?.level),event=toText(row.context?.event);
+ if(level||event)info.append(node("div","sub",[level?"Lv "+level:"",event].filter(Boolean).join(" · ")));
+ const toggle=node("button","link-detail","View reward details");toggle.type="button";toggle.setAttribute("aria-expanded","false");
+ const id="detail-"+Math.random().toString(36).slice(2);toggle.setAttribute("aria-controls",id);
+ info.append(toggle);sourceLine.append(img,info);source.append(sourceLine);tr.append(source);
+ tr.append(node("td","meta",label(row)));
+ tr.append(node("td","qty",row.quantityDisplay||"Variable"));
+ tr.append(node("td","meta",row.frequency||"Not specified"));
+ const chanceCell=node("td"),chance=node("span","chance "+toText(row.chance).toLowerCase(),row.chance||"Unspecified");
+ chanceCell.append(chance);tr.append(chanceCell);
+ tr.append(node("td","note",row.note||"Details in recorded rewards"));
+ const extra=detailedRow(row);extra.hidden=true;extra.id=id;
+ toggle.addEventListener("click",()=>{
+  extra.hidden=!extra.hidden;
+  toggle.setAttribute("aria-expanded",String(!extra.hidden));
+  toggle.textContent=extra.hidden?"View reward details":"Hide reward details";
+ });
+ return [tr,extra];
 }
-function schedule(){
- clearTimeout(loadTimer);if(abort)abort.abort();
- loadTimer=setTimeout(()=>load(),280);
+function updateSortIndicators(){
+ for(const btn of document.querySelectorAll("[data-sort]")){
+  const active=btn.dataset.sort===sort;
+  btn.querySelector(".arrow").textContent=active?(direction==="desc"?"▼":"▲"):"↕";
+  btn.closest("th").setAttribute("aria-sort",active?(direction==="desc"?"descending":"ascending"):"none");
+ }
 }
-filters.addEventListener('click',event=>{
- const target=event.target.closest('button[data-type]');
- if(!target)return;
- type=target.dataset.type;
- for(const button of filters.querySelectorAll('button'))button.setAttribute('aria-pressed',String(button===target));
- schedule();
-});
-drop.addEventListener('change',schedule);
-query.addEventListener('input',()=>{
- schedule();
- clearTimeout(suggestTimer);
+async function fetchResults(append=false){
  const term=query.value.trim();
- if(term.length<2){datalist.replaceChildren();return;}
- suggestTimer=setTimeout(async()=>{
+ if(!append){page=0;tbody.replaceChildren();frame.hidden=true;more.hidden=true;}
+ if(term.length<2){empty.hidden=false;empty.textContent="Type at least two characters to search recorded rewards.";heading.textContent="Find an item to get started";desc.textContent="Browse reward sources by quantity and source type.";status.textContent="";return;}
+ if(controller)controller.abort();controller=new AbortController();const current=++token;
+ heading.textContent='Results for “'+term+'”';
+ empty.hidden=false;empty.textContent="Searching recorded rewards…";
+ const params=new URLSearchParams({q:term,type,sort,direction,page:String(page)});
+ try {
+  const response=await fetch(API+"/v3/search?"+params,{signal:controller.signal});
+  if(!response.ok)throw Error("Search returned HTTP "+response.status);
+  const data=await response.json();
+  if(current!==token||!Array.isArray(data.groups))return;
+  for(const group of data.groups)tbody.append(...resultRow(group));
+  recordCount=data.total;hasMore=Boolean(data.hasMore);
+  frame.hidden=recordCount===0;more.hidden=!hasMore;
+  empty.hidden=recordCount>0;
+  if(!recordCount)empty.textContent="No matches. Try a different item name or another category.";
+  desc.textContent=recordCount+" matching "+(recordCount===1?"source":"sources")+" · "+(tbody.querySelectorAll(".main-row").length)+" shown. Quantities are per recorded reward, not additive totals.";
+  status.textContent=data.updatedAt?"Sheet updated "+new Date(data.updatedAt).toLocaleString():"";
+ }catch(error){
+  if(error.name==="AbortError")return;
+  empty.hidden=false;empty.textContent="Search is temporarily unavailable. Please try again.";
+  if(!append)frame.hidden=true;
+  more.hidden=true;
+ }
+}
+function schedule(){clearTimeout(delay);if(controller)controller.abort();delay=setTimeout(()=>fetchResults(),280);}
+query.addEventListener("input",()=>{
+ clear.hidden=!query.value; schedule();clearTimeout(suggestDelay);
+ const term=query.value.trim();if(term.length<2){suggestions.replaceChildren();return;}
+ suggestDelay=setTimeout(async()=>{
   try{
-   const response=await fetch(API+'/v2/suggest?q='+encodeURIComponent(term));
-   if(!response.ok)return;
-   const data=await response.json();
+   const r=await fetch(API+"/v2/suggest?q="+encodeURIComponent(term));
+   if(!r.ok)return;
+   const data=await r.json();
    if(query.value.trim()!==term)return;
-   datalist.replaceChildren(...(data.items||[]).map(v=>{const opt=document.createElement('option');opt.value=v;return opt;}));
+   suggestions.replaceChildren(...(data.items||[]).map(v=>{const opt=document.createElement("option");opt.value=v;return opt;}));
   }catch{}
- },350);
+ },320);
 });
-more.addEventListener('click',()=>{if(hasMore){page++;load({append:true});}});
-const initial=new URLSearchParams(location.search).get('q');
+clear.addEventListener("click",()=>{query.value="";clear.hidden=true;query.dispatchEvent(new Event("input"));query.focus();});
+tabs.addEventListener("click",e=>{
+ const button=e.target.closest("button[data-type]");if(!button)return;
+ type=button.dataset.type;
+ for(const tab of tabs.querySelectorAll("button"))tab.setAttribute("aria-selected",String(tab===button));
+ schedule();
+});
+document.querySelectorAll("[data-sort]").forEach(btn=>btn.addEventListener("click",()=>{
+ const value=btn.dataset.sort;
+ if(value===sort)direction=direction==="asc"?"desc":"asc";
+ else{sort=value;direction=value==="quantity"?"asc":"asc";}
+ updateSortIndicators();schedule();
+}));
+more.addEventListener("click",()=>{if(hasMore){page++;fetchResults(true);}});
+updateSortIndicators();
+const initial=new URLSearchParams(location.search).get("q");
 if(initial)query.value=initial;
-if(query.value.trim().length >= 2) schedule();
-</script>
-</body></html>
+clear.hidden=!query.value;if(query.value.trim().length>=2)schedule();
+})();
+</script></body></html>
