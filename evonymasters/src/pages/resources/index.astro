@@ -55,7 +55,7 @@ footer{border-top:1px solid #29425d;padding:24px 0;color:#afc3d4;font-size:.83re
 <main>
 <section class="hero"><div class="wrap">
 <div class="label-line">Player tools / Item Finder</div>
-<h1>Find your free rewards</h1>
+<h1>Find your rewards</h1>
 <p class="intro">Find which bosses, events, tasks and boxes offer the item you need. Results are grouped by source, so you can compare opportunities without scrolling through hundreds of repeated rewards.</p>
 <div class="search-box">
 <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="10.8" cy="10.8" r="7"/><path d="m16 16 5 5"/></svg>
@@ -105,7 +105,7 @@ const syncStatus=document.querySelector('#sync-status');
 const datalist=document.querySelector('#item-suggestions');
 const labels={'events':'Event / activity',bosses:'Boss monster','event-bosses':'Event boss',regular:'Regular monster',boxes:'Reward box'};
 const emojis={'events':'📅',bosses:'⚔️','event-bosses':'🐉',regular:'🧭',boxes:'📦'};
-let type='all',page=0,serial=0,loadTimer,abort,hasMore=false,allCount=0;
+let type='all',page=0,serial=0,loadTimer,suggestTimer,abort,hasMore=false;
 const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=String(text);return n;};
 const safe = value=>String(value??'').trim();
 function groupCard(group){
@@ -159,7 +159,7 @@ async function load({append=false}={}){
     if(current!==serial)return;
     if(!Array.isArray(data.groups))throw Error('Unexpected search response');
     for(const group of data.groups)results.append(groupCard(group));
-    hasMore=Boolean(data.hasMore);allCount=data.total;
+    hasMore=Boolean(data.hasMore);
     more.hidden=!hasMore;
     desc.textContent=data.total+' matching '+(data.total===1?'source':'sources')+' · '+results.childElementCount+' shown. Expand a source to see its rewards.';
     syncStatus.textContent=data.updatedAt?'Data synced: '+new Date(data.updatedAt).toLocaleString():'';
@@ -185,10 +185,10 @@ filters.addEventListener('click',event=>{
 drop.addEventListener('change',schedule);
 query.addEventListener('input',()=>{
  schedule();
- clearTimeout(window._suggestDebounce);
+ clearTimeout(suggestTimer);
  const term=query.value.trim();
  if(term.length<2){datalist.replaceChildren();return;}
- window._suggestDebounce=setTimeout(async()=>{
+ suggestTimer=setTimeout(async()=>{
   try{
    const response=await fetch(API+'/v2/suggest?q='+encodeURIComponent(term));
    if(!response.ok)return;
