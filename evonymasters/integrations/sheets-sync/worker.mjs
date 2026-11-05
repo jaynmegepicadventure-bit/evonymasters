@@ -88,7 +88,10 @@ function search(snapshot, query, sourceFilter = "", monsterType = "") {
   return found.slice(0,30);
 }
 
-const validTypes = new Set(["all","events","bosses","regular","event-bosses","boxes"]);
+// V3: query all matched sources, aggregate quantities and sort before pagination.
+// The master spreadsheet remains private, and no bulk-download endpoint is provided.
+const validTypes = new Set(["all","events","tasks","bosses","regular","event-bosses","boxes"]);
+const validSorts = new Set(["suggested","source","type","quantity","frequency","chance","notes"]);
 const normalizeDrop = value => {
   const v=norm(value);
   if(v==="guaranteed")return "Guaranteed";
@@ -102,22 +105,27 @@ function queryScore(name, q){
   if(n.includes(q))return 2;
   return -1;
 }
-function groupSearch(snapshot, {query,type="all",drop="all",page=0}){
-  const q=norm(query);const grouped=new Map();const boxMap=new Map();
+const numericQuantity = raw => {
+  const n=clean(raw).replace(/,/g,"");
+  return /^\\d+(?:\\.\\d+)?$/.test(n) ? Number(n) : null;
+};
+const taskEvent = row => /\\b(task|tasks|quest|quests|daily activit(?:y|ies))\\b/i.test(
+  [row["EVENT NAME"],row["SUB EVENT"],row.DETAIL,row["ACTIVITY TYPE"]].join(" ")
+);
+function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggested",direction="asc"}){
+  const q=norm(query), grouped=new Map(), boxMap=new Map();
   for(const box of snapshot.boxes){
-    const r=box.fields;const id=norm(r["Box Name"]);
+    const r=box.fields, id=norm(r["Box Name"]);
     if(!boxMap.has(id))boxMap.set(id,[]);
     boxMap.get(id).push(r);
   }
-  function descendants(name, classification, path, visited, depth){
+  function descendants(name,classification,path,visited,depth){
     if(depth>7)return [];
-    const id=norm(name);
-    if(visited.has(id))return [];
-    const following=new Set([...visited,id]);const result=[];
+    const id=norm(name);if(visited.has(id))return [];
+    const following=new Set([...visited,id]),result=[];
     for(const row of boxMap.get(id)||[]){
-      const item=row["Reward Item (in-game)"];
-      const childDrop=normalizeDrop(row["Drop Classification"]);
-      const effectiveDrop=classification==="Guaranteed"?childDrop:classification==="Possible"?"Possible":"Unspecified";
+      const item=row["Reward Item (in-game)"], childDrop=normalizeDrop(row["Drop Classification"]);
+      const effectiveDrop=classification==="Guaranteed" ? childDrop : classification==="Possible" ? "Possible" : "Unspecified";
       const child={item,quantity:row.Quantity,classification:effectiveDrop,route:[...path,item]};
       result.push(child);
       result.push(...descendants(item,effectiveDrop,child.route,following,depth+1));
@@ -125,52 +133,52 @@ function groupSearch(snapshot, {query,type="all",drop="all",page=0}){
     }
     return result;
   }
-  function add(source,key,title,context,reward,sourceScore=99){
+  function add(source,key,title,context,reward){
     if(drop!=="all"&&reward.classification!==drop)return;
-    const score=queryScore(reward.item,q);
-    const titleScore=queryScore(title,q);
-    if(score<0 && titleScore<0)return;
+    const score=queryScore(reward.item,q), titleScore=queryScore(title,q);
+    if(score<0&&titleScore<0)return;
     const id=source+":"+key;
     let g=grouped.get(id);
     if(!g){g={source,title,context,items:[],score:99,matchingRewards:0};grouped.set(id,g);}
     const itemKey=[reward.item,reward.quantity,reward.classification,reward.route.join(">")].join("|").toLowerCase();
     if(!g._seen)g._seen=new Set();
     if(g._seen.has(itemKey))return;
-    g._seen.add(itemKey);
-    g.matchingRewards++;
-    // Show each matched item, with the path needed to obtain it.
+    g._seen.add(itemKey);g.matchingRewards++;
+    // Keep a bounded detail list, but quantity aggregation includes all distinct matches.
     if(g.items.length<12)g.items.push(reward);
+    if(!g._quantities)g._quantities=new Set();
+    const n=numericQuantity(reward.quantity);
+    if(n!==null)g._quantities.add(n);
+    if(!g._classes)g._classes=new Set();
+    g._classes.add(reward.classification);
     g.score=Math.min(g.score,score<0?3:titleScore<0?3:titleScore);
   }
   if(["all","bosses","regular","event-bosses"].includes(type)){
-    for(const row of snapshot.monsters){
-      const r=row.fields;
+    for(const {fields:r} of snapshot.monsters){
       const mt=norm(r["Monster Type"]);
       const classification=mt==="regular"?"regular":mt==="event"?"event-bosses":"bosses";
       if(type!=="all"&&type!==classification)continue;
-      const name=r["Monster Name"];
-      const id=[mt,norm(name),norm(r["Monster Level"]),norm(r.Event)].join("|");
+      const name=r["Monster Name"], id=[mt,norm(name),norm(r["Monster Level"]),norm(r.Event)].join("|");
       const context={level:r["Monster Level"],stamina:r.Stamina,event:r.Event,monsterType:r["Monster Type"]};
       const direct={item:r["Reward Item (in-game)"],quantity:r.Quantity,classification:normalizeDrop(r["Drop Classification"]),route:[r["Reward Item (in-game)"]]};
       add(classification,id,name,context,direct);
       for(const child of descendants(direct.item,direct.classification,direct.route,new Set(),0))add(classification,id,name,context,child);
     }
   }
-  if(type==="all"||type==="events"){
-    for(const row of snapshot.events){
-      const r=row.fields;
-      const title=r["EVENT NAME"];
-      const id=[norm(title),norm(r["SUB EVENT"]),norm(r.DETAIL),norm(r["ACTIVITY TYPE"])].join("|");
-      const context={subEvent:r["SUB EVENT"],activity:r["ACTIVITY TYPE"],frequency:r.FEQUENCY,recurrence:r.RECURRANCE,availability:"Unknown",detail:r.DETAIL};
+  if(["all","events","tasks"].includes(type)){
+    for(const {fields:r} of snapshot.events){
+      const kind=taskEvent(r)?"tasks":"events";
+      if(type!=="all"&&type!==kind)continue;
+      const title=r["EVENT NAME"],id=[norm(title),norm(r["SUB EVENT"]),norm(r.DETAIL),norm(r["ACTIVITY TYPE"])].join("|");
+      const context={subEvent:r["SUB EVENT"],activity:r["ACTIVITY TYPE"],frequency:r.FEQUENCY,recurrence:r.RECURRANCE,detail:r.DETAIL};
       const reward={item:r.ITEM,quantity:r.QUANTITY,classification:"Unspecified",route:[r.ITEM]};
-      add("events",id,title,context,reward);
-      for(const child of descendants(reward.item,reward.classification,reward.route,new Set(),0))add("events",id,title,context,child);
+      add(kind,id,title,context,reward);
+      for(const child of descendants(reward.item,reward.classification,reward.route,new Set(),0))add(kind,id,title,context,child);
     }
   }
   if(type==="all"||type==="boxes"){
-    for(const [id,entries]of boxMap){
-      const title=entries[0]["Box Name"];
-      const context={sourceNote:entries[0].Source};
+    for(const [id,entries] of boxMap){
+      const title=entries[0]["Box Name"], context={sourceNote:entries[0].Source};
       for(const row of entries){
         const reward={item:row["Reward Item (in-game)"],quantity:row.Quantity,classification:normalizeDrop(row["Drop Classification"]),route:[title,row["Reward Item (in-game)"]]};
         add("boxes",id,title,context,reward);
@@ -178,10 +186,39 @@ function groupSearch(snapshot, {query,type="all",drop="all",page=0}){
       }
     }
   }
-  const sources={events:0,bosses:1,"event-bosses":2,regular:3,boxes:4};
-  const groups=[...grouped.values()].sort((a,b)=>a.score-b.score||sources[a.source]-sources[b.source]||a.title.localeCompare(b.title));
-  const LIMIT=12,offset=page*LIMIT;
-  return {total:groups.length,page,hasMore:offset+LIMIT<groups.length,groups:groups.slice(offset,offset+LIMIT).map(({_seen,...item})=>item)};
+  const sourcePriority={tasks:0,events:1,bosses:2,"event-bosses":3,regular:4,boxes:5};
+  const chancePriority={Guaranteed:0,Possible:1,Unspecified:2};
+  const groups=[...grouped.values()].map(g=>{
+    const quantities=[...(g._quantities||[])].sort((a,b)=>a-b);
+    const classes=[...(g._classes||[])];
+    // A range indicates recorded alternatives, NOT a sum or promised minimum.
+    const quantityDisplay=quantities.length===0?"Variable":quantities.length===1?quantities[0].toLocaleString("en-US"):quantities[0].toLocaleString("en-US")+"–"+quantities.at(-1).toLocaleString("en-US");
+    const chance=classes.length===1?classes[0]:"Mixed";
+    const frequency=clean(g.context.frequency||g.context.recurrence||"Not specified");
+    const note=clean([g.context.subEvent,g.context.detail,g.context.sourceNote].filter(Boolean).filter((x,i,a)=>a.indexOf(x)===i).join(" · "))
+      || (g.source==="boxes"?"Box contents":g.source==="bosses"||g.source==="event-bosses"||g.source==="regular"?"Defeat monster":"Reward conditions vary");
+    const { _seen,_quantities,_classes,...rest}=g;
+    return {...rest,quantityDisplay,quantityMax:quantities.at(-1)??null,chance,frequency,note};
+  });
+  const collator=(a,b)=>a.localeCompare(b,"en",{numeric:true,sensitivity:"base"});
+  const compare=(a,b)=>{
+    switch(sort){
+      case "source":return collator(a.title,b.title);
+      case "type":return collator(a.source,b.source)||collator(a.title,b.title);
+      case "quantity":{
+        if(a.quantityMax===null||b.quantityMax===null)return a.quantityMax===null?(b.quantityMax===null?0:1):-1;
+        return b.quantityMax-a.quantityMax||collator(a.title,b.title);
+      }
+      case "frequency":return collator(a.frequency,b.frequency)||collator(a.title,b.title);
+      case "chance":return (chancePriority[a.chance]??3)-(chancePriority[b.chance]??3)||collator(a.title,b.title);
+      case "notes":return collator(a.note,b.note)||collator(a.title,b.title);
+      default:return a.score-b.score||sourcePriority[a.source]-sourcePriority[b.source]||collator(a.title,b.title);
+    }
+  };
+  // Quantity descending and other headers ascending by default; flipping reverses results.
+  groups.sort((a,b)=>direction==="desc"?-compare(a,b):compare(a,b));
+  const LIMIT=15,offset=page*LIMIT;
+  return {total:groups.length,page,hasMore:offset+LIMIT<groups.length,groups:groups.slice(offset,offset+LIMIT)};
 }
 function suggestedItems(snapshot, query){
   const q=norm(query);const options=new Map();
@@ -201,7 +238,7 @@ export default {
  async fetch(request, env) {
   const url=new URL(request.url);
   const origin=request.headers.get("origin")||"";
-  if((url.pathname==="/v1/search"||url.pathname==="/v2/search"||url.pathname==="/v2/suggest") && request.method==="OPTIONS") {
+  if((url.pathname==="/v1/search"||url.pathname==="/v2/search"||url.pathname==="/v3/search"||url.pathname==="/v2/suggest") && request.method==="OPTIONS") {
     if(!PUBLIC_ORIGINS.has(origin)) return new Response(null,{status:403});
     return new Response(null,{status:204,headers:{...publicHeaders(origin),"access-control-allow-methods":"GET, OPTIONS","access-control-allow-headers":"content-type","access-control-max-age":"3600"}});
   }
@@ -219,6 +256,21 @@ export default {
     let snapshot;try{snapshot=parseSnapshot(JSON.parse(body));}catch(e){return reply({error:"Validation failed",detail:String(e.message).slice(0,160)},422);}
     await env.DATA.put("latest",JSON.stringify(snapshot));
     return reply({ok:true,counts:snapshot.counts});
+  }
+  if(url.pathname==="/v3/search" && request.method==="GET"){
+    const q=clean(url.searchParams.get("q"));
+    const type=clean(url.searchParams.get("type"))||"all";
+    const drop=clean(url.searchParams.get("drop"))||"all";
+    const sort=clean(url.searchParams.get("sort"))||"suggested";
+    const direction=clean(url.searchParams.get("direction"))||"asc";
+    const page=Number(url.searchParams.get("page")||0);
+    if(q.length<2||q.length>100||!validTypes.has(type)||!["all","Guaranteed","Possible","Unspecified"].includes(drop)||
+       !validSorts.has(sort)||!["asc","desc"].includes(direction)||!Number.isSafeInteger(page)||page<0||page>1000)
+      return reply({error:"Invalid search parameters"},400,publicHeaders(origin));
+    const raw=await env.DATA.get("latest");
+    if(!raw)return reply({error:"No validated data available"},503,publicHeaders(origin));
+    const snapshot=JSON.parse(raw);
+    return reply({...groupSearch(snapshot,{query:q,type,drop,page,sort,direction}),updatedAt:snapshot.importedAt},200,publicHeaders(origin));
   }
   if((url.pathname==="/v2/search"||url.pathname==="/v2/suggest")&&request.method==="GET"){
     const q=clean(url.searchParams.get("q"));
