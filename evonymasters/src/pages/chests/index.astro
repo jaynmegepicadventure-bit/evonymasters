@@ -72,6 +72,7 @@ function card(c){
   const li=el("li");li.append(el("span","",item.item),el("span","",item.quantity||"Quantity missing"));list.append(li);
  }
  if(c.itemCount>5)list.append(el("li","muted","+"+(c.itemCount-5)+" additional recorded items"));
+ if(c.nestedCount)list.append(el("li","muted",c.nestedCount+" nested reward paths"));
  article.append(list);
  const origin=c.sources.slice(0,3).map(s=>s.type+": "+s.name+(s.level?" (Lv "+s.level+")":""));
  if(origin.length)article.append(el("div","detail","From: "+origin.join(" · ")));
@@ -120,16 +121,18 @@ compare.addEventListener("click",async()=>{
   const hr=el("tr"),first=el("th","","Reward item");first.scope="col";hr.append(first);
   for(const chest of data.chests){const th=el("th","",chest.name+(chest.level?" · "+chest.level:""));th.scope="col";hr.append(th)}
   head.append(hr);
-  const names=[...new Set(data.chests.flatMap(c=>c.items.map(i=>i.item)))].sort((a,b)=>a.localeCompare(b));
+  const names=[...new Set(data.chests.flatMap(c=>[...c.items,...(c.nestedItems||[])].map(i=>i.item)))].sort((a,b)=>a.localeCompare(b));
   for(const name of names){
    const row=el("tr");row.append(el("td","",name));
    for(const chest of data.chests){
-    const matches=chest.items.filter(i=>i.item===name),cell=el("td");
+    const matches=[...chest.items,...(chest.nestedItems||[])].filter(i=>i.item===name),cell=el("td");
     if(!matches.length)cell.textContent="—";
     else for(const item of matches){
      const part=el("div","",item.quantity||"Quantity missing");
      const className=toText(item.classification)==="Unspecified"?"Data missing":item.classification;
-     part.append(el("span","classification",className));cell.append(part);
+     part.append(el("span","classification",className));
+     if(item.via?.length)part.append(el("span","classification","Via "+item.via.join(" → ")+" (nested reward)"));
+     cell.append(part);
     }
     row.append(cell);
    }
