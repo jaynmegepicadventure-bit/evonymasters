@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 160" role="img" aria-label="ymir illustration">
+<defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#163d5d"/><stop offset="1" stop-color="#79b7d9"/></linearGradient><radialGradient id="glow"><stop stop-color="#f5d38d" stop-opacity=".32"/><stop offset="1" stop-color="#f5d38d" stop-opacity="0"/></radialGradient></defs>
+<rect width="220" height="160" fill="url(#g)"/><circle cx="112" cy="84" r="98" fill="url(#glow)"/>
+<path d="M0 130 52 110 100 131 168 96 220 115v45H0Z" fill="#091c35" opacity=".37"/>
+<g stroke-linejoin="round" stroke-linecap="round"><path d="m67 36 42-18 44 18 18 43-14 49-48 17-48-17-15-49Z" fill="#7fbbdc" stroke="#def9ff" stroke-width="6"/><path d="m73 51 20 9 17-22 17 22 22-9-8 39-20 18-11-13-12 13-19-18Z" fill="#254865"/><path d="m72 108 36 27 39-27-17 36H91Z" fill="#e8f7ff"/><circle cx="92" cy="82" r="5" fill="#e2fcff"/><circle cx="129" cy="82" r="5" fill="#e2fcff"/><path d="M110 85v19" stroke="#c4e8fb" stroke-width="5"/></g><path d="M0 0h220v160H0Z" fill="none" stroke="#e0bd76" stroke-opacity=".38" stroke-width="4"/>
+</svg>

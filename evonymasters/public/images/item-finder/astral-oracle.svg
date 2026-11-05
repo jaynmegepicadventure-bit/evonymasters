@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 160" role="img" aria-label="astral oracle illustration">
+<defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#2a2566"/><stop offset="1" stop-color="#784cb4"/></linearGradient><radialGradient id="glow"><stop stop-color="#f5d38d" stop-opacity=".32"/><stop offset="1" stop-color="#f5d38d" stop-opacity="0"/></radialGradient></defs>
+<rect width="220" height="160" fill="url(#g)"/><circle cx="112" cy="84" r="98" fill="url(#glow)"/>
+<path d="M0 130 52 110 100 131 168 96 220 115v45H0Z" fill="#091c35" opacity=".37"/>
+<g stroke-linejoin="round" stroke-linecap="round"><circle cx="110" cy="82" r="53" stroke="#e4be77" stroke-width="5" fill="#223b82" fill-opacity=".65"/><ellipse cx="110" cy="82" rx="23" ry="58" stroke="#efc88b" stroke-width="3" fill="none" transform="rotate(30 110 82)"/><ellipse cx="110" cy="82" rx="54" ry="21" stroke="#c5a6ff" stroke-width="3" fill="none" transform="rotate(-22 110 82)"/><path d="M110 35v94M63 82h94" stroke="#ffd78b" stroke-width="3" opacity=".65"/><circle cx="110" cy="82" r="13" fill="#f9e5bd"/></g><path d="M0 0h220v160H0Z" fill="none" stroke="#e0bd76" stroke-opacity=".38" stroke-width="4"/>
+</svg>

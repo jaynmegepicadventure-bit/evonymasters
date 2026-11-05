@@ -144,3 +144,58 @@ test('v2 search accepts only supported filters and pages',async()=>{
  const response=await worker.fetch(new Request(API+'/v2/search?q=stone',{headers:{origin:sites.allowed}}),env);
  assert.equal(response.headers.get('access-control-allow-origin'),sites.allowed);
 });
+
+test('v3 comparison table returns quantities and sorts every source before paging',async()=>{
+ const {env}=runtime();
+ const data=payload();
+ for(let i=0;i<25;i++)data.tabs.events.push(['Centre','','','','Event '+String(i).padStart(2,'0'),'','Personal Activity','','','','','Refining Stone',String(i+1)]);
+ assert.equal((await worker.fetch(await signedRequest(data),env)).status,200);
+ const r=await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&sort=quantity&direction=asc'),env);
+ assert.equal(r.status,200);
+ const j=await r.json();
+ assert.equal(j.total>=26,true);
+ assert.equal(j.hasMore,true);
+ assert.equal(j.groups.length,15);
+ assert.equal(j.groups[0].quantityMax,25,'highest numeric quantity should be first across entire dataset');
+ const next=await (await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&sort=quantity&direction=asc&page=1'),env)).json();
+ assert.ok(next.groups.length>0);
+ assert.ok(j.groups.every(g=>g.quantityMax===null||g.quantityMax>=next.groups[0].quantityMax));
+});
+test('v3 source title sort reverses with direction and preserves global order',async()=>{
+ const {env}=runtime();await worker.fetch(await signedRequest(payload()),env);
+ const asc=await (await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&sort=source&direction=asc'),env)).json();
+ const desc=await (await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&sort=source&direction=desc'),env)).json();
+ assert.equal(asc.groups[0].title,desc.groups.at(-1).title);
+});
+test('v3 shows alternative reward tiers as a range, not a sum',async()=>{
+ const {env}=runtime();const data=payload();
+ data.tabs.events.push(['Centre','','','','Festival','','','','','','','Refining Stone','40']);
+ data.tabs.events.push(['Centre','','','','Festival','','','','','','','Refining Stone','80']);
+ await worker.fetch(await signedRequest(data),env);
+ const result=await (await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&type=events'),env)).json();
+ const festival=result.groups.find(x=>x.title==='Festival');
+ assert.equal(festival.quantityDisplay,'20–80');
+ assert.equal(festival.chance,'Unspecified');
+});
+test('v3 splits explicit Tasks from Events and includes event bosses in Bosses tab',async()=>{
+ const {env}=runtime();const data=payload();
+ data.tabs.events.push(['Centre','','','','Daily Task Rewards','My Tasks','Personal Activity','','','','','Refining Stone','77']);
+ data.tabs.monsters.push(['Event','8','Special Beast','999','20','Event','Refining Stone','9','Possible']);
+ await worker.fetch(await signedRequest(data),env);
+ const tasks=await (await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&type=tasks'),env)).json();
+ assert.ok(tasks.groups.some(x=>x.title==='Daily Task Rewards'));
+ const events=await (await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&type=events'),env)).json();
+ assert.ok(!events.groups.some(x=>x.title==='Daily Task Rewards'));
+ const bosses=await (await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&type=all-bosses'),env)).json();
+ assert.ok(bosses.groups.some(x=>x.title==='Special Beast'));
+ assert.ok(bosses.groups.some(x=>x.title==='Zombie'));
+});
+test('v3 rejects invalid sort and returns origin-scoped CORS',async()=>{
+ const {env}=runtime();await worker.fetch(await signedRequest(payload()),env);
+ const bad=await worker.fetch(new Request(API+'/v3/search?q=stone&sort=made-up'),env);
+ assert.equal(bad.status,400);
+ const good=await worker.fetch(new Request(API+'/v3/search?q=stone',{headers:{origin:sites.allowed}}),env);
+ assert.equal(good.headers.get('access-control-allow-origin'),sites.allowed);
+ const opts=await worker.fetch(new Request(API+'/v3/search',{method:'OPTIONS',headers:{origin:sites.allowed}}),env);
+ assert.equal(opts.status,204);
+});

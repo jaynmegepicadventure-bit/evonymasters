@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 160" role="img" aria-label="feasting revelry illustration">
+<defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#54251a"/><stop offset="1" stop-color="#b87429"/></linearGradient><radialGradient id="glow"><stop stop-color="#f5d38d" stop-opacity=".32"/><stop offset="1" stop-color="#f5d38d" stop-opacity="0"/></radialGradient></defs>
+<rect width="220" height="160" fill="url(#g)"/><circle cx="112" cy="84" r="98" fill="url(#glow)"/>
+<path d="M0 130 52 110 100 131 168 96 220 115v45H0Z" fill="#091c35" opacity=".37"/>
+<g stroke-linejoin="round" stroke-linecap="round"><ellipse cx="110" cy="122" rx="75" ry="21" fill="#e5b060" stroke="#ffdbaa" stroke-width="5"/><path d="M64 111C37 70 70 45 111 45c47 0 72 32 47 68-20 18-74 19-94-2Z" fill="#a84e27" stroke="#f4af63" stroke-width="5"/><path d="M84 70q18-19 47 0" stroke="#ffc68a" stroke-width="6" fill="none"/><circle cx="52" cy="120" r="8" fill="#6ebc67"/><circle cx="164" cy="120" r="8" fill="#88c45f"/></g><path d="M0 0h220v160H0Z" fill="none" stroke="#e0bd76" stroke-opacity=".38" stroke-width="4"/>
+</svg>

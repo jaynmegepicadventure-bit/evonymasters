@@ -47,3 +47,14 @@ This folder is a **separate Cloudflare Worker** proof of concept. The production
 - **Important:** Deploy this updated `worker.mjs` to the separate `evonymasters-sheet-sync` Worker **before merging the draft PR**. The previously deployed v1-only Worker does not respond to `/v2/search` and the redesigned website would show an unavailable state.
 - After deploying, test `/health`, `/v2/search?q=refining%20stone`, `/v2/search?q=refining%20stone&type=events`, and `/v2/suggest?q=refin`. Then test browser CORS in the existing website and confirm fresh `updatedAt`. Only after that, merge PR and verify the live `/resources/` page.
 - Public search results can still be collected by repeated queries. Add Cloudflare rate limiting or bot controls if the dataset needs further scraping protection.
+
+## Item Finder comparison-table deployment (PR #2)
+1. Keep `evonymasters` (live site) unchanged until the sync Worker is updated.
+2. Copy the latest `integrations/sheets-sync/worker.mjs` **from the comparison-table feature branch**, and paste into **evonymasters-sheet-sync** → Edit code → Deploy in Cloudflare. Do **not** edit the original site Worker or change `DATA` or `SYNC_SECRET`.
+3. Verify the authenticated sync still works and the new public endpoint responds: `/health`; `/v3/search?q=refining%20stone&sort=quantity`; `/v3/search?q=refining%20stone&sort=source&direction=desc`; `/v3/search?q=refining%20stone&type=tasks`.
+4. Confirm the `/v3/search` result contains `groups`, each with `quantityDisplay`, `frequency`, `chance` and `note`.
+5. Only then merge PR #2. GitHub main branch is connected to Cloudflare's existing `evonymasters` deployment. Verify `/resources/` on the live site after deployment.
+6. The new images are hand-crafted original fantasy SVG illustrations created for the project: named sources have specific art, other sources use neutral category art. They are illustrative, not official Evony artwork.
+7. Sorting is performed server-side on the **full matching source collection before pagination**. Quantity sorting uses the largest recorded alternative numeric reward, not a summed payout. Unknown quantities sort after numeric values.
+8. Tasks are conservatively recognized from source names and activity text containing task/quest/daily activity; other ambiguous entries remain under Events.
+9. The public comparison table does not guarantee that all listed rewards are currently redeemable. Chance is only Guaranteed when the imported source explicitly says so. Do not infer guaranteed outcomes from descriptive text alone.

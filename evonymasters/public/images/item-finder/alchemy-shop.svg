@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 160" role="img" aria-label="alchemy shop illustration">
+<defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#401767"/><stop offset="1" stop-color="#d18a3a"/></linearGradient><radialGradient id="glow"><stop stop-color="#f5d38d" stop-opacity=".32"/><stop offset="1" stop-color="#f5d38d" stop-opacity="0"/></radialGradient></defs>
+<rect width="220" height="160" fill="url(#g)"/><circle cx="112" cy="84" r="98" fill="url(#glow)"/>
+<path d="M0 130 52 110 100 131 168 96 220 115v45H0Z" fill="#091c35" opacity=".37"/>
+<g stroke-linejoin="round" stroke-linecap="round"><path d="M95 18v40l-27 46c-12 22 0 34 33 34h30c32 0 44-12 32-34l-27-46V18" fill="#6a44b0" fill-opacity=".55" stroke="#f8d68b" stroke-width="6"/><path d="M77 95q40-19 77 0v22q-39 21-77 0Z" fill="#f284e8" opacity=".75"/><path d="M90 21h54M76 138h83" stroke="#f4b85d" stroke-width="7"/><circle cx="112" cy="80" r="8" fill="#fff1be"/><circle cx="142" cy="119" r="5" fill="#fff"/></g><path d="M0 0h220v160H0Z" fill="none" stroke="#e0bd76" stroke-opacity=".38" stroke-width="4"/>
+</svg>
