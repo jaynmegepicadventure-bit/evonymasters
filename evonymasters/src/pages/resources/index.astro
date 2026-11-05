@@ -150,7 +150,9 @@ function detailedRow(row){
  }
  section.append(ul);
  if(row.matchingRewards>(row.items||[]).length)section.append(node("small","","More matching reward records exist. Narrow the item search for additional entries."));
- wrapper.append(section);td.append(wrapper);details.append(td);return details;
+ wrapper.append(section);
+ if(row.source==="boxes"){const link=node("a","source-link","Explore this chest in Chest Finder");link.href="/chests/?q="+encodeURIComponent(row.title);wrapper.append(link);}
+ td.append(wrapper);details.append(td);return details;
 }
 function resultRow(row){
  const tr=node("tr","main-row");
