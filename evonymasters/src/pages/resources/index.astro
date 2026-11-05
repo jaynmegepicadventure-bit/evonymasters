@@ -47,7 +47,7 @@ h1{font-size:clamp(2rem,4.2vw,3rem);letter-spacing:-.043em;line-height:1.1;margi
 .chance{display:inline-block;border-radius:999px;padding:5px 10px;white-space:nowrap;background:#324963;color:#e2ebf3;font-size:.76rem}
 .chance.guaranteed{background:#18533c;color:#b9f6c9}
 .chance.possible{background:#57441e;color:#ffe0a1}
-.chance.mixed{background:#504b36;color:#f6db9f}
+.chance.mixed{background:#504b36;color:#f6db9f}.chance.redeem{background:#2f4b7d;color:#cce7ff}.activity-tools{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:9px 0 3px;color:#c9dcec}.activity-tools select{border-radius:8px;padding:8px 12px;background:#1d3650;color:#fff;border:1px solid #627b95;font:inherit;font-size:.86rem}.detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}.detail-field{border:1px solid #3d5872;border-radius:8px;padding:10px 12px}.detail-field b{display:block;font-size:.74rem;color:#e7c683;margin-bottom:4px}.detail-field span{color:#e5f0fa}.detail-section{padding:12px 0}.detail-section h3{font-size:.95rem;margin:0 0 10px;color:#f5d48b}
 .note{max-width:310px;line-height:1.5;color:#cfdeeb}
 .detail-row{background:#1b344d}.detail-row td{padding:14px 22px 17px}
 .detail-content{display:flex;flex-wrap:wrap;gap:20px;align-items:start;color:#c5daea}
@@ -78,12 +78,14 @@ footer{border-top:1px solid #314c66;color:#abc1d4;font-size:.82rem;padding:23px 
 <button class="tab" role="tab" type="button" aria-selected="false" data-type="boxes">Boxes</button>
 </div><span class="sort-hint">Click a column heading to sort all matching sources</span>
 </div>
+<div class="activity-tools" id="activity-tools" hidden><label for="activity-filter">Activity:</label><select id="activity-filter"><option value="all">All activities</option><option value="alliance">Alliance</option><option value="personal">Personal</option></select></div>
 <div class="heading"><div><h2 id="results-heading">Find an item to get started</h2><p id="results-description">Browse recorded reward sources by quantity and source type.</p></div><span class="sync" id="sync-status"></span></div>
 <div id="empty" class="empty">Start typing an item name to see where it can be obtained.</div>
 <div class="table-frame" id="table-frame" hidden>
 <table class="results-table" aria-label="Item Finder comparison results"><thead><tr>
 <th scope="col"><button data-sort="source" type="button">Source <span class="arrow"></span></button></th>
 <th scope="col"><button data-sort="type" type="button">Type <span class="arrow"></span></button></th>
+<th scope="col">Activity</th>
 <th scope="col"><button data-sort="quantity" type="button">Quantity <span class="arrow"></span></button></th>
 <th scope="col"><button data-sort="frequency" type="button">Frequency <span class="arrow"></span></button></th>
 <th scope="col"><button data-sort="chance" type="button">Reward chance <span class="arrow"></span></button></th>
@@ -91,7 +93,7 @@ footer{border-top:1px solid #314c66;color:#abc1d4;font-size:.82rem;padding:23px 
 </tr></thead><tbody id="results"></tbody></table></div>
 <button id="load-more" class="load" type="button" hidden>Show more sources</button>
 </section></main>
-<footer><div class="wrap">EvonyMasters is an independent fan project. Quantities, conditions and drop information come from the community-maintained rewards dataset; some values are unclassified.</div></footer>
+<footer><div class="wrap">EvonyMasters is an independent fan project. Quantities, conditions and drop information come from the community-maintained rewards dataset; blank classifications indicate data still to be collected.</div></footer>
 <script is:inline>
 (()=>{
 "use strict";
@@ -99,7 +101,7 @@ const API="https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev";
 const query=document.getElementById("query"),clear=document.getElementById("clear-search"),tabs=document.getElementById("tabs"),
 frame=document.getElementById("table-frame"),tbody=document.getElementById("results"),heading=document.getElementById("results-heading"),
 desc=document.getElementById("results-description"),status=document.getElementById("sync-status"),empty=document.getElementById("empty"),
-more=document.getElementById("load-more"),suggestions=document.getElementById("item-suggestions");
+more=document.getElementById("load-more"),suggestions=document.getElementById("item-suggestions"),activityTools=document.getElementById("activity-tools"),activityFilter=document.getElementById("activity-filter");
 let type="all",sort="suggested",direction="asc",page=0,token=0,controller=null,delay=null,suggestDelay=null,hasMore=false,recordCount=0;
 const names={events:"Event",tasks:"Task",bosses:"Boss","event-bosses":"Event boss",regular:"Regular monster",boxes:"Box"};
 const art={
@@ -115,18 +117,40 @@ const artwork=row=>{
 };
 const label=row=>names[row.source]||row.source;
 function detailedRow(row){
- const details=node("tr","detail-row");const td=node("td");td.colSpan=6;
- const contents=node("div","detail-content");const wrap=node("div");
- wrap.append(node("strong","",row.title+" · Recorded rewards"));
+ const details=node("tr","detail-row"),td=node("td");td.colSpan=7;
+ const wrapper=node("div"),fields=node("div","detail-grid");
+ const addField=(title,value)=>{const v=toText(value);if(!v)return;const field=node("div","detail-field");field.append(node("b","",title),node("span","",v));fields.append(field);};
+ const c=row.context||{};
+ if(row.source==="events"||row.source==="tasks"){
+  addField("Event location",c.location);addField("Event category",c.event);
+  addField("Event / activity",c.subEvent);addField("Activity type",c.activity);
+  addField("Recurrence",c.recurrence);addField("Frequency",c.frequency);
+  addField("Level",c.level);addField("Stamina",c.stamina);
+  addField("Item availability",c.availability);addField("General",c.general);addField("Castle",c.castle);
+  addField("Instructions",c.detail);
+ }else if(row.source==="boxes"){
+  addField("Box source",c.sourceNote);
+ }else{
+  addField("Monster type",c.monsterType);addField("Monster level",c.level);
+  addField("Monster power",c.power);addField("Stamina",c.stamina);addField("Associated event",c.event);
+ }
+ if(fields.childElementCount){const section=node("section","detail-section");section.append(node("h3","","Source information"),fields);wrapper.append(section);}
+ const section=node("section","detail-section");section.append(node("h3","","Recorded reward options"));
  const ul=node("ul");
  for(const item of row.items||[]){
-  const quantity=toText(item.quantity)||"Variable";
-  const description=item.item+" × "+quantity+" · "+item.classification+(item.route?.length>1?" · Via "+item.route.join(" → "):"");
-  ul.append(node("li","",description));
+  const li=node("li");
+  const quantity=toText(item.quantity)||"Quantity missing";
+  const cl=toText(item.classification)==="Unspecified"?"Data missing":toText(item.classification);
+  li.append(node("strong","",item.item+" × "+quantity+" · "+cl));
+  if(item.route?.length>1)li.append(node("div","sub","Path: "+item.route.join(" → ")));
+  const d=item.details||{};
+  const moreInfo=[["Event location",d.location],["Sub-event",d.subEvent],["Activity",d.activity],["Level",d.level||d.boxLevel],["Stamina",d.stamina],["Instructions",d.detail],["Box source",d.boxSource],["Box notes",d.boxNotes],["Availability",d.availability]].filter(([,v])=>toText(v));
+  if(moreInfo.length)li.append(node("div","sub",moreInfo.map(([k,v])=>k+": "+v).join(" · ")));
+  ul.append(li);
  }
- wrap.append(ul);
- if(row.matchingRewards>(row.items||[]).length)wrap.append(node("small","","Additional reward records exist. Refine your search for more specific matches."));
- contents.append(wrap);td.append(contents);details.append(td);return details;
+ section.append(ul);
+ if(row.matchingRewards>(row.items||[]).length)section.append(node("small","","More matching reward records exist. Narrow the item search for additional entries."));
+ wrapper.append(section);td.append(wrapper);details.append(td);return details;
 }
 function resultRow(row){
  const tr=node("tr","main-row");
@@ -140,9 +164,10 @@ function resultRow(row){
  const id="detail-"+Math.random().toString(36).slice(2);toggle.setAttribute("aria-controls",id);
  info.append(toggle);sourceLine.append(img,info);source.append(sourceLine);tr.append(source);
  tr.append(node("td","meta",label(row)));
+ tr.append(node("td","meta",toText(row.context?.activity)||"—"));
  tr.append(node("td","qty",row.quantityDisplay||"Variable"));
  tr.append(node("td","meta",row.frequency||"Not specified"));
- const chanceCell=node("td"),chance=node("span","chance "+toText(row.chance).toLowerCase(),row.chance||"Unspecified");
+ const chanceCell=node("td"),chance=node("span","chance "+toText(row.chance).toLowerCase(),row.chance==="Unspecified"?"Data missing":(row.chance||"Data missing"));
  chanceCell.append(chance);tr.append(chanceCell);
  tr.append(node("td","note",row.note||"Details in recorded rewards"));
  const extra=detailedRow(row);extra.hidden=true;extra.id=id;
@@ -167,7 +192,7 @@ async function fetchResults(append=false){
  if(controller)controller.abort();controller=new AbortController();const current=++token;
  heading.textContent='Results for “'+term+'”';
  empty.hidden=false;empty.textContent="Searching recorded rewards…";
- const params=new URLSearchParams({q:term,type,sort,direction,page:String(page)});
+ const params=new URLSearchParams({q:term,type,sort,direction,page:String(page),activity:activityFilter.value});
  try {
   const response=await fetch(API+"/v3/search?"+params,{signal:controller.signal});
   if(!response.ok)throw Error("Search returned HTTP "+response.status);
@@ -205,9 +230,12 @@ clear.addEventListener("click",()=>{query.value="";clear.hidden=true;query.dispa
 tabs.addEventListener("click",e=>{
  const button=e.target.closest("button[data-type]");if(!button)return;
  type=button.dataset.type;
+ activityTools.hidden=!(type==="events"||type==="tasks");
+ if(activityTools.hidden)activityFilter.value="all";
  for(const tab of tabs.querySelectorAll("button"))tab.setAttribute("aria-selected",String(tab===button));
  schedule();
 });
+activityFilter.addEventListener("change",schedule);
 document.querySelectorAll("[data-sort]").forEach(btn=>btn.addEventListener("click",()=>{
  const value=btn.dataset.sort;
  if(value===sort)direction=direction==="asc"?"desc":"asc";
