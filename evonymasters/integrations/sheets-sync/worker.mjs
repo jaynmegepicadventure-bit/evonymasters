@@ -252,6 +252,26 @@ function chestCatalog(snapshot){
       if(!chest.sources.some(s=>s._id===id))chest.sources.push({_id:id,type:"Event",name:r["EVENT NAME"],subEvent:r["SUB EVENT"],location:r.LOCATION,activity:r["ACTIVITY TYPE"],detail:r.DETAIL});
     }
   }
+
+  // Follow chest-inside-chest links without assuming the outer chest guarantees any inner reward.
+  function nested(chest,seen,depth){
+    if(depth>6||seen.has(norm(chest.name)))return [];
+    const next=new Set([...seen,norm(chest.name)]),found=[];
+    for(const item of chest.items){
+      const childList=byName.get(norm(item.item))||[];
+      for(const child of childList){
+        for(const reward of child.items){
+          const classification=item.classification==="Possible"?"Possible":reward.classification;
+          found.push({...reward,classification,via:[chest.name,child.name]});
+        }
+        for(const reward of nested(child,next,depth+1))
+          found.push({...reward,classification:item.classification==="Possible"?"Possible":reward.classification,via:[chest.name,...reward.via]});
+        if(found.length>300)return found.slice(0,300);
+      }
+    }
+    return found;
+  }
+  for(const chest of byKey.values())chest.nestedItems=nested(chest,new Set(),0);
   for(const chest of byKey.values())chest.sources=chest.sources.map(({_id,...rest})=>rest);
   return [...byKey.values()];
 }
@@ -262,14 +282,14 @@ function chestSearch(snapshot,{q="",source="all",page=0}){
    ||source==="events"&&c.sources.some(s=>s.type==="Event")
    ||source==="activities"&&c.sources.some(s=>s.type==="Event"&&/alliance|personal|activit|task/i.test(s.activity));
   const matching=list.filter(c=>hasSource(c)&&(!q||queryScore(c.name,norm(q))>=0||
-    c.items.some(i=>norm(i.item).includes(norm(q))))).sort((a,b)=>a.name.localeCompare(b.name)||a.level.localeCompare(b.level));
+    [...c.items,...c.nestedItems].some(i=>norm(i.item).includes(norm(q))))).sort((a,b)=>a.name.localeCompare(b.name)||a.level.localeCompare(b.level));
   const LIMIT=15,offset=page*LIMIT;
-  return {total:matching.length,page,hasMore:offset+LIMIT<matching.length,chests:matching.slice(offset,offset+LIMIT).map(c=>({...c,items:c.items.slice(0,12),itemCount:c.items.length,sources:c.sources.slice(0,12)})),updatedAt:snapshot.importedAt};
+  return {total:matching.length,page,hasMore:offset+LIMIT<matching.length,chests:matching.slice(offset,offset+LIMIT).map(c=>({...c,items:c.items.slice(0,12),itemCount:c.items.length,nestedCount:c.nestedItems.length,sources:c.sources.slice(0,12)})),updatedAt:snapshot.importedAt};
 }
 function compareChests(snapshot, ids){
   const catalog=chestCatalog(snapshot),list=ids.map(id=>catalog.find(c=>c.id===id));
   if(list.some(c=>!c))return null;
-  return {chests:list.map(c=>({id:c.id,name:c.name,level:c.level,items:c.items,sources:c.sources,sourceNotes:c.sourceNotes})),updatedAt:snapshot.importedAt};
+  return {chests:list.map(c=>({id:c.id,name:c.name,level:c.level,items:c.items,nestedItems:c.nestedItems,sources:c.sources,sourceNotes:c.sourceNotes})),updatedAt:snapshot.importedAt};
 }
 function suggestedItems(snapshot, query){
   const q=norm(query);const options=new Map();
