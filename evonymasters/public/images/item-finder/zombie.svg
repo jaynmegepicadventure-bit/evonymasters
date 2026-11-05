@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 160" role="img" aria-label="zombie illustration">
+<defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#263948"/><stop offset="1" stop-color="#7b4e42"/></linearGradient><radialGradient id="glow"><stop stop-color="#f5d38d" stop-opacity=".32"/><stop offset="1" stop-color="#f5d38d" stop-opacity="0"/></radialGradient></defs>
+<rect width="220" height="160" fill="url(#g)"/><circle cx="112" cy="84" r="98" fill="url(#glow)"/>
+<path d="M0 130 52 110 100 131 168 96 220 115v45H0Z" fill="#091c35" opacity=".37"/>
+<g stroke-linejoin="round" stroke-linecap="round"><path d="M70 40q37-33 75 0l14 68-36 37H91l-38-36Z" fill="#728779" stroke="#a8b4a7" stroke-width="6"/><path d="m64 51 25 10 20-18 30 17 14-7" stroke="#2a3c3c" stroke-width="8" fill="none"/><ellipse cx="88" cy="85" rx="12" ry="8" fill="#b53f35"/><ellipse cx="132" cy="85" rx="12" ry="8" fill="#b53f35"/><path d="m96 109 14-7 15 7-7 19-18-1Z" fill="#283c37"/><path d="M83 130h55" stroke="#efe0ad" stroke-width="7" stroke-dasharray="8 7"/></g><path d="M0 0h220v160H0Z" fill="none" stroke="#e0bd76" stroke-opacity=".38" stroke-width="4"/>
+</svg>
