@@ -223,6 +223,8 @@ test('v3 event activity filters isolate Alliance and Personal activity records',
  data.tabs.events.push(['Events','','','','Alliance Rewards','Alliance Battle','Alliance activity','','','','','Refining Stone','75']);
  data.tabs.events.push(['Events','','','','Personal Rewards','Personal Quest','Personal activity','','','','','Refining Stone','70']);
  await worker.fetch(await signedRequest(data),env);
+ const allCheck=await (await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&type=all'),env)).json();
+ assert.ok(allCheck.groups.some(g=>g.title==='Alliance Rewards'),JSON.stringify(allCheck.groups.map(g=>({name:g.title,source:g.source,activity:g.context?.activity}))));
  const alliance=await (await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&type=events&activity=alliance'),env)).json();
  assert.ok(alliance.groups.some(x=>x.title==='Alliance Rewards'),JSON.stringify(alliance));
  assert.ok(!alliance.groups.some(x=>x.title==='Personal Rewards'));
