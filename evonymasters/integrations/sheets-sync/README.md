@@ -58,3 +58,14 @@ This folder is a **separate Cloudflare Worker** proof of concept. The production
 7. Sorting is performed server-side on the **full matching source collection before pagination**. Quantity sorting uses the largest recorded alternative numeric reward, not a summed payout. Unknown quantities sort after numeric values.
 8. Tasks are conservatively recognized from source names and activity text containing task/quest/daily activity; other ambiguous entries remain under Events.
 9. The public comparison table does not guarantee that all listed rewards are currently redeemable. Chance is only Guaranteed when the imported source explicitly says so. Do not infer guaranteed outcomes from descriptive text alone.
+
+## Drop classification + Chest Finder release
+
+- EVENTS & ACTIVITIES sheet: add **Drop Classification** as column L after LEVEL and before ITEM. Allowed values are **Guaranteed**, **Possible**, and **Redeem**. Leave missing data blank; the website displays **Data missing**, never implies game availability. The importer matches columns by header and tolerates a missing optional column during rollout.
+- The original Google Apps Script and trigger stay unchanged; the sync script reads all columns by name and sends the full private sheet through signed pushes.
+- **Deployment order:** replace code in Cloudflare Worker `evonymasters-sheet-sync` with the latest `integrations/sheets-sync/worker.mjs` from this feature branch; leave `DATA` KV binding and `SYNC_SECRET` untouched.
+- Test `/health`, `/v3/search?q=refining%20stone&type=events`, `/v3/search?q=refining%20stone&type=events&activity=alliance`, `/v4/chests?q=refining%20stone` and `/v4/chests/compare?id=<URL-encoded-id-from-chests-results>`.
+- The `/v4/chests` endpoint is bounded to 15 chest records per page; comparison accepts at most four recorded identifiers and includes direct and nested rewards, with cycle protection.
+- Verify current sync with Apps Script execution logs if event classifications still look blank. Scheduled sync repeats approximately every 5 minutes.
+- Once the endpoints pass, merge PR #3 and confirm `/resources/` and `/chests/` on the GitHub-deployed site. Do not merge first: the website requires the updated Worker.
+- Images use original artwork assets in `public/images/item-finder/`; illustrations are non-official, decorative and not proof of exact chest appearance.

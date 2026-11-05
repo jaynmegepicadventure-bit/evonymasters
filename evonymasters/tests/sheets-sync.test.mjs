@@ -199,3 +199,59 @@ test('v3 rejects invalid sort and returns origin-scoped CORS',async()=>{
  const opts=await worker.fetch(new Request(API+'/v3/search',{method:'OPTIONS',headers:{origin:sites.allowed}}),env);
  assert.equal(opts.status,204);
 });
+
+test('event classification column can be inserted before ITEM and syncs Redeem, Possible, Guaranteed',async()=>{
+ const {env,map}=runtime(),data=payload();
+ data.tabs.events[1]=[...data.tabs.events[1]];
+ data.tabs.events[1].splice(11,0,'Drop Classification');
+ data.tabs.events[2].splice(11,0,'Redeem');
+ const next=padded(['Event Centre','','','','Festival','','','','','','','Possible','Refining Stone','50'],16);
+ data.tabs.events.push(next);
+ const redeem=await worker.fetch(await signedRequest(data),env);
+ assert.equal(redeem.status,200);
+ assert.equal(JSON.parse(map.get('latest')).events[0].fields['Drop Classification'],'Redeem');
+ const res=await (await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&type=events'),env)).json();
+ const festival=res.groups.find(g=>g.title==='Festival');
+ assert.ok(festival.items.some(x=>x.classification==='Redeem'));
+ assert.ok(festival.items.some(x=>x.classification==='Possible'));
+ assert.equal(festival.context.location,'Event Centre');
+ assert.ok(festival.items.some(x=>x.details?.location==='Event Centre'));
+ const onlyRedeem=await (await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&type=events&drop=Redeem'),env)).json();
+ assert.ok(onlyRedeem.groups.some(x=>x.title==='Festival'));
+});
+test('v3 event activity filters isolate Alliance and Personal activity records',async()=>{
+ const {env}=runtime(),data=payload();
+ data.tabs.events.push(['Events','','','','Alliance Rewards','Alliance Battle','Alliance activity','','','','','Refining Stone','75']);
+ data.tabs.events.push(['Events','','','','Personal Rewards','Personal Gathering','Personal activity','','','','','Refining Stone','70']);
+ await worker.fetch(await signedRequest(data),env);
+ const alliance=await (await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&type=events&activity=alliance'),env)).json();
+ assert.ok(alliance.groups.some(x=>x.title==='Alliance Rewards'));
+ assert.ok(!alliance.groups.some(x=>x.title==='Personal Rewards'));
+ const personal=await (await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&type=events&activity=personal'),env)).json();
+ assert.ok(personal.groups.some(x=>x.title==='Personal Rewards'));
+ assert.ok(!personal.groups.some(x=>x.title==='Alliance Rewards'));
+ const invalid=await worker.fetch(new Request(API+'/v3/search?q=stone&activity=everything'),env);
+ assert.equal(invalid.status,400);
+});
+test('v4 chest search looks up boxes by contents, returns source relationships and nested items',async()=>{
+ const {env}=runtime();await worker.fetch(await signedRequest(payload()),env);
+ const result=await worker.fetch(new Request(API+'/v4/chests?q=refining%20stone',{headers:{origin:sites.allowed}}),env);
+ assert.equal(result.status,200);assert.equal(result.headers.get('access-control-allow-origin'),sites.allowed);
+ const body=await result.json();
+ assert.ok(body.chests.some(c=>c.name==='Lv1 Boss Monster Chest'));
+ const outer=body.chests.find(c=>c.name==='Lv1 Boss Monster Chest');
+ assert.ok(outer.sources.some(s=>s.name==='Zombie'));
+ assert.ok(outer.nestedCount>0);
+ const compare=await (await worker.fetch(new Request(API+'/v4/chests/compare?id='+encodeURIComponent(outer.id)),env)).json();
+ assert.ok(compare.chests[0].nestedItems.some(i=>i.item==='Refining Stone'&&i.classification==='Possible'));
+ assert.ok(compare.chests[0].nestedItems.length<100);
+});
+test('v4 chest comparison limits selections and rejects missing chest identifiers',async()=>{
+ const {env}=runtime();await worker.fetch(await signedRequest(payload()),env);
+ for(const suffix of ['','?id=not-a-real-chest','?id=a&id=b&id=c&id=d&id=e']){
+  const r=await worker.fetch(new Request(API+'/v4/chests/compare'+suffix),env);
+  assert.ok(r.status===400||r.status===404);
+ }
+ const preflight=await worker.fetch(new Request(API+'/v4/chests',{method:'OPTIONS',headers:{origin:sites.allowed}}),env);
+ assert.equal(preflight.status,204);
+});
