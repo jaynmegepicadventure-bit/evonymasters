@@ -49,7 +49,7 @@ const trimRow = (source, row, item, classification, route, quantity) => ({
   level: clean(row["Monster Level"] ?? row.LEVEL ?? row.Level), event:clean(row.Event ?? row.EVENT),
   monsterType: clean(row["Monster Type"]), stamina: clean(row.Stamina ?? row.STAMINA),
 });
-function search(snapshot, query) {
+function search(snapshot, query, sourceFilter = "", monsterType = "") {
   const q=norm(query); const found=[];const boxLookup=new Map();
   for(const entry of snapshot.boxes){const key=norm(entry.fields["Box Name"]);if(!boxLookup.has(key))boxLookup.set(key,[]);boxLookup.get(key).push(entry.fields);}
   function expand(name, classification, path, depth, seen) {
@@ -75,12 +75,13 @@ function search(snapshot, query) {
       if(found.length>=50)break;
     }
   }
-  for(const entry of snapshot.monsters){
+  if(sourceFilter !== "event") for(const entry of snapshot.monsters){
     const row=entry.fields;
+    if(monsterType && norm(row["Monster Type"]) !== norm(monsterType)) continue;
     add("monster",row,row["Reward Item (in-game)"],row["Drop Classification"],[row["Reward Item (in-game)"]],norm(row["Monster Name"]).includes(q));
     if(found.length>=50)break;
   }
-  if(found.length<50)for(const entry of snapshot.events) {
+  if(sourceFilter !== "monster" && found.length<50)for(const entry of snapshot.events) {
     const row=entry.fields;add("event",row,row.ITEM,"Unspecified",[row.ITEM],norm(row["EVENT NAME"]).includes(q));
     if(found.length>=50)break;
   }
@@ -112,10 +113,13 @@ export default {
   if(url.pathname==="/v1/search"&&request.method==="GET"){
     const q=clean(url.searchParams.get("q"));
     if(q.length<3||q.length>100)return reply({error:"Query must be 3–100 characters"},400,publicHeaders(origin));
+    const sourceFilter=clean(url.searchParams.get("source"));
+    const monsterType=clean(url.searchParams.get("monsterType"));
+    if(!["","event","monster"].includes(sourceFilter) || !["","Regular","Boss","Event"].includes(monsterType))return reply({error:"Invalid search filter"},400,publicHeaders(origin));
     const raw=await env.DATA.get("latest");
     if(!raw)return reply({error:"No validated data available"},503,publicHeaders(origin));
     const snapshot=JSON.parse(raw);
-    return reply({results:search(snapshot,q),updatedAt:snapshot.importedAt},200,publicHeaders(origin));
+    return reply({results:search(snapshot,q,sourceFilter,monsterType),updatedAt:snapshot.importedAt},200,publicHeaders(origin));
   }
   return reply({error:"Not found"},404);
  }
