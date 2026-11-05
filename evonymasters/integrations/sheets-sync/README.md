@@ -36,3 +36,14 @@ This folder is a **separate Cloudflare Worker** proof of concept. The production
 - Existing local JSON results are the fallback when the live service is unavailable; no blanket source-data export is added.
 - This still requires verification of the live response, browser console, type filters, and performance before merging the draft PR.
 - Avoid merging until the owner confirms the updated Worker is installed and end-to-end search works. The original website continues serving its previous version until then.
+
+## Item Finder Stage 1 (Nov 5 2026)
+- The development branch replaces the Resource Finder page with the **Item Finder** grouped accordion layout.
+- The new `/v2/search?q=...&type=all|events|bosses|event-bosses|regular|boxes&drop=all|Guaranteed|Possible|Unspecified&page=0` endpoint returns a paginated set of 12 **sources**, not raw reward rows.
+- `/v2/suggest?q=...` returns up to 10 item-name suggestions. The Google Sheet itself is still never made public.
+- Sources group monster name/type/level/event, event name/sub-event/detail/activity, and box name. Nested boxes are traversed with a cycle guard and preserve contained-item quantities and conservative classifications.
+- Only verified `Guaranteed` entries qualify for the guaranteed-only filter. Events with unknown drop classification are **Unspecified**. No unsupported "available now", F2P guarantee, or additive cross-event total is displayed.
+- All incoming query results render as text nodes rather than HTML. Only the origin of the existing evonymasters site is permitted in Worker CORS.
+- **Important:** Deploy this updated `worker.mjs` to the separate `evonymasters-sheet-sync` Worker **before merging the draft PR**. The previously deployed v1-only Worker does not respond to `/v2/search` and the redesigned website would show an unavailable state.
+- After deploying, test `/health`, `/v2/search?q=refining%20stone`, `/v2/search?q=refining%20stone&type=events`, and `/v2/suggest?q=refin`. Then test browser CORS in the existing website and confirm fresh `updatedAt`. Only after that, merge PR and verify the live `/resources/` page.
+- Public search results can still be collected by repeated queries. Add Cloudflare rate limiting or bot controls if the dataset needs further scraping protection.
