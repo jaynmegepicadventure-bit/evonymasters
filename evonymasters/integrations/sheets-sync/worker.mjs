@@ -90,7 +90,7 @@ function search(snapshot, query, sourceFilter = "", monsterType = "") {
 
 // V3: query all matched sources, aggregate quantities and sort before pagination.
 // The master spreadsheet remains private, and no bulk-download endpoint is provided.
-const validTypes = new Set(["all","events","tasks","bosses","regular","event-bosses","boxes"]);
+const validTypes = new Set(["all","events","tasks","bosses","all-bosses","regular","event-bosses","boxes"]);
 const validSorts = new Set(["suggested","source","type","quantity","frequency","chance","notes"]);
 const normalizeDrop = value => {
   const v=norm(value);
@@ -153,11 +153,11 @@ function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggest
     g._classes.add(reward.classification);
     g.score=Math.min(g.score,score<0?3:titleScore<0?3:titleScore);
   }
-  if(["all","bosses","regular","event-bosses"].includes(type)){
+  if(["all","bosses","all-bosses","regular","event-bosses"].includes(type)){
     for(const {fields:r} of snapshot.monsters){
       const mt=norm(r["Monster Type"]);
       const classification=mt==="regular"?"regular":mt==="event"?"event-bosses":"bosses";
-      if(type!=="all"&&type!==classification)continue;
+      if(type!=="all"&&type!==classification&&!(type==="all-bosses"&&["bosses","event-bosses"].includes(classification)))continue;
       const name=r["Monster Name"], id=[mt,norm(name),norm(r["Monster Level"]),norm(r.Event)].join("|");
       const context={level:r["Monster Level"],stamina:r.Stamina,event:r.Event,monsterType:r["Monster Type"]};
       const direct={item:r["Reward Item (in-game)"],quantity:r.Quantity,classification:normalizeDrop(r["Drop Classification"]),route:[r["Reward Item (in-game)"]]};
