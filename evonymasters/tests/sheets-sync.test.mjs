@@ -97,3 +97,50 @@ test('monster type filtering occurs before truncation',async()=>{
  assert.ok(result.results.length>0);
  assert.ok(result.results.every(x=>x.name==='Regular Target'));
 });
+
+test('v2 item finder groups nested rewards by source instead of listing every drop',async()=>{
+ const {env}=runtime();
+ assert.equal((await worker.fetch(await signedRequest(payload()),env)).status,200);
+ const response=await worker.fetch(new Request(API+'/v2/search?q=refining%20stone'),env);
+ assert.equal(response.status,200);
+ const body=await response.json();
+ assert.ok(body.groups.length>0);
+ const zombie=body.groups.find(g=>g.title==='Zombie');
+ assert.ok(zombie,'Zombie must appear once as a grouped source');
+ assert.equal(body.groups.filter(g=>g.title==='Zombie').length,1);
+ assert.ok(zombie.items.some(i=>i.quantity==='7'&&i.classification==='Possible'&&i.route.join(' / ')==='Lv1 Boss Monster Chest / Inner Chest / Refining Stone'));
+ assert.ok(body.groups.some(g=>g.title==='Festival'));
+ assert.ok(body.groups.some(g=>g.title==='Inner Chest'));
+});
+test('v2 category and guarantee filters apply before returning grouped results',async()=>{
+ const {env}=runtime();
+ await worker.fetch(await signedRequest(payload()),env);
+ const onlyEvents=await (await worker.fetch(new Request(API+'/v2/search?q=refining%20stone&type=events'),env)).json();
+ assert.ok(onlyEvents.groups.length>0);
+ assert.ok(onlyEvents.groups.every(g=>g.source==='events'));
+ const onlyGuaranteed=await (await worker.fetch(new Request(API+'/v2/search?q=refining%20stone&drop=Guaranteed'),env)).json();
+ assert.ok(onlyGuaranteed.groups.every(g=>g.items.every(x=>x.classification==='Guaranteed')));
+ assert.ok(onlyGuaranteed.groups.every(g=>g.title!=='Festival'),'Unknown event rewards must never be presented as guaranteed');
+ const onlyPossible=await (await worker.fetch(new Request(API+'/v2/search?q=refining%20stone&drop=Possible'),env)).json();
+ assert.ok(onlyPossible.groups.some(g=>g.title==='Zombie'));
+});
+test('v2 suggestions rank exact and prefix item matches without returning entire sheet',async()=>{
+ const {env}=runtime();
+ await worker.fetch(await signedRequest(payload()),env);
+ const response=await worker.fetch(new Request(API+'/v2/suggest?q=refin'),env);
+ assert.equal(response.status,200);
+ const body=await response.json();
+ assert.ok(body.items.includes('Refining Stone'));
+ assert.ok(body.items.length<=10);
+ assert.equal(body.groups,undefined);
+});
+test('v2 search accepts only supported filters and pages',async()=>{
+ const {env}=runtime();
+ await worker.fetch(await signedRequest(payload()),env);
+ for(const suffix of ['type=private','drop=Nothing','page=-1','page=1.2']){
+   const response=await worker.fetch(new Request(API+'/v2/search?q=gems&'+suffix),env);
+   assert.equal(response.status,400,suffix);
+ }
+ const response=await worker.fetch(new Request(API+'/v2/search?q=stone',{headers:{origin:sites.allowed}}),env);
+ assert.equal(response.headers.get('access-control-allow-origin'),sites.allowed);
+});
