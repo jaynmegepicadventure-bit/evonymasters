@@ -151,7 +151,7 @@ function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggest
     if(n!==null)g._quantities.add(n);
     if(!g._classes)g._classes=new Set();
     g._classes.add(reward.classification);
-    g.score=Math.min(g.score,score<0?3:titleScore<0?3:titleScore);
+    g.score=Math.min(g.score,score>=0?score:3+titleScore);
   }
   if(["all","bosses","all-bosses","regular","event-bosses"].includes(type)){
     for(const {fields:r} of snapshot.monsters){
