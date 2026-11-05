@@ -46,7 +46,12 @@ export function installLiveResourceSearch({query, type, results, count, empty, e
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 5500);
       try {
-        const url = ENDPOINT + '?q=' + encodeURIComponent(term);
+        const selection = type.value;
+        const source = selection === 'Event Activity' ? 'event' : selection ? 'monster' : '';
+        const monsterType = selection === 'Event Activity' ? '' : selection;
+        const url = ENDPOINT + '?q=' + encodeURIComponent(term) +
+          (source ? '&source=' + encodeURIComponent(source) : '') +
+          (monsterType ? '&monsterType=' + encodeURIComponent(monsterType) : '');
         const response = await fetch(url, {signal:controller.signal, mode:'cors'});
         if (!response.ok) throw new Error('Live search unavailable');
         const payload = await response.json();
