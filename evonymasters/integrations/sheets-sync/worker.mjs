@@ -43,9 +43,9 @@ async function validHmac(secret, stamp, body, signature) {
   let diff = 0; for (let i = 0; i < 64; i++) diff |= digest.charCodeAt(i) ^ signature.toLowerCase().charCodeAt(i);
   return diff === 0;
 }
-const trimRow = (source, row, item, classification, route) => ({
+const trimRow = (source, row, item, classification, route, quantity) => ({
   source, name: clean(source==="monster" ? row["Monster Name"] : source==="event" ? row["EVENT NAME"] : row["Box Name"]),
-  item, quantity: clean(row.Quantity ?? row.QUANTITY), classification:clean(classification), route,
+  item, quantity: clean(quantity ?? row.Quantity ?? row.QUANTITY), classification:clean(classification), route,
   level: clean(row["Monster Level"] ?? row.LEVEL ?? row.Level), event:clean(row.Event ?? row.EVENT),
   monsterType: clean(row["Monster Type"]), stamina: clean(row.Stamina ?? row.STAMINA),
 });
@@ -59,7 +59,7 @@ function search(snapshot, query) {
     for(const entry of boxLookup.get(key)||[]) {
       const child=entry["Reward Item (in-game)"];
       const category = clean(classification).toLowerCase()==="guaranteed" && clean(entry["Drop Classification"]).toLowerCase()==="guaranteed" ? "Guaranteed" : "Possible";
-      if(norm(child).includes(q))result.push({item:child,classification:category,route:[...path,child]});
+      if(norm(child).includes(q))result.push({item:child,quantity:entry.Quantity,classification:category,route:[...path,child]});
       result.push(...expand(child,category,[...path,child],depth+1,next));
       if (result.length>100) break;
     }
@@ -71,7 +71,7 @@ function search(snapshot, query) {
     if(found.length>=50)return;
     for(const child of expand(item,classification,valueRoute,0,new Set())) {
       if(!norm(child.item).includes(q))continue;
-      found.push(trimRow(source,row,child.item,child.classification,child.route));
+      found.push(trimRow(source,row,child.item,child.classification,child.route,child.quantity));
       if(found.length>=50)break;
     }
   }
