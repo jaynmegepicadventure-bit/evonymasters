@@ -156,7 +156,7 @@ test('v3 comparison table returns quantities and sorts every source before pagin
  assert.equal(j.total>=26,true);
  assert.equal(j.hasMore,true);
  assert.equal(j.groups.length,15);
- assert.equal(j.groups[0].title,'Festival','highest numeric quantity should be first across entire dataset');
+ assert.equal(j.groups[0].quantityMax,25,'highest numeric quantity should be first across entire dataset');
  const next=await (await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&sort=quantity&direction=asc&page=1'),env)).json();
  assert.ok(next.groups.length>0);
  assert.ok(j.groups.every(g=>g.quantityMax===null||g.quantityMax>=next.groups[0].quantityMax));
@@ -169,8 +169,8 @@ test('v3 source title sort reverses with direction and preserves global order',a
 });
 test('v3 shows alternative reward tiers as a range, not a sum',async()=>{
  const {env}=runtime();const data=payload();
- data.tabs.events.push(['Centre','','','','Festival','','Personal Activity','','','','','Refining Stone','40']);
- data.tabs.events.push(['Centre','','','','Festival','','Personal Activity','','','','','Refining Stone','80']);
+ data.tabs.events.push(['Centre','','','','Festival','','','','','','','Refining Stone','40']);
+ data.tabs.events.push(['Centre','','','','Festival','','','','','','','Refining Stone','80']);
  await worker.fetch(await signedRequest(data),env);
  const result=await (await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&type=events'),env)).json();
  const festival=result.groups.find(x=>x.title==='Festival');
@@ -180,7 +180,7 @@ test('v3 shows alternative reward tiers as a range, not a sum',async()=>{
 test('v3 splits explicit Tasks from Events and includes event bosses in Bosses tab',async()=>{
  const {env}=runtime();const data=payload();
  data.tabs.events.push(['Centre','','','','Daily Task Rewards','My Tasks','Personal Activity','','','','','Refining Stone','77']);
- data.tabs.monsters.push(['Event','8','Special Beast','999','20','Event','','Refining Stone','9','Possible']);
+ data.tabs.monsters.push(['Event','8','Special Beast','999','20','Event','Refining Stone','9','Possible']);
  await worker.fetch(await signedRequest(data),env);
  const tasks=await (await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&type=tasks'),env)).json();
  assert.ok(tasks.groups.some(x=>x.title==='Daily Task Rewards'));
