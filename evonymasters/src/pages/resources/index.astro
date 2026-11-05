@@ -91,7 +91,7 @@ footer{border-top:1px solid #29425d;padding:24px 0;color:#afc3d4;font-size:.83re
 <button id="load-more" type="button" hidden>Show more sources</button>
 </section></main>
 <footer><div class="wrap">EvonyMasters is an independent fan project. Data is maintained in a private spreadsheet and may change with game updates. Free-to-play eligibility and current availability are not yet verified for every source.</div></footer>
-<script>
+<script is:inline>
 const API='https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev';
 const query=document.querySelector('#query');
 const filters=document.querySelector('#type-filters');
@@ -200,6 +200,7 @@ query.addEventListener('input',()=>{
 });
 more.addEventListener('click',()=>{if(hasMore){page++;load({append:true});}});
 const initial=new URLSearchParams(location.search).get('q');
-if(initial){query.value=initial;schedule();}
+if(initial)query.value=initial;
+if(query.value.trim().length >= 2) schedule();
 </script>
 </body></html>
