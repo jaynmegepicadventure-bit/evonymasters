@@ -74,3 +74,26 @@ test('unknown site origin cannot read cross-site and browser preflight is constr
  const permitted=await worker.fetch(new Request(API+'/v1/search',{method:'OPTIONS',headers:{origin:sites.allowed}}),env);
  assert.equal(permitted.status,204);
 });
+
+test('event-only searches are not crowded out by monster search cap',async()=>{
+ const {env}=runtime();
+ const data=payload();
+ for(let index=0; index<45; index++) data.tabs.monsters.push(['Boss',String(index+2),'Repeat Monster','36500','15','','Refining Stone','1','Possible']);
+ const response=await worker.fetch(await signedRequest(data),env);
+ assert.equal(response.status,200);
+ const result=await worker.fetch(new Request(API+'/v1/search?q=refining%20stone&source=event'),env);
+ const payloadOut=await result.json();
+ assert.ok(payloadOut.results.length>0);
+ assert.ok(payloadOut.results.every(x=>x.source==='event'));
+ assert.equal(payloadOut.results[0].name,'Festival');
+});
+test('monster type filtering occurs before truncation',async()=>{
+ const {env}=runtime();
+ const data=payload();
+ data.tabs.monsters.push(['Regular','1','Regular Target','200','5','','Refining Stone','3','Guaranteed']);
+ assert.equal((await worker.fetch(await signedRequest(data),env)).status,200);
+ const response=await worker.fetch(new Request(API+'/v1/search?q=refining%20stone&source=monster&monsterType=Regular'),env);
+ const result=await response.json();
+ assert.ok(result.results.length>0);
+ assert.ok(result.results.every(x=>x.name==='Regular Target'));
+});
