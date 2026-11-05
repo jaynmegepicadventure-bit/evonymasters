@@ -222,7 +222,7 @@ test('event classification column can be inserted before ITEM and syncs Redeem, 
 test('v3 event activity filters isolate Alliance and Personal activity records',async()=>{
  const {env}=runtime(),data=payload();
  data.tabs.events.push(['Events','','','','Alliance Rewards','Alliance Battle','Alliance activity','','','','','Refining Stone','75']);
- data.tabs.events.push(['Events','','','','Personal Rewards','Personal Quest','Personal activity','','','','','Refining Stone','70']);
+ data.tabs.events.push(['Events','','','','Personal Rewards','Personal Gathering','Personal activity','','','','','Refining Stone','70']);
  await worker.fetch(await signedRequest(data),env);
  const alliance=await (await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&type=events&activity=alliance'),env)).json();
  assert.ok(alliance.groups.some(x=>x.title==='Alliance Rewards'));
