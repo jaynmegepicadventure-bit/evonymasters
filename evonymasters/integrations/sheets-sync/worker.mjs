@@ -126,7 +126,7 @@ function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggest
     const following=new Set([...visited,id]),result=[];
     for(const row of boxMap.get(id)||[]){
       const item=row["Reward Item (in-game)"], childDrop=normalizeDrop(row["Drop Classification"]);
-      const effectiveDrop=classification==="Possible" ? "Possible" : childDrop;
+      const effectiveDrop=classification==="Possible" ? "Possible" : classification==="Unspecified" ? "Unspecified" : childDrop;
       const child={item,quantity:row.Quantity,classification:effectiveDrop,route:[...path,item],details:{boxName:name,boxLevel:row.Level,boxSource:row.Source,boxNotes:row.Notes}};
       result.push(child);
       result.push(...descendants(item,effectiveDrop,child.route,following,depth+1));
@@ -261,11 +261,11 @@ function chestCatalog(snapshot){
       const childList=byName.get(norm(item.item))||[];
       for(const child of childList){
         for(const reward of child.items){
-          const classification=item.classification==="Possible"?"Possible":reward.classification;
+          const classification=item.classification==="Possible"?"Possible":item.classification==="Unspecified"?"Unspecified":reward.classification;
           found.push({...reward,classification,via:[chest.name,child.name]});
         }
         for(const reward of nested(child,next,depth+1))
-          found.push({...reward,classification:item.classification==="Possible"?"Possible":reward.classification,via:[chest.name,...reward.via]});
+          found.push({...reward,classification:item.classification==="Possible"?"Possible":item.classification==="Unspecified"?"Unspecified":reward.classification,via:[chest.name,...reward.via]});
         if(found.length>300)return found.slice(0,300);
       }
     }
