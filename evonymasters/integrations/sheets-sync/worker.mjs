@@ -9,16 +9,16 @@ const reply = (obj, status = 200, headers = {}) => new Response(JSON.stringify(o
 const clean = x => String(x ?? "").trim();
 const norm = x => clean(x).toLocaleLowerCase("en").replace(/\s+/g, " ");
 const fields = {
-  events: ["LOCATION","EVENT","RECURRANCE","FEQUENCY","EVENT NAME","SUB EVENT","ACTIVITY TYPE","ITEM AVAILABILITY","STAMINA","DETAIL","LEVEL","ITEM","QUANTITY","GENERAL","CASTLE"],
+  events: ["LOCATION","EVENT","RECURRANCE","FEQUENCY","EVENT NAME","SUB EVENT","ACTIVITY TYPE","ITEM AVAILABILITY","STAMINA","DETAIL","LEVEL","ITEM","QUANTITY","GENERAL","CASTLE","Drop Classification"],
   monsters: ["Monster Type","Monster Level","Monster Name","Power","Stamina","Event","Reward Item (in-game)","Quantity","Drop Classification"],
   boxes: ["Box Name","Level","Reward Item (in-game)","Quantity","Drop Classification","Source","Notes"]
 };
 const asNumber = x => { const t = clean(x).replace(/,/g, ""); return /^-?\d+(\.\d+)?$/.test(t) ? Number(t) : null; };
-function convertTable(table, required, headerRow) {
+function convertTable(table, required, headerRow, optional=[]) {
   if (!Array.isArray(table) || table.length < headerRow || table.length > 15000) throw Error("Invalid tab rows");
   const heads = table[headerRow - 1].map(x => clean(x).toLowerCase());
   const cols = required.map(name => heads.indexOf(name.toLowerCase()));
-  if (cols.some(i => i < 0)) throw Error("Missing expected columns: " + required.filter((_,i) => cols[i] < 0).join(", "));
+  if (cols.some((i,j) => i < 0 && !optional.includes(required[j]))) throw Error("Missing expected columns: " + required.filter((name,i) => cols[i] < 0 && !optional.includes(name)).join(", "));
   return table.slice(headerRow).map((row, i) => ({
     sheetRow: i + headerRow + 1,
     fields: Object.fromEntries(required.map((name,j) => [name, clean(row[cols[j]])]))
@@ -26,7 +26,7 @@ function convertTable(table, required, headerRow) {
 }
 function parseSnapshot(raw) {
   if (!raw || raw.version !== 1 || !raw.tabs || typeof raw.tabs !== "object") throw Error("Unsupported payload version");
-  const events = convertTable(raw.tabs.events, fields.events, 2);
+  const events = convertTable(raw.tabs.events, fields.events, 2, ["Drop Classification"]);
   const monsters = convertTable(raw.tabs.monsters, fields.monsters, 1);
   const boxes = convertTable(raw.tabs.boxes, fields.boxes, 2);
   for (const r of monsters) if (!r.fields["Monster Name"] || !r.fields["Reward Item (in-game)"]) throw Error("Incomplete monster row " + r.sheetRow);
@@ -95,6 +95,7 @@ const validSorts = new Set(["suggested","source","type","quantity","frequency","
 const normalizeDrop = value => {
   const v=norm(value);
   if(v==="guaranteed")return "Guaranteed";
+  if(v==="redeem")return "Redeem";
   if(v==="possible"||v==="chance"||v==="random")return "Possible";
   return "Unspecified";
 };
@@ -112,7 +113,7 @@ const numericQuantity = raw => {
 const taskEvent = row => /\b(task|tasks|quest|quests|daily activit(?:y|ies))\b/i.test(
   [row["EVENT NAME"],row["SUB EVENT"],row.DETAIL,row["ACTIVITY TYPE"]].join(" ")
 );
-function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggested",direction="asc"}){
+function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggested",direction="asc",activity="all"}){
   const q=norm(query), grouped=new Map(), boxMap=new Map();
   for(const box of snapshot.boxes){
     const r=box.fields, id=norm(r["Box Name"]);
@@ -125,8 +126,8 @@ function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggest
     const following=new Set([...visited,id]),result=[];
     for(const row of boxMap.get(id)||[]){
       const item=row["Reward Item (in-game)"], childDrop=normalizeDrop(row["Drop Classification"]);
-      const effectiveDrop=classification==="Guaranteed" ? childDrop : classification==="Possible" ? "Possible" : "Unspecified";
-      const child={item,quantity:row.Quantity,classification:effectiveDrop,route:[...path,item]};
+      const effectiveDrop=classification==="Possible" ? "Possible" : childDrop;
+      const child={item,quantity:row.Quantity,classification:effectiveDrop,route:[...path,item],details:{boxName:name,boxLevel:row.Level,boxSource:row.Source,boxNotes:row.Notes}};
       result.push(child);
       result.push(...descendants(item,effectiveDrop,child.route,following,depth+1));
       if(result.length>200)break;
@@ -140,7 +141,7 @@ function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggest
     const id=source+":"+key;
     let g=grouped.get(id);
     if(!g){g={source,title,context,items:[],score:99,matchingRewards:0};grouped.set(id,g);}
-    const itemKey=[reward.item,reward.quantity,reward.classification,reward.route.join(">")].join("|").toLowerCase();
+    const itemKey=[reward.item,reward.quantity,reward.classification,reward.route.join(">"),JSON.stringify(reward.details||{})].join("|").toLowerCase();
     if(!g._seen)g._seen=new Set();
     if(g._seen.has(itemKey))return;
     g._seen.add(itemKey);g.matchingRewards++;
@@ -159,7 +160,7 @@ function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggest
       const classification=mt==="regular"?"regular":mt==="event"?"event-bosses":"bosses";
       if(type!=="all"&&type!==classification&&!(type==="all-bosses"&&["bosses","event-bosses"].includes(classification)))continue;
       const name=r["Monster Name"], id=[mt,norm(name),norm(r["Monster Level"]),norm(r.Event)].join("|");
-      const context={level:r["Monster Level"],stamina:r.Stamina,event:r.Event,monsterType:r["Monster Type"]};
+      const context={level:r["Monster Level"],stamina:r.Stamina,event:r.Event,monsterType:r["Monster Type"],power:r.Power};
       const direct={item:r["Reward Item (in-game)"],quantity:r.Quantity,classification:normalizeDrop(r["Drop Classification"]),route:[r["Reward Item (in-game)"]]};
       add(classification,id,name,context,direct);
       for(const child of descendants(direct.item,direct.classification,direct.route,new Set(),0))add(classification,id,name,context,child);
@@ -169,9 +170,10 @@ function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggest
     for(const {fields:r} of snapshot.events){
       const kind=taskEvent(r)?"tasks":"events";
       if(type!=="all"&&type!==kind)continue;
+      if(activity!=="all" && (activity==="alliance"?!/alliance/i.test(r["ACTIVITY TYPE"]):!/personal/i.test(r["ACTIVITY TYPE"])))continue;
       const title=r["EVENT NAME"],id=[norm(title),norm(r["SUB EVENT"]),norm(r.DETAIL),norm(r["ACTIVITY TYPE"])].join("|");
-      const context={subEvent:r["SUB EVENT"],activity:r["ACTIVITY TYPE"],frequency:r.FEQUENCY,recurrence:r.RECURRANCE,detail:r.DETAIL};
-      const reward={item:r.ITEM,quantity:r.QUANTITY,classification:"Unspecified",route:[r.ITEM]};
+      const context={subEvent:r["SUB EVENT"],activity:r["ACTIVITY TYPE"],frequency:r.FEQUENCY,recurrence:r.RECURRANCE,detail:r.DETAIL,location:r.LOCATION,event:r.EVENT,level:r.LEVEL,stamina:r.STAMINA,availability:r["ITEM AVAILABILITY"],general:r.GENERAL,castle:r.CASTLE};
+      const reward={item:r.ITEM,quantity:r.QUANTITY,classification:normalizeDrop(r["Drop Classification"]),route:[r.ITEM],details:{location:r.LOCATION,event:r.EVENT,subEvent:r["SUB EVENT"],activity:r["ACTIVITY TYPE"],frequency:r.FEQUENCY,recurrence:r.RECURRANCE,detail:r.DETAIL,level:r.LEVEL,stamina:r.STAMINA,availability:r["ITEM AVAILABILITY"],general:r.GENERAL,castle:r.CASTLE}};
       add(kind,id,title,context,reward);
       for(const child of descendants(reward.item,reward.classification,reward.route,new Set(),0))add(kind,id,title,context,child);
     }
@@ -180,14 +182,14 @@ function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggest
     for(const [id,entries] of boxMap){
       const title=entries[0]["Box Name"], context={sourceNote:entries[0].Source};
       for(const row of entries){
-        const reward={item:row["Reward Item (in-game)"],quantity:row.Quantity,classification:normalizeDrop(row["Drop Classification"]),route:[title,row["Reward Item (in-game)"]]};
+        const reward={item:row["Reward Item (in-game)"],quantity:row.Quantity,classification:normalizeDrop(row["Drop Classification"]),route:[title,row["Reward Item (in-game)"]],details:{boxName:title,boxLevel:row.Level,boxSource:row.Source,boxNotes:row.Notes}};
         add("boxes",id,title,context,reward);
         for(const child of descendants(reward.item,reward.classification,reward.route,new Set([id]),0))add("boxes",id,title,context,child);
       }
     }
   }
   const sourcePriority={tasks:0,events:1,bosses:2,"event-bosses":3,regular:4,boxes:5};
-  const chancePriority={Guaranteed:0,Possible:1,Unspecified:2};
+  const chancePriority={Guaranteed:0,Redeem:1,Possible:2,Unspecified:3};
   const groups=[...grouped.values()].map(g=>{
     const quantities=[...(g._quantities||[])].sort((a,b)=>a-b);
     const classes=[...(g._classes||[])];
@@ -220,6 +222,55 @@ function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggest
   const LIMIT=15,offset=page*LIMIT;
   return {total:groups.length,page,hasMore:offset+LIMIT<groups.length,groups:groups.slice(offset,offset+LIMIT)};
 }
+
+function chestCatalog(snapshot){
+  const byKey=new Map();
+  for(const {fields:r} of snapshot.boxes){
+    const name=clean(r["Box Name"]),level=clean(r.Level);
+    const key=norm(name)+"|"+norm(level);
+    if(!byKey.has(key))byKey.set(key,{id:encodeURIComponent(key),name,level,items:[],sources:[],sourceNotes:[]});
+    const chest=byKey.get(key);
+    chest.items.push({item:r["Reward Item (in-game)"],quantity:r.Quantity,classification:normalizeDrop(r["Drop Classification"]),notes:r.Notes});
+    if(clean(r.Source)&&!chest.sourceNotes.includes(clean(r.Source)))chest.sourceNotes.push(clean(r.Source));
+  }
+  // A source relationship is shown only if the reward explicitly names this chest.
+  const byName=new Map();
+  for(const chest of byKey.values()){
+    const key=norm(chest.name);
+    if(!byName.has(key))byName.set(key,[]);
+    byName.get(key).push(chest);
+  }
+  for(const {fields:r} of snapshot.monsters){
+    for(const chest of byName.get(norm(r["Reward Item (in-game)"]))||[]){
+      const id=["Boss",r["Monster Name"],r["Monster Level"],r.Event].join("|");
+      if(!chest.sources.some(s=>s._id===id))chest.sources.push({_id:id,type:"Boss",name:r["Monster Name"],level:r["Monster Level"],event:r.Event,stamina:r.Stamina});
+    }
+  }
+  for(const {fields:r} of snapshot.events){
+    for(const chest of byName.get(norm(r.ITEM))||[]){
+      const id=["Event",r["EVENT NAME"],r["SUB EVENT"],r.DETAIL].join("|");
+      if(!chest.sources.some(s=>s._id===id))chest.sources.push({_id:id,type:"Event",name:r["EVENT NAME"],subEvent:r["SUB EVENT"],location:r.LOCATION,activity:r["ACTIVITY TYPE"],detail:r.DETAIL});
+    }
+  }
+  for(const chest of byKey.values())chest.sources=chest.sources.map(({_id,...rest})=>rest);
+  return [...byKey.values()];
+}
+function chestSearch(snapshot,{q="",source="all",page=0}){
+  const list=chestCatalog(snapshot);
+  const hasSource=(c)=>source==="all"||source==="unlinked"&&!c.sources.length
+   ||source==="bosses"&&c.sources.some(s=>s.type==="Boss")
+   ||source==="events"&&c.sources.some(s=>s.type==="Event")
+   ||source==="activities"&&c.sources.some(s=>s.type==="Event"&&/alliance|personal|activit|task/i.test(s.activity));
+  const matching=list.filter(c=>hasSource(c)&&(!q||queryScore(c.name,norm(q))>=0||
+    c.items.some(i=>norm(i.item).includes(norm(q))))).sort((a,b)=>a.name.localeCompare(b.name)||a.level.localeCompare(b.level));
+  const LIMIT=15,offset=page*LIMIT;
+  return {total:matching.length,page,hasMore:offset+LIMIT<matching.length,chests:matching.slice(offset,offset+LIMIT).map(c=>({...c,items:c.items.slice(0,12),itemCount:c.items.length,sources:c.sources.slice(0,12)})),updatedAt:snapshot.importedAt};
+}
+function compareChests(snapshot, ids){
+  const catalog=chestCatalog(snapshot),list=ids.map(id=>catalog.find(c=>c.id===id));
+  if(list.some(c=>!c))return null;
+  return {chests:list.map(c=>({id:c.id,name:c.name,level:c.level,items:c.items,sources:c.sources,sourceNotes:c.sourceNotes})),updatedAt:snapshot.importedAt};
+}
 function suggestedItems(snapshot, query){
   const q=norm(query);const options=new Map();
   const consider = name => {
@@ -238,7 +289,7 @@ export default {
  async fetch(request, env) {
   const url=new URL(request.url);
   const origin=request.headers.get("origin")||"";
-  if((url.pathname==="/v1/search"||url.pathname==="/v2/search"||url.pathname==="/v3/search"||url.pathname==="/v2/suggest") && request.method==="OPTIONS") {
+  if((url.pathname==="/v1/search"||url.pathname==="/v2/search"||url.pathname==="/v3/search"||url.pathname==="/v4/chests"||url.pathname==="/v4/chests/compare"||url.pathname==="/v2/suggest") && request.method==="OPTIONS") {
     if(!PUBLIC_ORIGINS.has(origin)) return new Response(null,{status:403});
     return new Response(null,{status:204,headers:{...publicHeaders(origin),"access-control-allow-methods":"GET, OPTIONS","access-control-allow-headers":"content-type","access-control-max-age":"3600"}});
   }
@@ -257,20 +308,36 @@ export default {
     await env.DATA.put("latest",JSON.stringify(snapshot));
     return reply({ok:true,counts:snapshot.counts});
   }
+  if((url.pathname==="/v4/chests"||url.pathname==="/v4/chests/compare") && request.method==="GET"){
+    const raw=await env.DATA.get("latest");if(!raw)return reply({error:"No validated data available"},503,publicHeaders(origin));
+    const snapshot=JSON.parse(raw);
+    if(url.pathname==="/v4/chests/compare"){
+      const ids=url.searchParams.getAll("id");
+      if(!ids.length||ids.length>4||ids.some(id=>id.length>250)||new Set(ids).size!==ids.length)
+        return reply({error:"Select between one and four distinct chests"},400,publicHeaders(origin));
+      const compared=compareChests(snapshot,ids);
+      return compared?reply(compared,200,publicHeaders(origin)):reply({error:"Chest not found"},404,publicHeaders(origin));
+    }
+    const q=clean(url.searchParams.get("q")),source=clean(url.searchParams.get("source"))||"all",page=Number(url.searchParams.get("page")||0);
+    if(q.length>100||!["all","bosses","events","activities","unlinked"].includes(source)||!Number.isSafeInteger(page)||page<0||page>1000)
+      return reply({error:"Invalid chest search parameters"},400,publicHeaders(origin));
+    return reply(chestSearch(snapshot,{q,source,page}),200,publicHeaders(origin));
+  }
   if(url.pathname==="/v3/search" && request.method==="GET"){
     const q=clean(url.searchParams.get("q"));
     const type=clean(url.searchParams.get("type"))||"all";
+    const activity=clean(url.searchParams.get("activity"))||"all";
     const drop=clean(url.searchParams.get("drop"))||"all";
     const sort=clean(url.searchParams.get("sort"))||"suggested";
     const direction=clean(url.searchParams.get("direction"))||"asc";
     const page=Number(url.searchParams.get("page")||0);
-    if(q.length<2||q.length>100||!validTypes.has(type)||!["all","Guaranteed","Possible","Unspecified"].includes(drop)||
+    if(q.length<2||q.length>100||!validTypes.has(type)||!["all","alliance","personal"].includes(activity)||!["all","Guaranteed","Possible","Redeem","Unspecified"].includes(drop)||
        !validSorts.has(sort)||!["asc","desc"].includes(direction)||!Number.isSafeInteger(page)||page<0||page>1000)
       return reply({error:"Invalid search parameters"},400,publicHeaders(origin));
     const raw=await env.DATA.get("latest");
     if(!raw)return reply({error:"No validated data available"},503,publicHeaders(origin));
     const snapshot=JSON.parse(raw);
-    return reply({...groupSearch(snapshot,{query:q,type,drop,page,sort,direction}),updatedAt:snapshot.importedAt},200,publicHeaders(origin));
+    return reply({...groupSearch(snapshot,{query:q,type,drop,page,sort,direction,activity}),updatedAt:snapshot.importedAt},200,publicHeaders(origin));
   }
   if((url.pathname==="/v2/search"||url.pathname==="/v2/suggest")&&request.method==="GET"){
     const q=clean(url.searchParams.get("q"));
