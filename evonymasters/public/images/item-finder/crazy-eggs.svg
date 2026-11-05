@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 160" role="img" aria-label="crazy eggs illustration">
+<defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#4e1931"/><stop offset="1" stop-color="#c76c36"/></linearGradient><radialGradient id="glow"><stop stop-color="#f5d38d" stop-opacity=".32"/><stop offset="1" stop-color="#f5d38d" stop-opacity="0"/></radialGradient></defs>
+<rect width="220" height="160" fill="url(#g)"/><circle cx="112" cy="84" r="98" fill="url(#glow)"/>
+<path d="M0 130 52 110 100 131 168 96 220 115v45H0Z" fill="#091c35" opacity=".37"/>
+<g stroke-linejoin="round" stroke-linecap="round"><path d="M110 22C64 22 59 90 64 110c9 43 85 47 96 0 7-35-9-88-50-88Z" fill="#b72d47" stroke="#ffc982" stroke-width="6"/><path d="m76 74 35 20 32-19m-70 35 38-16 34 16" stroke="#ffdc8d" stroke-width="8" fill="none"/><circle cx="109" cy="56" r="11" fill="#ffda75"/><path d="m102 56 7-9 7 9-7 9z" fill="#fff1be"/></g><path d="M0 0h220v160H0Z" fill="none" stroke="#e0bd76" stroke-opacity=".38" stroke-width="4"/>
+</svg>
