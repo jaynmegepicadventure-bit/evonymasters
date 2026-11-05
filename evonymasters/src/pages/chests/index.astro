@@ -1,0 +1,143 @@
+---
+import SiteHeader from '../../components/SiteHeader.astro';
+---
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="Explore and compare Evony reward chest contents from bosses, events and activities."/>
+<link rel="icon" href="/favicon.svg"/><title>Chest Finder | EvonyMasters</title>
+<style is:global>
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#eaf0f8;background:#0b1727}
+*{box-sizing:border-box}body{margin:0}.wrap{max-width:1260px;margin:0 auto;padding:0 20px}
+.hero{padding:30px 0 25px;background:linear-gradient(110deg,#182e49,#11263c);border-bottom:1px solid #385672}.eyebrow{font-weight:800;color:#e7be72;font-size:.78rem;letter-spacing:.14em}
+h1{font-size:clamp(2rem,4vw,3rem);margin:7px 0 9px;letter-spacing:-.04em}.subtitle{color:#c8d7e6;line-height:1.55;margin:0}
+.search{display:flex;gap:10px;flex-wrap:wrap;margin-top:19px}.search input,.search select{background:#f4f8fb;color:#162a41;border:1px solid #b1c1ce;border-radius:9px;padding:12px 14px;font:inherit}.search input{flex:1;min-width:220px}.search select{min-width:180px}
+.controls{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:20px 0;flex-wrap:wrap}
+.controls h2{font-size:1.24rem;margin:0}.controls p{font-size:.86rem;color:#adc5d9;margin:5px 0 0}
+.pill{background:#f4c772;border:1px solid #f4c772;color:#14263b;border-radius:99px;padding:9px 14px;font:inherit;font-weight:750;cursor:pointer}
+.pill.secondary{background:#1d364f;border-color:#647c95;color:#e2eaf3}.pill:disabled{opacity:.45;cursor:default}
+.chest-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:14px}
+.chest{border:1px solid #435f79;border-radius:13px;background:linear-gradient(#1b344e,#11263c);padding:17px;display:flex;flex-direction:column;gap:10px}
+.chest-head{display:flex;align-items:center;gap:12px}
+.chest img{width:84px;height:66px;object-fit:cover;border:1px solid #58738b;border-radius:9px}
+.chest h3{margin:0;font-size:1.05rem}.sub{font-size:.79rem;color:#b6cadc;margin-top:4px;line-height:1.5}
+.chest .items{list-style:none;margin:0;padding:9px 0;border-top:1px solid #35506b;flex:1}
+.chest li{display:flex;justify-content:space-between;gap:12px;padding:4px 0;font-size:.86rem;color:#e3edf5}
+.chest li span:last-child{white-space:nowrap;color:#edcb82}
+.card-actions{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.card-actions label{cursor:pointer;font-size:.9rem}.card-actions input{accent-color:#f4c772;vertical-align:middle}
+.muted{color:#afc1d3}.status{margin:12px 0;color:#d9e6f0}.panel{border:1px solid #3f5e79;border-radius:12px;background:#152c44;padding:18px;margin:18px 0}
+.panel h2{font-size:1.16rem;margin:0 0 14px}.selection{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.table-wrap{overflow-x:auto}.comparison{border-collapse:collapse;width:100%;min-width:620px}
+.comparison th,.comparison td{padding:12px 13px;border-bottom:1px solid #3d5770;text-align:left;vertical-align:top;font-size:.88rem}
+.comparison th{color:#f0cf8a;background:#1d3853}.comparison th:first-child{min-width:200px}
+.comparison td:first-child{font-weight:750}.classification{display:block;font-size:.72rem;color:#aec9dd;margin-top:3px}
+.detail{margin-top:10px;color:#ccdae7;font-size:.83rem;line-height:1.6}.detail strong{color:#f4d396}
+.source-link{display:inline-block;color:#f2c979;font-size:.81rem;margin-top:6px;text-decoration:underline}
+.more{margin:19px auto 36px;display:block}
+.empty{padding:25px;border:1px dashed #57718a;text-align:center;border-radius:10px;color:#bcd0df}
+footer{margin-top:30px;border-top:1px solid #334f69;padding:25px 0;color:#b5c8d9;font-size:.82rem}
+@media(max-width:640px){.wrap{padding:0 14px}.hero{padding:23px 0}.search input,.search select{width:100%}.chest-list{display:block}.chest{margin:10px 0}}
+</style></head><body>
+<SiteHeader active="chests"/>
+<header class="hero"><div class="wrap"><div class="eyebrow">PLAYER TOOLS / CHEST FINDER</div><h1>What's inside that chest?</h1>
+<p class="subtitle">Search by chest name or reward item. Compare up to four chests, see recorded quantities, and trace their known sources.</p>
+<div class="search"><label for="q" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden">Chest or reward item</label><input id="q" type="search" placeholder="Search a chest or its contents…" autocomplete="off"/>
+<label for="source" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden">Reward source</label>
+<select id="source"><option value="all">All sources</option><option value="bosses">Bosses</option><option value="events">Events</option><option value="activities">Activities</option><option value="unlinked">Source not recorded</option></select></div></div></header>
+<main class="wrap">
+<div class="controls"><div><h2>Browse reward chests</h2><p id="count">Loading recorded chests…</p></div>
+<div class="selection"><span id="selected-count">0 of 4 selected</span><button class="pill" id="compare" disabled>Compare selected</button><button class="pill secondary" id="reset" disabled>Clear selection</button></div></div>
+<div id="status" class="status" role="status"></div>
+<div class="chest-list" id="chests"></div>
+<button id="more" class="pill more" hidden>Show more chests</button>
+<section class="panel" id="comparison-panel" hidden><h2>Compare chest contents</h2><p class="muted">Every recorded item is shown. A possible reward is not a guaranteed payout. Nested chests are listed separately from the contents of their child chests.</p>
+<div class="table-wrap"><table class="comparison"><thead id="compare-head"></thead><tbody id="compare-body"></tbody></table></div></section>
+</main><footer><div class="wrap">EvonyMasters is an independent community project. Reward information reflects recorded sources; missing classifications mean data still to be collected.</div></footer>
+<script is:inline>
+(()=>{
+"use strict";
+const API="https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev";
+const q=document.getElementById("q"),source=document.getElementById("source"),cards=document.getElementById("chests"),more=document.getElementById("more"),status=document.getElementById("status"),count=document.getElementById("count"),compare=document.getElementById("compare"),reset=document.getElementById("reset"),selection=document.getElementById("selected-count"),panel=document.getElementById("comparison-panel"),head=document.getElementById("compare-head"),body=document.getElementById("compare-body");
+const selected=new Map();let page=0,hasMore=false,serial=0,timer=null,request=null;
+const toText=x=>String(x??"").trim();
+const el=(tag,cls,value)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(value!==undefined)n.textContent=toText(value);return n;};
+function refreshSelected(){selection.textContent=selected.size+" of 4 selected";compare.disabled=selected.size<2;reset.disabled=!selected.size;}
+function card(c){
+ const article=el("article","chest"),top=el("div","chest-head"),pic=document.createElement("img");
+ pic.src="/images/item-finder/box.svg";pic.alt="";pic.width=84;pic.height=66;pic.loading="lazy";
+ const labels=el("div");labels.append(el("h3","",c.name),el("div","sub",[c.level?"Level "+c.level:"",c.itemCount+" recorded rewards"].filter(Boolean).join(" · ")));
+ top.append(pic,labels);article.append(top);
+ const list=el("ul","items");
+ for(const item of c.items.slice(0,5)){
+  const li=el("li");li.append(el("span","",item.item),el("span","",item.quantity||"Quantity missing"));list.append(li);
+ }
+ if(c.itemCount>5)list.append(el("li","muted","+"+(c.itemCount-5)+" additional recorded items"));
+ article.append(list);
+ const origin=c.sources.slice(0,3).map(s=>s.type+": "+s.name+(s.level?" (Lv "+s.level+")":""));
+ if(origin.length)article.append(el("div","detail","From: "+origin.join(" · ")));
+ else if(c.sourceNotes.length)article.append(el("div","detail","Recorded source: "+c.sourceNotes.join(" · ")));
+ else article.append(el("div","detail","Source not yet linked in data"));
+ const actions=el("div","card-actions"),label=document.createElement("label"),cb=document.createElement("input");
+ cb.type="checkbox";cb.checked=selected.has(c.id);cb.disabled=!cb.checked&&selected.size>=4;
+ cb.addEventListener("change",()=>{
+  if(cb.checked&&selected.size<4)selected.set(c.id,c);
+  else selected.delete(c.id);
+  refreshSelected();
+  for(const checkbox of cards.querySelectorAll('input[type="checkbox"]'))checkbox.disabled=!checkbox.checked&&selected.size>=4;
+ });
+ label.append(cb,document.createTextNode(" Compare"));
+ const a=el("a","source-link","Find this chest's sources");a.href="/resources/?q="+encodeURIComponent(c.name);
+ actions.append(label,a);article.append(actions);
+ return article;
+}
+async function load(append=false){
+ const my=++serial;
+ if(request)request.abort();request=new AbortController();
+ if(!append){page=0;cards.replaceChildren();more.hidden=true;panel.hidden=true;}
+ status.textContent="Loading chests…";
+ const params=new URLSearchParams({q:q.value.trim(),source:source.value,page:String(page)});
+ try{
+  const r=await fetch(API+"/v4/chests?"+params,{signal:request.signal});
+  if(!r.ok)throw Error("Server "+r.status);
+  const data=await r.json();if(my!==serial)return;
+  for(const chest of data.chests||[])cards.append(card(chest));
+  count.textContent=data.total+" recorded "+(data.total===1?"chest":"chests")+" · "+cards.childElementCount+" shown";
+  hasMore=Boolean(data.hasMore);more.hidden=!hasMore;
+  status.textContent=!data.total?"No matching chests. Try another item or source.":"";
+ }catch(e){if(e.name!=="AbortError")status.textContent="Chest Finder is temporarily unavailable. Please try again.";}
+}
+const schedule=()=>{clearTimeout(timer);if(request)request.abort();timer=setTimeout(()=>load(),260)};
+q.addEventListener("input",schedule);source.addEventListener("change",schedule);
+more.addEventListener("click",()=>{if(hasMore){page++;load(true)}});
+reset.addEventListener("click",()=>{selected.clear();for(const cb of cards.querySelectorAll('input[type="checkbox"]')){cb.checked=false;cb.disabled=false}refreshSelected();panel.hidden=true;});
+compare.addEventListener("click",async()=>{
+ const ids=[...selected.keys()],params=new URLSearchParams();ids.forEach(id=>params.append("id",id));
+ status.textContent="Preparing comparison…";
+ try{
+  const r=await fetch(API+"/v4/chests/compare?"+params);
+  if(!r.ok)throw Error("Compare "+r.status);
+  const data=await r.json();head.replaceChildren();body.replaceChildren();
+  const hr=el("tr"),first=el("th","","Reward item");first.scope="col";hr.append(first);
+  for(const chest of data.chests){const th=el("th","",chest.name+(chest.level?" · "+chest.level:""));th.scope="col";hr.append(th)}
+  head.append(hr);
+  const names=[...new Set(data.chests.flatMap(c=>c.items.map(i=>i.item)))].sort((a,b)=>a.localeCompare(b));
+  for(const name of names){
+   const row=el("tr");row.append(el("td","",name));
+   for(const chest of data.chests){
+    const matches=chest.items.filter(i=>i.item===name),cell=el("td");
+    if(!matches.length)cell.textContent="—";
+    else for(const item of matches){
+     const part=el("div","",item.quantity||"Quantity missing");
+     const className=toText(item.classification)==="Unspecified"?"Data missing":item.classification;
+     part.append(el("span","classification",className));cell.append(part);
+    }
+    row.append(cell);
+   }
+   body.append(row);
+  }
+  panel.hidden=false;status.textContent="";panel.scrollIntoView({behavior:"smooth",block:"start"});
+ }catch{status.textContent="Could not compare these chests. Try again."}
+});
+const initial=new URLSearchParams(location.search);q.value=initial.get("q")||"";load();
+})();
+</script></body></html>
