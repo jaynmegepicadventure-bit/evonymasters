@@ -107,9 +107,9 @@ function queryScore(name, q){
 }
 const numericQuantity = raw => {
   const n=clean(raw).replace(/,/g,"");
-  return /^\\d+(?:\\.\\d+)?$/.test(n) ? Number(n) : null;
+  return /^\d+(?:\.\d+)?$/.test(n) ? Number(n) : null;
 };
-const taskEvent = row => /\\b(task|tasks|quest|quests|daily activit(?:y|ies))\\b/i.test(
+const taskEvent = row => /\b(task|tasks|quest|quests|daily activit(?:y|ies))\b/i.test(
   [row["EVENT NAME"],row["SUB EVENT"],row.DETAIL,row["ACTIVITY TYPE"]].join(" ")
 );
 function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggested",direction="asc"}){
