@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 160" role="img" aria-label="grace of star trail illustration">
+<defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#182b69"/><stop offset="1" stop-color="#7653ab"/></linearGradient><radialGradient id="glow"><stop stop-color="#f5d38d" stop-opacity=".32"/><stop offset="1" stop-color="#f5d38d" stop-opacity="0"/></radialGradient></defs>
+<rect width="220" height="160" fill="url(#g)"/><circle cx="112" cy="84" r="98" fill="url(#glow)"/>
+<path d="M0 130 52 110 100 131 168 96 220 115v45H0Z" fill="#091c35" opacity=".37"/>
+<g stroke-linejoin="round" stroke-linecap="round"><path d="M108 24 122 68 165 81 122 94 108 135 94 94 53 81 94 68Z" fill="#f0bb5b" stroke="#fff0bc" stroke-width="4"/><circle cx="108" cy="81" r="13" fill="#fff6d9"/><path d="M28 126q60-49 172-83" fill="none" stroke="#9bcaff" stroke-width="4" stroke-dasharray="8 10"/><circle cx="43" cy="48" r="5" fill="#fff7d0"/><circle cx="190" cy="113" r="4" fill="#f7dc93"/></g><path d="M0 0h220v160H0Z" fill="none" stroke="#e0bd76" stroke-opacity=".38" stroke-width="4"/>
+</svg>
