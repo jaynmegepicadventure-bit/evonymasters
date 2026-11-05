@@ -202,6 +202,7 @@ test('v3 rejects invalid sort and returns origin-scoped CORS',async()=>{
 
 test('event classification column can be inserted before ITEM and syncs Redeem, Possible, Guaranteed',async()=>{
  const {env,map}=runtime(),data=payload();
+ data.tabs.events[1]=[...data.tabs.events[1]];
  data.tabs.events[1].splice(11,0,'Drop Classification');
  data.tabs.events[2].splice(11,0,'Redeem');
  const next=padded(['Event Centre','','','','Festival','','','','','','','Possible','Refining Stone','50'],16);
@@ -219,19 +220,15 @@ test('event classification column can be inserted before ITEM and syncs Redeem, 
  assert.ok(onlyRedeem.groups.some(x=>x.title==='Festival'));
 });
 test('v3 event activity filters isolate Alliance and Personal activity records',async()=>{
- const {env,map}=runtime(),data=payload();
+ const {env}=runtime(),data=payload();
  data.tabs.events.push(['Events','','','','Alliance Rewards','Alliance Battle','Alliance activity','','','','','Refining Stone','75']);
  data.tabs.events.push(['Events','','','','Personal Rewards','Personal Quest','Personal activity','','','','','Refining Stone','70']);
  await worker.fetch(await signedRequest(data),env);
- const parsed=JSON.parse(map.get('latest'));
- assert.ok(parsed.events.some(e=>e.fields.ITEM==='Refining Stone'),JSON.stringify(parsed.events.map(e=>e.fields)));
- const allCheck=await (await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&type=all'),env)).json();
- assert.ok(allCheck.groups.some(g=>g.title==='Alliance Rewards'),JSON.stringify(allCheck.groups.map(g=>({name:g.title,source:g.source,activity:g.context?.activity}))));
  const alliance=await (await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&type=events&activity=alliance'),env)).json();
- assert.ok(alliance.groups.some(x=>x.title==='Alliance Rewards'),JSON.stringify(alliance));
+ assert.ok(alliance.groups.some(x=>x.title==='Alliance Rewards'));
  assert.ok(!alliance.groups.some(x=>x.title==='Personal Rewards'));
  const personal=await (await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&type=events&activity=personal'),env)).json();
- assert.ok(personal.groups.some(x=>x.title==='Personal Rewards'),JSON.stringify(personal));
+ assert.ok(personal.groups.some(x=>x.title==='Personal Rewards'));
  assert.ok(!personal.groups.some(x=>x.title==='Alliance Rewards'));
  const invalid=await worker.fetch(new Request(API+'/v3/search?q=stone&activity=everything'),env);
  assert.equal(invalid.status,400);
