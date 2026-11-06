@@ -291,13 +291,14 @@ function chestCatalog(snapshot){
   for(const {fields:r} of snapshot.boxes){
     const name=clean(r["Box Name"]),level=clean(r.Level),rank=clean(r["Source Rank"]);
     // Identically named ranking chests can carry different rewards at each rank.
-    const key=[norm(name),norm(level),norm(rank)].join("|");
+    const sourceKind=norm(r["Source Kind"]),sourceName=clean(r["Source Event"]);
+    // Keep similarly named event chests from unrelated events separate.
+    const key=[norm(name),norm(level),norm(rank),sourceKind==="event"?norm(sourceName):""].join("|");
     if(!byKey.has(key))byKey.set(key,{id:encodeURIComponent(key),name,level,rank,items:[],sources:[],sourceNotes:[]});
     const chest=byKey.get(key);
     chest.items.push({item:r["Reward Item (in-game)"],quantity:r.Quantity,classification:normalizeDrop(r["Drop Classification"]),notes:r.Notes});
     if(clean(r.Source)&&!chest.sourceNotes.includes(clean(r.Source)))chest.sourceNotes.push(clean(r.Source));
     // Preserve the direct, explicit event or boss source from the revised workbook.
-    const sourceName=clean(r["Source Event"]),sourceKind=norm(r["Source Kind"]);
     if(sourceName)addSource(chest,{
       type:sourceKind==="boss"||sourceKind==="monster"?"Boss":"Event",name:sourceName,
       activity:clean(r["Source Activity"]),participation:clean(r["Source Participation"]),
