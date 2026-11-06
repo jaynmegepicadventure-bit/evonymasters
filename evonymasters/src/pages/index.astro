@@ -1,35 +1,117 @@
 ---
 import SiteHeader from '../components/SiteHeader.astro';
 import monsters from '../data/monsters.json';
-const monsterCount = monsters.length;
+const monsterCount=monsters.length;
+const features=[
+ {href:'/resources/',image:'/images/item-finder/ymir.svg',eyebrow:'Find the best source',title:'Resource Finder',text:'Search recorded rewards, compare monster drops and see where the items you need can be earned.',action:'Find a reward'},
+ {href:'/chests/',image:'/images/item-finder/box.svg',eyebrow:'Open the possibilities',title:'Chest Finder',text:'Explore complete chest contents, ranking variants and known event or boss sources.',action:'Explore chests'},
+ {href:'/events/',image:'/images/item-finder/feasting-revelry.svg',eyebrow:'Plan your next move',title:'Event Guides',text:'Discover event activities, featured rewards and the details that matter when planning your next move.',action:'Browse events'}
+];
+const shortcuts=[
+ {href:'/resources/?q=Gems',label:'Gems'},
+ {href:'/resources/?q=Refining%20Stone',label:'Refining Stone'},
+ {href:'/resources/?q=Speedup',label:'Speedups'},
+ {href:'/resources/?q=Alliance%20Honor',label:'Alliance Honor'},
+ {href:'/chests/?source=events',label:'Event Chests'},
+ {href:'/chests/?source=bosses',label:'Boss Chests'}
+];
 ---
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<meta name="description" content="evonymasters: a growing independent Evony: The King's Return player reference for monster rewards, generals, events and building upgrades."/>
+<meta name="description" content="EvonyMasters player tools: find item rewards, explore chest contents, compare monster drops, browse events and research generals."/>
 <link rel="icon" href="/favicon.svg"/>
-<title>Evony: The King's Return · Player tools | evonymasters</title>
-<style>
-:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#eaf0f8;background:#0c1726}*{box-sizing:border-box}body{margin:0}a{color:inherit}.wrap{max-width:1150px;margin:auto;padding:0 22px}header{border-bottom:1px solid #30445c;background:#11243a}.nav{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{font-size:1.45rem;font-weight:850;letter-spacing:-.04em;text-decoration:none}.brand span,.eyebrow,.arrow{color:#e6bc73}.nav small{color:#a9bcd0}.hero{padding:82px 0 76px;background:radial-gradient(circle at 78% 12%,#234667 0,transparent 55%)}.eyebrow{text-transform:uppercase;letter-spacing:.13em;font-size:.8rem;font-weight:800}h1{font-size:clamp(2.4rem,5.3vw,4.5rem);line-height:1.1;margin:18px 0;letter-spacing:-.045em;max-width:920px}h2{font-size:clamp(1.6rem,3vw,2.1rem);letter-spacing:-.025em}.intro{max-width:730px;color:#bbccdd;line-height:1.75;font-size:1.12rem}.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}.button{display:inline-flex;align-items:center;gap:10px;background:#e6bc73;color:#11243a;text-decoration:none;font-weight:800;padding:15px 20px;border-radius:10px}.button:hover{background:#f4d69f}.secondary{background:#203a52;color:#eaf0f8;border:1px solid #55708b}.secondary:hover{background:#294864}.section{padding:58px 0 72px}.section-intro{color:#b6c8d9;max-width:730px;line-height:1.7}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:30px}.card{background:#152b43;border:1px solid #35516d;border-radius:18px;padding:28px;display:flex;flex-direction:column;gap:13px;min-height:260px}.card.live{border-color:#b58d50;background:linear-gradient(140deg,#203b52,#152b43)}.card h3{font-size:1.45rem;margin:0}.card p{color:#b6c8d9;line-height:1.65;margin:0}.card .action{margin-top:auto;padding-top:10px;font-weight:800;color:#e6bc73;text-decoration:none}.badge{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:#a9bed1}.live .badge{color:#9ce0ae}.count{color:#b6c8d9;font-size:.86rem}footer{border-top:1px solid #30445c;padding:28px 0;color:#a9bdcf;font-size:.84rem;line-height:1.6}@media(max-width:680px){.hero{padding:55px 0}.grid{grid-template-columns:1fr}.card{min-height:220px}.nav small{display:none}}
-</style>
-</head>
+<title>EvonyMasters | Rewards, Chests, Events &amp; Generals</title>
+<style is:global>
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#f4f0e8;background:#07111e}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 4%,#1a2d45 0,transparent 50%),#07111e}a{color:inherit}
+[hidden]{display:none!important}
+.site-header{background:#0b1829;border-bottom-color:#9e7738}.site-header .site-brand span{color:#edc26f}
+.wrap{max-width:1260px;margin:0 auto;padding:0 24px}
+.hero{position:relative;isolation:isolate;overflow:hidden;min-height:570px;background:radial-gradient(circle at 78% 34%,#a43e20 0%,#43231e 20%,transparent 54%),linear-gradient(114deg,#0a1828 13%,#172c42 58%,#1f2b39);border-bottom:1px solid #8c6736}
+.hero:before{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(90deg,rgba(5,13,24,.97) 0%,rgba(5,13,24,.86) 37%,rgba(5,13,24,.38) 62%,rgba(5,13,24,.08) 100%),url('/images/home/evony-splash.webp') center right / auto 118% no-repeat;opacity:.96}
+.hero:after{content:"";position:absolute;inset:auto 0 0;height:145px;z-index:-1;background:linear-gradient(transparent,#08121f)}
+.hero-inner{padding:90px 0 115px;position:relative}
+.hero-copy{max-width:695px}
+.kicker{display:inline-flex;align-items:center;gap:10px;letter-spacing:.16em;text-transform:uppercase;color:#f4c672;font-size:.78rem;font-weight:850}
+.kicker:before{content:"✦";font-size:1rem}
+h1,h2,h3{letter-spacing:-.035em}
+h1{font-family:Georgia,'Times New Roman',serif;font-size:clamp(2.8rem,5.2vw,5rem);line-height:1.09;margin:20px 0 19px;color:#fff4dd;text-shadow:0 4px 20px #0009}
+h1 span{display:block;color:#f2c977}
+.hero-intro{max-width:610px;font-size:1.14rem;color:#e2e7ef;line-height:1.7;text-shadow:0 3px 8px #000a}
+.actions{display:flex;flex-wrap:wrap;gap:13px;margin-top:29px}
+.btn{display:inline-flex;gap:11px;align-items:center;justify-content:center;border-radius:10px;padding:15px 20px;text-decoration:none;font-weight:850;font-size:.96rem;transition:transform .18s,background .18s,box-shadow .18s}
+.btn:hover,.feature:hover,.small-panel a:hover{transform:translateY(-2px)}
+.btn.primary{color:#142037;background:linear-gradient(#ffe4a1,#efb64b);border:1px solid #fbe3ae;box-shadow:0 0 24px #e8a63d40}
+.btn.secondary{border:1px solid #d2a85b;background:#10253acc;color:#ffe2a6}
+.btn:focus-visible,.feature:focus-visible,.quick-link:focus-visible,.small-panel a:focus-visible{outline:3px solid #fff;outline-offset:4px}
+.hero-note{margin-top:30px;font-size:.8rem;color:#b4c9d8;display:flex;gap:9px;align-items:center}
+.hero-note:before{content:"◆";color:#f3c56d}
+.main-content{position:relative;margin-top:-71px;padding-bottom:68px}
+.tool-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.feature{display:flex;align-items:center;gap:17px;min-height:178px;padding:20px;border:1px solid #9e773d;border-radius:15px;background:linear-gradient(135deg,#20364d,#0e2032 75%);box-shadow:0 15px 35px #020b16a8,inset 0 1px #ffffff14;text-decoration:none;transition:transform .18s,border-color .18s}
+.feature:hover{border-color:#f5cc80}
+.feature-image{width:104px;height:112px;object-fit:cover;flex:none;border-radius:11px;background:#14283d;border:1px solid #5b7084}
+.feature-copy{min-width:0}.feature .eyebrow{color:#b8cada;text-transform:uppercase;font-size:.66rem;letter-spacing:.1em;font-weight:800}
+.feature h2{font-family:Georgia,serif;margin:6px 0 6px;font-size:1.48rem;color:#f2ca7b}
+.feature p{font-size:.84rem;line-height:1.55;color:#d1dce8;margin:0 0 12px}
+.feature .action{font-size:.84rem;color:#ffd68a;font-weight:850}
+.section-top{display:flex;justify-content:space-between;align-items:end;gap:20px;margin:38px 0 15px}
+.section-top h2{font-size:1.65rem;font-family:Georgia,serif;margin:8px 0;color:#f4d695}
+.section-top p{color:#bfcfdf;margin:0;font-size:.94rem;line-height:1.6}
+.lower-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:17px}
+.small-panel{min-height:244px;border:1px solid #3f5c74;border-radius:14px;background:linear-gradient(165deg,#142a41,#0d1e30);padding:21px;box-shadow:inset 0 1px #ffffff10}
+.small-panel h3{font-family:Georgia,serif;font-size:1.28rem;color:#edc674;margin:0 0 8px}
+.small-panel p{color:#bbccdc;line-height:1.58;font-size:.84rem;margin:0 0 14px}
+.quick-list{display:flex;flex-wrap:wrap;gap:9px}
+.quick-link{border:1px solid #66758b;border-radius:999px;background:#172e45;color:#f4ebd9;padding:9px 13px;text-decoration:none;font-size:.8rem;font-weight:720;white-space:nowrap;transition:background .18s}
+.quick-link:hover{background:#28445d;border-color:#edc674}
+.panel-links{display:grid;gap:10px}
+.panel-links a{display:flex;align-items:center;gap:11px;padding:10px 12px;background:#1c344b;border:1px solid #344f67;border-radius:10px;text-decoration:none;color:#f8ead0;font-size:.9rem;font-weight:700;transition:transform .18s}
+.panel-links img{width:39px;height:39px;border-radius:7px;object-fit:cover}
+.panel-links a span{margin-left:auto;color:#edc674;font-size:1.2rem}
+.categories{margin-top:33px;padding:25px;border-radius:16px;border:1px solid #405870;background:#101f31}
+.categories h2{font-family:Georgia,serif;font-size:1.46rem;color:#f3cc81;margin:0 0 17px}
+.category-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.category{display:flex;align-items:center;gap:12px;padding:14px;border:1px solid #405a70;border-radius:10px;background:#192e44;text-decoration:none;min-height:94px}
+.category:hover{border-color:#dbaf63;background:#213952}
+.category img{width:56px;height:54px;object-fit:cover;border-radius:8px}
+.category strong{display:block;font-size:.93rem;color:#f2e6d0}
+.category small{display:block;color:#afc3d4;margin-top:4px;line-height:1.45}
+footer{padding:27px 0;border-top:1px solid #314c62;font-size:.81rem;color:#aebfd0;line-height:1.65}
+@media(max-width:1050px){.tool-grid{grid-template-columns:1fr 1fr}.feature:last-child{grid-column:1/-1}.lower-grid{grid-template-columns:1fr 1fr}.small-panel:first-child{grid-column:1/-1}.category-grid{grid-template-columns:1fr 1fr}.hero:before{background:linear-gradient(90deg,#071321ee 0%,#071321cc 55%,#07132160 100%),url('/images/home/evony-splash.webp') right center / auto 100% no-repeat}}
+@media(max-width:650px){.wrap{padding:0 16px}.hero{min-height:545px}.hero-inner{padding:67px 0 112px}.hero:before{background:linear-gradient(90deg,#071321f4 0%,#071321d9 68%,#07132199 100%),url('/images/home/evony-splash.webp') right center / auto 100% no-repeat}h1{font-size:clamp(2.6rem,11vw,3.65rem)}.hero-intro{font-size:1rem}.actions .btn{width:100%}.main-content{margin-top:-65px}.tool-grid,.lower-grid,.category-grid{grid-template-columns:1fr}.feature:last-child,.small-panel:first-child{grid-column:auto}.feature{min-height:153px}.feature-image{width:88px;height:98px}.section-top{margin-top:30px}.small-panel{min-height:0}.categories{padding:18px}.hero-note{font-size:.75rem}}
+@media(prefers-reduced-motion:reduce){.btn,.feature,.small-panel a{transition:none}.btn:hover,.feature:hover,.small-panel a:hover{transform:none}}
+</style></head>
 <body>
-<SiteHeader active="home" />
+<SiteHeader active="home"/>
 <main>
-<section class="hero"><div class="wrap">
-<div class="eyebrow">Evony: The King's Return · Player tools</div>
-<h1>Everything you need to know about Evony, in one place.</h1>
-<p class="intro">Find the information you need to plan your next move in Evony: The King's Return. We're building one home for monster rewards, general comparisons, event guides and building upgrades—with searchable tools that make game data easier to use.</p>
-<div class="hero-actions"><a class="button" href="/resources/">Find the resource you are missing <span aria-hidden="true">→</span></a><a class="button secondary" href="#tools">Explore player tools <span aria-hidden="true">↓</span></a></div>
-</div></section>
-<section id="tools" class="section"><div class="wrap"><div class="eyebrow">Player tools</div><h2>Choose what you're working on</h2><p class="section-intro">Explore the current resource, general and event tools. More player references are planned.</p>
-<div class="grid">
-<article class="card live"><div class="badge">Available now</div><h3>Find the resource you are missing</h3><p>Search monsters by name or reward. Compare power, stamina, possible drops and recorded chest contents, then open each monster's detail page.</p><div class="count">{monsterCount} monster records in the current catalog · data is still being expanded</div><a class="action" href="/resources/">Open Resource Finder <span aria-hidden="true">→</span></a></article>
-<article class="card live"><div class="badge">Available now · expanding</div><h3>Generals</h3><p>Search recorded buffs and debuffs, then open a general’s page to review attributes, troop totals, conditions and source details.</p><a class="action" href="/generals/">Explore generals <span aria-hidden="true">→</span></a></article>
-<article class="card live"><div class="badge">Available now · expanding</div><h3>Events</h3><p>Search Evony events and open guides covering how each event works, how to participate and what to look out for.</p><a class="action" href="/events/">Explore event guides <span aria-hidden="true">→</span></a></article>
-<article class="card"><div class="badge">Coming soon</div><h3>Building Upgrades</h3><p>Search buildings, learn what each one does and see the requirements and resource costs to upgrade to a particular level.</p><div class="action">Building levels and upgrade costs planned</div></article>
+<section class="hero" aria-labelledby="home-title"><div class="wrap hero-inner"><div class="hero-copy">
+<div class="kicker">EvonyMasters · Player tools</div>
+<h1 id="home-title">Master Evony <span>rewards, chests &amp; events.</span></h1>
+<p class="hero-intro">Find exactly where rewards come from, what's inside each chest, and which monsters or events are worth exploring. The tools you need, all in one place.</p>
+<div class="actions"><a class="btn primary" href="/resources/">⌕ &nbsp; Explore Resource Finder <span aria-hidden="true">→</span></a><a class="btn secondary" href="/chests/">▣ &nbsp; Open Chest Finder <span aria-hidden="true">→</span></a></div>
+<p class="hero-note">Independent fan-made Evony reference · Recorded rewards, not guaranteed outcomes</p>
 </div></div></section>
-</main>
-<footer><div class="wrap">evonymasters is an independent fan-made player reference and is not affiliated with or endorsed by the game publisher. Game information may change with updates.</div></footer>
+<div class="wrap main-content">
+<section id="tools" aria-label="Explore EvonyMasters tools"><div class="tool-grid">
+{features.map(feature=><a class="feature" href={feature.href}><img class="feature-image" src={feature.image} alt="" loading="lazy"/><div class="feature-copy"><span class="eyebrow">{feature.eyebrow}</span><h2>{feature.title}</h2><p>{feature.text}</p><span class="action">{feature.action} →</span></div></a>)}
+</div></section>
+<section aria-labelledby="plan-title">
+<div class="section-top"><div><div class="kicker">Explore more</div><h2 id="plan-title">Find your next advantage</h2><p>Quick routes into the tools players use most.</p></div></div>
+<div class="lower-grid">
+<article class="small-panel"><h3>⌕ &nbsp; Popular searches</h3><p>Jump straight to commonly sought-after rewards and chest sources.</p><div class="quick-list">{shortcuts.map(link=><a class="quick-link" href={link.href}>{link.label} ↗</a>)}</div></article>
+<article class="small-panel"><h3>⚔ &nbsp; Monster rewards</h3><p>From regular monsters to boss chest drops, compare what's recorded before spending stamina.</p><div class="panel-links"><a href="/resources/?q=Monarch%20EXP"><img src="/images/item-finder/zombie.svg" alt="" loading="lazy"/>Explore monster drops<span aria-hidden="true">›</span></a><a href="/chests/?source=bosses"><img src="/images/item-finder/box.svg" alt="" loading="lazy"/>Browse boss chests<span aria-hidden="true">›</span></a></div></article>
+<article class="small-panel"><h3>✦ &nbsp; Events &amp; generals</h3><p>Explore recorded event rewards and research your generals for the next challenge.</p><div class="panel-links"><a href="/events/"><img src="/images/item-finder/feasting-revelry.svg" alt="" loading="lazy"/>Event guides<span aria-hidden="true">›</span></a><a href="/generals/"><img src="/images/item-finder/event.svg" alt="" loading="lazy"/>General reference<span aria-hidden="true">›</span></a></div></article>
+</div>
+</section>
+<section class="categories" aria-labelledby="categories-title"><h2 id="categories-title">Explore the library</h2><div class="category-grid">
+<a class="category" href="/resources/"><img src="/images/item-finder/ymir.svg" alt="" loading="lazy"/><span><strong>Monster &amp; item rewards</strong><small>{monsterCount} catalog records · Reward sources</small></span></a>
+<a class="category" href="/events/"><img src="/images/item-finder/feasting-revelry.svg" alt="" loading="lazy"/><span><strong>Events</strong><small>Activities &amp; event rewards</small></span></a>
+<a class="category" href="/chests/"><img src="/images/item-finder/box.svg" alt="" loading="lazy"/><span><strong>Chests</strong><small>Contents, ranking tiers &amp; sources</small></span></a>
+<a class="category" href="/generals/"><img src="/images/item-finder/event.svg" alt="" loading="lazy"/><span><strong>Generals</strong><small>Skills, buffs &amp; attributes</small></span></a>
+</div></section>
+</div></main>
+<footer><div class="wrap">EvonyMasters is an independent community fan project, not affiliated with or endorsed by the game publisher. Game information and rewards may change; verify details in game.</div></footer>
 </body></html>
