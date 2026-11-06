@@ -4,7 +4,7 @@ import SiteHeader from '../../components/SiteHeader.astro';
 <!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<meta name="description" content="Search Evony rewards and compare quantities, frequencies and ways to obtain them from monsters, events, tasks and boxes."/>
+<meta name="description" content="Search Evony rewards and compare quantities, frequencies and ways to obtain them from monsters, events and boxes."/>
 <link rel="icon" href="/favicon.svg"/><title>Item Finder | EvonyMasters</title>
 <style is:global>
 :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#0c1726;color:#ecf1f9}
@@ -74,7 +74,6 @@ footer{border-top:1px solid #314c66;color:#abc1d4;font-size:.82rem;padding:23px 
 <button class="tab" role="tab" type="button" aria-selected="true" data-type="all">All</button>
 <button class="tab" role="tab" type="button" aria-selected="false" data-type="events">Events</button>
 <button class="tab" role="tab" type="button" aria-selected="false" data-type="all-bosses">Bosses</button>
-<button class="tab" role="tab" type="button" aria-selected="false" data-type="tasks">Tasks</button>
 <button class="tab" role="tab" type="button" aria-selected="false" data-type="boxes">Boxes</button>
 </div><span class="sort-hint">Click a column heading to sort all matching sources</span>
 </div>
@@ -103,7 +102,7 @@ frame=document.getElementById("table-frame"),tbody=document.getElementById("resu
 desc=document.getElementById("results-description"),status=document.getElementById("sync-status"),empty=document.getElementById("empty"),
 more=document.getElementById("load-more"),suggestions=document.getElementById("item-suggestions"),activityTools=document.getElementById("activity-tools"),activityFilter=document.getElementById("activity-filter");
 let type="all",sort="suggested",direction="asc",page=0,token=0,controller=null,delay=null,suggestDelay=null,hasMore=false,recordCount=0;
-const names={events:"Event",tasks:"Task",bosses:"Boss","event-bosses":"Event boss",regular:"Regular monster",boxes:"Box"};
+const names={events:"Event",bosses:"Boss","event-bosses":"Event boss",regular:"Regular monster",boxes:"Box"};
 const art={
  "alchemy shop":"alchemy-shop","astral oracle":"astral-oracle","grace of star trail":"grace-of-star-trail",
  "crazy eggs":"crazy-eggs","feasting revelry":"feasting-revelry",ymir:"ymir",zombie:"zombie"
@@ -112,7 +111,7 @@ const toText=x=>String(x??"").trim();
 const node=(tag,className,content)=>{const n=document.createElement(tag);if(className)n.className=className;if(content!==undefined)n.textContent=toText(content);return n;};
 const artwork=row=>{
  const key=toText(row.title).toLowerCase().replace(/[^a-z0-9 ]/g,"").replace(/\s+/g," ").trim();
- const fallback=row.source==="boxes"?"box":row.source==="tasks"?"task":["bosses","event-bosses","regular"].includes(row.source)?"boss":"event";
+ const fallback=row.source==="boxes"?"box":["bosses","event-bosses","regular"].includes(row.source)?"boss":"event";
  return "/images/item-finder/"+(art[key]||fallback)+".svg";
 };
 const label=row=>names[row.source]||row.source;
@@ -121,7 +120,7 @@ function detailedRow(row){
  const wrapper=node("div"),fields=node("div","detail-grid");
  const addField=(title,value)=>{const v=toText(value);if(!v)return;const field=node("div","detail-field");field.append(node("b","",title),node("span","",v));fields.append(field);};
  const c=row.context||{};
- if(row.source==="events"||row.source==="tasks"){
+ if(row.source==="events"){
   addField("Event location",c.location);addField("Event category",c.event);
   addField("Event / activity",c.subEvent);addField("Activity type",c.activity);
   addField("Recurrence",c.recurrence);addField("Frequency",c.frequency);
@@ -232,7 +231,7 @@ clear.addEventListener("click",()=>{query.value="";clear.hidden=true;query.dispa
 tabs.addEventListener("click",e=>{
  const button=e.target.closest("button[data-type]");if(!button)return;
  type=button.dataset.type;
- activityTools.hidden=!(type==="events"||type==="tasks");
+ activityTools.hidden=type!=="events";
  if(activityTools.hidden)activityFilter.value="all";
  for(const tab of tabs.querySelectorAll("button"))tab.setAttribute("aria-selected",String(tab===button));
  schedule();
