@@ -288,3 +288,49 @@ test('revised EVONYMASTERS workbook syncs the new EVENTS MONSTER and IN THE BOXE
  const chests=await (await worker.fetch(new Request(API+'/v4/chests?q=gold'),env)).json();
  assert.ok(chests.chests.some(c=>c.name==='Lv1 Boss Monster Chest'&&c.sources.some(s=>s.name==='Zombie')));
 });
+
+test('revised event and monster chest sources drive the Chest Finder filters and event listing',async()=>{
+ const {env}=runtime();
+ const data={
+  version:1,schema:'evonymasters-2026-v2',
+  tabs:{
+   events:[
+    ['EVENT ID','EVENT NAME','EVENT LOCATION','EVENT SEC LOCATION','FREQUENCY','PARTICIPATION','REWARD METHOD','RANKING TYPE','STAMINA','CHEST ID','CHEST NAME','RANK','TIER','DROP CLASSIFICATION','ITEM','QUANTITY'],
+    ['','Revelation of Maya','Event Centre','Back to Maya','Limited','Personal','Activity','','No','','','','','Guaranteed','Art Treasure Scroll Chest','2'],
+    ['','Viking Challenge','Event Centre','Viking','Limited','Personal','Activity','','No','','','','','Possible','Viking War Chest','1']
+   ],
+   monsters:[
+    ['MONSTER ID','MONSTER NAME','MONSTER LEVEL','MONSGTER TYPE','EVENT NAME','POWER','STAMINA','REWARD TYPE','CHEST ID','REWARD TYPE','DROP CLASSIFICATION','ITEM','QUANTITY'],
+    ['','Zombie','1','Boss','','36500','15','','','Chest','Guaranteed','Lv1 Boss Monster Chest','1']
+   ],
+   boxes:[
+    ['CHEST ID','CHEST NAME','EVENT ID','EVENT / BOSS NAME','ACTIVITY (EVENT/MONSTER)','PARTICIPATION','REWARD METHOD','RANKING TYPE','RANK','TIER','DROP CLASSIFICATION','ITEM','QUANTITY'],
+    ['','Mayan Ranking Chest','','Revelation of Maya','EVENT','Personal','Ranking','Server Competition','1','','Guaranteed','Mayan Gem Chest','150'],
+    ['','Mayan Ranking Chest','','Revelation of Maya','EVENT','Personal','Ranking','Server Competition','2','','Guaranteed','Mayan Gem Chest','130'],
+    ['','Emblem Chest','','Ranger Knights Order','EVENT','Personal','Activity','','','Excellent','Possible','Blood of Ares','1'],
+    ['','Viking War Chest','','Viking Challenge','EVENT','Personal','Activity','','','','Possible','Speedup Training','50'],
+    ['','Lv1 Boss Monster Chest','','Zombie','Boss','','','','','1','Guaranteed','Gold','100000']
+   ]
+  }
+ };
+ const sync=await worker.fetch(await signedRequest(data),env);
+ assert.equal(sync.status,200);
+ const list=await (await worker.fetch(new Request(API+'/v4/chests?source=events'),env)).json();
+ assert.equal(list.total,4,'all event-sourced chests should appear even without direct chest item awards');
+ assert.ok(list.chests.some(c=>c.name==='Emblem Chest'&&c.sources.some(s=>s.name==='Ranger Knights Order')));
+ const maya=list.chests.filter(c=>c.name==='Mayan Ranking Chest');
+ assert.equal(maya.length,2,'ranking positions must remain separate variants');
+ assert.deepEqual(maya.map(c=>c.rank).sort(),['1','2']);
+ const events=await (await worker.fetch(new Request(API+'/v4/chests/events'),env)).json();
+ assert.ok(events.events.some(e=>e.name==='Revelation of Maya'&&e.count===2));
+ const search=await (await worker.fetch(new Request(API+'/v4/chests?source=events&event=Revelation%20of%20Maya&participation=personal&rank=1'),env)).json();
+ assert.equal(search.total,1);
+ assert.equal(search.chests[0].items[0].quantity,'150');
+ const byEventName=await (await worker.fetch(new Request(API+'/v4/chests?q=Ranger%20Knights'),env)).json();
+ assert.equal(byEventName.total,1);
+ assert.equal(byEventName.chests[0].name,'Emblem Chest');
+ const bosses=await (await worker.fetch(new Request(API+'/v4/chests?source=bosses'),env)).json();
+ assert.ok(bosses.chests.some(c=>c.name==='Lv1 Boss Monster Chest'&&c.sources.some(s=>s.name==='Zombie')));
+ const bad=await worker.fetch(new Request(API+'/v4/chests?participation=everybody'),env);
+ assert.equal(bad.status,400);
+});
