@@ -255,3 +255,36 @@ test('v4 chest comparison limits selections and rejects missing chest identifier
  const preflight=await worker.fetch(new Request(API+'/v4/chests',{method:'OPTIONS',headers:{origin:sites.allowed}}),env);
  assert.equal(preflight.status,204);
 });
+
+test('revised EVONYMASTERS workbook syncs the new EVENTS MONSTER and IN THE BOXES headers',async()=>{
+ const {env,map}=runtime();
+ const revised={
+  version:1,schema:'evonymasters-2026-v2',
+  tabs:{
+   events:[
+    ['EVENT ID','EVENT NAME','EVENT LOCATION','EVENT SEC LOCATION','FREQUENCY','PARTICIPATION','REWARD METHOD','RANKING TYPE','STAMINA','CHEST ID','CHEST NAME','RANK','TIER','DROP CLASSIFICATION','ITEM','QUANTITY','GENERAL','CASTLE','GEAR / BUFFS'],
+    ['','Maya','Event Centre','Maya Challenge','Weekly','Personal','Activity','','No','','','','','Guaranteed','Speed Chest','1','','',''],
+    ['','World Boss','Event Centre','Alliance Rewards','Daily','Alliance','Ranking','Server','','','','Place 1','','Possible','Refining Stone','22','','','']
+   ],
+   monsters:[
+    ['MONSTER ID','MONSTER NAME','MONSTER LEVEL','MONSGTER TYPE','EVENT NAME','POWER','STAMINA','REWARD TYPE','CHEST ID','REWARD TYPE','DROP CLASSIFICATION','ITEM','QUANTITY','GEAR'],
+    ['','Zombie','1','Boss','','36500','15','','','Chest','Guaranteed','Lv1 Boss Monster Chest','1',''],
+    ['','','','Event','','','','','','','','','','']
+   ],
+   boxes:[
+    ['CHEST ID','CHEST NAME','EVENT ID','EVENT / BOSS NAME','ACTIVITY (EVENT/MONSTER)','PARTICIPATION','REWARD METHOD','RANKING TYPE','RANK','TIER','DROP CLASSIFICATION','ITEM','QUANTITY','GENERAL','CASTLE','GEAR / BUFFS'],
+    ['','Speed Chest','','Maya','EVENT','Personal','Activity','','','One','Possible','Speedup','1440','','',''],
+    ['','Lv1 Boss Monster Chest','','Zombie','Boss','','','','','1','Guaranteed','Gold','100000','','','']
+   ]
+  }
+ };
+ const sync=await worker.fetch(await signedRequest(revised),env);
+ assert.equal(sync.status,200,await sync.text());
+ assert.deepEqual(JSON.parse(map.get('latest')).counts,{events:2,monsters:1,boxes:2});
+ const search=await (await worker.fetch(new Request(API+'/v3/search?q=speedup'),env)).json();
+ assert.ok(search.groups.some(g=>g.title==='Maya'));
+ const alliance=await (await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&type=events&activity=alliance'),env)).json();
+ assert.ok(alliance.groups.some(g=>g.title==='World Boss'&&g.items.some(i=>i.classification==='Possible')));
+ const chests=await (await worker.fetch(new Request(API+'/v4/chests?q=gold'),env)).json();
+ assert.ok(chests.chests.some(c=>c.name==='Lv1 Boss Monster Chest'&&c.sources.some(s=>s.name==='Zombie')));
+});
