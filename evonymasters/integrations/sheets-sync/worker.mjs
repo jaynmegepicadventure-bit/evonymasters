@@ -24,16 +24,68 @@ function convertTable(table, required, headerRow, optional=[]) {
     fields: Object.fromEntries(required.map((name,j) => [name, clean(row[cols[j]])]))
   })).filter(x => Object.values(x.fields).some(Boolean));
 }
+// Accept the original sheet contract and the revised EVONYMASTERS workbook.
+// Normalize to the canonical field names used by the existing search API.
 function parseSnapshot(raw) {
   if (!raw || raw.version !== 1 || !raw.tabs || typeof raw.tabs !== "object") throw Error("Unsupported payload version");
-  const events = convertTable(raw.tabs.events, fields.events, 2, ["Drop Classification"]);
-  const monsters = convertTable(raw.tabs.monsters, fields.monsters, 1);
-  const boxes = convertTable(raw.tabs.boxes, fields.boxes, 2);
-  for (const r of monsters) if (!r.fields["Monster Name"] || !r.fields["Reward Item (in-game)"]) throw Error("Incomplete monster row " + r.sheetRow);
-  for (const r of boxes) if (!r.fields["Box Name"] || !r.fields["Reward Item (in-game)"]) throw Error("Incomplete box row " + r.sheetRow);
-  for (const r of events) if (!r.fields.ITEM || !r.fields["EVENT NAME"]) throw Error("Incomplete event row " + r.sheetRow);
-  return {version:1, importedAt:new Date().toISOString(), counts:{events:events.length,monsters:monsters.length,boxes:boxes.length}, events, monsters, boxes};
+  const isRevised = raw.schema === "evonymasters-2026-v2";
+  if (!isRevised) {
+    const events = convertTable(raw.tabs.events, fields.events, 2, ["Drop Classification"]);
+    const monsters = convertTable(raw.tabs.monsters, fields.monsters, 1);
+    const boxes = convertTable(raw.tabs.boxes, fields.boxes, 2);
+    for (const r of monsters) if (!r.fields["Monster Name"] || !r.fields["Reward Item (in-game)"]) throw Error("Incomplete monster row " + r.sheetRow);
+    for (const r of boxes) if (!r.fields["Box Name"] || !r.fields["Reward Item (in-game)"]) throw Error("Incomplete box row " + r.sheetRow);
+    for (const r of events) if (!r.fields.ITEM || !r.fields["EVENT NAME"]) throw Error("Incomplete event row " + r.sheetRow);
+    return {version:1, importedAt:new Date().toISOString(), counts:{events:events.length,monsters:monsters.length,boxes:boxes.length}, events, monsters, boxes};
+  }
+  function records(table, name, required) {
+    if (!Array.isArray(table) || table.length < 1 || table.length > 15000) throw Error("Invalid " + name + " rows");
+    const header = table[0].map(x => norm(x));
+    const indexes = Object.fromEntries(required.map(k => [k,header.indexOf(norm(k))]));
+    for (const k of required) if(indexes[k]<0) throw Error("Missing "+name+" header: "+k);
+    return table.slice(1).map((values,i) => ({
+      sheetRow:i+2,
+      values:Object.fromEntries(header.map((h,j)=>[h,clean(values[j])]))
+    })).filter(({values})=>Object.values(values).some(Boolean));
+  }
+  const ev = records(raw.tabs.events, "EVENTS", ["EVENT NAME","EVENT LOCATION","EVENT SEC LOCATION","FREQUENCY","PARTICIPATION","REWARD METHOD","DROP CLASSIFICATION","ITEM","QUANTITY"]);
+  const mo = records(raw.tabs.monsters, "MONSTER", ["MONSTER NAME","MONSTER LEVEL","MONSGTER TYPE","ITEM","QUANTITY","DROP CLASSIFICATION"]);
+  const bx = records(raw.tabs.boxes, "IN THE BOXES", ["CHEST NAME","TIER","DROP CLASSIFICATION","ITEM","QUANTITY"]);
+  const value=(v,k)=>v[norm(k)]||"";
+  const events=ev.filter(r=>value(r.values,"EVENT NAME")&&value(r.values,"ITEM")).map(({sheetRow,values:v})=>({
+    sheetRow,fields:{
+      "EVENT NAME":value(v,"EVENT NAME"),"LOCATION":value(v,"EVENT LOCATION"),
+      "EVENT":value(v,"EVENT NAME"),"SUB EVENT":value(v,"EVENT SEC LOCATION"),
+      "FEQUENCY":value(v,"FREQUENCY"),"RECURRANCE":"",
+      "ACTIVITY TYPE":value(v,"PARTICIPATION"),"ITEM AVAILABILITY":value(v,"REWARD METHOD"),
+      "STAMINA":value(v,"STAMINA"),"DETAIL":[value(v,"REWARD METHOD"),value(v,"RANKING TYPE"),value(v,"RANK"),value(v,"CHEST NAME")].filter(Boolean).join(" · "),
+      "LEVEL":value(v,"RANK")||value(v,"TIER"),"ITEM":value(v,"ITEM"),"QUANTITY":value(v,"QUANTITY"),
+      "GENERAL":value(v,"GENERAL"),"CASTLE":value(v,"CASTLE"),
+      "Drop Classification":value(v,"DROP CLASSIFICATION")
+    }
+  }));
+  const monsters=mo.filter(r=>value(r.values,"MONSTER NAME")&&value(r.values,"ITEM")).map(({sheetRow,values:v})=>({
+    sheetRow,fields:{
+      "Monster Name":value(v,"MONSTER NAME"),"Monster Level":value(v,"MONSTER LEVEL"),
+      "Monster Type":value(v,"MONSGTER TYPE")||value(v,"MONSTER TYPE"),
+      "Power":value(v,"POWER"),"Stamina":value(v,"STAMINA"),
+      "Event":value(v,"EVENT NAME"),"Reward Item (in-game)":value(v,"ITEM"),
+      "Quantity":value(v,"QUANTITY"),"Drop Classification":value(v,"DROP CLASSIFICATION")
+    }
+  }));
+  const boxes=bx.filter(r=>value(r.values,"CHEST NAME")&&value(r.values,"ITEM")).map(({sheetRow,values:v})=>({
+    sheetRow,fields:{
+      "Box Name":value(v,"CHEST NAME"),"Level":value(v,"TIER"),
+      "Reward Item (in-game)":value(v,"ITEM"),"Quantity":value(v,"QUANTITY"),
+      "Drop Classification":value(v,"DROP CLASSIFICATION"),
+      "Source":[value(v,"EVENT / BOSS NAME"),value(v,"ACTIVITY (EVENT/MONSTER)"),value(v,"PARTICIPATION")].filter(Boolean).join(" · "),
+      "Notes":[value(v,"REWARD METHOD"),value(v,"RANKING TYPE"),value(v,"RANK"),value(v,"GEAR / BUFFS")].filter(Boolean).join(" · ")
+    }
+  }));
+  if (!events.length || !monsters.length || !boxes.length) throw Error("Revised workbook contains an empty reward tab");
+  return {version:1, importedAt:new Date().toISOString(), counts:{events:events.length,monsters:monsters.length,boxes:boxes.length}, events,monsters,boxes};
 }
+
 async function validHmac(secret, stamp, body, signature) {
   if (!/^[a-f0-9]{64}$/i.test(signature)) return false;
   const key = await crypto.subtle.importKey("raw",new TextEncoder().encode(secret),{name:"HMAC",hash:"SHA-256"},false,["sign"]);
