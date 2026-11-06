@@ -69,3 +69,15 @@ This folder is a **separate Cloudflare Worker** proof of concept. The production
 - Verify current sync with Apps Script execution logs if event classifications still look blank. Scheduled sync repeats approximately every 5 minutes.
 - Once the endpoints pass, merge PR #3 and confirm `/resources/` and `/chests/` on the GitHub-deployed site. Do not merge first: the website requires the updated Worker.
 - Images use original artwork assets in `public/images/item-finder/`; illustrations are non-official, decorative and not proof of exact chest appearance.
+
+
+## Revised EVONYMASTERS workbook switch (2026-11-06)
+
+- New master Google spreadsheet: `1YeRfwH6cdeAGxJbFvapNUqkRXN_LdBscXcn5KAb_zmc` (title `EVONYMASTERS`).
+- Tabs imported: `EVENTS` (row 1 headers), `MONSTER` (row 1 headers), `IN THE BOXES` (row 1 headers). `LISTING` is reference-only and not synced.
+- The `apps-script.gs` file has the new BOOK_ID, tabs, sync URL and `schema: "evonymasters-2026-v2"` marker. Existing production Apps Script remains in the **old spreadsheet** until the account owner installs this version, sets the Apps Script `SYNC_SECRET` property and executes `setupSync()` in the new workbook. Remove the old spreadsheet's scheduled trigger **after** the new sync succeeds, to prevent the old data from replacing the new snapshot.
+- Deploy the matching `worker.mjs` to the separate `evonymasters-sheet-sync` Worker **before** running the new script. Keep Cloudflare `DATA` KV binding and `SYNC_SECRET` unchanged.
+- The importer maps the revised column names into the established search API contract, while continuing to accept historical version-1 payloads from older scripts. Blank monster placeholder rows are ignored. Drop classifications come from each source row rather than being inferred.
+- Event chest awards and box contents remain separate inputs. The existing search API links chest contents by name; identical chest names across several tiers can still be ambiguous, so do not interpret nested matches as certain tier-specific outcomes without reviewing the source.
+- Test `/v3/search?q=refining%20stone&type=events`, `/v3/search?q=refining%20stone&type=bosses`, and `/v4/chests?q=refining%20stone`, and check `updatedAt` after manually invoking `syncRewards()` from the revised workbook.
+- Only merge the website-side PR after the new Worker and new Apps Script are installed, fresh sync returns `200`, and user-visible search results have been checked.

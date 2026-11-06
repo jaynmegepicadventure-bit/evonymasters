@@ -1,8 +1,8 @@
-// Bind this script to the private ITEM FINDER spreadsheet.
+// Bind this script to the private EVONYMASTERS spreadsheet (the revised workbook).
 // Run setupSync() once; do not publish or deploy as a web app.
 // Google Apps Script project property SYNC_SECRET must equal the Cloudflare secret.
-const SYNC_URL = 'https://evonymasters-sheet-sync.YOUR-SUBDOMAIN.workers.dev/v1/sync';
-const BOOK_ID = '1uxhy6wTqcEyywtBp0wvMksKSKjQNjM0kV36ZacCszbU';
+const SYNC_URL = 'https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev/v1/sync';
+const BOOK_ID = '1YeRfwH6cdeAGxJbFvapNUqkRXN_LdBscXcn5KAb_zmc';
 function syncRewards() {
   const secret=PropertiesService.getScriptProperties().getProperty('SYNC_SECRET');
   if(!secret)throw new Error('Set SYNC_SECRET in Apps Script project properties first.');
@@ -13,8 +13,8 @@ function syncRewards() {
     if(!sheet)throw new Error('Missing tab: '+name);
     return sheet.getDataRange().getDisplayValues();
   }
-  const body=JSON.stringify({version:1,tabs:{
-    events:values('EVENTS & ACTIVITIES'),monsters:values('MONSTERS'),boxes:values('IN THE BOXES')
+  const body=JSON.stringify({version:1,schema:'evonymasters-2026-v2',tabs:{
+    events:values('EVENTS'),monsters:values('MONSTER'),boxes:values('IN THE BOXES')
   }});
   const stamp=String(Date.now());
   const bytes=Utilities.computeHmacSha256Signature(stamp+'.'+body,secret,Utilities.Charset.UTF_8);
