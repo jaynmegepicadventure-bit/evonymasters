@@ -177,15 +177,16 @@ test('v3 shows alternative reward tiers as a range, not a sum',async()=>{
  assert.equal(festival.quantityDisplay,'20–80');
  assert.equal(festival.chance,'Unspecified');
 });
-test('v3 splits explicit Tasks from Events and includes event bosses in Bosses tab',async()=>{
+test('v3 includes task-named event rewards under Events without a separate Tasks search',async()=>{
  const {env}=runtime();const data=payload();
  data.tabs.events.push(['Centre','','','','Daily Task Rewards','My Tasks','Personal Activity','','','','','Refining Stone','77']);
  data.tabs.monsters.push(['Event','8','Special Beast','999','20','Event','Refining Stone','9','Possible']);
  await worker.fetch(await signedRequest(data),env);
- const tasks=await (await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&type=tasks'),env)).json();
- assert.ok(tasks.groups.some(x=>x.title==='Daily Task Rewards'));
+ const deprecated=await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&type=tasks'),env);
+ assert.equal(deprecated.status,400);
  const events=await (await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&type=events'),env)).json();
- assert.ok(!events.groups.some(x=>x.title==='Daily Task Rewards'));
+ assert.ok(events.groups.some(x=>x.title==='Daily Task Rewards'));
+ assert.ok(events.groups.some(x=>x.title==='Festival'));
  const bosses=await (await worker.fetch(new Request(API+'/v3/search?q=refining%20stone&type=all-bosses'),env)).json();
  assert.ok(bosses.groups.some(x=>x.title==='Special Beast'));
  assert.ok(bosses.groups.some(x=>x.title==='Zombie'));

@@ -32,7 +32,11 @@ h1{font-size:clamp(2rem,4vw,3rem);margin:7px 0 9px;letter-spacing:-.04em}.subtit
 .comparison th{color:#f0cf8a;background:#1d3853}.comparison th:first-child{min-width:200px}
 .comparison td:first-child{font-weight:750}.classification{display:block;font-size:.72rem;color:#aec9dd;margin-top:3px}
 .detail{margin-top:10px;color:#ccdae7;font-size:.83rem;line-height:1.6}.detail strong{color:#f4d396}
-.source-link{display:inline-block;color:#f2c979;font-size:.81rem;margin-top:6px;text-decoration:underline}
+.expand-btn{border:1px solid #ba985b;border-radius:8px;padding:9px 15px;background:#edc574;color:#13283c;font:inherit;font-size:.85rem;font-weight:800;cursor:pointer}.expand-btn:hover{background:#ffda92}.expand-btn:focus-visible{outline:3px solid #fff;outline-offset:3px}.expand-btn:disabled{opacity:.6;cursor:wait}
+.chest-expanded{border-top:1px solid #48627b;padding-top:12px;margin-top:4px}.chest-expanded[hidden]{display:none}
+.chest-expanded h4{margin:0 0 8px;color:#f2d08a;font-size:.95rem}
+.reward-table{width:100%;border-collapse:collapse;font-size:.83rem}.reward-table th{text-align:left;color:#f1ce8d;border-bottom:1px solid #47627d;padding:8px 6px}.reward-table td{border-bottom:1px solid #344e68;padding:9px 6px;vertical-align:top}.reward-table th:nth-child(2),.reward-table td:nth-child(2){text-align:right;white-space:nowrap}.reward-table th:nth-child(3),.reward-table td:nth-child(3){text-align:right;white-space:nowrap}.reward-table .muted{font-size:.75rem}.reward-path{display:block;color:#acc2d5;font-size:.73rem;margin-top:4px}.reward-heading{margin:14px 0 5px;color:#b9d7eb;font-weight:750;font-size:.82rem}.chest-note{font-size:.78rem;color:#a9c2d6;line-height:1.5;margin:6px 0}
+@media(max-width:640px){.reward-table{font-size:.76rem}.reward-table th,.reward-table td{padding:8px 3px}}
 .more{margin:19px auto 36px;display:block}
 .empty{padding:25px;border:1px dashed #57718a;text-align:center;border-radius:10px;color:#bcd0df}
 footer{margin-top:30px;border-top:1px solid #334f69;padding:25px 0;color:#b5c8d9;font-size:.82rem}
@@ -92,8 +96,64 @@ function card(c){
   for(const checkbox of cards.querySelectorAll('input[type="checkbox"]'))checkbox.disabled=!checkbox.checked&&selected.size>=4;
  });
  label.append(cb,document.createTextNode(" Compare"));
- const a=el("a","source-link","Find this chest's sources");a.href="/resources/?q="+encodeURIComponent(c.name);
- actions.append(label,a);article.append(actions);
+ const expand=el("button","expand-btn","Expand");expand.type="button";expand.setAttribute("aria-expanded","false");
+ const expanded=el("section","chest-expanded");expanded.hidden=true;expanded.id="chest-"+Math.random().toString(36).slice(2);expand.setAttribute("aria-controls",expanded.id);
+ const openDetails=async()=>{
+  expanded.replaceChildren();expanded.append(el("p","chest-note","Loading all recorded rewards…"));expanded.hidden=false;expand.disabled=true;
+  try{
+   const params=new URLSearchParams();params.append("id",c.id);
+   const response=await fetch(API+"/v4/chests/compare?"+params);
+   if(!response.ok)throw Error("Detail lookup unavailable");
+   const payload=await response.json(),chest=payload.chests?.[0];
+   if(!chest)throw Error("No chest data");
+   expanded.replaceChildren();
+   expanded.append(el("h4","","All "+chest.items.length+" recorded rewards"));
+   if(chest.rank||chest.level)expanded.append(el("p","chest-note",[
+    chest.rank?"Ranking position: "+chest.rank:"",
+    chest.level?"Chest tier: "+chest.level:""
+   ].filter(Boolean).join(" · ")));
+   const table=el("table","reward-table"),thead=el("thead"),tr=el("tr");
+   for(const name of ["Reward","Quantity","Chance"]){const th=el("th","",name);th.scope="col";tr.append(th)}
+   thead.append(tr);table.append(thead);
+   const tbody=el("tbody");
+   for(const item of chest.items){
+    const row=el("tr"),name=el("td","",item.item);
+    if(item.notes)name.append(el("small","reward-path",item.notes));
+    row.append(name,el("td","",item.quantity||"Not recorded"),el("td","",item.classification==="Unspecified"?"Not recorded":item.classification||"Not recorded"));
+    tbody.append(row);
+   }
+   table.append(tbody);expanded.append(table);
+   if(chest.nestedItems?.length){
+    const nestedTitle=el("div","reward-heading","Inside other chests (nested rewards)");
+    expanded.append(nestedTitle);
+    const nestedTable=el("table","reward-table"),nh=el("thead"),nr=el("tr");
+    for(const name of ["Reward","Quantity","Chance"]){const th=el("th","",name);th.scope="col";nr.append(th)}
+    nh.append(nr);nestedTable.append(nh);const nb=el("tbody");
+    for(const item of chest.nestedItems){
+     const row=el("tr"),name=el("td","",item.item);
+     if(item.via?.length)name.append(el("small","reward-path","Via "+item.via.join(" → ")));
+     row.append(name,el("td","",item.quantity||"Not recorded"),el("td","",item.classification==="Unspecified"?"Not recorded":item.classification||"Not recorded"));nb.append(row);
+    }
+    nestedTable.append(nb);expanded.append(nestedTable);
+    expanded.append(el("p","chest-note","Nested rewards depend on receiving and opening the inner chest."));
+   }
+   if(chest.sources?.length){
+    const sourceText=[...new Set(chest.sources.map(s=>[s.type,s.name,s.rank?"Rank "+s.rank:"",s.participation||""].filter(Boolean).join(" · ")))];
+    expanded.append(el("div","reward-heading","Where it comes from"));
+    for(const line of sourceText)expanded.append(el("p","chest-note",line));
+   }
+   expand.textContent="Collapse";expand.setAttribute("aria-expanded","true");
+  }catch{
+   expanded.replaceChildren(el("p","chest-note","Unable to load the full chest record. Please try Expand again."));
+   expand.textContent="Retry";
+  }finally{expand.disabled=false;}
+ };
+ expand.addEventListener("click",()=>{
+  if(!expanded.hidden){expanded.hidden=true;expand.textContent="Expand";expand.setAttribute("aria-expanded","false");}
+  else if(expanded.dataset.loaded==="true"){expanded.hidden=false;expand.textContent="Collapse";expand.setAttribute("aria-expanded","true");}
+  else {openDetails().then(()=>{if(expand.textContent==="Collapse")expanded.dataset.loaded="true";});}
+ });
+ actions.append(label,expand);article.append(actions,expanded);
  return article;
 }
 async function load(append=false){

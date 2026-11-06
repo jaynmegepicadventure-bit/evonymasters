@@ -149,7 +149,7 @@ function search(snapshot, query, sourceFilter = "", monsterType = "") {
 
 // V3: query all matched sources, aggregate quantities and sort before pagination.
 // The master spreadsheet remains private, and no bulk-download endpoint is provided.
-const validTypes = new Set(["all","events","tasks","bosses","all-bosses","regular","event-bosses","boxes"]);
+const validTypes = new Set(["all","events","bosses","all-bosses","regular","event-bosses","boxes"]);
 const validSorts = new Set(["suggested","source","type","quantity","frequency","chance","notes"]);
 const normalizeDrop = value => {
   const v=norm(value);
@@ -169,9 +169,6 @@ const numericQuantity = raw => {
   const n=clean(raw).replace(/,/g,"");
   return /^\d+(?:\.\d+)?$/.test(n) ? Number(n) : null;
 };
-const taskEvent = row => /\b(task|tasks|quest|quests|daily activit(?:y|ies))\b/i.test(
-  [row["EVENT NAME"],row["SUB EVENT"],row.DETAIL,row["ACTIVITY TYPE"]].join(" ")
-);
 function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggested",direction="asc",activity="all"}){
   const q=norm(query), grouped=new Map(), boxMap=new Map();
   for(const box of snapshot.boxes){
@@ -225,16 +222,14 @@ function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggest
       for(const child of descendants(direct.item,direct.classification,direct.route,new Set(),0))add(classification,id,name,context,child);
     }
   }
-  if(["all","events","tasks"].includes(type)){
+  if(["all","events"].includes(type)){
     for(const {fields:r} of snapshot.events){
-      const kind=taskEvent(r)?"tasks":"events";
-      if(type!=="all"&&type!==kind)continue;
       if(activity!=="all" && (activity==="alliance"?!/alliance/i.test(r["ACTIVITY TYPE"]):!/personal/i.test(r["ACTIVITY TYPE"])))continue;
       const title=r["EVENT NAME"],id=[norm(title),norm(r["SUB EVENT"]),norm(r.DETAIL),norm(r["ACTIVITY TYPE"])].join("|");
       const context={subEvent:r["SUB EVENT"],activity:r["ACTIVITY TYPE"],frequency:r.FEQUENCY,recurrence:r.RECURRANCE,detail:r.DETAIL,location:r.LOCATION,event:r.EVENT,level:r.LEVEL,stamina:r.STAMINA,availability:r["ITEM AVAILABILITY"],general:r.GENERAL,castle:r.CASTLE};
       const reward={item:r.ITEM,quantity:r.QUANTITY,classification:normalizeDrop(r["Drop Classification"]),route:[r.ITEM],details:{location:r.LOCATION,event:r.EVENT,subEvent:r["SUB EVENT"],activity:r["ACTIVITY TYPE"],frequency:r.FEQUENCY,recurrence:r.RECURRANCE,detail:r.DETAIL,level:r.LEVEL,stamina:r.STAMINA,availability:r["ITEM AVAILABILITY"],general:r.GENERAL,castle:r.CASTLE}};
-      add(kind,id,title,context,reward);
-      for(const child of descendants(reward.item,reward.classification,reward.route,new Set(),0))add(kind,id,title,context,child);
+      add("events",id,title,context,reward);
+      for(const child of descendants(reward.item,reward.classification,reward.route,new Set(),0))add("events",id,title,context,child);
     }
   }
   if(type==="all"||type==="boxes"){
@@ -247,7 +242,7 @@ function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggest
       }
     }
   }
-  const sourcePriority={tasks:0,events:1,bosses:2,"event-bosses":3,regular:4,boxes:5};
+  const sourcePriority={events:0,bosses:1,"event-bosses":2,regular:3,boxes:4};
   const chancePriority={Guaranteed:0,Redeem:1,Possible:2,Unspecified:3};
   const groups=[...grouped.values()].map(g=>{
     const quantities=[...(g._quantities||[])].sort((a,b)=>a-b);
