@@ -79,7 +79,14 @@ function parseSnapshot(raw) {
       "Reward Item (in-game)":value(v,"ITEM"),"Quantity":value(v,"QUANTITY"),
       "Drop Classification":value(v,"DROP CLASSIFICATION"),
       "Source":[value(v,"EVENT / BOSS NAME"),value(v,"ACTIVITY (EVENT/MONSTER)"),value(v,"PARTICIPATION")].filter(Boolean).join(" · "),
-      "Notes":[value(v,"REWARD METHOD"),value(v,"RANKING TYPE"),value(v,"RANK"),value(v,"GEAR / BUFFS")].filter(Boolean).join(" · ")
+      "Notes":[value(v,"REWARD METHOD"),value(v,"RANKING TYPE"),value(v,"RANK"),value(v,"GEAR / BUFFS")].filter(Boolean).join(" · "),
+      "Source Event":value(v,"EVENT / BOSS NAME"),
+      "Source Kind":value(v,"ACTIVITY (EVENT/MONSTER)"),
+      "Source Activity":value(v,"REWARD METHOD"),
+      "Source Participation":value(v,"PARTICIPATION"),
+      "Source Rank":value(v,"RANK"),
+      "Source Ranking Type":value(v,"RANKING TYPE"),
+      "Chest ID":value(v,"CHEST ID")
     }
   }));
   if (!events.length || !monsters.length || !boxes.length) throw Error("Revised workbook contains an empty reward tab");
@@ -276,41 +283,55 @@ function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggest
 }
 
 function chestCatalog(snapshot){
-  const byKey=new Map();
+  const byKey=new Map(),byName=new Map();
+  const addSource=(chest,source)=>{
+    const id=[source.type,source.name,source.subEvent||"",source.level||"",source.rank||"",source.activity||""].map(norm).join("|");
+    if(!chest.sources.some(s=>s._id===id))chest.sources.push({_id:id,...source});
+  };
   for(const {fields:r} of snapshot.boxes){
-    const name=clean(r["Box Name"]),level=clean(r.Level);
-    const key=norm(name)+"|"+norm(level);
-    if(!byKey.has(key))byKey.set(key,{id:encodeURIComponent(key),name,level,items:[],sources:[],sourceNotes:[]});
+    const name=clean(r["Box Name"]),level=clean(r.Level),rank=clean(r["Source Rank"]);
+    // Identically named ranking chests can carry different rewards at each rank.
+    const key=[norm(name),norm(level),norm(rank)].join("|");
+    if(!byKey.has(key))byKey.set(key,{id:encodeURIComponent(key),name,level,rank,items:[],sources:[],sourceNotes:[]});
     const chest=byKey.get(key);
     chest.items.push({item:r["Reward Item (in-game)"],quantity:r.Quantity,classification:normalizeDrop(r["Drop Classification"]),notes:r.Notes});
     if(clean(r.Source)&&!chest.sourceNotes.includes(clean(r.Source)))chest.sourceNotes.push(clean(r.Source));
+    // Preserve the direct, explicit event or boss source from the revised workbook.
+    const sourceName=clean(r["Source Event"]),sourceKind=norm(r["Source Kind"]);
+    if(sourceName)addSource(chest,{
+      type:sourceKind==="boss"||sourceKind==="monster"?"Boss":"Event",name:sourceName,
+      activity:clean(r["Source Activity"]),participation:clean(r["Source Participation"]),
+      rankingType:clean(r["Source Ranking Type"]),rank,
+      level:sourceKind==="boss"||sourceKind==="monster"?level:"",
+      detail:clean(r.Notes)
+    });
   }
-  // A source relationship is shown only if the reward explicitly names this chest.
-  const byName=new Map();
   for(const chest of byKey.values()){
-    const key=norm(chest.name);
-    if(!byName.has(key))byName.set(key,[]);
-    byName.get(key).push(chest);
+    const k=norm(chest.name);if(!byName.has(k))byName.set(k,[]);byName.get(k).push(chest);
   }
+  // Explicit chest awards supplement source metadata without mixing distinct ranks.
   for(const {fields:r} of snapshot.monsters){
     for(const chest of byName.get(norm(r["Reward Item (in-game)"]))||[]){
-      const id=["Boss",r["Monster Name"],r["Monster Level"],r.Event].join("|");
-      if(!chest.sources.some(s=>s._id===id))chest.sources.push({_id:id,type:"Boss",name:r["Monster Name"],level:r["Monster Level"],event:r.Event,stamina:r.Stamina});
+      const known=chest.sources.filter(s=>s.type==="Boss");
+      if(known.length&&!known.some(s=>norm(s.name)===norm(r["Monster Name"])))continue;
+      addSource(chest,{type:"Boss",name:r["Monster Name"],level:r["Monster Level"],event:r.Event,stamina:r.Stamina});
     }
   }
   for(const {fields:r} of snapshot.events){
     for(const chest of byName.get(norm(r.ITEM))||[]){
-      const id=["Event",r["EVENT NAME"],r["SUB EVENT"],r.DETAIL].join("|");
-      if(!chest.sources.some(s=>s._id===id))chest.sources.push({_id:id,type:"Event",name:r["EVENT NAME"],subEvent:r["SUB EVENT"],location:r.LOCATION,activity:r["ACTIVITY TYPE"],detail:r.DETAIL});
+      const known=chest.sources.filter(s=>s.type==="Event");
+      if(known.length&&!known.some(s=>norm(s.name)===norm(r["EVENT NAME"])))continue;
+      if(chest.rank&&norm(chest.rank)!==norm(r.LEVEL))continue;
+      addSource(chest,{type:"Event",name:r["EVENT NAME"],subEvent:r["SUB EVENT"],location:r.LOCATION,activity:r["ACTIVITY TYPE"],detail:r.DETAIL,rank:chest.rank});
     }
   }
-
-  // Follow chest-inside-chest links without assuming the outer chest guarantees any inner reward.
   function nested(chest,seen,depth){
-    if(depth>6||seen.has(norm(chest.name)))return [];
-    const next=new Set([...seen,norm(chest.name)]),found=[];
+    if(depth>6||seen.has(chest.id))return [];
+    const next=new Set([...seen,chest.id]),found=[];
     for(const item of chest.items){
       const childList=byName.get(norm(item.item))||[];
+      // Do not imply that an ambiguous chest variant has deterministic contents.
+      if(childList.length!==1)continue;
       for(const child of childList){
         for(const reward of child.items){
           const classification=item.classification==="Possible"?"Possible":item.classification==="Unspecified"?"Unspecified":reward.classification;
@@ -327,22 +348,44 @@ function chestCatalog(snapshot){
   for(const chest of byKey.values())chest.sources=chest.sources.map(({_id,...rest})=>rest);
   return [...byKey.values()];
 }
-function chestSearch(snapshot,{q="",source="all",page=0}){
+function chestSearch(snapshot,{q="",source="all",event="",participation="all",rank="",page=0}){
   const list=chestCatalog(snapshot);
-  const hasSource=(c)=>source==="all"||source==="unlinked"&&!c.sources.length
-   ||source==="bosses"&&c.sources.some(s=>s.type==="Boss")
-   ||source==="events"&&c.sources.some(s=>s.type==="Event")
-   ||source==="activities"&&c.sources.some(s=>s.type==="Event"&&/alliance|personal|activit|task/i.test(s.activity));
-  const matching=list.filter(c=>hasSource(c)&&(!q||queryScore(c.name,norm(q))>=0||
-    [...c.items,...c.nestedItems].some(i=>norm(i.item).includes(norm(q))))).sort((a,b)=>a.name.localeCompare(b.name)||a.level.localeCompare(b.level));
+  const matching=list.filter(c=>{
+    const sources=c.sources;
+    const hasSource=source==="all"||source==="unlinked"&&!sources.length
+      ||source==="bosses"&&sources.some(s=>s.type==="Boss")
+      ||source==="events"&&sources.some(s=>s.type==="Event")
+      ||source==="activities"&&sources.some(s=>s.type==="Event"&&(s.activity||s.participation||s.subEvent||"").length>0);
+    if(!hasSource)return false;
+    const eventSources=sources.filter(s=>s.type==="Event");
+    if(event&&!eventSources.some(s=>norm(s.name)===norm(event)))return false;
+    if(participation!=="all"&&!eventSources.some(s=>norm(s.participation).includes(norm(participation))))return false;
+    if(rank&&!eventSources.some(s=>norm(s.rank)===norm(rank)))return false;
+    const query=norm(q);
+    if(query&&!([c.name,c.level,c.rank,...sources.map(s=>s.name),...sources.map(s=>s.subEvent),...c.items.map(i=>i.item),...c.nestedItems.map(i=>i.item)].some(x=>norm(x).includes(query))))return false;
+    return true;
+  }).sort((a,b)=>a.name.localeCompare(b.name)||a.level.localeCompare(b.level)||a.rank.localeCompare(b.rank,undefined,{numeric:true}));
   const LIMIT=15,offset=page*LIMIT;
-  return {total:matching.length,page,hasMore:offset+LIMIT<matching.length,chests:matching.slice(offset,offset+LIMIT).map(c=>({...c,items:c.items.slice(0,12),itemCount:c.items.length,nestedCount:c.nestedItems.length,sources:c.sources.slice(0,12)})),updatedAt:snapshot.importedAt};
+  return {total:matching.length,page,hasMore:offset+LIMIT<matching.length,
+    chests:matching.slice(offset,offset+LIMIT).map(c=>({...c,items:c.items.slice(0,12),itemCount:c.items.length,nestedCount:c.nestedItems.length,sources:c.sources.slice(0,12)})),
+    updatedAt:snapshot.importedAt};
 }
-function compareChests(snapshot, ids){
+function chestEvents(snapshot){
+  const events=new Map();
+  for(const chest of chestCatalog(snapshot))for(const source of chest.sources){
+    if(source.type!=="Event")continue;
+    const name=clean(source.name),key=norm(name);
+    if(!events.has(key))events.set(key,{name,chests:new Set()});
+    events.get(key).chests.add(chest.id);
+  }
+  return {events:[...events.values()].map(e=>({name:e.name,count:e.chests.size})).sort((a,b)=>a.name.localeCompare(b.name)),updatedAt:snapshot.importedAt};
+}
+function compareChests(snapshot,ids){
   const catalog=chestCatalog(snapshot),list=ids.map(id=>catalog.find(c=>c.id===id));
   if(list.some(c=>!c))return null;
-  return {chests:list.map(c=>({id:c.id,name:c.name,level:c.level,items:c.items,nestedItems:c.nestedItems,sources:c.sources,sourceNotes:c.sourceNotes})),updatedAt:snapshot.importedAt};
+  return {chests:list.map(c=>({id:c.id,name:c.name,level:c.level,rank:c.rank,items:c.items,nestedItems:c.nestedItems,sources:c.sources,sourceNotes:c.sourceNotes})),updatedAt:snapshot.importedAt};
 }
+
 function suggestedItems(snapshot, query){
   const q=norm(query);const options=new Map();
   const consider = name => {
@@ -361,7 +404,7 @@ export default {
  async fetch(request, env) {
   const url=new URL(request.url);
   const origin=request.headers.get("origin")||"";
-  if((url.pathname==="/v1/search"||url.pathname==="/v2/search"||url.pathname==="/v3/search"||url.pathname==="/v4/chests"||url.pathname==="/v4/chests/compare"||url.pathname==="/v2/suggest") && request.method==="OPTIONS") {
+  if((url.pathname==="/v1/search"||url.pathname==="/v2/search"||url.pathname==="/v3/search"||url.pathname==="/v4/chests"||url.pathname==="/v4/chests/events"||url.pathname==="/v4/chests/compare"||url.pathname==="/v2/suggest") && request.method==="OPTIONS") {
     if(!PUBLIC_ORIGINS.has(origin)) return new Response(null,{status:403});
     return new Response(null,{status:204,headers:{...publicHeaders(origin),"access-control-allow-methods":"GET, OPTIONS","access-control-allow-headers":"content-type","access-control-max-age":"3600"}});
   }
@@ -380,7 +423,7 @@ export default {
     await env.DATA.put("latest",JSON.stringify(snapshot));
     return reply({ok:true,counts:snapshot.counts});
   }
-  if((url.pathname==="/v4/chests"||url.pathname==="/v4/chests/compare") && request.method==="GET"){
+  if((url.pathname==="/v4/chests"||url.pathname==="/v4/chests/events"||url.pathname==="/v4/chests/compare") && request.method==="GET"){
     const raw=await env.DATA.get("latest");if(!raw)return reply({error:"No validated data available"},503,publicHeaders(origin));
     const snapshot=JSON.parse(raw);
     if(url.pathname==="/v4/chests/compare"){
@@ -390,10 +433,13 @@ export default {
       const compared=compareChests(snapshot,ids);
       return compared?reply(compared,200,publicHeaders(origin)):reply({error:"Chest not found"},404,publicHeaders(origin));
     }
-    const q=clean(url.searchParams.get("q")),source=clean(url.searchParams.get("source"))||"all",page=Number(url.searchParams.get("page")||0);
-    if(q.length>100||!["all","bosses","events","activities","unlinked"].includes(source)||!Number.isSafeInteger(page)||page<0||page>1000)
+    if(url.pathname==="/v4/chests/events")return reply(chestEvents(snapshot),200,publicHeaders(origin));
+    const q=clean(url.searchParams.get("q")),source=clean(url.searchParams.get("source"))||"all",
+      event=clean(url.searchParams.get("event")),participation=clean(url.searchParams.get("participation"))||"all",
+      rank=clean(url.searchParams.get("rank")),page=Number(url.searchParams.get("page")||0);
+    if(q.length>100||event.length>120||rank.length>50||!["all","bosses","events","activities","unlinked"].includes(source)||!["all","personal","alliance"].includes(participation)||!Number.isSafeInteger(page)||page<0||page>1000)
       return reply({error:"Invalid chest search parameters"},400,publicHeaders(origin));
-    return reply(chestSearch(snapshot,{q,source,page}),200,publicHeaders(origin));
+    return reply(chestSearch(snapshot,{q,source,event,participation,rank,page}),200,publicHeaders(origin));
   }
   if(url.pathname==="/v3/search" && request.method==="GET"){
     const q=clean(url.searchParams.get("q"));
