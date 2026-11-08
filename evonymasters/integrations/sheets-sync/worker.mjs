@@ -30,7 +30,7 @@ function parseSnapshot(raw) {
   if (!raw || raw.version !== 1 || !raw.tabs || typeof raw.tabs !== "object") throw Error("Unsupported payload version");
   const isRevised = raw.schema === "evonymasters-2026-v2";
   if (!isRevised) {
-    const events = convertTable(raw.tabs.events, fields.events, 2, ["Drop Classification"]);
+    const events = convertTable(raw.tabs.events, fields.events, 2, ["Drop Classification","REWARD METHOD"]);
     const monsters = convertTable(raw.tabs.monsters, fields.monsters, 1);
     const boxes = convertTable(raw.tabs.boxes, fields.boxes, 2);
     for (const r of monsters) if (!r.fields["Monster Name"] || !r.fields["Reward Item (in-game)"]) throw Error("Incomplete monster row " + r.sheetRow);
