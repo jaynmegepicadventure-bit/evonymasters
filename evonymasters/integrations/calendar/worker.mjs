@@ -81,7 +81,7 @@ function occurrences(rows,from,to,kind,includeAlways){
    for(const source of s.targets){
     if(kind!=="all"&&kind!==source.kind)continue;
     events.push({id:s.id+"|"+source.id+"|"+dateValue,scheduleId:s.id,sourceId:source.id,name:source.name,kind:source.kind,level:source.level||"",family:!!source.family,rule:s.rule,
-      date:dateValue,startDate:s.startDate||"",endDate:s.endDate||"",startTime:s.startTime,endTime:s.endTime,status:s.status,notes:s.notes,sourceUrl:s.sourceUrl,reviewAfter:s.reviewAfter});
+      date:dateValue,startDate:s.startDate||"",endDate:s.endDate||"",startTime:s.startTime,endTime:s.endTime,status:s.reviewAfter&&dateValue>s.reviewAfter?"Needs Review":s.status,notes:s.notes,sourceUrl:s.sourceUrl,reviewAfter:s.reviewAfter});
     if(events.length>=9000)return {events,truncated:true};
    }
   }
