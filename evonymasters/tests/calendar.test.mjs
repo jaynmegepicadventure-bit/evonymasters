@@ -150,14 +150,14 @@ test("Weekend rules use UTC Saturday and Sunday, with alternate weekends anchore
 test("Player-facing reward, event, chest and homepage browser scripts remain syntactically valid",()=>{
  for(const path of ["../src/pages/resources/index.astro","../src/pages/events/index.astro","../src/pages/chests/index.astro","../src/pages/index.astro","../src/pages/bosses/[id].astro"]){
   const html=readFileSync(new URL(path,import.meta.url),"utf8");
-  const scripts=[...html.matchAll(/<script(?:\\s[^>]*)?>([\\s\\S]*?)<\\/script>/g)];
+  const scripts=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)];
   for(const [,source] of scripts)assert.doesNotThrow(()=>new Script(source),path);
  }
  const resources=readFileSync(new URL("../src/pages/resources/index.astro",import.meta.url),"utf8");
  assert.match(resources,/>Reward Activity </);
  assert.match(resources,/>Availability </);
  assert.doesNotMatch(resources,/>Frequency <span class="arrow"/);
- assert.doesNotMatch(resources,/>Notes \\/ How to obtain <span class="arrow"/);
- assert.match(resources,/addField\("Notes \\/ How to obtain",row.note\)/);
+ assert.doesNotMatch(resources,/>Notes \/ How to obtain <span class="arrow"/);
+ assert.match(resources,/addField\("Notes \/ How to obtain",row.note\)/);
  assert.doesNotMatch(resources,/id="activity-filter"/);
 });
