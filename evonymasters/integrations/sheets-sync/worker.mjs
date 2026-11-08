@@ -344,6 +344,38 @@ function chestCatalog(snapshot){
   for(const chest of byKey.values())chest.sources=chest.sources.map(({_id,...rest})=>rest);
   return [...byKey.values()];
 }
+// Present related chest variants together, in numeric level/rank order.
+const chestCollator=new Intl.Collator("en",{numeric:true,sensitivity:"base"});
+const chestFamily=name=>clean(name).replace(/^(?:common|uncommon|rare|super rare|epic|legendary|excellent|junior|medium|senior)\s+/i,"").trim();
+const chestNumber=value=>{
+  const match=clean(value).replace(/,/g,"").match(/\d+(?:\.\d+)?/);
+  return match?Number(match[0]):Number.POSITIVE_INFINITY;
+};
+function compareChestOrder(a,b,query=""){
+  const q=norm(query);
+  const relevance=chest=>{
+    if(!q)return 0;
+    if(norm(chest.name).includes(q))return 0;
+    if(chest.sources.some(src=>norm(src.name).includes(q)||norm(src.subEvent).includes(q)))return 1;
+    if(chest.items.some(item=>norm(item.item).includes(q)))return 2;
+    return 3;
+  };
+  const score=relevance(a)-relevance(b);
+  if(score)return score;
+  const family=chestCollator.compare(chestFamily(a.name),chestFamily(b.name));
+  if(family)return family;
+  const level=chestNumber(a.level)-chestNumber(b.level);
+  if(Number.isFinite(level)&&level)return level;
+  if(Number.isFinite(chestNumber(a.level))!==Number.isFinite(chestNumber(b.level)))return Number.isFinite(chestNumber(a.level))?-1:1;
+  const ranked=chestNumber(a.rank)-chestNumber(b.rank);
+  if(Number.isFinite(ranked)&&ranked)return ranked;
+  if(Number.isFinite(chestNumber(a.rank))!==Number.isFinite(chestNumber(b.rank)))return Number.isFinite(chestNumber(a.rank))?-1:1;
+  return chestCollator.compare(a.name,b.name)||chestCollator.compare(a.level,b.level)||chestCollator.compare(a.rank,b.rank)||chestCollator.compare(a.id,b.id);
+}
+const sortChestItems=items=>[...items].sort((a,b)=>chestCollator.compare(a.item,b.item)
+  ||chestNumber(a.quantity)-chestNumber(b.quantity)
+  ||chestCollator.compare(a.quantity,b.quantity)
+  ||chestCollator.compare(a.classification,b.classification));
 function chestSearch(snapshot,{q="",source="all",event="",participation="all",rank="",page=0}){
   const list=chestCatalog(snapshot);
   const matching=list.filter(c=>{
@@ -360,10 +392,10 @@ function chestSearch(snapshot,{q="",source="all",event="",participation="all",ra
     const query=norm(q);
     if(query&&!([c.name,c.level,c.rank,...sources.map(s=>s.name),...sources.map(s=>s.subEvent),...c.items.map(i=>i.item),...c.nestedItems.map(i=>i.item)].some(x=>norm(x).includes(query))))return false;
     return true;
-  }).sort((a,b)=>a.name.localeCompare(b.name)||a.level.localeCompare(b.level)||a.rank.localeCompare(b.rank,undefined,{numeric:true}));
+  }).sort((a,b)=>compareChestOrder(a,b,q));
   const LIMIT=15,offset=page*LIMIT;
   return {total:matching.length,page,hasMore:offset+LIMIT<matching.length,
-    chests:matching.slice(offset,offset+LIMIT).map(c=>({...c,items:c.items.slice(0,12),itemCount:c.items.length,nestedCount:c.nestedItems.length,sources:c.sources.slice(0,12)})),
+    chests:matching.slice(offset,offset+LIMIT).map(c=>({...c,items:sortChestItems(c.items).slice(0,12),itemCount:c.items.length,nestedCount:c.nestedItems.length,sources:c.sources.slice(0,12)})),
     updatedAt:snapshot.importedAt};
 }
 function chestEvents(snapshot){
@@ -379,7 +411,7 @@ function chestEvents(snapshot){
 function compareChests(snapshot,ids){
   const catalog=chestCatalog(snapshot),list=ids.map(id=>catalog.find(c=>c.id===id));
   if(list.some(c=>!c))return null;
-  return {chests:list.map(c=>({id:c.id,name:c.name,level:c.level,rank:c.rank,items:c.items,nestedItems:c.nestedItems,sources:c.sources,sourceNotes:c.sourceNotes})),updatedAt:snapshot.importedAt};
+  return {chests:list.sort((a,b)=>compareChestOrder(a,b)).map(c=>({id:c.id,name:c.name,level:c.level,rank:c.rank,items:sortChestItems(c.items),nestedItems:sortChestItems(c.nestedItems),sources:c.sources,sourceNotes:c.sourceNotes})),updatedAt:snapshot.importedAt};
 }
 
 function suggestedItems(snapshot, query){
