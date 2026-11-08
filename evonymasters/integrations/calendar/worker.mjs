@@ -131,6 +131,6 @@ export default {
    }
    if(request.method==="DELETE"){rows.splice(pos,1);await write(env,rows);return respond({ok:true});}
    return respond({error:"Method not allowed"},405);
-  }catch(e){return respond({error:txt(e.message).slice(0,150)},/catalog|unavailable|Missing/i.test(txt(e.message))?503:400);}
+  }catch(e){return respond({error:txt(e.message).slice(0,150)},/^Reward catalog unavailable|^Invalid reward catalog|^Missing CALENDAR KV|^Corrupt schedule data/i.test(txt(e.message))?503:400);}
  }
 };
