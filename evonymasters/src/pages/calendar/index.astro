@@ -2,7 +2,7 @@
 import SiteHeader from '../../components/SiteHeader.astro';
 ---
 <!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<meta name="description" content="EvonyMasters event calendar: see confirmed and tentative Evony events by day, week, month and upcoming dates."/>
+<meta name="description" content="EvonyMasters event calendar: see scheduled Evony events and monsters by day, week, month and upcoming dates."/>
 <title>Event Calendar | EvonyMasters</title><link rel="icon" href="/favicon.svg"/>
 <style is:global>
 :root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#edf4fb;background:#0b1929}*{box-sizing:border-box}body{margin:0}a{color:#f2cc85}
@@ -13,16 +13,16 @@ button{cursor:pointer;font:inherit}.control{border:1px solid #627d96;background:
 .month-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}.weekday{color:#f2d29b;font-weight:800;font-size:.77rem;text-align:center;padding:10px 0}
 .day-box{background:#1b354f;border:1px solid #354e68;border-radius:10px;min-height:123px;padding:9px;min-width:0}.day-box.outside{opacity:.5}.day-box.today{border-color:#f2c979}.day-box .day-number{font-size:.83rem;color:#f6e9d0;font-weight:850}.day-box a{display:block;border-left:3px solid #efc778;border-radius:4px;background:#274563;padding:5px 6px;font-size:.73rem;line-height:1.25;color:#eef4fb;text-decoration:none;margin-top:5px;overflow-wrap:anywhere}.day-box a.tentative{border-color:#a5abc4}.week-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:9px}.week-grid .day-box{min-height:235px}
 .entry-list{display:grid;gap:12px}.entry{padding:17px;border:1px solid #45627a;border-radius:11px;background:linear-gradient(130deg,#1b3854,#12263b)}.entry h3{margin:0 0 7px;color:#f5d28d;font-size:1.11rem}.entry p{margin:7px 0;color:#c4d8e8;font-size:.88rem;line-height:1.5}.tags{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0}.tag{background:#2a455f;border:1px solid #55708b;border-radius:99px;color:#ebf4fb;padding:3px 9px;font-size:.73rem}.tag.tentative{border-color:#9b94af;color:#ded7f2}.entry a{display:inline-block;margin-top:7px;font-size:.86rem;font-weight:750}
-.empty{color:#bfd0df;line-height:1.65;padding:24px;text-align:center;border:1px dashed #5c7288;border-radius:12px}.hint{font-size:.8rem;color:#aebfd2;margin:17px 0 0}footer{border-top:1px solid #314b64;padding:24px 0;color:#b9cada;font-size:.81rem}
+.empty{color:#bfd0df;line-height:1.65;padding:24px;text-align:center;border:1px dashed #5c7288;border-radius:12px}.toolbar label{display:flex;align-items:center;gap:8px;color:#d5e3ef;font-size:.86rem}.toolbar label input{accent-color:#f0c676}.hint{font-size:.8rem;color:#aebfd2;margin:17px 0 0}footer{border-top:1px solid #314b64;padding:24px 0;color:#b9cada;font-size:.81rem}
 @media(max-width:800px){.week-grid{grid-template-columns:1fr}.week-grid .day-box{min-height:95px}.month-grid{gap:3px}.calendar{padding:9px}.day-box{padding:5px;min-height:80px;border-radius:6px}.day-box a{font-size:.63rem;padding:3px}.weekday{font-size:.66rem}}
 @media(max-width:480px){.wrap{padding:0 13px}.control{padding:9px 11px;font-size:.8rem}.month-grid{grid-template-columns:repeat(7,minmax(0,1fr))}.day-box{min-height:72px}.day-box a{font-size:.58rem}.day-box .day-number{font-size:.72rem}}
 </style></head><body><SiteHeader active="calendar"/>
-<header class="hero"><div class="wrap"><div class="eyebrow">Player Tools / Event Calendar</div><h1>Plan your next event</h1><p>Browse scheduled events by day, week or month, and see what is coming up. Dates are shown in <strong>Evony server time (UTC)</strong>. Only events with recorded dates appear here.</p>
+<header class="hero"><div class="wrap"><div class="eyebrow">Player Tools / Event Calendar</div><h1>Plan your next event</h1><p>Browse events and monsters by day, week or month, and see what is coming up. Dates are shown in <strong>Evony server time (UTC)</strong>. Only published schedules appear here. Always-available monsters are hidden by default to avoid clutter.</p>
 <div class="hero-links"><a href="/events/">Event guides and rewards ↗</a><a href="https://evonymasters-calendar.jaynmegepicadventure.workers.dev/admin/">Admin sign in ↗</a></div></div></header>
 <main class="wrap"><div class="toolbar"><div class="views" aria-label="Calendar view">
 <button class="control" data-view="day" aria-pressed="false">Day</button><button class="control" data-view="week" aria-pressed="false">Week</button><button class="control" data-view="month" aria-pressed="true">Month</button><button class="control" data-view="upcoming" aria-pressed="false">Upcoming</button>
 </div><div class="navigation"><button id="prev" class="control" aria-label="Previous date range">‹</button><button id="today" class="control primary">Today</button><button id="next" class="control" aria-label="Next date range">›</button></div></div>
-<h2 id="heading">Event calendar</h2><p id="status" class="hint" role="status">Loading recorded event dates…</p><section id="calendar" class="calendar" aria-live="polite"></section>
+<div class="toolbar"><label for="kind-filter">Show <select class="control" id="kind-filter"><option value="all">All events &amp; monsters</option><option value="Event">Events</option><option value="Boss">Bosses</option><option value="Event Boss">Event Bosses</option><option value="Regular Monster">Regular Monsters</option></select></label><label><input type="checkbox" id="show-always"/> Include always-available</label></div><h2 id="heading">Event calendar</h2><p id="status" class="hint" role="status">Loading recorded event dates…</p><section id="calendar" class="calendar" aria-live="polite"></section>
 <p class="hint">Confirmed and tentative dates are labelled. Events with no verified schedule are not assumed to be active. Admins can add an occurrence without changing reward data.</p>
 </main><footer><div class="wrap">EvonyMasters is an independent fan project. Schedule information is community-maintained and may change in-game.</div></footer>
 <script is:inline>
@@ -39,20 +39,20 @@ const advance=(d,n)=>new Date(d.getTime()+n*86400000);
 const monthStart=d=>new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),1));
 const monday=d=>advance(d,-((d.getUTCDay()+6)%7));
 const format=(s,opts={month:"short",day:"numeric",year:"numeric"})=>new Intl.DateTimeFormat("en-GB",{...opts,timeZone:"UTC"}).format(dateFrom(s));
-const onDate=(e,d)=>e.startDate<=d&&e.endDate>=d;
-const byDate=(a,b)=>a.startDate.localeCompare(b.startDate)||a.startTime.localeCompare(b.startTime)||collator.compare(a.name,b.name);
+const onDate=(e,d)=>e.date===d;
+const byDate=(a,b)=>a.date.localeCompare(b.date)||a.startTime.localeCompare(b.startTime)||collator.compare(a.name,b.name);
 function entry(e){const a=make("article","entry"),h=make("h3","",e.name),tags=make("div","tags");
-for(const item of [e.category,e.status])tags.append(make("span","tag"+(item==="Tentative"?" tentative":""),item));
-const dates=e.startDate===e.endDate?format(e.startDate):format(e.startDate)+" – "+format(e.endDate);
+for(const item of [e.kind,e.status])tags.append(make("span","tag"+(item==="Tentative"?" tentative":""),item));
+const dates=format(e.date)+(e.rule==="always"?" · Always available":e.rule==="ongoing"?" · Ongoing":e.rule==="daily"?" · Daily":"");
 const time=e.startTime?" · "+e.startTime+(e.endTime?"–"+e.endTime:"")+" UTC":" · All day / time not specified";
 a.append(h,tags,make("p","",dates+time));
 if(e.notes)a.append(make("p","",e.notes));
-const link=make("a","",e.sourceUrl?"Read source / details ↗":"Find event rewards ↗");link.href=e.sourceUrl||"/events/?q="+encodeURIComponent(e.eventKey||e.name);
+const link=make("a","",e.sourceUrl?"Read source / details ↗":"Find event rewards ↗");link.href=e.sourceUrl||(e.kind==="Event"?"/events/?q=":"/resources/?q=")+encodeURIComponent(e.name);
 if(e.sourceUrl){link.target="_blank";link.rel="noopener noreferrer"}
 a.append(link);return a}
 function dayBox(date,outside=false){const day=dateString(date),dayEvents=events.filter(e=>onDate(e,day)),box=make("div","day-box"+(outside?" outside":"")+(day===today?" today":""));
 box.append(make("div","day-number",String(date.getUTCDate())));
-for(const e of dayEvents.slice(0,4)){const link=make("a",e.status==="Tentative"?"tentative":"",e.name);link.href=e.sourceUrl||"/events/?q="+encodeURIComponent(e.eventKey||e.name);link.title=e.name+" · "+e.status;if(e.sourceUrl){link.target="_blank";link.rel="noopener noreferrer"}box.append(link)}
+for(const e of dayEvents.slice(0,4)){const link=make("a",e.status==="Tentative"?"tentative":"",e.name);link.href=e.sourceUrl||(e.kind==="Event"?"/events/?q=":"/resources/?q=")+encodeURIComponent(e.name);link.title=e.name+" · "+e.status;if(e.sourceUrl){link.target="_blank";link.rel="noopener noreferrer"}box.append(link)}
 if(dayEvents.length>4)box.append(make("div","hint","+"+(dayEvents.length-4)+" more"));
 return box}
 function draw(){root.replaceChildren();for(const b of document.querySelectorAll("[data-view]"))b.setAttribute("aria-pressed",String(b.dataset.view===view));
@@ -72,19 +72,34 @@ if(view==="month"){
  const list=make("div","entry-list");
  let matches;
  if(view==="day"){heading.textContent=format(focusDate,{weekday:"long",month:"long",day:"numeric",year:"numeric"});matches=events.filter(e=>onDate(e,focusDate))}
- else{heading.textContent="Upcoming events";matches=events.filter(e=>e.endDate>=today).sort(byDate)}
+ else{heading.textContent="Upcoming events";matches=events.filter(e=>e.date>=today).sort(byDate)}
  for(const e of matches.slice(0,100))list.append(entry(e));
  if(!matches.length)list.append(make("div","empty",view==="upcoming"?"No upcoming dated events have been published yet.":"No events recorded for this date range."));
- if(matches.length>100)list.append(make("p","hint","Showing the first 100 upcoming entries."));
+ if(matches.length>100)list.append(make("p","hint","Showing the first 100 upcoming appearances."));
  root.append(list);
 }
 }
-function shift(dir){if(view==="day")focus=advance(focus,dir);if(view==="week")focus=advance(focus,dir*7);if(view==="month")focus=new Date(Date.UTC(focus.getUTCFullYear(),focus.getUTCMonth()+dir,1));draw()}
+function shift(dir){if(view==="day")focus=advance(focus,dir);if(view==="week")focus=advance(focus,dir*7);if(view==="month")focus=new Date(Date.UTC(focus.getUTCFullYear(),focus.getUTCMonth()+dir,1));load()}
 document.getElementById("prev").addEventListener("click",()=>shift(-1));
 document.getElementById("next").addEventListener("click",()=>shift(1));
-document.getElementById("today").addEventListener("click",()=>{focus=new Date(Date.UTC(current.getUTCFullYear(),current.getUTCMonth(),current.getUTCDate()));draw()});
-document.querySelectorAll("[data-view]").forEach(b=>b.addEventListener("click",()=>{view=b.dataset.view;draw()}));
-async function load(){try{const response=await fetch(API,{mode:"cors"});if(!response.ok)throw Error("Unavailable");const data=await response.json();if(!Array.isArray(data.events))throw Error("Invalid calendar");events=data.events.sort(byDate);status.textContent=events.length+" published dated "+(events.length===1?"event":"events")+" · Evony server time (UTC)";}catch{loadError=true;status.textContent="Calendar data could not be loaded."}draw()}
+document.getElementById("today").addEventListener("click",()=>{focus=new Date(Date.UTC(current.getUTCFullYear(),current.getUTCMonth(),current.getUTCDate()));load()});
+document.querySelectorAll("[data-view]").forEach(b=>b.addEventListener("click",()=>{view=b.dataset.view;load()}));
+let serial=0;
+async function load(){
+ const requestId=++serial;
+ let from,to;
+ if(view==="month"){from=dateString(monday(monthStart(focus)));to=dateString(advance(dateFrom(from),41));}
+ else if(view==="week"){from=dateString(monday(focus));to=dateString(advance(dateFrom(from),6));}
+ else if(view==="day"){from=to=dateString(focus);}
+ else{from=today;to=dateString(advance(dateFrom(today),59));}
+ const params=new URLSearchParams({from,to,kind:document.getElementById("kind-filter").value,includeAlways:String(document.getElementById("show-always").checked)});
+ status.textContent="Loading schedules…";
+ try{const response=await fetch(API+"?"+params,{mode:"cors"});if(!response.ok)throw Error("Unavailable");const data=await response.json();if(!Array.isArray(data.events))throw Error("Invalid calendar");if(requestId!==serial)return;events=data.events.sort(byDate);loadError=false;status.textContent=events.length+" scheduled appearances · Evony server time (UTC)"+(data.truncated?" · Results limited":"");}
+ catch{if(requestId!==serial)return;loadError=true;status.textContent="Calendar data could not be loaded."}
+ draw();
+}
+document.getElementById("kind-filter").addEventListener("change",load);
+document.getElementById("show-always").addEventListener("change",load);
 load();
 })();
 </script></body></html>
