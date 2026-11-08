@@ -13,7 +13,8 @@ const shortcuts=[
  {href:'/resources/?q=Speedup',label:'Speedups'},
  {href:'/resources/?q=Alliance%20Honor',label:'Alliance Honor'},
  {href:'/chests/?source=events',label:'Event Chests'},
- {href:'/chests/?source=bosses',label:'Boss Chests'}
+ {href:'/chests/?source=bosses',label:'Boss Chests'},
+ {href:'/calendar/',label:'Event Calendar'}
 ];
 ---
 <!doctype html>
@@ -103,7 +104,7 @@ footer{padding:27px 0;border-top:1px solid #314c62;font-size:.81rem;color:#aebfd
 <div class="lower-grid">
 <article class="small-panel"><h3>⌕ &nbsp; Popular searches</h3><p>Jump straight to commonly sought-after rewards and chest sources.</p><div class="quick-list">{shortcuts.map(link=><a class="quick-link" href={link.href}>{link.label} ↗</a>)}</div></article>
 <article class="small-panel"><h3>⚔ &nbsp; Monster rewards</h3><p>From regular monsters to boss chest drops, compare what's recorded before spending stamina.</p><div class="panel-links"><a href="/resources/?q=Monarch%20EXP"><img src="/images/item-finder/zombie.svg" alt="" loading="lazy"/>Explore monster drops<span aria-hidden="true">›</span></a><a href="/chests/?source=bosses"><img src="/images/item-finder/box.svg" alt="" loading="lazy"/>Browse boss chests<span aria-hidden="true">›</span></a></div></article>
-<article class="small-panel"><h3>✦ &nbsp; Events &amp; generals</h3><p>Explore recorded event rewards and research your generals for the next challenge.</p><div class="panel-links"><a href="/events/"><img src="/images/item-finder/feasting-revelry.svg" alt="" loading="lazy"/>Event guides<span aria-hidden="true">›</span></a><a href="/generals/"><img src="/images/item-finder/event.svg" alt="" loading="lazy"/>General reference<span aria-hidden="true">›</span></a></div></article>
+<article class="small-panel"><h3>✦ &nbsp; Events &amp; generals</h3><p>Browse event schedules, check recorded rewards and research your generals for the next challenge.</p><div class="panel-links"><a href="/events/"><img src="/images/item-finder/feasting-revelry.svg" alt="" loading="lazy"/>Event guides<span aria-hidden="true">›</span></a><a href="/calendar/"><img src="/images/item-finder/event.svg" alt="" loading="lazy"/>Events calendar<span aria-hidden="true">›</span></a><a href="/generals/"><img src="/images/item-finder/event.svg" alt="" loading="lazy"/>General reference<span aria-hidden="true">›</span></a></div></article>
 </div>
 </section>
 <section class="categories" aria-labelledby="categories-title"><h2 id="categories-title">Explore the library</h2><div class="category-grid">
