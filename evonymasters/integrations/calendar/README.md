@@ -1,47 +1,59 @@
-# EvonyMasters Event Calendar
+# EvonyMasters Events & Monsters Calendar: deployment and administration
 
-The calendar is a **separate Cloudflare Worker** from the existing website and Google Sheets sync Worker. It has a public read-only endpoint, and a Cloudflare Access-protected editor. No calendar dates have been invented or preloaded.
+**Status:** The calendar implementation is in draft PR #10 until the required Cloudflare Workers and login are configured and tested. Do **not** merge it as a fully operational live calendar before completing these steps.
 
-## What to deploy
+## Architecture and data ownership
 
-- Source: `evonymasters/integrations/calendar/worker.mjs`
-- Worker name: `evonymasters-calendar`
-- Intended URL: `https://evonymasters-calendar.jaynmegepicadventure.workers.dev`
-- KV binding: `CALENDAR` (create a new KV namespace; do not reuse `DATA` from `evonymasters-sheet-sync`)
-- Environment variable: `ADMIN_EMAILS` (comma-separated list of the **exact** approved login emails, e.g. `you@example.com,editor@example.com`; do not use a broad email domain)
-- This calendar Worker does **not** need your existing Google Apps Script `SYNC_SECRET`.
+- Google Sheets `EVONYMASTERS` remains the reward source. No spreadsheet edits are required.
+- The existing independent Cloudflare `evonymasters-sheet-sync` Worker holds the validated reward snapshot. The change to `integrations/sheets-sync/worker.mjs` adds `GET /v4/calendar/catalog`, a read-only list of **all unique events, bosses, event bosses, regular monsters, monster families, and individual levels**.
+- The separate new Cloudflare `evonymasters-calendar` Worker fetches this live catalog on the server when an administrator opens the editor. It stores only calendar **schedule rules** in a dedicated `CALENDAR` KV namespace. It never duplicates reward contents or changes existing Sheets data.
+- The website `/calendar/` displays publicly published schedule occurrences returned by the calendar Worker, using day/week/month/upcoming views and filters.
+- The admin UI is served by the calendar Worker from its own `/admin/` path, sharing origin with its private API.
+- Existing EVENT ID and MONSTER ID columns in the spreadsheet were blank when checked. The catalog therefore uses **stable identity keys based on the normalized event name, or monster category + name + level**, not spreadsheet row numbers. Monster-family entries group all levels by type/name. If a name or category is renamed, the identity changes, so review existing schedules when renaming records.
 
-## Login configuration (required)
+## Suggested safe deployment order
 
-The code never accepts an unprotected client-side password. Admin requests require Cloudflare's authenticated `ctx.access` object and a matching `ADMIN_EMAILS` entry. The Worker denies admin access if either is missing.
+1. Deploy updated `evonymasters/integrations/sheets-sync/worker.mjs` to the existing `evonymasters-sheet-sync` Cloudflare Worker. **Keep the existing DATA KV binding and SYNC_SECRET unchanged**. Test `GET https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev/v4/calendar/catalog`; it should respond with `entries` containing the new unique event/monster catalog and family/level records.
+2. In Cloudflare Workers & Pages, create a **separate Worker** named `evonymasters-calendar`. Use the code in `integrations/calendar/worker.mjs`.
+3. Create a new KV namespace and bind it to this new Worker as `CALENDAR`. Do not reuse the reward-sync Worker's `DATA` binding.
+4. Set Worker environment variable `ADMIN_EMAILS` to a comma-separated list of the exact approved administrator emails. No shared or public password is needed. Optionally set `CATALOG_URL` if the reward sync Worker is on a different URL than `https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev/v4/calendar/catalog`.
+5. Configure **Cloudflare Zero Trust Access** for this Worker hostname on paths `/admin*` **and** `/api/admin/*`, with an allow policy limited to the same approved email addresses. Do not protect the entire host, otherwise the public `GET /api/events` API cannot be loaded by visitors.
+6. Verify that `GET /api/admin/catalog` without an authenticated Access session returns HTTP 403; with an approved Access account it returns entries. The Worker checks `ctx.access.getIdentity()` **and** `ADMIN_EMAILS`. A successful authenticated request never relies merely on a spoofable header.
+7. Open `https://evonymasters-calendar.jaynmegepicadventure.workers.dev/admin/`, sign in and confirm that the **Events/Monsters** selection list loads automatically. Add a test draft by selecting multiple records, assigning dates and saving. Drafts must not appear in `/api/events`. Publish a test schedule, check the public API, then unpublish or delete the test.
+8. Merge PR #10 and verify the new `/calendar/` route on the website. Test desktop/mobile, multiple schedule types and date navigation. There are no invented dates or automatic assumptions based on the `FREQUENCY` reward metadata.
 
-1. In the Cloudflare dashboard, enable Zero Trust / Access.
-2. Create a **self-hosted Cloudflare Access application** for the calendar Worker hostname. Protect the paths `/admin*` **and** `/api/admin/*`. Confirm both routes are covered. Use a policy including only approved editor email addresses or users.
-3. Do **not** protect the entire calendar Worker hostname if you want its public `/api/events` endpoint accessible to all visitors.
-4. Bind the newly created `CALENDAR` KV namespace and set `ADMIN_EMAILS` in the calendar Worker's Settings.
-5. Deploy the calendar Worker code. Use the Cloudflare Access-protected URL `https://evonymasters-calendar.jaynmegepicadventure.workers.dev/admin/` to sign in.
-6. Enter an event's name, start/end dates (inclusive, in **UTC / Evony server time**), optional UTC clock times, category, confidence and source. Use **Draft** for unverified events. Publish only when the dates are confirmed or clearly labelled tentative.
-7. Visit the public `/calendar/` route on the website and verify the event appears in day/week/month/upcoming views. Check draft entries remain invisible to the public API.
-8. Keep the separate Google Sheets `evonymasters-sheet-sync` Worker unchanged. Event schedule dates are managed in the calendar admin UI, not inferred from reward data.
+## Administrator workflow
 
-Access configuration reference: https://developers.cloudflare.com/cloudflare-one/access-controls/applications/http-apps/
-Worker authentication context: https://developers.cloudflare.com/workers/configuration/cloudflare-access/
+1. Search and filter the automatic catalog by `Event`, `Boss`, `Event Boss`, or `Regular Monster`. The **Unscheduled** filter highlights sources without any recorded schedule. Tick many entries at once or use `Select visible`. Whole-family entries cover the boss family; individual level entries allow more precise schedules.
+2. Choose one of seven rules:
+   - **Specific dates**: click multiple dates in the picker.
+   - **Date range**: one uninterrupted date range (inclusive).
+   - **Daily**: repeat every UTC day between start and end dates, or indefinitely with a review date.
+   - **Weekly**: select Sun–Sat weekdays and an optional end date.
+   - **Every X days**: choose an interval from 2–365 days.
+   - **Ongoing**: continuously active from a start date until an optional end date.
+   - **Always available**: permanent availability, hidden from public calendar by default unless the visitor enables it.
+3. Enter UTC start/end times if known, confidence `Confirmed` or `Tentative`, optional individual date exclusions, and notes / source URL.
+4. Select **Draft** initially; **Published** controls public visibility. **Paused** overrides public visibility without deleting data.
+5. Choose whether to **Add** another schedule or **Replace** existing schedules for the selected records. Replace detaches only selected records from previous schedule groups, retaining other targets.
+6. **Review after** is mandatory for indefinite daily, weekly, interval, range-less ongoing schedules. After the review date, public occurrences automatically display `Needs Review` rather than `Confirmed` until an admin updates the schedule.
+7. Edit, pause, unpublish or delete existing schedule groups from the bottom list. Avoid simultaneously editing the same KV key in multiple browser sessions.
 
-## Endpoints
+## APIs
 
-- `GET /api/events`: public, only published entries, start-date ascending. Enables CORS only for EvonyMasters' website origin.
-- `GET /admin/`: authenticated editor, served by this Worker.
-- `GET /api/admin/events`: authenticated read including drafts.
-- `POST /api/admin/events`: authenticated add.
-- `PUT /api/admin/events/:id`: authenticated edit / publish / unpublish.
-- `DELETE /api/admin/events/:id`: authenticated delete.
+- `GET /v4/calendar/catalog` (on `evonymasters-sheet-sync`): complete deduplicated event and monster reference catalog.
+- `GET /api/events?from=YYYY-MM-DD&to=YYYY-MM-DD&kind=all&includeAlways=false`: public, expanded dated occurrences. Filters `kind` to `Event`, `Boss`, `Event Boss`, `Regular Monster`, or `all`; 93-day maximum query window. With `includeAlways=true`, permanent monsters are included in the requested days.
+- `GET /api/admin/catalog`: protected catalog.
+- `GET /api/admin/schedules`: protected schedule groups, including drafts.
+- `POST /api/admin/schedules`: bulk create.
+- `PUT /api/admin/schedules/:id`: update, pause or publish a group.
+- `DELETE /api/admin/schedules/:id`: remove a group.
 
-Event fields: `name`, `startDate`, `endDate`, `startTime`, `endTime`, `category` (Event/Boss/Activity), `status` (Confirmed/Tentative), `published` (boolean), `notes`, `sourceUrl` (HTTPS URL), and optional `eventKey` used to link to reward guides. Only admins can write. Date formats use `YYYY-MM-DD`; times use `HH:MM` UTC.
+## Security, reliability and known limitations
 
-## Important operational considerations
-
-- Because calendar entries live in KV, this initial admin system is intended for **low-frequency editing by a small number of admins**. KV is eventually consistent and simultaneous editors could overwrite changes. For a multi-editor/high-frequency operation, migrate to D1 with transaction/version control.
-- Cloudflare Access and the `ADMIN_EMAILS` allowlist **must both be configured**. Do not deploy without testing unauthenticated requests. Enabling Access on the whole Worker would make the public schedule unreadable.
-- This implementation is deliberately independent of the `EVENTS` reward sheet. It does not assume events run on specific days or repeat according to their reward `FREQUENCY` field. Add one occurrence per confirmed run.
-- The calendar's public UI can be deployed before this Worker; until the Worker exists, it displays a temporary-unavailable message rather than inventing dates.
-- The site is built as static Astro pages. The admin editor is served from the calendar Worker's own hostname so its authenticated API and browser session share the same origin.
+- The code **fails closed** when `ctx.access` is missing or the user's email is not explicitly allowed. The public API is read-only; write calls require same-origin and validated input.
+- Cloudflare Access setup is required externally; this repository does not provision or change a Cloudflare account.
+- KV is eventually consistent and can lose simultaneous updates. This version targets a small admin team editing at low frequency. Consider D1 for multi-user editing or audit/version history.
+- Recurring schedules are **not inferred** from reward data. Unknown event dates stay unscheduled. All times use Evony server time (UTC) and all date boundaries are inclusive.
+- Calendar page groups daily occurrences; its public availability is dependent on the new Worker being deployed. Until the Worker exists, the public page shows a temporary-unavailable message.
+- Cloudflare documentation for Access Worker identity: https://developers.cloudflare.com/workers/configuration/cloudflare-access/
