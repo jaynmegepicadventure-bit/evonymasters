@@ -1,88 +1,118 @@
-import test from 'node:test';
-import assert from 'node:assert/strict';
-import worker from '../integrations/calendar/worker.mjs';
-const HOST='https://evonymasters-calendar.test';
-function setup(){
+import test from "node:test";
+import assert from "node:assert/strict";
+import worker from "../integrations/calendar/worker.mjs";
+const HOST="https://evonymasters-calendar.test",origin=HOST;
+const fakeCatalog=[
+ {id:"event:revelation%20of%20maya",name:"Revelation of Maya",kind:"Event"},
+ {id:"family:boss%7Cymir",name:"Ymir",kind:"Boss",family:true},
+ {id:"monster:boss%7Cymir%7C1",name:"Ymir · Lv 1",kind:"Boss",level:"1",familyId:"family:boss%7Cymir"},
+ {id:"monster:boss%7Cymir%7C6",name:"Ymir · Lv 6",kind:"Boss",level:"6",familyId:"family:boss%7Cymir"},
+ {id:"family:event%20boss%7Chydra",name:"Hydra",kind:"Event Boss",family:true},
+ {id:"family:regular%20monster%7Czombie",name:"Zombie",kind:"Regular Monster",family:true}
+];
+function runtime(){
  const map=new Map();
- const env={ADMIN_EMAILS:'admin@example.test,helper@example.test',CALENDAR:{
+ const env={ADMIN_EMAILS:"admin@example.test,team@example.test",CALENDAR:{
   get:async k=>map.get(k)??null,put:async(k,v)=>{map.set(k,v)}
- }};
- const signed={access:{getIdentity:async()=>({email:'admin@example.test'})}};
- const unknown={access:{getIdentity:async()=>({email:'unknown@example.test'})}};
- return {map,env,signed,unknown};
+ },CATALOG_SERVICE:{fetch:async()=>Response.json({entries:fakeCatalog})}};
+ const access={access:{getIdentity:async()=>({email:"admin@example.test"})}};
+ const outsider={access:{getIdentity:async()=>({email:"outsider@example.test"})}};
+ return {map,env,access,outsider};
 }
-const url=p=>HOST+p;
-const request=(path,method='GET',data,origin=HOST)=>new Request(url(path),{
- method,
- headers:{...(data!==undefined?{'content-type':'application/json'}:{}),...(origin?{origin}:{})},
- ...(data!==undefined?{body:JSON.stringify(data)}:{})
+function request(path,method="GET",body,requestOrigin=HOST){
+ return new Request(HOST+path,{method,
+ headers:{...(body!==undefined?{"content-type":"application/json"}:{}),...(requestOrigin?{origin:requestOrigin}:{})},
+ ...(body!==undefined?{body:JSON.stringify(body)}:{})});
+}
+const basics={targetIds:[fakeCatalog[0].id,fakeCatalog[1].id],rule:"dates",selectedDates:["2026-11-12","2026-11-16"],startDate:"",endDate:"",reviewAfter:"",excludedDates:[],daysOfWeek:[],intervalDays:14,startTime:"",endTime:"",status:"Confirmed",notes:"",sourceUrl:"",published:true,paused:false};
+async function add(env,ctx,changes={}){
+ const res=await worker.fetch(request("/api/admin/schedules","POST",{...basics,...changes}),env,ctx);
+ assert.equal(res.status,201,await res.clone().text());
+ return (await res.json()).schedule;
+}
+async function publicEvents(env,from="2026-11-08",to="2026-11-30",params=""){
+ const r=await worker.fetch(request("/api/events?from="+from+"&to="+to+params),env);
+ assert.equal(r.status,200,await r.clone().text());return (await r.json()).events;
+}
+test("Cloudflare Access and allowlist are both necessary; only authenticated admins read catalog",async()=>{
+ const {env,access,outsider}=runtime();
+ assert.equal((await worker.fetch(request("/admin/"),env)).status,403);
+ assert.equal((await worker.fetch(request("/api/admin/catalog"),env,outsider)).status,403);
+ assert.equal((await worker.fetch(request("/admin/"),env,{access:{}})).status,403);
+ assert.equal((await worker.fetch(request("/admin/"),{...env,ADMIN_EMAILS:""},access)).status,403);
+ const page=await worker.fetch(request("/admin/"),env,access);
+ assert.equal(page.status,200);assert.match(await page.text(),/Bulk|Select events and monsters/i);
+ const data=await (await worker.fetch(request("/api/admin/catalog"),env,access)).json();
+ assert.deepEqual(data.entries,fakeCatalog);
+ assert.deepEqual(await publicEvents(env),[]);
 });
-const data={
- name:'Revelation of Maya',category:'Event',status:'Confirmed',
- startDate:'2026-11-12',endDate:'2026-11-15',startTime:'',endTime:'',
- notes:'Dates confirmed in game',sourceUrl:'https://example.test/event',published:false
-};
-test('Public calendar starts empty and unconfigured admin access is denied',async()=>{
- const {env,signed}=setup();
- const publicResponse=await worker.fetch(request('/api/events'),env);
- assert.equal(publicResponse.status,200);
- assert.deepEqual((await publicResponse.json()).events,[]);
- assert.equal((await worker.fetch(request('/api/admin/events'),env)).status,403);
- const noAllowlist={...env,ADMIN_EMAILS:''};
- assert.equal((await worker.fetch(request('/api/admin/events'),noAllowlist,signed)).status,403);
- assert.equal((await worker.fetch(request('/api/admin/events'),env,{access:{}})).status,403);
+test("Bulk specific dates publish all selected source ids, with drafts remaining private",async()=>{
+ const {env,access}=runtime();
+ const s=await add(env,access,{published:false});
+ assert.deepEqual(await publicEvents(env),[]);
+ const pub=await worker.fetch(request("/api/admin/schedules/"+s.id,"PUT",{...s,targetIds:s.targets.map(t=>t.id),published:true,replace:false}),env,access);
+ assert.equal(pub.status,200,await pub.clone().text());
+ const results=await publicEvents(env);
+ assert.equal(results.length,4);
+ assert.deepEqual([...new Set(results.map(e=>e.date))],["2026-11-12","2026-11-16"]);
+ assert.ok(results.some(e=>e.kind==="Boss"&&e.family));
+ assert.ok(results.some(e=>e.kind==="Event"));
+ assert.equal((await publicEvents(env,"2026-11-12","2026-11-12","&kind=Boss")).length,1);
 });
-test('Admin login requires verified Access identity and explicit email authorization',async()=>{
- const {env,signed,unknown}=setup();
- assert.equal((await worker.fetch(request('/admin/'),env)).status,403);
- assert.equal((await worker.fetch(request('/admin/'),env,unknown)).status,403);
- const login=await worker.fetch(request('/admin/'),env,signed);
- assert.equal(login.status,200);
- assert.match(await login.text(),/Event Calendar Admin/);
- assert.equal((await worker.fetch(request('/api/admin/events'),env,unknown)).status,403);
+test("Daily, weekly, interval and ongoing schedules expand according to UTC days",async()=>{
+ const {env,access}=runtime();
+ await add(env,access,{targetIds:[fakeCatalog[0].id],rule:"daily",selectedDates:[],startDate:"2026-11-09",endDate:"2026-11-11"});
+ await add(env,access,{targetIds:[fakeCatalog[1].id],rule:"weekly",selectedDates:[],startDate:"2026-11-08",endDate:"2026-11-23",daysOfWeek:[1,5]});
+ await add(env,access,{targetIds:[fakeCatalog[4].id],rule:"interval",selectedDates:[],startDate:"2026-11-09",endDate:"2026-11-20",intervalDays:3,excludedDates:["2026-11-15"]});
+ await add(env,access,{targetIds:[fakeCatalog[5].id],rule:"ongoing",selectedDates:[],startDate:"2026-11-10",endDate:"2026-11-12"});
+ const events=await publicEvents(env,"2026-11-08","2026-11-20");
+ const on=id=>events.filter(e=>e.sourceId===id).map(e=>e.date);
+ assert.deepEqual(on(fakeCatalog[0].id),["2026-11-09","2026-11-10","2026-11-11"]);
+ assert.deepEqual(on(fakeCatalog[1].id),["2026-11-09","2026-11-13","2026-11-16","2026-11-20"]);
+ assert.deepEqual(on(fakeCatalog[4].id),["2026-11-09","2026-11-12","2026-11-18"]);
+ assert.deepEqual(on(fakeCatalog[5].id),["2026-11-10","2026-11-11","2026-11-12"]);
 });
-test('Drafts stay private; admins publish, edit, and delete entries',async()=>{
- const {env,signed}=setup();
- const create=await worker.fetch(request('/api/admin/events','POST',data),env,signed);
- assert.equal(create.status,201,await create.clone().text());
- const item=(await create.json()).event;
- assert.match(item.id,/^[0-9a-f-]{36}$/);
- assert.equal(item.published,false);
- assert.deepEqual((await (await worker.fetch(request('/api/events'),env)).json()).events,[]);
- let all=await (await worker.fetch(request('/api/admin/events'),env,signed)).json();
- assert.equal(all.events.length,1);
- assert.equal(all.admin,'admin@example.test');
- const modified={...item,published:true,name:'Revelation of Maya · Updated'};
- const edit=await worker.fetch(request('/api/admin/events/'+item.id,'PUT',modified),env,signed);
- assert.equal(edit.status,200);
- const publicEvents=await (await worker.fetch(request('/api/events'),env)).json();
- assert.equal(publicEvents.events.length,1);
- assert.equal(publicEvents.events[0].name,modified.name);
- const remove=await worker.fetch(request('/api/admin/events/'+item.id,'DELETE',null,HOST),env,signed);
- assert.equal(remove.status,200);
- assert.equal((await (await worker.fetch(request('/api/events'),env)).json()).events.length,0);
+test("Always available is opt-in, paused records disappear, and tentative remains labelled",async()=>{
+ const {env,access}=runtime();
+ const s=await add(env,access,{targetIds:[fakeCatalog[5].id],rule:"always",selectedDates:[],startDate:"",endDate:"",status:"Tentative"});
+ assert.equal((await publicEvents(env,"2026-11-10","2026-11-11")).length,0);
+ const all=await publicEvents(env,"2026-11-10","2026-11-11","&includeAlways=true");
+ assert.equal(all.length,2);assert.equal(all[0].status,"Tentative");
+ const paused=await worker.fetch(request("/api/admin/schedules/"+s.id,"PUT",{...s,targetIds:s.targets.map(t=>t.id),paused:true}),env,access);
+ assert.equal(paused.status,200);
+ assert.equal((await publicEvents(env,"2026-11-10","2026-11-11","&includeAlways=true")).length,0);
 });
-test('All admin writes fail closed on bad origin, unverified user, invalid dates and unsafe payloads',async()=>{
- const {env,signed,unknown}=setup();
- assert.equal((await worker.fetch(request('/api/admin/events','POST',data),env)).status,403);
- assert.equal((await worker.fetch(request('/api/admin/events','POST',data),env,unknown)).status,403);
- assert.equal((await worker.fetch(request('/api/admin/events','POST',data,'https://elsewhere.test'),env,signed)).status,403);
- assert.equal((await worker.fetch(request('/api/admin/events','POST',{...data,startDate:'2026-02-31'}),env,signed)).status,400);
- assert.equal((await worker.fetch(request('/api/admin/events','POST',{...data,endDate:'2026-11-10'}),env,signed)).status,400);
- assert.equal((await worker.fetch(request('/api/admin/events','POST',{...data,sourceUrl:'javascript:alert(1)'}),env,signed)).status,400);
- assert.equal((await worker.fetch(request('/api/admin/events','POST',{...data,published:'true'}),env,signed)).status,400);
- assert.deepEqual((await (await worker.fetch(request('/api/events'),env)).json()).events,[]);
+test("Replace only removes selected targets from other schedules; unselected sources survive",async()=>{
+ const {env,access}=runtime();
+ const old=await add(env,access);
+ await add(env,access,{targetIds:[fakeCatalog[1].id],rule:"range",startDate:"2026-11-20",endDate:"2026-11-21",selectedDates:[],replace:true});
+ const list=await (await worker.fetch(request("/api/admin/schedules"),env,access)).json();
+ assert.equal(list.schedules.length,2);
+ assert.deepEqual(list.schedules.find(s=>s.id===old.id).targets.map(t=>t.id),[fakeCatalog[0].id]);
+ assert.ok((await publicEvents(env,"2026-11-12","2026-11-12")).some(e=>e.kind==="Event"));
+ assert.ok(!(await publicEvents(env,"2026-11-12","2026-11-12")).some(e=>e.kind==="Boss"));
 });
-test('Public view only shows published events in chronological order and allows site CORS',async()=>{
- const {env,signed}=setup();
- for(const [name,startDate] of [['Later','2026-12-04'],['Earlier','2026-11-10']]){
-  const r=await worker.fetch(request('/api/admin/events','POST',{...data,name,startDate,endDate:startDate,published:true}),env,signed);
-  assert.equal(r.status,201);
- }
- const resp=await worker.fetch(request('/api/events','GET',undefined,'https://evonymasters.jaynmegepicadventure.workers.dev'),env);
- assert.equal(resp.headers.get('access-control-allow-origin'),'https://evonymasters.jaynmegepicadventure.workers.dev');
- const body=await resp.json();
- assert.deepEqual(body.events.map(e=>e.name),['Earlier','Later']);
- const preflight=await worker.fetch(new Request(url('/api/events'),{method:'OPTIONS',headers:{origin:'https://evonymasters.jaynmegepicadventure.workers.dev'}}),env);
- assert.equal(preflight.status,204);
+test("Admin writes reject invalid IDs, unsafe origins, unknown user, recurrence errors and deletes",async()=>{
+ const {env,access,outsider}=runtime();
+ assert.equal((await worker.fetch(request("/api/admin/schedules","POST",basics),env)).status,403);
+ assert.equal((await worker.fetch(request("/api/admin/schedules","POST",basics),env,outsider)).status,403);
+ assert.equal((await worker.fetch(request("/api/admin/schedules","POST",basics,"https://example.test"),env,access)).status,403);
+ for(const bad of [
+  {targetIds:["unknown"]},{rule:"weekly",selectedDates:[],startDate:"2026-11-09",endDate:"2026-11-30",daysOfWeek:[]},
+  {rule:"interval",selectedDates:[],startDate:"2026-11-09",endDate:"2026-11-30",intervalDays:0},
+  {rule:"daily",selectedDates:[],startDate:"2026-11-09",endDate:"",reviewAfter:""},
+  {selectedDates:["2026-02-31"]},{sourceUrl:"javascript:alert(1)"}
+ ]){const r=await worker.fetch(request("/api/admin/schedules","POST",{...basics,...bad}),env,access);assert.equal(r.status,400,JSON.stringify(bad)+": "+await r.text());}
+ assert.equal((await worker.fetch(request("/api/events?from=2026-01-01&to=2027-01-01"),env)).status,400);
+ const s=await add(env,access);
+ const deleted=await worker.fetch(request("/api/admin/schedules/"+s.id,"DELETE"),env,access);
+ assert.equal(deleted.status,200);assert.deepEqual(await publicEvents(env),[]);
+});
+test("Public CORS is narrowly scoped",async()=>{
+ const {env}=runtime();
+ const url="/api/events?from=2026-11-09&to=2026-11-10";
+ const allowed=await worker.fetch(request(url,"GET",undefined,"https://evonymasters.jaynmegepicadventure.workers.dev"),env);
+ assert.equal(allowed.headers.get("access-control-allow-origin"),"https://evonymasters.jaynmegepicadventure.workers.dev");
+ const blocked=await worker.fetch(request(url,"GET",undefined,"https://unrelated.test"),env);
+ assert.equal(blocked.headers.has("access-control-allow-origin"),false);
 });
