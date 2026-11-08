@@ -335,3 +335,49 @@ test('revised event and monster chest sources drive the Chest Finder filters and
  const bad=await worker.fetch(new Request(API+'/v4/chests?participation=everybody'),env);
  assert.equal(bad.status,400);
 });
+
+test('Chest Finder orders matching chest families by numeric tier before source-only matches',async()=>{
+ const {env}=runtime();
+ const sheet={
+  version:1,schema:'evonymasters-2026-v2',
+  tabs:{
+   events:[
+    ['EVENT NAME','EVENT LOCATION','EVENT SEC LOCATION','FREQUENCY','PARTICIPATION','REWARD METHOD','DROP CLASSIFICATION','ITEM','QUANTITY'],
+    ['Revenge of Ymir','Event Centre','Bosses','Weekly','Alliance','Activity','Guaranteed','Refining Stone','1']
+   ],
+   monsters:[
+    ['MONSTER NAME','MONSTER LEVEL','MONSGTER TYPE','ITEM','QUANTITY','DROP CLASSIFICATION'],
+    ['Lv1 Ymir','1','Boss','Frost Bag','1','Possible']
+   ],
+   boxes:[
+    ['CHEST NAME','EVENT / BOSS NAME','ACTIVITY (EVENT/MONSTER)','RANK','TIER','DROP CLASSIFICATION','ITEM','QUANTITY'],
+    ['Epic Ymir Chest','Lv6 Ymir','Boss','','6','Guaranteed','Wood','1300'],
+    ['Frost Bag','Lv1 Ymir','Boss','1-10','','Guaranteed','Food','20'],
+    ['Common Ymir Chest','Lv1 Ymir','Boss','','1','Guaranteed','Stone','10'],
+    ['Common Ymir Chest','Lv1 Ymir','Boss','','1','Guaranteed','Food','100'],
+    ['Common Ymir Chest','Lv1 Ymir','Boss','','1','Guaranteed','Speedup Training','240'],
+    ['Common Ymir Chest','Lv1 Ymir','Boss','','1','Guaranteed','Speedup Training','24'],
+    ['Common Ymir Chest','Lv1 Ymir','Boss','','1','Guaranteed','Wood','400'],
+    ['Legendary Ymir Chest','Lv4 Ymir','Boss','','4','Guaranteed','Stone','800'],
+    ['Common Ymir Chest','Lv2 Ymir','Boss','','2','Guaranteed','Ore','300']
+   ]
+  }
+ };
+ // The two Common Ymir records share the same tier only when both identify tier 1.
+ assert.equal((await worker.fetch(await signedRequest(sheet),env)).status,200);
+ const result=await (await worker.fetch(new Request(API+'/v4/chests?q=ymir'),env)).json();
+ assert.deepEqual(result.chests.map(c=>[c.name,c.level]),[
+  ['Common Ymir Chest','1'],['Common Ymir Chest','2'],
+  ['Legendary Ymir Chest','4'],['Epic Ymir Chest','6'],['Frost Bag','']
+ ]);
+ const common=result.chests[0];
+ assert.deepEqual(common.items.map(i=>i.item),['Food','Speedup Training','Speedup Training','Stone','Wood']);
+ assert.deepEqual(common.items.filter(i=>i.item==='Speedup Training').map(i=>i.quantity),['24','240']);
+ const ids=[result.chests[3].id,common.id];
+ const url=API+'/v4/chests/compare?'+ids.map(id=>'id='+encodeURIComponent(id)).join('&');
+ const response=await worker.fetch(new Request(url),env);
+ assert.equal(response.status,200);
+ const compared=await response.json();
+ assert.deepEqual(compared.chests.map(c=>c.level),['1','6']);
+ assert.deepEqual(compared.chests[0].items.map(i=>i.item),['Food','Speedup Training','Speedup Training','Stone','Wood']);
+});
