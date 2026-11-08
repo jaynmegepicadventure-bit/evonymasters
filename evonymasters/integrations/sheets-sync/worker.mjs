@@ -9,7 +9,7 @@ const reply = (obj, status = 200, headers = {}) => new Response(JSON.stringify(o
 const clean = x => String(x ?? "").trim();
 const norm = x => clean(x).toLocaleLowerCase("en").replace(/\s+/g, " ");
 const fields = {
-  events: ["LOCATION","EVENT","RECURRANCE","FEQUENCY","EVENT NAME","SUB EVENT","ACTIVITY TYPE","ITEM AVAILABILITY","STAMINA","DETAIL","LEVEL","ITEM","QUANTITY","GENERAL","CASTLE","Drop Classification"],
+  events: ["LOCATION","EVENT","RECURRANCE","FEQUENCY","EVENT NAME","SUB EVENT","ACTIVITY TYPE","REWARD METHOD","ITEM AVAILABILITY","STAMINA","DETAIL","LEVEL","ITEM","QUANTITY","GENERAL","CASTLE","Drop Classification"],
   monsters: ["Monster Type","Monster Level","Monster Name","Power","Stamina","Event","Reward Item (in-game)","Quantity","Drop Classification"],
   boxes: ["Box Name","Level","Reward Item (in-game)","Quantity","Drop Classification","Source","Notes"]
 };
@@ -57,7 +57,7 @@ function parseSnapshot(raw) {
       "EVENT NAME":value(v,"EVENT NAME"),"LOCATION":value(v,"EVENT LOCATION"),
       "EVENT":value(v,"EVENT NAME"),"SUB EVENT":value(v,"EVENT SEC LOCATION"),
       "FEQUENCY":value(v,"FREQUENCY"),"RECURRANCE":"",
-      "ACTIVITY TYPE":value(v,"PARTICIPATION"),"ITEM AVAILABILITY":value(v,"REWARD METHOD"),
+      "ACTIVITY TYPE":value(v,"PARTICIPATION"),"REWARD METHOD":value(v,"REWARD METHOD"),"ITEM AVAILABILITY":value(v,"REWARD METHOD"),
       "STAMINA":value(v,"STAMINA"),"DETAIL":[value(v,"REWARD METHOD"),value(v,"RANKING TYPE"),value(v,"RANK"),value(v,"CHEST NAME")].filter(Boolean).join(" · "),
       "LEVEL":value(v,"RANK")||value(v,"TIER"),"ITEM":value(v,"ITEM"),"QUANTITY":value(v,"QUANTITY"),
       "GENERAL":value(v,"GENERAL"),"CASTLE":value(v,"CASTLE"),
@@ -150,7 +150,7 @@ function search(snapshot, query, sourceFilter = "", monsterType = "") {
 // V3: query all matched sources, aggregate quantities and sort before pagination.
 // The master spreadsheet remains private, and no bulk-download endpoint is provided.
 const validTypes = new Set(["all","events","bosses","all-bosses","regular","event-bosses","boxes"]);
-const validSorts = new Set(["suggested","source","type","quantity","frequency","chance","notes"]);
+const validSorts = new Set(["suggested","source","type","activity","rewardActivity","quantity","frequency","chance","notes"]);
 const normalizeDrop = value => {
   const v=norm(value);
   if(v==="guaranteed")return "Guaranteed";
@@ -226,7 +226,7 @@ function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggest
     for(const {fields:r} of snapshot.events){
       if(activity!=="all" && (activity==="alliance"?!/alliance/i.test(r["ACTIVITY TYPE"]):!/personal/i.test(r["ACTIVITY TYPE"])))continue;
       const title=r["EVENT NAME"],id=[norm(title),norm(r["SUB EVENT"]),norm(r.DETAIL),norm(r["ACTIVITY TYPE"])].join("|");
-      const context={subEvent:r["SUB EVENT"],activity:r["ACTIVITY TYPE"],frequency:r.FEQUENCY,recurrence:r.RECURRANCE,detail:r.DETAIL,location:r.LOCATION,event:r.EVENT,level:r.LEVEL,stamina:r.STAMINA,availability:r["ITEM AVAILABILITY"],general:r.GENERAL,castle:r.CASTLE};
+      const context={subEvent:r["SUB EVENT"],activity:r["ACTIVITY TYPE"],rewardActivity:r["REWARD METHOD"],frequency:r.FEQUENCY,recurrence:r.RECURRANCE,detail:r.DETAIL,location:r.LOCATION,event:r.EVENT,level:r.LEVEL,stamina:r.STAMINA,availability:r["ITEM AVAILABILITY"],general:r.GENERAL,castle:r.CASTLE};
       const reward={item:r.ITEM,quantity:r.QUANTITY,classification:normalizeDrop(r["Drop Classification"]),route:[r.ITEM],details:{location:r.LOCATION,event:r.EVENT,subEvent:r["SUB EVENT"],activity:r["ACTIVITY TYPE"],frequency:r.FEQUENCY,recurrence:r.RECURRANCE,detail:r.DETAIL,level:r.LEVEL,stamina:r.STAMINA,availability:r["ITEM AVAILABILITY"],general:r.GENERAL,castle:r.CASTLE}};
       add("events",id,title,context,reward);
       for(const child of descendants(reward.item,reward.classification,reward.route,new Set(),0))add("events",id,title,context,child);
@@ -261,6 +261,8 @@ function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggest
     switch(sort){
       case "source":return collator(a.title,b.title);
       case "type":return collator(a.source,b.source)||collator(a.title,b.title);
+      case "activity":return collator(clean(a.context.activity),clean(b.context.activity))||collator(a.title,b.title);
+      case "rewardActivity":return collator(clean(a.context.rewardActivity),clean(b.context.rewardActivity))||collator(a.title,b.title);
       case "quantity":{
         if(a.quantityMax===null||b.quantityMax===null)return a.quantityMax===null?(b.quantityMax===null?0:1):-1;
         return b.quantityMax-a.quantityMax||collator(a.title,b.title);
