@@ -69,6 +69,17 @@ const API="https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev";
 const q=document.getElementById("q"),source=document.getElementById("source"),eventFilter=document.getElementById("event-filter"),participationFilter=document.getElementById("participation-filter"),rankFilter=document.getElementById("rank-filter"),eventSearch=document.getElementById("event-search"),cards=document.getElementById("chests"),more=document.getElementById("more"),status=document.getElementById("status"),count=document.getElementById("count"),compare=document.getElementById("compare"),reset=document.getElementById("reset"),selection=document.getElementById("selected-count"),panel=document.getElementById("comparison-panel"),head=document.getElementById("compare-head"),body=document.getElementById("compare-body");
 const selected=new Map();let page=0,hasMore=false,serial=0,timer=null,request=null;
 const toText=x=>String(x??"").trim();
+const collator=new Intl.Collator("en",{numeric:true,sensitivity:"base"});
+const sortedRewards=rows=>[...rows].sort((a,b)=>collator.compare(a.item,b.item)
+ || (parseFloat(String(a.quantity).replace(/,/g,""))||0)-(parseFloat(String(b.quantity).replace(/,/g,""))||0)
+ || collator.compare(a.quantity||"",b.quantity||""));
+const chestFamily=name=>toText(name).replace(/^(?:common|uncommon|rare|super rare|epic|legendary|excellent|junior|medium|senior)\s+/i,"").trim();
+const firstNumber=value=>{const n=toText(value).replace(/,/g,"").match(/\d+(?:\.\d+)?/);return n?Number(n[0]):Infinity};
+const compareChest=(a,b)=>collator.compare(chestFamily(a.name),chestFamily(b.name))
+ ||(firstNumber(a.level)-firstNumber(b.level)||0)
+ ||(firstNumber(a.rank)-firstNumber(b.rank)||0)
+ ||collator.compare(a.name,b.name);
+
 const el=(tag,cls,value)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(value!==undefined)n.textContent=toText(value);return n;};
 function refreshSelected(){selection.textContent=selected.size+" of 4 selected";compare.disabled=selected.size<2;reset.disabled=!selected.size;}
 function card(c){
@@ -77,7 +88,7 @@ function card(c){
  const labels=el("div");labels.append(el("h3","",c.name),el("div","sub",[c.level?"Tier "+c.level:"",c.rank?"Rank "+c.rank:"",c.itemCount+" recorded rewards"].filter(Boolean).join(" · ")));
  top.append(pic,labels);article.append(top);
  const list=el("ul","items");
- for(const item of c.items.slice(0,5)){
+ for(const item of sortedRewards(c.items).slice(0,5)){
   const li=el("li");li.append(el("span","",item.item),el("span","",item.quantity||"Quantity missing"));list.append(li);
  }
  if(c.itemCount>5)list.append(el("li","muted","+"+(c.itemCount-5)+" additional recorded items"));
@@ -116,7 +127,7 @@ function card(c){
    for(const name of ["Reward","Quantity","Chance"]){const th=el("th","",name);th.scope="col";tr.append(th)}
    thead.append(tr);table.append(thead);
    const tbody=el("tbody");
-   for(const item of chest.items){
+   for(const item of sortedRewards(chest.items)){
     const row=el("tr"),name=el("td","",item.item);
     if(item.notes)name.append(el("small","reward-path",item.notes));
     row.append(name,el("td","",item.quantity||"Not recorded"),el("td","",item.classification==="Unspecified"?"Not recorded":item.classification||"Not recorded"));
@@ -129,7 +140,7 @@ function card(c){
     const nestedTable=el("table","reward-table"),nh=el("thead"),nr=el("tr");
     for(const name of ["Reward","Quantity","Chance"]){const th=el("th","",name);th.scope="col";nr.append(th)}
     nh.append(nr);nestedTable.append(nh);const nb=el("tbody");
-    for(const item of chest.nestedItems){
+    for(const item of sortedRewards(chest.nestedItems)){
      const row=el("tr"),name=el("td","",item.item);
      if(item.via?.length)name.append(el("small","reward-path","Via "+item.via.join(" → ")));
      row.append(name,el("td","",item.quantity||"Not recorded"),el("td","",item.classification==="Unspecified"?"Not recorded":item.classification||"Not recorded"));nb.append(row);
@@ -205,11 +216,11 @@ compare.addEventListener("click",async()=>{
  try{
   const r=await fetch(API+"/v4/chests/compare?"+params);
   if(!r.ok)throw Error("Compare "+r.status);
-  const data=await r.json();head.replaceChildren();body.replaceChildren();
+  const data=await r.json();data.chests.sort(compareChest);head.replaceChildren();body.replaceChildren();
   const hr=el("tr"),first=el("th","","Reward item");first.scope="col";hr.append(first);
   for(const chest of data.chests){const th=el("th","",chest.name+(chest.level?" · "+chest.level:"")+(chest.rank?" · Rank "+chest.rank:""));th.scope="col";hr.append(th)}
   head.append(hr);
-  const names=[...new Set(data.chests.flatMap(c=>[...c.items,...(c.nestedItems||[])].map(i=>i.item)))].sort((a,b)=>a.localeCompare(b));
+  const names=[...new Set(data.chests.flatMap(c=>[...c.items,...(c.nestedItems||[])].map(i=>i.item)))].sort(collator.compare);
   for(const name of names){
    const row=el("tr");row.append(el("td","",name));
    for(const chest of data.chests){
