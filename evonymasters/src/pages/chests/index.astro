@@ -19,7 +19,7 @@ h1{font-size:clamp(2rem,4vw,3rem);margin:7px 0 9px;letter-spacing:-.04em}.subtit
 .chest{border:1px solid #435f79;border-radius:13px;background:linear-gradient(#1b344e,#11263c);padding:17px;display:flex;flex-direction:column;gap:10px}
 .chest-head{display:flex;align-items:center;gap:12px}
 .chest img{width:84px;height:66px;object-fit:cover;border:1px solid #58738b;border-radius:9px}
-.chest h3{margin:0;font-size:1.05rem}.sub{font-size:.79rem;color:#b6cadc;margin-top:4px;line-height:1.5}
+.chest h3{margin:0;font-size:1.05rem}.source-availability{display:block;color:#b8cad8;font-size:.75rem;margin-top:5px}.source-availability.live{color:#7ae5a6;font-weight:850}.sub{font-size:.79rem;color:#b6cadc;margin-top:4px;line-height:1.5}
 .chest .items{list-style:none;margin:0;padding:9px 0;border-top:1px solid #35506b;flex:1}
 .chest li{display:flex;justify-content:space-between;gap:12px;padding:4px 0;font-size:.86rem;color:#e3edf5}
 .chest li span:last-child{white-space:nowrap;color:#edcb82}
@@ -67,7 +67,10 @@ footer{margin-top:30px;border-top:1px solid #334f69;padding:25px 0;color:#b5c8d9
 "use strict";
 const API="https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev";
 const q=document.getElementById("q"),source=document.getElementById("source"),eventFilter=document.getElementById("event-filter"),participationFilter=document.getElementById("participation-filter"),rankFilter=document.getElementById("rank-filter"),eventSearch=document.getElementById("event-search"),cards=document.getElementById("chests"),more=document.getElementById("more"),status=document.getElementById("status"),count=document.getElementById("count"),compare=document.getElementById("compare"),reset=document.getElementById("reset"),selection=document.getElementById("selected-count"),panel=document.getElementById("comparison-panel"),head=document.getElementById("compare-head"),body=document.getElementById("compare-body");
-const selected=new Map();let page=0,hasMore=false,serial=0,timer=null,request=null;
+const selected=new Map();let page=0,hasMore=false,serial=0,timer=null,request=null,availability=null;
+const sourceKey=v=>String(v??"").trim().toLowerCase().replace(/\s*·\s*lv\s*\d+$/i,"").replace(/\s+/g," ");
+function paintAvailability(article,c){const badge=article.querySelector(".source-availability");if(!badge)return;if(!availability){badge.textContent="Source availability: checking…";return}const matches=(c.sources||[]).map(src=>availability.get(sourceKey(src.name))).filter(Boolean);const live=matches.some(v=>v.live),upcoming=matches.map(v=>v.next).filter(Boolean).sort()[0];badge.classList.toggle("live",live);badge.textContent=live?"● Source LIVE":upcoming?"Source upcoming · "+upcoming+" UTC":"Source schedule not recorded";}
+async function loadAvailability(){try{const today=new Date().toISOString().slice(0,10),to=new Date(Date.parse(today+"T00:00:00Z")+92*86400000).toISOString().slice(0,10);const r=await fetch("https://evonymasters-calendar.jaynmegepicadventure.workers.dev/api/events?"+new URLSearchParams({from:today,to,kind:"all",includeAlways:"true"}));if(!r.ok)throw Error("Calendar unavailable");const d=await r.json(),next=new Map();for(const e of d.events||[]){const key=sourceKey(e.name),old=next.get(key)||{live:false,next:""};if(e.date===today)old.live=true;else if(!old.next||e.date<old.next)old.next=e.date;next.set(key,old);}availability=next;for(const article of cards.querySelectorAll(".chest"))if(article._chestRecord)paintAvailability(article,article._chestRecord)}catch{availability=new Map();for(const article of cards.querySelectorAll(".chest"))if(article._chestRecord){const badge=article.querySelector(".source-availability");if(badge)badge.textContent="Source availability unavailable"}}}
 const toText=x=>String(x??"").trim();
 const collator=new Intl.Collator("en",{numeric:true,sensitivity:"base"});
 const sortedRewards=rows=>[...rows].sort((a,b)=>collator.compare(a.item,b.item)
@@ -85,7 +88,7 @@ function refreshSelected(){selection.textContent=selected.size+" of 4 selected";
 function card(c){
  const article=el("article","chest"),top=el("div","chest-head"),pic=document.createElement("img");
  pic.src="/images/item-finder/box.svg";pic.alt="";pic.width=84;pic.height=66;pic.loading="lazy";
- const labels=el("div");labels.append(el("h3","",c.name),el("div","sub",[c.level?"Tier "+c.level:"",c.rank?"Rank "+c.rank:"",c.itemCount+" recorded rewards"].filter(Boolean).join(" · ")));
+ const labels=el("div");labels.append(el("h3","",c.name),el("div","sub",[c.level?"Tier "+c.level:"",c.rank?"Rank "+c.rank:"",c.itemCount+" recorded rewards"].filter(Boolean).join(" · ")),el("span","source-availability","Checking source availability…"));article._chestRecord=c;paintAvailability(article,c);
  top.append(pic,labels);article.append(top);
  const list=el("ul","items");
  for(const item of sortedRewards(c.items).slice(0,5)){
@@ -240,6 +243,6 @@ compare.addEventListener("click",async()=>{
   panel.hidden=false;status.textContent="";panel.scrollIntoView({behavior:"smooth",block:"start"});
  }catch{status.textContent="Could not compare these chests. Try again."}
 });
-const initial=new URLSearchParams(location.search);q.value=initial.get("q")||"";if(initial.get("source")&&[...source.options].some(o=>o.value===initial.get("source")))source.value=initial.get("source");setEventMode();loadEventChoices();load();
+const initial=new URLSearchParams(location.search);q.value=initial.get("q")||"";if(initial.get("source")&&[...source.options].some(o=>o.value===initial.get("source")))source.value=initial.get("source");setEventMode();loadEventChoices();load();loadAvailability();
 })();
 </script></body></html>
