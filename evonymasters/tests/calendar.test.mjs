@@ -1,4 +1,6 @@
 import test from "node:test";
+import { Script } from "node:vm";
+import { readFileSync } from "node:fs";
 import assert from "node:assert/strict";
 import worker from "../integrations/calendar/worker.mjs";
 const HOST="https://evonymasters-calendar.test",origin=HOST;
@@ -115,4 +117,22 @@ test("Public CORS is narrowly scoped",async()=>{
  assert.equal(allowed.headers.get("access-control-allow-origin"),"https://evonymasters.jaynmegepicadventure.workers.dev");
  const blocked=await worker.fetch(request(url,"GET",undefined,"https://unrelated.test"),env);
  assert.equal(blocked.headers.has("access-control-allow-origin"),false);
+});
+
+test("Admin and public calendar browser scripts are syntactically valid",async()=>{
+ const {env,access}=runtime();
+ const html=await (await worker.fetch(request("/admin/"),env,access)).text();
+ const match=html.match(/<script>([\s\S]*?)<\/script>/);
+ assert.ok(match,"admin interface should include its interactive script");
+ assert.doesNotThrow(()=>new Script(match[1]));
+ const calendar=readFileSync(new URL("../src/pages/calendar/index.astro",import.meta.url),"utf8");
+ const publicScript=calendar.match(/<script is:inline>([\s\S]*?)<\/script>/);
+ assert.ok(publicScript);
+ assert.doesNotThrow(()=>new Script(publicScript[1]));
+});
+test("Open-ended daily schedules show Needs Review after the review date",async()=>{
+ const {env,access}=runtime();
+ await add(env,access,{targetIds:[fakeCatalog[0].id],rule:"daily",selectedDates:[],startDate:"2026-11-09",endDate:"",reviewAfter:"2026-11-11"});
+ const entries=await publicEvents(env,"2026-11-10","2026-11-12");
+ assert.deepEqual(entries.map(e=>e.status),["Confirmed","Confirmed","Needs Review"]);
 });
