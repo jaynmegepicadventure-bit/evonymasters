@@ -31,7 +31,7 @@ async function bodyJSON(req){
  if(Number(req.headers.get("content-length")||0)>25000)throw Error("Payload too large");
  const value=await req.text();if(value.length>25000)throw Error("Payload too large");return JSON.parse(value);
 }
-const ruleTypes=new Set(["dates","range","daily","weekly","interval","ongoing","always"]);
+const ruleTypes=new Set(["dates","range","daily","weekly","interval","ongoing","always","weekends","alternate-weekends"]);
 function validate(input,entries,existing){
  if(!input||typeof input!=="object"||Array.isArray(input))throw Error("Invalid schedule");
  const rule=txt(input.rule),status=txt(input.status||"Confirmed");
@@ -44,25 +44,26 @@ function validate(input,entries,existing){
  const startDate=txt(input.startDate),endDate=txt(input.endDate),reviewAfter=txt(input.reviewAfter),name=txt(input.name);
  const selectedDates=Array.isArray(input.selectedDates)?input.selectedDates:[],excludedDates=Array.isArray(input.excludedDates)?input.excludedDates:[],daysOfWeek=Array.isArray(input.daysOfWeek)?input.daysOfWeek:[];
  const startTime=txt(input.startTime),endTime=txt(input.endTime),notes=txt(input.notes),sourceUrl=txt(input.sourceUrl),intervalDays=Number(input.intervalDays||1);
- if(!["always","dates"].includes(rule)&&!validDate(startDate))throw Error("Enter a valid start date");
+ if(["range","interval","ongoing","alternate-weekends"].includes(rule)&&!validDate(startDate))throw Error("Enter a valid start date");
  if(endDate&&!validDate(endDate)||startDate&&endDate&&endDate<startDate)throw Error("Invalid end date");
  if(rule==="range"&&!endDate)throw Error("Date range requires an end date");
- if(!["always","dates"].includes(rule)&&!endDate&&!validDate(reviewAfter))throw Error("Open-ended recurring events require a review date");
+ 
  if(reviewAfter&&(!validDate(reviewAfter)||startDate&&reviewAfter<startDate))throw Error("Invalid review date");
  if(startTime&&!ts.test(startTime)||endTime&&!ts.test(endTime)||startTime&&endTime&&endTime<startTime)throw Error("Enter valid UTC times, start before end");
  if(selectedDates.length>180||selectedDates.some(d=>typeof d!=="string"||!validDate(d))||rule==="dates"&&!selectedDates.length)throw Error("Choose valid individual dates");
  if(excludedDates.length>180||excludedDates.some(d=>typeof d!=="string"||!validDate(d)))throw Error("Invalid excluded dates");
- if(rule==="weekly"&&(!daysOfWeek.length||daysOfWeek.some(d=>!Number.isInteger(d)||d<0||d>6)))throw Error("Choose weekdays");
+ if(rule==="alternate-weekends"&&day(startDate).getUTCDay()!==6)throw Error("Choose a Saturday as the first active weekend");
+  if(rule==="weekly"&&(!daysOfWeek.length||daysOfWeek.some(d=>!Number.isInteger(d)||d<0||d>6)))throw Error("Choose weekdays");
  if(rule==="interval"&&(!Number.isInteger(intervalDays)||intervalDays<2||intervalDays>365))throw Error("Interval must be between 2 and 365 days");
  if(name.length>150||notes.length>1000)throw Error("Title or notes too long");
  if(sourceUrl){let link;try{link=new URL(sourceUrl)}catch{throw Error("Invalid source URL")}if(link.protocol!=="https:"||sourceUrl.length>500)throw Error("Source URL must use HTTPS");}
  const unique=[...new Set(selectedDates)].sort();
  const title=name||targets.slice(0,2).map(t=>t.name).join(", ")+(targets.length>2?" +"+(targets.length-2):"");
  return {id:existing?.id||crypto.randomUUID(),name:title,targets:targets.map(t=>({id:t.id,name:t.name,kind:t.kind,level:t.level||"",family:!!t.family})),rule,
- startDate:rule==="always"?"":rule==="dates"?unique[0]:startDate,endDate:rule==="always"?"":endDate,
+ startDate:rule==="always"||rule==="daily"||rule==="weekends"||rule==="weekly"?"":rule==="dates"?unique[0]:startDate,endDate:rule==="always"||rule==="daily"||rule==="weekends"||rule==="weekly"?"":endDate,
  selectedDates:rule==="dates"?unique:[],daysOfWeek:rule==="weekly"?[...new Set(daysOfWeek)].sort():[],
  intervalDays:rule==="interval"?intervalDays:1,excludedDates:[...new Set(excludedDates)].sort(),startTime,endTime,reviewAfter:rule==="always"?"":reviewAfter,
- status,notes,sourceUrl,published:input.published??existing?.published??false,paused:input.paused??existing?.paused??false,updatedAt:new Date().toISOString()};
+ status,notes,sourceUrl,published:input.published??true,paused:input.paused??existing?.paused??false,updatedAt:new Date().toISOString()};
 }
 function matches(s,dateValue){
  if(!s.published||s.paused||(s.excludedDates||[]).includes(dateValue))return false;
@@ -70,6 +71,8 @@ function matches(s,dateValue){
  if(s.rule==="dates")return s.selectedDates.includes(dateValue);
  if(dateValue<s.startDate||s.endDate&&dateValue>s.endDate)return false;
  if(["range","daily","ongoing"].includes(s.rule))return true;
+  if(s.rule==="weekends")return [0,6].includes(day(dateValue).getUTCDay());
+  if(s.rule==="alternate-weekends"){const dow=day(dateValue).getUTCDay(),offset=dow===0?1:0;return [0,6].includes(dow)&&Math.floor((day(dateValue)-day(s.startDate))/86400000+offset)%14===0;}
  if(s.rule==="weekly")return s.daysOfWeek.includes(day(dateValue).getUTCDay());
  if(s.rule==="interval")return (day(dateValue)-day(s.startDate))/86400000%s.intervalDays===0;
  return false;
