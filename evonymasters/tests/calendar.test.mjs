@@ -161,3 +161,10 @@ test("Player-facing reward, event, chest and homepage browser scripts remain syn
  assert.match(resources,/addField\("Notes \/ How to obtain",row.note\)/);
  assert.doesNotMatch(resources,/id="activity-filter"/);
 });
+
+test("Saved schedule rendering declares its own title binding",async()=>{
+ const {env,access}=runtime();
+ const html=await (await worker.fetch(request("/admin/"),env,access)).text();
+ assert.match(html,/const article=document\.createElement\("article"\),title=document\.createElement\("strong"\)/);
+ assert.doesNotMatch(html,/article\.className="entry",title=document\.createElement/);
+});
