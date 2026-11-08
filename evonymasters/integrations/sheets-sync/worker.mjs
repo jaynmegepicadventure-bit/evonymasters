@@ -147,10 +147,66 @@ function search(snapshot, query, sourceFilter = "", monsterType = "") {
   return found.slice(0,30);
 }
 
+// A read-only view of the same published schedules stored by the Calendar Worker.
+// Bind CALENDAR to the existing evonymasters-calendar-data KV namespace on this Worker.
+function buildCalendarStates(schedules, today=new Date().toISOString().slice(0,10)){
+  const states=new Map(),todayDay=new Date(today+"T00:00:00Z");
+  if(!Array.isArray(schedules))return states;
+  const isOn=(s,dateValue,offset)=>{
+    if(!s.published||s.paused||(s.excludedDates||[]).includes(dateValue))return false;
+    if(s.rule==="dates")return (s.selectedDates||[]).includes(dateValue);
+    if(s.rule==="always")return true;
+    if(s.startDate&&dateValue<s.startDate||s.endDate&&dateValue>s.endDate)return false;
+    const wd=new Date(dateValue+"T00:00:00Z").getUTCDay();
+    if(["daily","range","ongoing"].includes(s.rule))return true;
+    if(s.rule==="weekends")return wd===0||wd===6;
+    if(s.rule==="alternate-weekends"){
+      const anchor=new Date(s.startDate+"T00:00:00Z");
+      const distance=Math.floor((new Date(dateValue+"T00:00:00Z")-anchor)/86400000);
+      return distance>=0&&(distance%14===0||distance%14===1);
+    }
+    if(s.rule==="weekly")return (s.daysOfWeek||[]).includes(wd);
+    if(s.rule==="interval"&&s.startDate){
+      const diff=Math.floor((new Date(dateValue+"T00:00:00Z")-new Date(s.startDate+"T00:00:00Z"))/86400000);
+      return diff>=0&&diff%Number(s.intervalDays||1)===0;
+    }
+    return false;
+  };
+  for(const s of schedules){
+    if(!s.published||s.paused)continue;
+    let active=false,next="";
+    for(let offset=0;offset<=92;offset++){
+      const dateValue=new Date(todayDay.getTime()+offset*86400000).toISOString().slice(0,10);
+      if(!isOn(s,dateValue,offset))continue;
+      if(offset===0)active=true;
+      else{next=dateValue;break;}
+    }
+    for(const target of s.targets||[]){
+      const key=norm(target.kind)+"|"+norm(target.name);
+      const old=states.get(key)||{active:false,next:""};
+      old.active=old.active||active;
+      if(next&&(!old.next||next<old.next))old.next=next;
+      states.set(key,old);
+    }
+  }
+  return states;
+}
+function lookupAvailability(group,states){
+  if(group.source==="boxes")return {availability:"Not applicable",nextAvailable:""};
+  if(!states)return {availability:"Unknown",nextAvailable:""};
+  const kind={events:"Event",bosses:"Boss","event-bosses":"Event Boss",regular:"Regular Monster"}[group.source];
+  const base=norm(kind)+"|"+norm(group.title);
+  const family=states.get(base);
+  const level=clean(group.context?.level);
+  const individual=level?states.get(base+" · lv "+norm(level)):null;
+  const active=Boolean(family?.active||individual?.active);
+  const dates=[family?.next,individual?.next].filter(Boolean).sort();
+  return {availability:active?"Live":dates.length?"Upcoming":"Unscheduled",nextAvailable:dates[0]||""};
+}
 // V3: query all matched sources, aggregate quantities and sort before pagination.
 // The master spreadsheet remains private, and no bulk-download endpoint is provided.
 const validTypes = new Set(["all","events","bosses","all-bosses","regular","event-bosses","boxes"]);
-const validSorts = new Set(["suggested","source","type","activity","rewardActivity","quantity","frequency","chance","notes"]);
+const validSorts = new Set(["suggested","source","type","activity","rewardActivity","quantity","frequency","chance","notes","availability"]);
 const normalizeDrop = value => {
   const v=norm(value);
   if(v==="guaranteed")return "Guaranteed";
@@ -169,7 +225,7 @@ const numericQuantity = raw => {
   const n=clean(raw).replace(/,/g,"");
   return /^\d+(?:\.\d+)?$/.test(n) ? Number(n) : null;
 };
-function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggested",direction="asc",activity="all"}){
+function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggested",direction="asc",activity="all",calendarStates=null,liveOnly=false}){
   const q=norm(query), grouped=new Map(), boxMap=new Map();
   for(const box of snapshot.boxes){
     const r=box.fields, id=norm(r["Box Name"]);
@@ -226,7 +282,7 @@ function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggest
     for(const {fields:r} of snapshot.events){
       if(activity!=="all" && (activity==="alliance"?!/alliance/i.test(r["ACTIVITY TYPE"]):!/personal/i.test(r["ACTIVITY TYPE"])))continue;
       const title=r["EVENT NAME"],id=[norm(title),norm(r["SUB EVENT"]),norm(r.DETAIL),norm(r["ACTIVITY TYPE"])].join("|");
-      const context={subEvent:r["SUB EVENT"],activity:r["ACTIVITY TYPE"],rewardActivity:r["REWARD METHOD"],frequency:r.FEQUENCY,recurrence:r.RECURRANCE,detail:r.DETAIL,location:r.LOCATION,event:r.EVENT,level:r.LEVEL,stamina:r.STAMINA,availability:r["ITEM AVAILABILITY"],general:r.GENERAL,castle:r.CASTLE};
+      const context={subEvent:r["SUB EVENT"],activity:r["ACTIVITY TYPE"],rewardActivity:r["REWARD METHOD"]||r["ITEM AVAILABILITY"],frequency:r.FEQUENCY,recurrence:r.RECURRANCE,detail:r.DETAIL,location:r.LOCATION,event:r.EVENT,level:r.LEVEL,stamina:r.STAMINA,availability:r["ITEM AVAILABILITY"],general:r.GENERAL,castle:r.CASTLE};
       const reward={item:r.ITEM,quantity:r.QUANTITY,classification:normalizeDrop(r["Drop Classification"]),route:[r.ITEM],details:{location:r.LOCATION,event:r.EVENT,subEvent:r["SUB EVENT"],activity:r["ACTIVITY TYPE"],frequency:r.FEQUENCY,recurrence:r.RECURRANCE,detail:r.DETAIL,level:r.LEVEL,stamina:r.STAMINA,availability:r["ITEM AVAILABILITY"],general:r.GENERAL,castle:r.CASTLE}};
       add("events",id,title,context,reward);
       for(const child of descendants(reward.item,reward.classification,reward.route,new Set(),0))add("events",id,title,context,child);
@@ -254,7 +310,8 @@ function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggest
     const note=clean([g.context.subEvent,g.context.detail,g.context.sourceNote].filter(Boolean).filter((x,i,a)=>a.indexOf(x)===i).join(" · "))
       || (g.source==="boxes"?"Box contents":g.source==="bosses"||g.source==="event-bosses"||g.source==="regular"?"Defeat monster":"Reward conditions vary");
     const { _seen,_quantities,_classes,...rest}=g;
-    return {...rest,quantityDisplay,quantityMax:quantities.at(-1)??null,chance,frequency,note};
+    const availability=lookupAvailability(g,calendarStates);
+    return {...rest,quantityDisplay,quantityMax:quantities.at(-1)??null,chance,frequency,note,...availability};
   });
   const collator=(a,b)=>a.localeCompare(b,"en",{numeric:true,sensitivity:"base"});
   const compare=(a,b)=>{
@@ -263,6 +320,7 @@ function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggest
       case "type":return collator(a.source,b.source)||collator(a.title,b.title);
       case "activity":return collator(clean(a.context.activity),clean(b.context.activity))||collator(a.title,b.title);
       case "rewardActivity":return collator(clean(a.context.rewardActivity),clean(b.context.rewardActivity))||collator(a.title,b.title);
+      case "availability":return ({Live:0,Upcoming:1,Unscheduled:2,Unknown:3,"Not applicable":4}[a.availability]??3)-({Live:0,Upcoming:1,Unscheduled:2,Unknown:3,"Not applicable":4}[b.availability]??3)||collator(a.nextAvailable||"9999",b.nextAvailable||"9999")||collator(a.title,b.title);
       case "quantity":{
         if(a.quantityMax===null||b.quantityMax===null)return a.quantityMax===null?(b.quantityMax===null?0:1):-1;
         return b.quantityMax-a.quantityMax||collator(a.title,b.title);
@@ -274,9 +332,10 @@ function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggest
     }
   };
   // Quantity descending and other headers ascending by default; flipping reverses results.
-  groups.sort((a,b)=>direction==="desc"?-compare(a,b):compare(a,b));
+  const visible=liveOnly?groups.filter(g=>g.availability==="Live"):groups;
+  visible.sort((a,b)=>direction==="desc"?-compare(a,b):compare(a,b));
   const LIMIT=15,offset=page*LIMIT;
-  return {total:groups.length,page,hasMore:offset+LIMIT<groups.length,groups:groups.slice(offset,offset+LIMIT)};
+  return {total:visible.length,page,hasMore:offset+LIMIT<visible.length,groups:visible.slice(offset,offset+LIMIT),availabilityConfigured:calendarStates!==null};
 }
 
 // Stable identifiers derived from event and monster identity, never sheet row numbers.
@@ -509,13 +568,16 @@ export default {
     const sort=clean(url.searchParams.get("sort"))||"suggested";
     const direction=clean(url.searchParams.get("direction"))||"asc";
     const page=Number(url.searchParams.get("page")||0);
+    const liveOnly=url.searchParams.get("liveOnly")==="true";
     if(q.length<2||q.length>100||!validTypes.has(type)||!["all","alliance","personal"].includes(activity)||!["all","Guaranteed","Possible","Redeem","Unspecified"].includes(drop)||
        !validSorts.has(sort)||!["asc","desc"].includes(direction)||!Number.isSafeInteger(page)||page<0||page>1000)
       return reply({error:"Invalid search parameters"},400,publicHeaders(origin));
     const raw=await env.DATA.get("latest");
     if(!raw)return reply({error:"No validated data available"},503,publicHeaders(origin));
     const snapshot=JSON.parse(raw);
-    return reply({...groupSearch(snapshot,{query:q,type,drop,page,sort,direction,activity}),updatedAt:snapshot.importedAt},200,publicHeaders(origin));
+    const calendarStates=env.CALENDAR?buildCalendarStates(JSON.parse((await env.CALENDAR.get("evonymasters:schedules:v2"))||"[]")):null;
+    if(liveOnly&&calendarStates===null)return reply({error:"Availability indexing is not configured"},503,publicHeaders(origin));
+    return reply({...groupSearch(snapshot,{query:q,type,drop,page,sort,direction,activity,calendarStates,liveOnly}),updatedAt:snapshot.importedAt},200,publicHeaders(origin));
   }
   if((url.pathname==="/v2/search"||url.pathname==="/v2/suggest")&&request.method==="GET"){
     const q=clean(url.searchParams.get("q"));
