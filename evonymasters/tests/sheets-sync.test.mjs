@@ -381,3 +381,26 @@ test('Chest Finder orders matching chest families by numeric tier before source-
  assert.deepEqual(compared.chests.map(c=>c.level),['1','6']);
  assert.deepEqual(compared.chests[0].items.map(i=>i.item),['Food','Speedup Training','Speedup Training','Stone','Wood']);
 });
+
+test('calendar catalog returns deduplicated stable event and monster family/level IDs',async()=>{
+ const {env}=runtime(),data=payload();
+ data.tabs.events.push(['Centre','','','','Festival','','Personal Activity','','','','','Gems','100']);
+ data.tabs.monsters.push(['Boss','6','Ymir','1000000','30','','Wood','150','Possible']);
+ data.tabs.monsters.push(['Boss','6','Ymir','1000000','30','','Stone','150','Possible']);
+ data.tabs.monsters.push(['Boss','1','Ymir','200000','20','','Wood','100','Possible']);
+ data.tabs.monsters.push(['Event','7','Hydra','600000','30','','Wood','100','Possible']);
+ assert.equal((await worker.fetch(await signedRequest(data),env)).status,200);
+ const res=await worker.fetch(new Request(API+'/v4/calendar/catalog'),env);
+ assert.equal(res.status,200);
+ const body=await res.json();
+ const events=body.entries.filter(x=>x.kind==='Event'&&x.name==='Festival');
+ assert.equal(events.length,1,'multiple reward rows must create one event');
+ const family=body.entries.filter(x=>x.name==='Ymir'&&x.family);
+ assert.equal(family.length,1,'all levels share a boss family');
+ const levels=body.entries.filter(x=>x.familyId===family[0].id);
+ assert.equal(levels.length,2);
+ assert.deepEqual(levels.map(x=>x.level).sort(),['1','6']);
+ assert.ok(body.entries.some(x=>x.kind==='Event Boss'&&x.name==='Hydra'&&x.family));
+ const again=await (await worker.fetch(new Request(API+'/v4/calendar/catalog'),env)).json();
+ assert.deepEqual(again.entries,body.entries);
+});
