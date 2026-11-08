@@ -28,8 +28,8 @@ async function authorized(env,ctx){
 }
 async function bodyJSON(req){
  if(!req.headers.get("content-type")?.toLowerCase().includes("application/json"))throw Error("Expected JSON");
- if(Number(req.headers.get("content-length")||0)>25000)throw Error("Payload too large");
- const value=await req.text();if(value.length>25000)throw Error("Payload too large");return JSON.parse(value);
+ if(Number(req.headers.get("content-length")||0)>100000)throw Error("Payload too large");
+ const value=await req.text();if(value.length>100000)throw Error("Payload too large");return JSON.parse(value);
 }
 const ruleTypes=new Set(["dates","range","daily","weekly","interval","ongoing","always","weekends","alternate-weekends"]);
 function validate(input,entries,existing){
@@ -38,7 +38,7 @@ function validate(input,entries,existing){
  if(!ruleTypes.has(rule)||!["Confirmed","Tentative"].includes(status))throw Error("Choose a valid schedule and status");
  if(input.published!==undefined&&typeof input.published!=="boolean")throw Error("Published must be boolean");
  if(input.paused!==undefined&&typeof input.paused!=="boolean")throw Error("Paused must be boolean");
- if(!Array.isArray(input.targetIds)||!input.targetIds.length||input.targetIds.length>150||new Set(input.targetIds).size!==input.targetIds.length)throw Error("Select 1–150 distinct events or monsters");
+ if(!Array.isArray(input.targetIds)||!input.targetIds.length||input.targetIds.length>1500||new Set(input.targetIds).size!==input.targetIds.length)throw Error("Select 1–1500 distinct events or monsters");
  const index=new Map(entries.map(e=>[e.id,e])),targets=input.targetIds.map(id=>index.get(id));
  if(targets.some(t=>!t))throw Error("Some selected events or monsters are no longer in the catalog");
  const startDate=txt(input.startDate),endDate=txt(input.endDate),reviewAfter=txt(input.reviewAfter),name=txt(input.name);
@@ -58,7 +58,8 @@ function validate(input,entries,existing){
  if(name.length>150||notes.length>1000)throw Error("Title or notes too long");
  if(sourceUrl){let link;try{link=new URL(sourceUrl)}catch{throw Error("Invalid source URL")}if(link.protocol!=="https:"||sourceUrl.length>500)throw Error("Source URL must use HTTPS");}
  const unique=[...new Set(selectedDates)].sort();
- const title=name||targets.slice(0,2).map(t=>t.name).join(", ")+(targets.length>2?" +"+(targets.length-2):"");
+ const ruleNames={dates:"Specific dates",daily:"Every day",weekends:"Every weekend","alternate-weekends":"Alternate weekends",weekly:"Selected weekdays",interval:"Every "+intervalDays+" days"};
+  const title=name||targets.slice(0,2).map(t=>t.name).join(", ")+(targets.length>2?" +"+(targets.length-2):"")+" · "+(ruleNames[rule]||rule);
  return {id:existing?.id||crypto.randomUUID(),name:title,targets:targets.map(t=>({id:t.id,name:t.name,kind:t.kind,level:t.level||"",family:!!t.family})),rule,
  startDate:rule==="always"||rule==="daily"||rule==="weekends"||rule==="weekly"?"":rule==="dates"?unique[0]:startDate,endDate:rule==="always"||rule==="daily"||rule==="weekends"||rule==="weekly"?"":endDate,
  selectedDates:rule==="dates"?unique:[],daysOfWeek:rule==="weekly"?[...new Set(daysOfWeek)].sort():[],
@@ -72,7 +73,7 @@ function matches(s,dateValue){
  if(dateValue<s.startDate||s.endDate&&dateValue>s.endDate)return false;
  if(["range","daily","ongoing"].includes(s.rule))return true;
   if(s.rule==="weekends")return [0,6].includes(day(dateValue).getUTCDay());
-  if(s.rule==="alternate-weekends"){const dow=day(dateValue).getUTCDay(),offset=dow===0?1:0;return [0,6].includes(dow)&&Math.floor((day(dateValue)-day(s.startDate))/86400000+offset)%14===0;}
+  if(s.rule==="alternate-weekends"){const delta=Math.floor((day(dateValue)-day(s.startDate))/86400000);return delta>=0&&(delta%14===0||delta%14===1);}
  if(s.rule==="weekly")return s.daysOfWeek.includes(day(dateValue).getUTCDay());
  if(s.rule==="interval")return (day(dateValue)-day(s.startDate))/86400000%s.intervalDays===0;
  return false;
@@ -120,7 +121,7 @@ export default {
    if(path==="/api/admin/schedules"&&request.method==="POST"){
     if(rows.length>=1500)return respond({error:"Schedule limit reached"},400);
     const input=await bodyJSON(request),schedule=validate(input,await catalog(env));
-    if(input.replace===true){const ids=new Set(schedule.targets.map(t=>t.id));rows=rows.map(r=>({...r,targets:r.targets.filter(t=>!ids.has(t.id))})).filter(r=>r.targets.length);}
+    if(input.replace!==false){const ids=new Set(schedule.targets.map(t=>t.id));rows=rows.map(r=>({...r,targets:r.targets.filter(t=>!ids.has(t.id))})).filter(r=>r.targets.length);}
     rows.push(schedule);await write(env,rows);return respond({schedule},201);
    }
    const matched=path.match(/^\/api\/admin\/schedules\/([a-f0-9-]{36})$/i);
@@ -129,7 +130,7 @@ export default {
    if(request.method==="PUT"){
     const input=await bodyJSON(request),schedule=validate(input,await catalog(env),rows[pos]);
     rows[pos]=schedule;
-    if(input.replace===true){const ids=new Set(schedule.targets.map(t=>t.id));rows=rows.map(r=>r.id===schedule.id?r:{...r,targets:r.targets.filter(t=>!ids.has(t.id))}).filter(r=>r.targets.length);}
+    if(input.replace!==false){const ids=new Set(schedule.targets.map(t=>t.id));rows=rows.map(r=>r.id===schedule.id?r:{...r,targets:r.targets.filter(t=>!ids.has(t.id))}).filter(r=>r.targets.length);}
     await write(env,rows);return respond({schedule});
    }
    if(request.method==="DELETE"){rows.splice(pos,1);await write(env,rows);return respond({ok:true});}
