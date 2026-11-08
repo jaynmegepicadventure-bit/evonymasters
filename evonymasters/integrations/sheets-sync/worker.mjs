@@ -277,6 +277,31 @@ function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggest
   return {total:groups.length,page,hasMore:offset+LIMIT<groups.length,groups:groups.slice(offset,offset+LIMIT)};
 }
 
+// Stable identifiers derived from event and monster identity, never sheet row numbers.
+// The revised source workbook currently has blank EVENT ID and MONSTER ID cells.
+const calendarKey=x=>norm(x).replace(/\s+/g," ");
+function calendarCatalog(snapshot){
+ const entries=new Map();
+ const add=(id,name,kind,extra={})=>{
+  if(!name||!id)return;
+  if(!entries.has(id))entries.set(id,{id,name,kind,...extra});
+ };
+ for(const row of snapshot.events){
+  const name=clean(row.fields["EVENT NAME"]);
+  if(name)add("event:"+encodeURIComponent(calendarKey(name)),name,"Event");
+ }
+ for(const row of snapshot.monsters){
+  const f=row.fields,name=clean(f["Monster Name"]),level=clean(f["Monster Level"]),rawType=norm(f["Monster Type"]);
+  if(!name)continue;
+  const kind=rawType==="event"||rawType.includes("event")?"Event Boss":rawType==="regular"?"Regular Monster":"Boss";
+  const familyId="family:"+encodeURIComponent(calendarKey(kind)+"|"+calendarKey(name));
+  const familyName=name;
+  add(familyId,familyName,kind,{family:true,monsterType:rawType});
+  if(level)add("monster:"+encodeURIComponent(calendarKey(kind)+"|"+calendarKey(name)+"|"+calendarKey(level)),name+" · Lv "+level,kind,{familyId,level,monsterType:rawType});
+ }
+ const sorted=[...entries.values()].sort((a,b)=>a.kind.localeCompare(b.kind)||a.name.localeCompare(b.name,undefined,{numeric:true}));
+ return {entries:sorted,updatedAt:snapshot.importedAt};
+}
 function chestCatalog(snapshot){
   const byKey=new Map(),byName=new Map();
   const addSource=(chest,source)=>{
@@ -450,6 +475,11 @@ export default {
     let snapshot;try{snapshot=parseSnapshot(JSON.parse(body));}catch(e){return reply({error:"Validation failed",detail:String(e.message).slice(0,160)},422);}
     await env.DATA.put("latest",JSON.stringify(snapshot));
     return reply({ok:true,counts:snapshot.counts});
+  }
+  if(url.pathname==="/v4/calendar/catalog"&&request.method==="GET"){
+    const raw=await env.DATA.get("latest");
+    if(!raw)return reply({error:"No validated data available"},503,publicHeaders(origin));
+    return reply(calendarCatalog(JSON.parse(raw)),200,publicHeaders(origin));
   }
   if((url.pathname==="/v4/chests"||url.pathname==="/v4/chests/events"||url.pathname==="/v4/chests/compare") && request.method==="GET"){
     const raw=await env.DATA.get("latest");if(!raw)return reply({error:"No validated data available"},503,publicHeaders(origin));
