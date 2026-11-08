@@ -404,3 +404,23 @@ test('calendar catalog returns deduplicated stable event and monster family/leve
  const again=await (await worker.fetch(new Request(API+'/v4/calendar/catalog'),env)).json();
  assert.deepEqual(again.entries,body.entries);
 });
+
+test('v3 availability sorting and live-only filter cover every matching source before pagination',async()=>{
+ const {env}=runtime();
+ assert.equal((await worker.fetch(await signedRequest(payload()),env)).status,200);
+ const schedules=[{id:'test',published:true,paused:false,rule:'daily',startDate:'',endDate:'',selectedDates:[],excludedDates:[],targets:[{name:'Zombie',kind:'Boss',family:true}]}];
+ env.CALENDAR={get:async key=>key==='evonymasters:schedules:v2'?JSON.stringify(schedules):null};
+ const requestUrl=path=>new Request(API+path,{headers:{origin:sites.allowed}});
+ const sorted=await (await worker.fetch(requestUrl('/v3/search?q=refining%20stone&sort=availability'),env)).json();
+ assert.equal(sorted.availabilityConfigured,true);
+ assert.equal(sorted.groups[0].title,'Zombie');
+ assert.equal(sorted.groups[0].availability,'Live');
+ assert.ok(sorted.groups.some(g=>g.availability==='Unscheduled'));
+ const filtered=await (await worker.fetch(requestUrl('/v3/search?q=refining%20stone&liveOnly=true'),env)).json();
+ assert.ok(filtered.groups.length>0);
+ assert.ok(filtered.groups.every(g=>g.availability==='Live'&&g.title==='Zombie'));
+ assert.ok(filtered.total<=sorted.total);
+ delete env.CALENDAR;
+ const notConfigured=await worker.fetch(requestUrl('/v3/search?q=refining%20stone&liveOnly=true'),env);
+ assert.equal(notConfigured.status,503);
+});
