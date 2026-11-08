@@ -63,13 +63,13 @@ test("Bulk specific dates publish all selected source ids, with drafts remaining
 });
 test("Daily, weekly, interval and ongoing schedules expand according to UTC days",async()=>{
  const {env,access}=runtime();
- await add(env,access,{targetIds:[fakeCatalog[0].id],rule:"daily",selectedDates:[],startDate:"2026-11-09",endDate:"2026-11-11"});
+ await add(env,access,{targetIds:[fakeCatalog[0].id],rule:"daily",selectedDates:[],startDate:"",endDate:""});
  await add(env,access,{targetIds:[fakeCatalog[1].id],rule:"weekly",selectedDates:[],startDate:"2026-11-08",endDate:"2026-11-23",daysOfWeek:[1,5]});
  await add(env,access,{targetIds:[fakeCatalog[4].id],rule:"interval",selectedDates:[],startDate:"2026-11-09",endDate:"2026-11-20",intervalDays:3,excludedDates:["2026-11-15"]});
  await add(env,access,{targetIds:[fakeCatalog[5].id],rule:"ongoing",selectedDates:[],startDate:"2026-11-10",endDate:"2026-11-12"});
  const events=await publicEvents(env,"2026-11-08","2026-11-20");
  const on=id=>events.filter(e=>e.sourceId===id).map(e=>e.date);
- assert.deepEqual(on(fakeCatalog[0].id),["2026-11-09","2026-11-10","2026-11-11"]);
+ assert.deepEqual(on(fakeCatalog[0].id),Array.from({length:13},(_,i)=>new Date(Date.UTC(2026,10,8+i)).toISOString().slice(0,10)));
  assert.deepEqual(on(fakeCatalog[1].id),["2026-11-09","2026-11-13","2026-11-16","2026-11-20"]);
  assert.deepEqual(on(fakeCatalog[4].id),["2026-11-09","2026-11-12","2026-11-18"]);
  assert.deepEqual(on(fakeCatalog[5].id),["2026-11-10","2026-11-11","2026-11-12"]);
@@ -102,7 +102,7 @@ test("Admin writes reject invalid IDs, unsafe origins, unknown user, recurrence 
  for(const bad of [
   {targetIds:["unknown"]},{rule:"weekly",selectedDates:[],startDate:"2026-11-09",endDate:"2026-11-30",daysOfWeek:[]},
   {rule:"interval",selectedDates:[],startDate:"2026-11-09",endDate:"2026-11-30",intervalDays:0},
-  {rule:"daily",selectedDates:[],startDate:"2026-11-09",endDate:"",reviewAfter:""},
+  {rule:"alternate-weekends",selectedDates:[],startDate:"2026-11-09",endDate:""},
   {selectedDates:["2026-02-31"]},{sourceUrl:"javascript:alert(1)"}
  ]){const r=await worker.fetch(request("/api/admin/schedules","POST",{...basics,...bad}),env,access);assert.equal(r.status,400,JSON.stringify(bad)+": "+await r.text());}
  assert.equal((await worker.fetch(request("/api/events?from=2026-01-01&to=2027-01-01"),env)).status,400);
@@ -130,9 +130,19 @@ test("Admin and public calendar browser scripts are syntactically valid",async()
  assert.ok(publicScript);
  assert.doesNotThrow(()=>new Script(publicScript[1]));
 });
-test("Open-ended daily schedules show Needs Review after the review date",async()=>{
+test("Daily schedules need no dates and publish automatically",async()=>{
  const {env,access}=runtime();
- await add(env,access,{targetIds:[fakeCatalog[0].id],rule:"daily",selectedDates:[],startDate:"2026-11-09",endDate:"",reviewAfter:"2026-11-11"});
+ const saved=await add(env,access,{targetIds:[fakeCatalog[0].id],rule:"daily",selectedDates:[],startDate:"",endDate:"",reviewAfter:"",published:undefined});
+ assert.equal(saved.published,true);
  const entries=await publicEvents(env,"2026-11-10","2026-11-12");
- assert.deepEqual(entries.map(e=>e.status),["Confirmed","Confirmed","Needs Review"]);
+ assert.deepEqual(entries.map(e=>e.status),["Confirmed","Confirmed","Confirmed"]);
+});
+
+test("Weekend rules use UTC Saturday and Sunday, with alternate weekends anchored on Saturday",async()=>{const {env,access}=runtime();
+ await add(env,access,{targetIds:[fakeCatalog[1].id],rule:"weekends",selectedDates:[],startDate:"",endDate:""});
+ await add(env,access,{targetIds:[fakeCatalog[4].id],rule:"alternate-weekends",selectedDates:[],startDate:"2026-11-14",endDate:""});
+ const results=await publicEvents(env,"2026-11-13","2026-11-30");
+ const dates=id=>results.filter(e=>e.sourceId===id).map(e=>e.date);
+ assert.deepEqual(dates(fakeCatalog[1].id),["2026-11-14","2026-11-15","2026-11-21","2026-11-22","2026-11-28","2026-11-29"]);
+ assert.deepEqual(dates(fakeCatalog[4].id),["2026-11-14","2026-11-15","2026-11-28","2026-11-29"]);
 });
