@@ -43,7 +43,7 @@ const onDate=(e,d)=>e.date===d;
 const byDate=(a,b)=>a.date.localeCompare(b.date)||a.startTime.localeCompare(b.startTime)||collator.compare(a.name,b.name);
 function entry(e){const a=make("article","entry"),h=make("h3","",e.name),tags=make("div","tags");
 for(const item of [e.kind,e.status])tags.append(make("span","tag"+(item==="Tentative"?" tentative":item==="Needs Review"?" needs-review":""),item));
-const dates=format(e.date)+(e.rule==="always"?" · Always available":e.rule==="ongoing"?" · Ongoing":e.rule==="daily"?" · Daily":"");
+const dates=format(e.date)+(e.rule==="always"?" · Always available":e.rule==="ongoing"?" · Ongoing":e.rule==="daily"?" · Daily":e.rule==="weekly"?" · Weekly":e.rule==="interval"?" · Every X days":"")+(e.endDate&&e.rule!=="dates"?" · Until "+format(e.endDate):"");
 const time=e.startTime?" · "+e.startTime+(e.endTime?"–"+e.endTime:"")+" UTC":" · All day / time not specified";
 a.append(h,tags,make("p","",dates+time));
 if(e.notes)a.append(make("p","",e.notes));
@@ -72,9 +72,9 @@ if(view==="month"){
  const list=make("div","entry-list");
  let matches;
  if(view==="day"){heading.textContent=format(focusDate,{weekday:"long",month:"long",day:"numeric",year:"numeric"});matches=events.filter(e=>onDate(e,focusDate))}
- else{heading.textContent="Upcoming events";matches=events.filter(e=>e.date>=today).sort(byDate)}
+ else{heading.textContent="Upcoming events & monsters";const seen=new Set();matches=events.filter(e=>e.date>=today).sort(byDate).filter(e=>{const key=e.scheduleId+"|"+e.sourceId;if(seen.has(key))return false;seen.add(key);return true})}
  for(const e of matches.slice(0,100))list.append(entry(e));
- if(!matches.length)list.append(make("div","empty",view==="upcoming"?"No upcoming dated events have been published yet.":"No events recorded for this date range."));
+ if(!matches.length)list.append(make("div","empty",view==="upcoming"?"No upcoming event or monster schedules have been published yet.":"No events recorded for this date range."));
  if(matches.length>100)list.append(make("p","hint","Showing the first 100 upcoming appearances."));
  root.append(list);
 }
