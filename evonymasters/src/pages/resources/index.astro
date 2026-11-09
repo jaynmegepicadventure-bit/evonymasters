@@ -48,7 +48,7 @@ h1{font-size:clamp(2rem,4.2vw,3rem);letter-spacing:-.043em;line-height:1.1;margi
 .chance.guaranteed{background:#18533c;color:#b9f6c9}
 .chance.possible{background:#57441e;color:#ffe0a1}
 .chance.mixed{background:#504b36;color:#f6db9f}.chance.redeem{background:#2f4b7d;color:#cce7ff}.activity-tools{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:9px 0 3px;color:#c9dcec}.activity-tools select{border-radius:8px;padding:8px 12px;background:#1d3650;color:#fff;border:1px solid #627b95;font:inherit;font-size:.86rem}.detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}.detail-field{border:1px solid #3d5872;border-radius:8px;padding:10px 12px}.detail-field b{display:block;font-size:.74rem;color:#e7c683;margin-bottom:4px}.detail-field span{color:#e5f0fa}.detail-section{padding:12px 0}.detail-section h3{font-size:.95rem;margin:0 0 10px;color:#f5d48b}
-.note{max-width:310px;line-height:1.5;color:#cfdeeb}
+.live-filter{display:flex;align-items:center;gap:7px;white-space:nowrap;font-size:.87rem;color:#d5e4f0}.live-filter input{accent-color:#37c583;width:18px;height:18px}.live-indicator{color:#75e8a6;font-weight:850;white-space:nowrap}.note{max-width:310px;line-height:1.5;color:#cfdeeb}
 .detail-row{background:#1b344d}.detail-row td{padding:14px 22px 17px}
 .detail-content{display:flex;flex-wrap:wrap;gap:20px;align-items:start;color:#c5daea}
 .detail-content ul{padding-left:20px;margin:8px 0;line-height:1.6}
@@ -63,7 +63,7 @@ footer{border-top:1px solid #314c66;color:#abc1d4;font-size:.82rem;padding:23px 
 <main><section class="hero"><div class="wrap">
 <div class="eyebrow">Player Tools / Item Finder</div>
 <h1>Find your rewards</h1>
-<p class="intro">Compare where to get an item, how much is listed, and how often sources recur.</p>
+<p class="intro">Compare where to get an item, how much is listed, and whether its source is scheduled as available.</p>
 <div class="searchbox"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
 <label for="query" style="position:absolute;width:1px;height:1px;clip:rect(0,0,0,0);overflow:hidden">Find a reward</label>
 <input id="query" type="search" list="item-suggestions" placeholder="Search Gems, Refining Stone, Source of Life…" autocomplete="off"/>
@@ -75,20 +75,20 @@ footer{border-top:1px solid #314c66;color:#abc1d4;font-size:.82rem;padding:23px 
 <button class="tab" role="tab" type="button" aria-selected="false" data-type="events">Events</button>
 <button class="tab" role="tab" type="button" aria-selected="false" data-type="all-bosses">Bosses</button>
 <button class="tab" role="tab" type="button" aria-selected="false" data-type="boxes">Boxes</button>
-</div><span class="sort-hint">Click a column heading to sort all matching sources</span>
+</div><label class="live-filter"><input type="checkbox" id="live-only"> Show Live Only</label><span class="sort-hint">Click a column heading to sort all matching sources</span>
 </div>
-<div class="activity-tools" id="activity-tools" hidden><label for="activity-filter">Activity:</label><select id="activity-filter"><option value="all">All activities</option><option value="alliance">Alliance</option><option value="personal">Personal</option></select></div>
+
 <div class="heading"><div><h2 id="results-heading">Find an item to get started</h2><p id="results-description">Browse recorded reward sources by quantity and source type.</p></div><span class="sync" id="sync-status"></span></div>
 <div id="empty" class="empty">Start typing an item name to see where it can be obtained.</div>
 <div class="table-frame" id="table-frame" hidden>
 <table class="results-table" aria-label="Item Finder comparison results"><thead><tr>
 <th scope="col"><button data-sort="source" type="button">Source <span class="arrow"></span></button></th>
 <th scope="col"><button data-sort="type" type="button">Type <span class="arrow"></span></button></th>
-<th scope="col">Activity</th>
+<th scope="col" data-event-column><button data-sort="activity" type="button">Activity <span class="arrow"></span></button></th><th scope="col" data-event-column><button data-sort="rewardActivity" type="button">Reward Activity <span class="arrow"></span></button></th>
 <th scope="col"><button data-sort="quantity" type="button">Quantity <span class="arrow"></span></button></th>
-<th scope="col"><button data-sort="frequency" type="button">Frequency <span class="arrow"></span></button></th>
+<th scope="col"><button data-sort="availability" type="button">Availability <span class="arrow"></span></button></th>
 <th scope="col"><button data-sort="chance" type="button">Reward chance <span class="arrow"></span></button></th>
-<th scope="col"><button data-sort="notes" type="button">Notes / How to obtain <span class="arrow"></span></button></th>
+
 </tr></thead><tbody id="results"></tbody></table></div>
 <button id="load-more" class="load" type="button" hidden>Show more sources</button>
 </section></main>
@@ -100,8 +100,14 @@ const API="https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev";
 const query=document.getElementById("query"),clear=document.getElementById("clear-search"),tabs=document.getElementById("tabs"),
 frame=document.getElementById("table-frame"),tbody=document.getElementById("results"),heading=document.getElementById("results-heading"),
 desc=document.getElementById("results-description"),status=document.getElementById("sync-status"),empty=document.getElementById("empty"),
-more=document.getElementById("load-more"),suggestions=document.getElementById("item-suggestions"),activityTools=document.getElementById("activity-tools"),activityFilter=document.getElementById("activity-filter");
+more=document.getElementById("load-more"),suggestions=document.getElementById("item-suggestions"),liveOnly=document.getElementById("live-only");
 let type="all",sort="suggested",direction="asc",page=0,token=0,controller=null,delay=null,suggestDelay=null,hasMore=false,recordCount=0;
+function fillAvailability(td,row){
+ const state=row.availability||"Unknown";
+ td.className=state==="Live"?"live-indicator":"meta";
+ td.textContent=state==="Live"?"● LIVE":state==="Upcoming"?"Upcoming · "+row.nextAvailable:state==="Not applicable"?"—":state==="Unscheduled"?"Unscheduled":"Not connected";
+ td.title=state==="Live"?"Scheduled as available today (Evony UTC)":state==="Unknown"?"Calendar availability is not connected":state==="Upcoming"?"Next scheduled date in Evony UTC":"";
+}
 const names={events:"Event",bosses:"Boss","event-bosses":"Event boss",regular:"Regular monster",boxes:"Box"};
 const art={
  "alchemy shop":"alchemy-shop","astral oracle":"astral-oracle","grace of star trail":"grace-of-star-trail",
@@ -116,13 +122,13 @@ const artwork=row=>{
 };
 const label=row=>names[row.source]||row.source;
 function detailedRow(row){
- const details=node("tr","detail-row"),td=node("td");td.colSpan=7;
+ const details=node("tr","detail-row"),td=node("td");td.colSpan=["all","events"].includes(type)?7:5;
  const wrapper=node("div"),fields=node("div","detail-grid");
  const addField=(title,value)=>{const v=toText(value);if(!v)return;const field=node("div","detail-field");field.append(node("b","",title),node("span","",v));fields.append(field);};
  const c=row.context||{};
  if(row.source==="events"){
   addField("Event location",c.location);addField("Event category",c.event);
-  addField("Event / activity",c.subEvent);addField("Activity type",c.activity);
+  addField("Event / activity",c.subEvent);addField("Activity type",c.activity);addField("Reward activity",c.rewardActivity);
   addField("Recurrence",c.recurrence);addField("Frequency",c.frequency);
   addField("Level",c.level);addField("Stamina",c.stamina);
   addField("Item availability",c.availability);addField("General",c.general);addField("Castle",c.castle);
@@ -133,7 +139,7 @@ function detailedRow(row){
   addField("Monster type",c.monsterType);addField("Monster level",c.level);
   addField("Monster power",c.power);addField("Stamina",c.stamina);addField("Associated event",c.event);
  }
- if(fields.childElementCount){const section=node("section","detail-section");section.append(node("h3","","Source information"),fields);wrapper.append(section);}
+ addField("Notes / How to obtain",row.note);if(fields.childElementCount){const section=node("section","detail-section");section.append(node("h3","","Source information"),fields);wrapper.append(section);}
  if(row.source==="boxes"){
   const section=node("section","detail-section");
   section.append(node("h3","","Chest contents by rank and tier"));
@@ -173,12 +179,12 @@ function resultRow(row){
  const id="detail-"+Math.random().toString(36).slice(2);toggle.setAttribute("aria-controls",id);
  info.append(toggle);sourceLine.append(img,info);source.append(sourceLine);tr.append(source);
  tr.append(node("td","meta",label(row)));
- tr.append(node("td","meta",toText(row.context?.activity)||"—"));
+ if(["all","events"].includes(type)){tr.append(node("td","meta",row.source==="events"?toText(row.context?.activity)||"—":"—"));tr.append(node("td","meta",row.source==="events"?toText(row.context?.rewardActivity)||"—":"—"));}
  tr.append(node("td","qty",row.quantityDisplay||"Variable"));
- tr.append(node("td","meta",row.frequency||"Not specified"));
+ const av=node("td","meta");av.dataset.availability="";fillAvailability(av,row);tr.append(av);
  const chanceCell=node("td"),chance=node("span","chance "+toText(row.chance).toLowerCase(),row.chance==="Unspecified"?"Data missing":(row.chance||"Data missing"));
  chanceCell.append(chance);tr.append(chanceCell);
- tr.append(node("td","note",row.note||"Details in recorded rewards"));
+ 
  const extra=detailedRow(row);extra.hidden=true;extra.id=id;
  toggle.addEventListener("click",()=>{
   extra.hidden=!extra.hidden;
@@ -201,12 +207,13 @@ async function fetchResults(append=false){
  if(controller)controller.abort();controller=new AbortController();const current=++token;
  heading.textContent='Results for “'+term+'”';
  empty.hidden=false;empty.textContent="Searching recorded rewards…";
- const params=new URLSearchParams({q:term,type,sort,direction,page:String(page),activity:activityFilter.value});
+ const params=new URLSearchParams({q:term,type,sort,direction,page:String(page),liveOnly:String(liveOnly.checked)});
  try {
   const response=await fetch(API+"/v3/search?"+params,{signal:controller.signal});
   if(!response.ok)throw Error("Search returned HTTP "+response.status);
   const data=await response.json();
   if(current!==token||!Array.isArray(data.groups))return;
+   liveOnly.disabled=data.availabilityConfigured===false;liveOnly.title=data.availabilityConfigured===false?"Connect the CALENDAR KV binding to enable global availability filtering":"";
   for(const group of data.groups)tbody.append(...resultRow(group));
   recordCount=data.total;hasMore=Boolean(data.hasMore);
   frame.hidden=recordCount===0;more.hidden=!hasMore;
@@ -239,12 +246,13 @@ clear.addEventListener("click",()=>{query.value="";clear.hidden=true;query.dispa
 tabs.addEventListener("click",e=>{
  const button=e.target.closest("button[data-type]");if(!button)return;
  type=button.dataset.type;
- activityTools.hidden=type!=="events";
- if(activityTools.hidden)activityFilter.value="all";
+ for(const th of document.querySelectorAll("[data-event-column]"))th.hidden=!["all","events"].includes(type);
+ if(!["all","events"].includes(type)&&["activity","rewardActivity"].includes(sort)){sort="suggested";direction="asc";updateSortIndicators();}
  for(const tab of tabs.querySelectorAll("button"))tab.setAttribute("aria-selected",String(tab===button));
  schedule();
 });
-activityFilter.addEventListener("change",schedule);
+
+liveOnly.addEventListener("change",()=>{sort=liveOnly.checked?"availability":"suggested";direction="asc";updateSortIndicators();schedule();});
 document.querySelectorAll("[data-sort]").forEach(btn=>btn.addEventListener("click",()=>{
  const value=btn.dataset.sort;
  if(value===sort)direction=direction==="asc"?"desc":"asc";

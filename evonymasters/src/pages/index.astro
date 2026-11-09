@@ -13,7 +13,8 @@ const shortcuts=[
  {href:'/resources/?q=Speedup',label:'Speedups'},
  {href:'/resources/?q=Alliance%20Honor',label:'Alliance Honor'},
  {href:'/chests/?source=events',label:'Event Chests'},
- {href:'/chests/?source=bosses',label:'Boss Chests'}
+ {href:'/chests/?source=bosses',label:'Boss Chests'},
+ {href:'/calendar/',label:'Event Calendar'}
 ];
 ---
 <!doctype html>
@@ -83,6 +84,7 @@ footer{padding:27px 0;border-top:1px solid #314c62;font-size:.81rem;color:#aebfd
 @media(max-width:1050px){.tool-grid{grid-template-columns:1fr 1fr}.feature:last-child{grid-column:1/-1}.lower-grid{grid-template-columns:1fr 1fr}.small-panel:first-child{grid-column:1/-1}.category-grid{grid-template-columns:1fr 1fr}.hero:before{background:linear-gradient(90deg,#071321ee 0%,#071321cc 55%,#07132160 100%),url('/images/home/evonymasters-home-hero.webp') right center / auto 100% no-repeat}}
 @media(max-width:650px){.wrap{padding:0 16px}.hero{min-height:545px}.hero-inner{padding:67px 0 112px}.hero:before{background:linear-gradient(90deg,#071321f4 0%,#071321d9 68%,#07132199 100%),url('/images/home/evonymasters-home-hero-mobile.webp') right center / auto 100% no-repeat}h1{font-size:clamp(2.6rem,11vw,3.65rem)}.hero-intro{font-size:1rem}.actions .btn{width:100%}.main-content{margin-top:-65px}.tool-grid,.lower-grid,.category-grid{grid-template-columns:1fr}.feature:last-child,.small-panel:first-child{grid-column:auto}.feature{min-height:153px}.feature-image{width:88px;height:98px}.section-top{margin-top:30px}.small-panel{min-height:0}.categories{padding:18px}.hero-note{font-size:.75rem}}
 @media(prefers-reduced-motion:reduce){.btn,.feature,.small-panel a{transition:none}.btn:hover,.feature:hover,.small-panel a:hover{transform:none}}
+.live-section{margin:35px 0 45px;border:1px solid #4b604f;background:linear-gradient(100deg,#102636,#142a35);border-radius:17px;padding:21px 24px}.live-section .section-top{margin-bottom:13px}.live-results{display:flex;flex-wrap:wrap;gap:10px}.live-item{display:inline-flex;align-items:center;gap:9px;padding:10px 13px;border:1px solid #567563;border-radius:9px;background:#1a3b32;color:#d6fce4;text-decoration:none;font-size:.9rem}.live-item:hover{border-color:#7ce6a2}.live-dot{color:#87efaf;font-size:.7rem}.live-kind{color:#aacdc2;font-size:.72rem}.live-link{color:#f3ca7a;font-weight:800;font-size:.9rem}.live-section h2{margin:6px 0}.live-section p{color:#b7ccc8;margin:5px 0}@media(max-width:600px){.live-section{padding:15px}}
 </style></head>
 <body>
 <SiteHeader active="home"/>
@@ -98,12 +100,13 @@ footer{padding:27px 0;border-top:1px solid #314c62;font-size:.81rem;color:#aebfd
 <section id="tools" aria-label="Explore EvonyMasters tools"><div class="tool-grid">
 {features.map(feature=><a class="feature" href={feature.href}><img class="feature-image" src={feature.image} alt="" loading="lazy"/><div class="feature-copy"><span class="eyebrow">{feature.eyebrow}</span><h2>{feature.title}</h2><p>{feature.text}</p><span class="action">{feature.action} →</span></div></a>)}
 </div></section>
+<section class="live-section" aria-labelledby="live-title"><div class="section-top"><div><div class="kicker">Evony server time · UTC</div><h2 id="live-title">Live Now</h2><p id="live-summary">Checking published event and monster schedules…</p></div><a class="live-link" href="/calendar/">View full calendar ↗</a></div><div id="live-results" class="live-results" aria-live="polite"></div></section>
 <section aria-labelledby="plan-title">
 <div class="section-top"><div><div class="kicker">Explore more</div><h2 id="plan-title">Find your next advantage</h2><p>Quick routes into the tools players use most.</p></div></div>
 <div class="lower-grid">
 <article class="small-panel"><h3>⌕ &nbsp; Popular searches</h3><p>Jump straight to commonly sought-after rewards and chest sources.</p><div class="quick-list">{shortcuts.map(link=><a class="quick-link" href={link.href}>{link.label} ↗</a>)}</div></article>
 <article class="small-panel"><h3>⚔ &nbsp; Monster rewards</h3><p>From regular monsters to boss chest drops, compare what's recorded before spending stamina.</p><div class="panel-links"><a href="/resources/?q=Monarch%20EXP"><img src="/images/item-finder/zombie.svg" alt="" loading="lazy"/>Explore monster drops<span aria-hidden="true">›</span></a><a href="/chests/?source=bosses"><img src="/images/item-finder/box.svg" alt="" loading="lazy"/>Browse boss chests<span aria-hidden="true">›</span></a></div></article>
-<article class="small-panel"><h3>✦ &nbsp; Events &amp; generals</h3><p>Explore recorded event rewards and research your generals for the next challenge.</p><div class="panel-links"><a href="/events/"><img src="/images/item-finder/feasting-revelry.svg" alt="" loading="lazy"/>Event guides<span aria-hidden="true">›</span></a><a href="/generals/"><img src="/images/item-finder/event.svg" alt="" loading="lazy"/>General reference<span aria-hidden="true">›</span></a></div></article>
+<article class="small-panel"><h3>✦ &nbsp; Events &amp; generals</h3><p>Browse event schedules, check recorded rewards and research your generals for the next challenge.</p><div class="panel-links"><a href="/events/"><img src="/images/item-finder/feasting-revelry.svg" alt="" loading="lazy"/>Event guides<span aria-hidden="true">›</span></a><a href="/calendar/"><img src="/images/item-finder/event.svg" alt="" loading="lazy"/>Events calendar<span aria-hidden="true">›</span></a><a href="/generals/"><img src="/images/item-finder/event.svg" alt="" loading="lazy"/>General reference<span aria-hidden="true">›</span></a></div></article>
 </div>
 </section>
 <section class="categories" aria-labelledby="categories-title"><h2 id="categories-title">Explore the library</h2><div class="category-grid">
@@ -114,4 +117,31 @@ footer{padding:27px 0;border-top:1px solid #314c62;font-size:.81rem;color:#aebfd
 </div></section>
 </div></main>
 <footer><div class="wrap">EvonyMasters is an independent community fan project, not affiliated with or endorsed by the game publisher. Game information and rewards may change; verify details in game.</div></footer>
+<script is:inline>
+(async()=>{
+ const root=document.getElementById('live-results'),summary=document.getElementById('live-summary');
+ const today=new Date().toISOString().slice(0,10);
+ try{
+  const API='https://evonymasters-calendar.jaynmegepicadventure.workers.dev/api/events';
+  const response=await fetch(API+'?'+new URLSearchParams({from:today,to:today,kind:'all',includeAlways:'true'}));
+  if(!response.ok)throw Error('Calendar unavailable');
+  const data=await response.json(),seen=new Set(),entries=[];
+  for(const event of data.events||[]){
+   const name=event.name.replace(/\s*·\s*Lv\s*\d+$/i,'').trim(),key=event.kind+'|'+name.toLowerCase();
+   if(seen.has(key))continue;seen.add(key);entries.push({name,kind:event.kind});
+  }
+  entries.sort((a,b)=>a.kind.localeCompare(b.kind)||a.name.localeCompare(b.name));
+  summary.textContent=entries.length?entries.length+' published sources scheduled as available today.':'No published availability recorded for today.';
+  for(const entry of entries.slice(0,16)){
+   const a=document.createElement('a');a.className='live-item';
+   a.href=entry.kind==='Event'?'/events/?q='+encodeURIComponent(entry.name):'/resources/?q='+encodeURIComponent(entry.name);
+   const dot=document.createElement('span');dot.className='live-dot';dot.textContent='●';
+   const name=document.createElement('strong');name.textContent=entry.name;
+   const kind=document.createElement('span');kind.className='live-kind';kind.textContent=entry.kind;
+   a.append(dot,name,kind);root.append(a);
+  }
+  if(entries.length>16){const a=document.createElement('a');a.href='/calendar/';a.className='live-item';a.textContent='See all '+entries.length+' sources →';root.append(a)}
+ }catch{summary.textContent='Availability cannot be loaded right now. Open the calendar to try again.'}
+})();
+</script>
 </body></html>
