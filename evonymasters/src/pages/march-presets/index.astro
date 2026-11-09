@@ -1,122 +1,97 @@
 ---
 import SiteHeader from '../../components/SiteHeader.astro';
 ---
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<meta name="description" content="Build an Evony march preset using march capacity, unlocked T13–T16 troops, and layered ranged, cavalry, ground, or siege templates."/>
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="EvonyMasters March Preset Builder. Enter Archer, Cavalry, Ground and Siege march sizes, choose unlocked troop tiers, and calculate recommended troop counts."/>
 <title>March Preset Builder | EvonyMasters</title><link rel="icon" href="/favicon.svg"/>
 <style is:global>
-:root{font-family:Inter,system-ui,-apple-system,sans-serif;background:#091725;color:#edf3fb}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 85% 0%,#203951 0,transparent 46%),#091725}a{color:#f0c577}button,input,select{font:inherit}
-.wrap{max-width:1210px;padding:0 24px;margin:0 auto}
-.hero{border-bottom:1px solid #405a72;padding:48px 0 33px;background:linear-gradient(120deg,#152f49bb,#102236aa)}
-.kicker{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:#eac17d;font-weight:850}
-.hero h1{color:#fff1d5;font-family:Georgia,serif;font-size:clamp(2.5rem,5.4vw,4.5rem);letter-spacing:-.04em;margin:9px 0 13px;font-weight:750}
-.hero p{color:#c2d3df;line-height:1.65;max-width:780px;margin:0}
-.meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:21px}.chip{display:inline-flex;gap:7px;align-items:center;border-radius:999px;border:1px solid #58738c;background:#1c3850;color:#e7ebee;padding:7px 11px;font-size:.75rem;font-weight:750}
-.main{padding:27px 0 70px}.stephead{display:flex;gap:12px;align-items:flex-start;margin-bottom:17px}.step{display:grid;place-items:center;background:#f0c678;color:#172a3c;border-radius:10px;width:34px;height:34px;font-weight:900;flex:none}.stephead h2{font-size:1.25rem;margin:0;color:#f5d496}.stephead p{margin:6px 0 0;color:#b6cbdb;font-size:.86rem}
-.layout{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:17px;align-items:start}
-.panel{padding:23px;background:#122b41;border:1px solid #416078;border-radius:16px;box-shadow:0 8px 26px #0002}.panel+.panel{margin-top:16px}.panel h3{color:#f2d399;margin:0 0 13px;font-size:1rem}
-.field{display:grid;gap:8px;margin-bottom:18px;color:#eacb97;font-size:.84rem;font-weight:750}.field input,.field select{width:100%;background:#f4f8fb;color:#10273a;border:1px solid #7893a7;border-radius:10px;padding:13px 14px;font-size:1rem}.field input:focus-visible,.field select:focus-visible,.toggle:focus-visible,.tab:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid #f6cf83;outline-offset:3px}
-.preset-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.tab{background:#1d3a55;border:1px solid #52718b;border-radius:10px;padding:13px 9px;color:#e2eff9;font-weight:800;cursor:pointer}.tab[aria-pressed=true]{color:#142a3c;border-color:#f3ca7d;background:#f0c979}.tab:hover{filter:brightness(1.13)}.choice-note{font-size:.78rem;color:#a6becf;line-height:1.5;margin:10px 0 0}
-.availability{overflow-x:auto}.availability table{border-collapse:separate;border-spacing:0 8px;width:100%;min-width:470px}.availability th{text-align:center;color:#b8cad9;font-size:.75rem;padding:4px}.availability th:first-child{text-align:left}.availability td{background:#1b3851;border-top:1px solid #40647d;border-bottom:1px solid #40647d;text-align:center;padding:8px}.availability td:first-child{border-left:1px solid #40647d;border-radius:8px 0 0 8px;font-size:.85rem;font-weight:800;text-align:left;white-space:nowrap}.availability td:last-child{border-right:1px solid #40647d;border-radius:0 8px 8px 0}.availability input{appearance:none;width:21px;height:21px;cursor:pointer;border:2px solid #9bb3c7;background:#10283c;border-radius:6px;display:inline-grid;place-items:center;vertical-align:middle}.availability input:checked{background:#e9c479;border-color:#e9c479}.availability input:checked:after{content:'✓';font-size:.83rem;color:#142638;font-weight:900}.availability .all-cell{background:#203e55;border:1px solid #40647d;border-radius:8px;padding:5px}.all-tier{color:#f5d590;font-weight:800;font-size:.76rem}.actions{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.action{cursor:pointer;background:#efc97e;color:#10263b;font-weight:850;border:1px solid #efc97e;border-radius:10px;padding:11px 15px}.action.alt{color:#ebf2fa;background:#203f5a;border-color:#6c8aa1}.action:hover{filter:brightness(1.11)}
-.results-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}.results-head h2{margin:0;color:#f8dba6;font-size:1.3rem}.tiny{font-size:.76rem;color:#a9c2d4}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-bottom:17px}.stat{background:#1a3a50;border:1px solid #40637a;border-radius:11px;padding:12px;min-width:0}.stat small{color:#abc5d5;font-size:.71rem;display:block}.stat strong{display:block;font-size:clamp(1.05rem,2.1vw,1.7rem);margin-top:5px;font-variant-numeric:tabular-nums;word-break:break-word}.stat:first-child strong{color:#9cf0b9}
-.chart{display:grid;height:20px;border-radius:999px;overflow:hidden;grid-auto-flow:column;grid-auto-columns:auto;display:flex;background:#233c53;margin:0 0 14px}.chart span{height:100%;min-width:0}.share-swatch{width:9px;height:9px;border-radius:2px;display:inline-block;margin-right:7px}
-.table-wrap{overflow:auto}.output-table{width:100%;border-collapse:collapse;min-width:370px}.output-table th{color:#a9becf;text-align:left;border-bottom:1px solid #496783;padding:12px 10px;font-size:.75rem;text-transform:uppercase;letter-spacing:.04em}.output-table td{padding:12px 10px;border-bottom:1px solid #314d62;font-size:.88rem}.output-table td:last-child,.output-table th:last-child{text-align:right;font-variant-numeric:tabular-nums}.output-table td:nth-child(2){color:#bad0e0}.output-table tr.total td{color:#f0cc87;font-weight:850;border-top:1px solid #6e8b9c}
-.notice{background:#3a3227;border:1px solid #ab8855;color:#f5dfbb;border-radius:10px;padding:13px 15px;font-size:.81rem;line-height:1.6;margin:12px 0}
-.notes{line-height:1.65;color:#bed0dd;font-size:.83rem}.notes ul{padding-left:21px}.notes li{margin:7px 0}
-.source{border-top:1px solid #425c73;margin-top:17px;padding-top:16px;color:#a9c0d2;font-size:.76rem;line-height:1.6}
-.empty{padding:30px;color:#d0c1a6;border:1px dashed #557089;border-radius:12px}.kbd{font-weight:850;color:#f2ce8f}
-footer{border-top:1px solid #2c455b;padding:23px 0;color:#b0c3d1;font-size:.79rem}
-@media(max-width:860px){.layout{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:560px){.wrap{padding:0 12px}.hero{padding:30px 0}.panel{padding:16px}.availability table{min-width:435px}.stats{gap:5px}.stat{padding:10px 8px}.stat small{font-size:.61rem}.stat strong{font-size:1rem}}
-</style></head><body><SiteHeader active="march"/>
-<header class="hero"><div class="wrap"><div class="kicker">Player tools / March planning</div><h1>March Preset Builder</h1>
-<p>Enter your march capacity, select the tiers you've unlocked, and build a practical troop allocation from the supplied 2024 Evony layer workbook. Six attack and siege presets, one exact march total.</p>
-<div class="meta"><span class="chip">⚔️ Six preset strategies</span><span class="chip">🛡️ T13–T16 unlocks</span><span class="chip">📊 Workbook-derived calculations</span></div></div></header>
-<main class="wrap main"><div class="layout">
-<div>
-<section class="panel"><div class="stephead"><span class="step">1</span><div><h2>Set up your march</h2><p>Choose your march size and the troop type you're building around.</p></div></div>
-<label class="field">March capacity <input id="march-size" type="number" min="1" max="100000000" step="1" value="7393200" inputmode="numeric" aria-describedby="size-help"/></label>
-<p class="choice-note" id="size-help">Use the final troop capacity shown in-game, including applicable march-size buffs.</p>
-<h3 style="margin-top:23px">Select a preset</h3><div class="preset-grid" role="group" aria-label="Preset type">
-<button type="button" class="tab" data-preset="ranged" aria-pressed="true">🏹 Ranged</button>
-<button type="button" class="tab" data-preset="cavalry" aria-pressed="false">🐎 Cavalry</button>
-<button type="button" class="tab" data-preset="ground" aria-pressed="false">🛡️ Ground</button>
-<button type="button" class="tab" data-preset="bigSiege" aria-pressed="false">🏰 Big Siege</button>
-<button type="button" class="tab" data-preset="smallSiege" aria-pressed="false">⚙️ Small Siege</button>
-<button type="button" class="tab" data-preset="soloSiege" aria-pressed="false">🎯 Solo Siege</button>
-</div><p class="choice-note" id="strategy-note">Weighted ranged march with T12–T15 primary troops.</p>
-</section>
-<section class="panel"><div class="stephead"><span class="step">2</span><div><h2>Mark unlocked troops</h2><p>Select whole tiers or individual troop types for T13, T14, T15 and T16.</p></div></div>
-<div class="availability"><table><thead><tr><th scope="col">Tier</th><th scope="col">All types</th><th scope="col">Ranged</th><th scope="col">Cavalry</th><th scope="col">Ground</th><th scope="col">Siege</th></tr></thead><tbody id="unlock-grid"></tbody></table></div>
-<div class="actions"><button id="unlock-all" type="button" class="action alt">Select all troops</button><button id="unlock-none" type="button" class="action alt">Clear T13–T16</button></div>
-<p class="choice-note">T1–T12 are assumed available. Checkboxes indicate availability, not how many troops you own. T16 uses a clearly labeled estimate because the 2024 workbook does not include a T16 formula.</p></section>
+:root{font-family:Inter,system-ui,-apple-system,sans-serif;background:#0a1929;color:#edf3fb}*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 80% -15%,#253e52,transparent 47%),#0a1929}a{color:#edc77e}button,input,select{font:inherit}
+.wrap{max-width:1300px;margin:0 auto;padding:0 24px}
+.hero{padding:43px 0 29px;border-bottom:1px solid #415b74;background:linear-gradient(110deg,#162f47dd,#102237b0)}
+.kicker{font-size:.74rem;color:#e4bd74;letter-spacing:.15em;font-weight:850;text-transform:uppercase}
+h1{font-family:Georgia,serif;font-size:clamp(2.5rem,5.3vw,4rem);letter-spacing:-.045em;color:#fff0d1;line-height:1.1;margin:11px 0 13px}.hero p{line-height:1.65;color:#bed0e0;max-width:880px;margin:0}
+.main{padding:28px 0 70px}
+.overview{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin:0 0 19px}
+.overview h2{font-size:1.27rem;color:#f4d08c;margin:0}.overview p{font-size:.83rem;color:#b4cbdc;margin:6px 0}
+.btn{padding:10px 14px;background:#efc679;color:#17293b;border:1px solid #efc679;border-radius:9px;font-weight:800;cursor:pointer}.btn.alt{background:#23415b;color:#e7f0f7;border-color:#607d95}.btn:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #f0ce81;outline-offset:3px}
+.columns{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:start}
+.troop-card{border:1px solid #426078;border-radius:14px;background:#132d43;min-width:0;overflow:hidden}
+.troop-top{padding:17px;background:linear-gradient(135deg,#20435d,#142e45);border-bottom:1px solid #426078}
+.troop-top h3{font-size:1.22rem;color:#f6dbab;margin:0 0 6px;display:flex;align-items:center;gap:8px}
+.icon{font-size:1.3rem}.troop-top p{margin:0;color:#bcd0e0;font-size:.77rem}
+.troop-inputs{padding:15px}
+.field{display:grid;gap:6px;color:#f2d49e;font-size:.79rem;font-weight:800;margin-bottom:14px}
+.field input,.field select{width:100%;padding:10px 11px;border-radius:8px;border:1px solid #849bab;background:#f5f8fb;color:#142839;min-width:0}
+.level-title{font-size:.77rem;color:#c5d5e1;font-weight:800;letter-spacing:.05em;text-transform:uppercase;margin:11px 0 8px}
+.tier-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.tier-chip{display:flex;align-items:center;gap:6px;background:#213e56;color:#ecf2fa;border:1px solid #4d7188;border-radius:8px;padding:9px 7px;font-weight:700;font-size:.84rem;cursor:pointer}
+.tier-chip:has(input:checked){border-color:#eac477;background:#3a453f}.tier-chip input{accent-color:#e9c373;width:17px;height:17px;margin:0;cursor:pointer}
+.result{border-top:1px solid #435f77;padding:16px;min-height:240px}
+.result h4{font-size:.92rem;color:#f2d398;margin:0 0 12px}.result-status{color:#acbfd0;font-size:.78rem;line-height:1.5}
+.result-summary{border:1px solid #376a59;background:#163d38;border-radius:9px;padding:10px;margin:0 0 13px}
+.result-summary strong{color:#a6efc4;font-size:1.18rem;display:block}.result-summary small{font-size:.69rem;color:#c0dbce}
+.allocation{width:100%;border-collapse:collapse}.allocation td{padding:8px 2px;border-bottom:1px solid #344e66;font-size:.81rem}.allocation td:last-child{text-align:right;color:#fff0d3;font-variant-numeric:tabular-nums;font-weight:750}
+.support{color:#bfcedb;font-size:.74rem;line-height:1.5;margin-top:11px}.notice{border-left:3px solid #c9a162;background:#3e3226;color:#f3e0c2;font-size:.76rem;padding:10px;margin-top:10px;line-height:1.5}
+.card-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}.copy-btn{font-size:.75rem;padding:8px 11px}
+.footer-note{margin:22px 0 0;color:#afc2d0;font-size:.78rem;line-height:1.6;padding:15px;border:1px solid #3f566b;border-radius:10px}
+.error{color:#ffc0b5;font-size:.82rem;line-height:1.5}footer{border-top:1px solid #28445d;padding:25px 0;color:#a3bbcc;font-size:.8rem}
+@media(max-width:1100px){.columns{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:580px){.wrap{padding:0 13px}.columns{grid-template-columns:1fr}.hero{padding:30px 0}.troop-card{display:grid;grid-template-columns:1fr}.troop-inputs{padding:16px}.tier-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.tier-chip{justify-content:center}}
+</style></head>
+<body><SiteHeader active="march"/>
+<header class="hero"><div class="wrap"><span class="kicker">Player tools / Troop planning</span><h1>March Preset Builder</h1>
+<p>Set your march size for each troop type, tick the troop levels you've unlocked, and get your recommended march automatically. No percentages to configure and no manual calculations.</p></div></header>
+<main class="wrap main">
+<div class="overview"><div><h2>Configure your four marches</h2><p>Use one column per troop type. Each march is calculated independently, based on its own size and unlocked tiers.</p></div><button id="all-tiers" class="btn alt" type="button">Unlock T13–T16 for all</button></div>
+<div class="columns" id="march-columns">
+<section class="troop-card" data-type="ranged"><div class="troop-top"><h3><span class="icon">🏹</span> Archer</h3><p>Ranged attack preset</p></div><div class="troop-inputs"><label class="field">Archer march size <input type="number" data-size min="1" max="100000000" step="1" placeholder="e.g. 7,393,200" inputmode="numeric"></label><div class="level-title">Unlocked troop tiers</div><div class="tier-grid" data-tiers></div></div><div class="result" data-result><p class="result-status">Enter your Archer march size to see a recommendation.</p></div></section>
+<section class="troop-card" data-type="cavalry"><div class="troop-top"><h3><span class="icon">🐎</span> Cavalry</h3><p>Mounted attack preset</p></div><div class="troop-inputs"><label class="field">Cavalry march size <input type="number" data-size min="1" max="100000000" step="1" placeholder="e.g. 7,480,700" inputmode="numeric"></label><div class="level-title">Unlocked troop tiers</div><div class="tier-grid" data-tiers></div></div><div class="result" data-result><p class="result-status">Enter your Cavalry march size to see a recommendation.</p></div></section>
+<section class="troop-card" data-type="ground"><div class="troop-top"><h3><span class="icon">🛡️</span> Ground</h3><p>Ground attack preset</p></div><div class="troop-inputs"><label class="field">Ground march size <input type="number" data-size min="1" max="100000000" step="1" placeholder="e.g. 7,486,400" inputmode="numeric"></label><div class="level-title">Unlocked troop tiers</div><div class="tier-grid" data-tiers></div></div><div class="result" data-result><p class="result-status">Enter your Ground march size to see a recommendation.</p></div></section>
+<section class="troop-card" data-type="siege"><div class="troop-top"><h3><span class="icon">🏰</span> Siege</h3><p>Siege attack preset</p></div><div class="troop-inputs"><label class="field">Siege march size <input type="number" data-size min="1" max="100000000" step="1" placeholder="e.g. 6,013,200" inputmode="numeric"></label><label class="field">Siege preset type<select data-siege><option value="bigSiege">Big Siege</option><option value="smallSiege">Small Siege</option><option value="soloSiege">Solo Siege</option></select></label><div class="level-title">Unlocked troop tiers</div><div class="tier-grid" data-tiers></div></div><div class="result" data-result><p class="result-status">Enter your Siege march size to see a recommendation.</p></div></section>
 </div>
-<div>
-<section class="panel" aria-live="polite"><div class="results-head"><div><h2>Recommended March Preset</h2><span class="tiny" id="preset-name">Ranged · Troop allocation</span></div><button id="copy-preset" class="action" type="button">Copy preset</button></div>
-<div id="result-content"><div class="empty">Calculating your march allocation…</div></div>
-</section>
-<section class="panel"><h3>How these presets are calculated</h3><div class="notes">
-<p><strong class="kbd">Step 1:</strong> The 2024 workbook reserves a fixed number of troops for support layers, including lower-tier troops and cross-type layers.</p>
-<p><strong class="kbd">Step 2:</strong> The remaining capacity is divided using the workbook's percentages for the chosen preset. If a selected high tier is unavailable, its allocation moves to the next available lower tier.</p>
-<p><strong class="kbd">Step 3:</strong> Quantities are rounded to whole troops while preserving the exact march capacity.</p>
-<p>The source workbook supports six profiles, but does <strong>not</strong> provide an individual count for every support troop by type and tier, so the support-layer reserve is shown separately instead of inventing a detailed breakdown.</p>
-<p>These are community planning templates. They are not a battle simulator and don't account for enemy composition, buffs, dragon, march speed, skill books, or your actual owned troop counts.</p>
-</div><div class="source"><strong>Source:</strong> User-provided <em>Troop Layers 2024.xlsx</em>, “March Layers” sheet. The older “Old Version, no T15” tab is preserved as background only. Supplementary 2023 Discord screenshots contain different example splits; the calculator follows the workbook rather than mixing contradictory percentages.</div>
-</section></div></div>
-</main><footer><div class="wrap">EvonyMasters · Independent community reference. Verify recommended troop counts against your actual troops before deploying a march.</div></footer>
-<script>
-import {TYPES,PRESETS,makeUnlocks,calculatePreset} from '../../lib/marchPresets.mjs';
-const $=id=>document.getElementById(id),fmt=new Intl.NumberFormat("en-GB");
-let preset="ranged",unlocked=makeUnlocks(),latest=null;
-const colors={16:"#f1d18b",15:"#e7a65c",14:"#a8c5e4",13:"#77a9dc",12:"#5685bd",11:"#6e88a0",10:"#6c88a0",9:"#6c88a0",support:"#557b80"};
-const esc=document.createElement.bind(document);
-function checkbox(row,tier,type){
- const td=esc("td"),box=esc("input");box.type="checkbox";box.checked=!!unlocked[type][tier];box.setAttribute("aria-label",type+" T"+tier+" unlocked");box.addEventListener("change",()=>{unlocked[type][tier]=box.checked;renderUnlocks();render()});td.append(box);row.append(td);
+<p class="footer-note"><strong>How these recommendations work:</strong> Presets are based on the uploaded <em>Troop Layers 2024.xlsx</em> workbook. Troop quantities are rounded to fit the march size exactly, with a separate lower-tier supporting-layers reserve. T1–T12 are assumed available. Because the 2024 workbook does not include T16, T16 recommendations are estimates. Use these as planning guides and check your troop inventory and actual battle setup before marching.</p>
+</main><footer><div class="wrap">EvonyMasters · Independent community reference. The site's administrators maintain preset allocation rules.</div></footer>
+<script is:inline>
+(()=>{"use strict";
+const ENDPOINT="https://evonymasters-calendar.jaynmegepicadventure.workers.dev/api/march-presets/calculate";
+const names={ranged:"Archer",cavalry:"Cavalry",ground:"Ground",siege:"Siege"},defaults={ranged:7393200,cavalry:7480700,ground:7486400,siege:6013200};
+const fmt=new Intl.NumberFormat("en-GB"),latest=new Map(),serial=new Map();
+const node=(tag,cls,value)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(value!==undefined)e.textContent=String(value);return e};
+function renderResult(card,data){
+ const result=card.querySelector("[data-result]");result.replaceChildren();
+ const title=node("h4","",data.label+" recommendation");result.append(title);
+ const summary=node("div","result-summary");summary.append(node("small","","Total troops in march"),node("strong","",fmt.format(data.marchSize)));result.append(summary);
+ const table=node("table","allocation");
+ for(const item of data.rows){const tr=node("tr");tr.append(node("td","",item.tier?"T"+item.tier+" "+item.type:item.label||"Lower-tier support layers"),node("td","",fmt.format(item.count)));table.append(tr)}
+ result.append(table);
+ const footer=node("p","support","Primary troops: "+fmt.format(data.mainTroops)+" · Supporting layers: "+fmt.format(data.reserve));result.append(footer);
+ for(const warning of data.warnings||[])result.append(node("div","notice",warning));
+ const actions=node("div","card-actions"),copy=node("button","btn alt copy-btn","Copy this preset");copy.type="button";
+ copy.addEventListener("click",async()=>{const lines=[data.label+" · "+fmt.format(data.marchSize)+" troops",...data.rows.map(r=>(r.tier?"T"+r.tier+" "+r.type:r.label)+": "+fmt.format(r.count))];try{await navigator.clipboard.writeText(lines.join("\n"));copy.textContent="Copied!"}catch{copy.textContent="Copy unavailable"}});
+ actions.append(copy);result.append(actions);
 }
-function renderUnlocks(){
- const grid=$("unlock-grid");grid.replaceChildren();
- for(const tier of [16,15,14,13]){
-  const row=esc("tr"),label=esc("td");label.textContent="T"+tier;row.append(label);
-  const allcell=esc("td"),all=esc("input");all.type="checkbox";all.checked=TYPES.every(type=>unlocked[type][tier]);all.indeterminate=!all.checked&&TYPES.some(type=>unlocked[type][tier]);all.setAttribute("aria-label","Unlock all troop types at T"+tier);all.addEventListener("change",()=>{for(const type of TYPES)unlocked[type][tier]=all.checked;renderUnlocks();render()});allcell.className="all-cell";allcell.append(all);row.append(allcell);
-  for(const type of TYPES)checkbox(row,tier,type);
-  grid.append(row);
- }
+async function calculate(card){
+ const type=card.dataset.type,id=(serial.get(type)||0)+1;serial.set(type,id);
+ const input=card.querySelector("[data-size]"),raw=input.value.trim(),root=card.querySelector("[data-result]");
+ if(!raw){root.replaceChildren(node("p","result-status","Enter your "+names[type]+" march size to see a recommendation."));return}
+ const marchSize=Number(raw);
+ if(!Number.isSafeInteger(marchSize)||marchSize<1||marchSize>100000000){root.replaceChildren(node("p","error","Enter a valid march size from 1 to 100,000,000."));return}
+ const kind=type==="siege"?card.querySelector("[data-siege]").value:type;
+ const unlocked={Ranged:{},Cavalry:{},Ground:{},Siege:{}};
+ for(const tier of [13,14,15,16]){const b=card.querySelector('input[data-tier="'+tier+'"]');unlocked[type==="ranged"?"Ranged":type==="cavalry"?"Cavalry":type==="ground"?"Ground":"Siege"][tier]=b.checked;}
+ root.replaceChildren(node("p","result-status","Calculating…"));
+ try{const r=await fetch(ENDPOINT,{method:"POST",mode:"cors",headers:{"content-type":"application/json"},body:JSON.stringify({marchSize,preset:kind,unlocked})});const data=await r.json();if(id!==serial.get(type))return;if(!r.ok)throw Error(data.error||"Calculation unavailable");latest.set(type,data);renderResult(card,data)}
+ catch(e){if(id!==serial.get(type))return;root.replaceChildren(node("p","error","Couldn't calculate this march. "+(e.message||"Please try again.")))}
 }
-function node(tag,className,value){const e=esc(tag);if(className)e.className=className;if(value!==undefined)e.textContent=String(value);return e}
-function render(){
- const root=$("result-content");root.replaceChildren();const value=$("march-size").value;
- try{
-  latest=calculatePreset({marchSize:Number(value),preset,unlocked});
-  const result=latest;$("preset-name").textContent=result.label+" · "+result.type+" priority";
-  const metrics=node("div","stats");
-  for(const [heading,amount] of [["March total",result.marchSize],["Main troops",result.mainTroops],["Support layers",result.reserve]]){const box=node("div","stat"),small=node("small","",heading),strong=node("strong","",fmt.format(amount));box.append(small,strong);metrics.append(box)}
-  root.append(metrics);
-  const bar=node("div","chart");bar.setAttribute("aria-label","March troop distribution");
-  for(const line of result.rows){const segment=node("span");segment.style.width=(line.count/result.marchSize*100)+"%";segment.style.background=colors[line.tier]||colors.support;segment.title=(line.tier?"T"+line.tier:"Support")+" · "+fmt.format(line.count);bar.append(segment)}
-  root.append(bar);
-  const holder=node("div","table-wrap"),table=node("table","output-table"),thead=node("thead"),heading=node("tr");
-  for(const name of ["Troop / Role","Tier","Quantity"])heading.append(node("th","",name));thead.append(heading);table.append(thead);
-  const tbody=node("tbody");
-  for(const item of result.rows){
-   const tr=node("tr"),unit=node("td"),swatch=node("span","share-swatch");swatch.style.background=colors[item.tier]||colors.support;unit.append(swatch,document.createTextNode(item.tier?item.type:item.label));
-   tr.append(unit,node("td","",item.tier?"T"+item.tier:"Mixed"),node("td","",fmt.format(item.count)));tbody.append(tr);
-  }
-  const end=node("tr","total");end.append(node("td","","Total"),node("td","",""),node("td","",fmt.format(result.marchSize)));tbody.append(end);table.append(tbody);holder.append(table);root.append(holder);
-  if(result.warnings.length){const alert=node("div","notice");alert.setAttribute("role","note");for(const warning of result.warnings)alert.append(node("div","",warning));root.append(alert)}
-  root.append(node("p","choice-note","Workbook reference: "+result.source+" · example march "+fmt.format(result.sourceSample)+". This calculator scales main allocations to your chosen march after subtracting the workbook's fixed lower-layer reserve."));
-  $("copy-preset").disabled=false;
- }catch(err){latest=null;root.append(node("div","notice",err.message));$("copy-preset").disabled=true}
+const timers=new Map();
+for(const card of document.querySelectorAll("[data-type]")){
+ const type=card.dataset.type,grid=card.querySelector("[data-tiers]");
+ for(const tier of [13,14,15,16]){const label=node("label","tier-chip"),check=node("input");check.type="checkbox";check.dataset.tier=tier;check.checked=tier<=14;check.addEventListener("change",()=>calculate(card));label.append(check,document.createTextNode("T"+tier));grid.append(label)}
+ const size=card.querySelector("[data-size]");
+ size.addEventListener("input",()=>{clearTimeout(timers.get(type));timers.set(type,setTimeout(()=>calculate(card),300))});
+ const selector=card.querySelector("[data-siege]");if(selector)selector.addEventListener("change",()=>calculate(card));
 }
-for(const b of document.querySelectorAll("[data-preset]"))b.addEventListener("click",()=>{
- preset=b.dataset.preset;for(const v of document.querySelectorAll("[data-preset]"))v.setAttribute("aria-pressed",String(v===b));
- const descriptions={ranged:"Ranged troop percentages from the 2024 workbook.",cavalry:"Cavalry-led march with fixed lower-tier layers.",ground:"Ground troop allocation with a substantial T12 support reserve if T15 is unlocked.",bigSiege:"Big Siege emphasizes T13 and T14, adding a highest-tier share if unlocked.",smallSiege:"Small Siege puts the remaining troops into T11 after its fixed allocations.",soloSiege:"Solo Siege spreads its main strength across T12–T15."};
- $("strategy-note").textContent=descriptions[preset];render();
-});
-$("march-size").addEventListener("input",render);
-$("unlock-all").addEventListener("click",()=>{for(const type of TYPES)for(const tier of [13,14,15,16])unlocked[type][tier]=true;renderUnlocks();render()});
-$("unlock-none").addEventListener("click",()=>{for(const type of TYPES)for(const tier of [13,14,15,16])unlocked[type][tier]=false;renderUnlocks();render()});
-$("copy-preset").addEventListener("click",async()=>{if(!latest)return;const output=[latest.label+" preset · "+fmt.format(latest.marchSize)+" troops",...latest.rows.map(x=>(x.tier?"T"+x.tier+" "+x.type:x.label)+": "+fmt.format(x.count)),...latest.warnings.map(v=>"Note: "+v)].join("\n");try{await navigator.clipboard.writeText(output);$("copy-preset").textContent="Copied!";setTimeout(()=>$("copy-preset").textContent="Copy preset",1500)}catch{$("copy-preset").textContent="Copy unavailable"}});
-renderUnlocks();render();
+document.getElementById("all-tiers").addEventListener("click",()=>{for(const card of document.querySelectorAll("[data-type]")){for(const check of card.querySelectorAll("[data-tier]"))check.checked=true;calculate(card)}});
+})();
 </script></body></html>
