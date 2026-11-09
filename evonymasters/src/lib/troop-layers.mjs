@@ -2,12 +2,12 @@
  * Troop layer calculator derived from Troop Layers 2024.xlsx.
  *
  * Updated reserve rule:
- *   - T1 to T9: default layer size for each of the four troop types
- *   - T10 to the highest tier selected: defaults for the OTHER three types
+ *   - T1 to T9: the selected formation's default layer size for all four troop types
+ *   - T10 to the highest tier selected: that same default for the OTHER three types
  *   - For the selected type, fixed Excel layers override its default T1–T9
  *     layers; extra fixed levels above T9 are deducted before proportional split.
  *
- * Base troop layer sizes: ranged, mounted and ground = 10,000; siege = 1,000.
+ * Every layer uses the selected formation's default (10,000 normal; 1,000 siege).
  * Six formations map to four underlying troop types (all siege variants are siege).
  */
 export const DEFAULT_LAYERS = Object.freeze({ ranged:10000, mounted:10000, ground:10000, siege:1000 });
@@ -48,8 +48,9 @@ export function calculateFormation(type,marchInput,selectedTiers){
  if(!march||!highest)return result;
  const ownDefault=DEFAULT_LAYERS[cfg.troopType];
  const counts=new Map();
- const defaults=Object.entries(DEFAULT_LAYERS);
- const otherDefault=defaults.reduce((sum,[troop,size])=>sum+(troop===cfg.troopType?0:size),0);
+ // The spreadsheet applies the selected formation's Default Layer Size to
+ // every troop family, including the other three types, not each type's own size.
+ const otherDefault=3*ownDefault;
  // Reserve all four types through T9. Above T9 reserve ONLY the other three types.
  const ownBase=9*ownDefault;
  const otherBase=9*otherDefault;
@@ -71,11 +72,10 @@ export function calculateFormation(type,marchInput,selectedTiers){
   counts.set(tier,Math.max(base,amount));
   primaryFixed.add(tier);
  }
- // Excel 'March Layers' E6 reserves 700,000 for Cavalry's T15-era formation.
- // Our generic four-type defaults reserve 575,000, missing 125,000.
- // Keep this workbook-specific difference explicit, never disguise it as top-tier troops.
+ // The Cavalry worksheet has an explicit 700,000 T15-era layer reserve.
+ // Reconcile the small difference from generalized cross-type layer defaults.
  if(highest===15&&cfg.excelT15Reserve){
-  result.excelAdjustment=Math.max(0,cfg.excelT15Reserve-(result.baseLayers+result.extraFixed));
+  result.excelAdjustment=cfg.excelT15Reserve-(result.baseLayers+result.extraFixed);
  }
  const reserve=result.baseLayers+result.extraFixed+result.excelAdjustment;
  // A march smaller than mandatory layers is marked insufficient rather than
