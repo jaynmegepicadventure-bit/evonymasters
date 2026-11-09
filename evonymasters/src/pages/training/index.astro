@@ -55,8 +55,8 @@ tfoot th{text-align:left;color:#f2cd89}tfoot tr+tr th,tfoot tr+tr td{background:
 @media(max-width:450px){.summary{grid-template-columns:1fr 1fr}.summary-item{padding:12px 10px}.control{flex:1;min-width:125px}.controls{padding:12px}}
 </style></head>
 <body><SiteHeader active="training" /><main>
-<h1>Troop Training</h1>
-<p class="lead">Enter how many troops you want to train. Each row calculates the resources, Power and Gold for that tier and troop type using the supplied training-cost workbook. Select any combination of troop types and levels, such as Ground + Ranged (Archers) and T1–T7, without losing amounts you entered in other rows.</p>
+<h1>Train an army. Count every resource.</h1>
+<p class="lead">From a few fresh recruits to a full-scale army, know the price before you train. Pick any mix of troop types and tiers, enter your target numbers and see the Food, Wood, Stone, Ore, Gold and Power totals update instantly.</p>
 <div class="controls">
 <div class="control"><span>Troop type</span>
 <details class="filter" id="type-filter"><summary><span class="filter-caption">All troop types</span><span aria-hidden="true">▾</span></summary>
@@ -94,7 +94,7 @@ tfoot th{text-align:left;color:#f2cd89}tfoot tr+tr th,tfoot tr+tr td{background:
 </tfoot>
 </table>
 </div>
-<p class="note"><strong>How totals work:</strong> Food, Wood, Stone, Ore and Gold are training costs. Power is gained from the troops. The right-hand <strong>Total resources</strong> column combines only Food + Wood + Stone + Ore; Gold and Power remain separate. Filtered subtotals count visible rows, while grand totals always include every amount you entered, even in hidden rows. All amounts start at zero on page load.</p>
+
 </main>
 <script>
 import { TROOP_TRAINING_COSTS, calculateTrainingRow, calculateTrainingTotals } from '../../data/troop-training-costs.mjs';
