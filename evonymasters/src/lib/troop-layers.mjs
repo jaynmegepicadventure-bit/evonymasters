@@ -13,7 +13,7 @@
 export const DEFAULT_LAYERS = Object.freeze({ ranged:10000, mounted:10000, ground:10000, siege:1000 });
 export const FORMATIONS = {
  ranged: { label:'Ranged', troopType:'ranged', fixed:{11:50000,10:50000,9:50000}, high:[.15,.20,.30,.35], low:[.20,.35,.45] },
- mounted: { label:'Cavalry', troopType:'mounted', fixed:{11:100000,10:25000,9:25000,8:25000,7:25000}, high:[.15,.20,.30,.35], low:[.25,.35,.40] },
+ mounted: { label:'Cavalry', troopType:'mounted', fixed:{11:100000,10:25000,9:25000,8:25000,7:25000}, high:[.15,.20,.30,.35], low:[.25,.35,.40], excelT15Reserve:700000 },
  ground: { label:'Ground', troopType:'ground', fixed:{11:25000,10:25000,9:25000,8:25000,7:25000}, high:[.40,.40,.20], low:[.40,.40,.20], specialTier:12, specialAmount:500000 },
  bigSiege: { label:'BIG Siege', troopType:'siege', fixed:{}, high:[.10,.25,.65], low:[.25,.75] },
  smallSiege: { label:'Small Siege', troopType:'siege', fixed:{14:50000,13:50000,12:50000,10:50000,9:50000}, residualTier:11 },
@@ -44,7 +44,7 @@ export function calculateFormation(type,marchInput,selectedTiers){
  const march=Number.isFinite(value)?Math.max(0,Math.min(1e10,Math.floor(value))):0;
  const tiers=[...new Set(selectedTiers.map(Number).filter(n=>Number.isInteger(n)&&n>=3&&n<=16))].sort((a,b)=>b-a);
  const highest=tiers[0]||0;
- const result={type,march,tiers,rows:[],ownLayers:0,otherLayers:0,baseLayers:0,extraFixed:0,support:0,remaining:0,total:0,unallocated:0};
+ const result={type,march,tiers,rows:[],ownLayers:0,otherLayers:0,baseLayers:0,extraFixed:0,excelAdjustment:0,support:0,remaining:0,total:0,unallocated:0};
  if(!march||!highest)return result;
  const ownDefault=DEFAULT_LAYERS[cfg.troopType];
  const counts=new Map();
@@ -71,7 +71,7 @@ export function calculateFormation(type,marchInput,selectedTiers){
   counts.set(tier,Math.max(base,amount));
   primaryFixed.add(tier);
  }
- const reserve=result.baseLayers+result.extraFixed;
+ // Excel 'March Layers' E6 reserves 700,000 for Cavalry's T15-era formation.\n // Our generic four-type defaults reserve 575,000, missing 125,000.\n // Keep this workbook-specific difference explicit, never disguise it as top-tier troops.\n if(highest===15&&cfg.excelT15Reserve){\n  result.excelAdjustment=Math.max(0,cfg.excelT15Reserve-(result.baseLayers+result.extraFixed));\n }\n const reserve=result.baseLayers+result.extraFixed+result.excelAdjustment;
  // A march smaller than mandatory layers is marked insufficient rather than
  // inventing a top-tier allocation or exceeding the entered march size.
  if(march<reserve){
@@ -102,7 +102,7 @@ export function calculateFormation(type,marchInput,selectedTiers){
  }
  result.support=reserve;
  result.rows=[...counts.entries()].sort((a,b)=>b[0]-a[0]).map(([tier,count])=>({tier,count}));
- result.total=result.otherLayers+result.rows.reduce((sum,row)=>sum+row.count,0);
+ result.total=result.otherLayers+result.excelAdjustment+result.rows.reduce((sum,row)=>sum+row.count,0);
  return result;
 }
 /** Rows to display and the precise cross-type deduction. */
@@ -111,5 +111,5 @@ export function displayFormationLayers(result){
  const counts=new Map(result.rows.map(({tier,count})=>[tier,count]));
  const rows=Array.from({length:top},(_,i)=>({tier:top-i,count:counts.get(top-i)||0}));
  const displayed=rows.reduce((sum,row)=>sum+row.count,0);
- return {rows,otherSupport:result.otherLayers,displayed,total:result.total};
+ return {rows,otherSupport:result.otherLayers+result.excelAdjustment,displayed,total:result.total};
 }
