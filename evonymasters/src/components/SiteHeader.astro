@@ -6,11 +6,12 @@ const links=[{href:'/',label:'Home',key:'home'},{href:'/resources/',label:'Resou
 <style is:global>
 .site-header{background:#11243a;border-bottom:1px solid #30445c;position:relative;z-index:20}.site-nav-wrap{max-width:1440px;min-height:76px;margin:auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between;gap:20px}.site-brand{font-size:1.45rem;font-weight:850;letter-spacing:-.04em;text-decoration:none;color:#eaf0f8;white-space:nowrap}.site-brand span{color:#e6bc73}.site-desktop-nav{display:flex;align-items:center;gap:15px}.site-desktop-nav a{color:#eaf0f8;text-decoration:none;font-size:.93rem;font-weight:700;white-space:nowrap}.site-desktop-nav a:hover,.site-desktop-nav a[aria-current=page]{color:#e6bc73}.site-planned{color:#a9bcd0;font-size:.88rem;white-space:nowrap}.site-planned small{font-size:.68rem;color:#e6bc73}.site-mobile-menu{display:none;position:relative}.site-mobile-menu summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:9px;border:1px solid #58708a;border-radius:9px;padding:9px 12px;color:#eaf0f8;font-weight:750}.site-mobile-menu summary::-webkit-details-marker{display:none}.site-mobile-menu nav{position:absolute;right:0;top:calc(100% + 10px);min-width:225px;display:flex;flex-direction:column;background:#11243a;border:1px solid #58708a;border-radius:12px;box-shadow:0 12px 25px #0008;padding:8px}.site-mobile-menu nav a,.site-mobile-menu nav .site-planned{padding:12px;border-radius:7px;text-decoration:none;color:#eaf0f8;font-size:.95rem}.site-mobile-menu nav a:hover,.site-mobile-menu nav a[aria-current=page]{background:#203a52;color:#e6bc73}.site-mobile-menu nav .site-planned{color:#a9bcd0}@media(max-width:1240px){.site-desktop-nav{display:none}.site-mobile-menu{display:block}}
 
-/* EvonyMasters illustrated page banners. The original site artwork is a
-   fallback until the optimized page-specific assets are present. */
+/* EvonyMasters illustrated page banners. When a page-specific image is absent,
+   use the navy background instead of repeating the homepage illustration. */
 .banner-hero{--hero-art:none;position:relative;isolation:isolate;overflow:hidden;
- background-image:linear-gradient(90deg,rgba(5,14,27,.83) 0%,rgba(6,19,35,.76) 44%,rgba(6,19,35,.23) 100%),var(--hero-art),url('/images/home/evonymasters-home-hero.webp') !important;
- background-size:cover,cover,cover !important;background-position:center,center,center !important;
+ background-color:#10273e;
+ background-image:linear-gradient(90deg,rgba(5,14,27,.83) 0%,rgba(6,19,35,.76) 44%,rgba(6,19,35,.23) 100%),var(--hero-art) !important;
+ background-size:cover,cover !important;background-position:center,center !important;
  background-repeat:no-repeat !important;
  border-bottom:1px solid rgba(225,182,105,.48);
 }
@@ -32,8 +33,8 @@ const links=[{href:'/',label:'Home',key:'home'},{href:'/resources/',label:'Resou
 .banner-resources,.banner-chests,.banner-events,.banner-calendar,.banner-generals{min-height:220px}
 .banner-resources>.wrap,.banner-chests>.wrap,.banner-events>.wrap,.banner-calendar>.wrap,.banner-generals>.wrap{position:relative;z-index:1}
 @media(max-width:760px){
- .banner-hero{background-image:linear-gradient(90deg,rgba(5,14,27,.91),rgba(5,14,27,.68)),var(--hero-art),url('/images/home/evonymasters-home-hero.webp') !important;
- background-position:center,center center,center !important}
+ .banner-hero{background-image:linear-gradient(90deg,rgba(5,14,27,.91),rgba(5,14,27,.68)),var(--hero-art) !important;
+ background-position:center,center center !important}
  .banner-march-preset,.banner-troop-training{min-height:190px}
 }
 
