@@ -51,3 +51,22 @@ test('Troop Training UI has independently filterable type and tier columns and d
  assert.match(src,/Grand total \(all entries\)/);
  assert.match(src,/Total resources/);
 });
+
+test('Multi-select filters include independently checked troop types and levels',()=>{
+ const src=readFileSync(new URL('../src/pages/training/index.astro',import.meta.url),'utf8');
+ assert.match(src,/id="type-filter"/);
+ assert.match(src,/id="tier-filter"/);
+ assert.match(src,/checkedValues\(typeFilter\)/);
+ assert.match(src,/checkedValues\(tierFilter\)/);
+ assert.match(src,/selectedTypes\.has\(row\.dataset\.type\)&&selectedTiers\.has\(row\.dataset\.tier\)/);
+ assert.match(src,/data-action="all"/);
+ assert.match(src,/data-action="none"/);
+ const groundArcherToT7=TROOP_TRAINING_COSTS.filter(r=>['Ground','Ranged'].includes(r.type)&&r.tier<=7);
+ assert.equal(groundArcherToT7.length,14);
+});
+test('Gold appears immediately before Power in headings, rows and footer totals',()=>{
+ const src=readFileSync(new URL('../src/pages/training/index.astro',import.meta.url),'utf8');
+ assert.match(src,/<th scope="col">Gold<\/th><th scope="col">Power<\/th>/);
+ assert.match(src,/\['food','wood','stone','ore','gold','power'\]/);
+ assert.match(src,/\['food','wood','stone','ore','gold','power','totalResources'\]/);
+});
