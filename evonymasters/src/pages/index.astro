@@ -5,7 +5,7 @@ const monsterCount=monsters.length;
 const features=[
  {href:'/resources/',image:'/images/item-finder/ymir.svg',eyebrow:'Find the best source',title:'Resource Finder',text:'Search recorded rewards, compare monster drops and see where the items you need can be earned.',action:'Find a reward'},
  {href:'/chests/',image:'/images/item-finder/box.svg',eyebrow:'Open the possibilities',title:'Chest Finder',text:'Explore complete chest contents, ranking variants and known event or boss sources.',action:'Explore chests'},
- {href:'/events/',image:'/images/item-finder/feasting-revelry.svg',eyebrow:'Plan your next move',title:'Event Guides',text:'Discover event activities, featured rewards and the details that matter when planning your next move.',action:'Browse events'}
+ {href:'/calendar/',image:'/images/item-finder/feasting-revelry.svg',eyebrow:'Plan your next move',title:'Event Calendar',text:'Discover event activities, featured rewards and the details that matter when planning your next move.',action:'View calendar'}
 ];
 const shortcuts=[
  {href:'/resources/?q=Gems',label:'Gems'},
@@ -106,12 +106,12 @@ footer{padding:27px 0;border-top:1px solid #314c62;font-size:.81rem;color:#aebfd
 <div class="lower-grid">
 <article class="small-panel"><h3>⌕ &nbsp; Popular searches</h3><p>Take the shortcut to the loot you're chasing.</p><div class="quick-list">{shortcuts.map(link=><a class="quick-link" href={link.href}>{link.label} ↗</a>)}</div></article>
 <article class="small-panel"><h3>⚔ &nbsp; Monster rewards</h3><p>Pick your targets, compare their loot and make every stamina point work harder.</p><div class="panel-links"><a href="/resources/?q=Monarch%20EXP"><img src="/images/item-finder/zombie.svg" alt="" loading="lazy"/>Explore monster drops<span aria-hidden="true">›</span></a><a href="/chests/?source=bosses"><img src="/images/item-finder/box.svg" alt="" loading="lazy"/>Browse boss chests<span aria-hidden="true">›</span></a></div></article>
-<article class="small-panel"><h3>✦ &nbsp; Events &amp; generals</h3><p>Scout the calendar, chase event prizes and prepare for your next power play.</p><div class="panel-links"><a href="/events/"><img src="/images/item-finder/feasting-revelry.svg" alt="" loading="lazy"/>Event guides<span aria-hidden="true">›</span></a><a href="/calendar/"><img src="/images/item-finder/event.svg" alt="" loading="lazy"/>Events calendar<span aria-hidden="true">›</span></a><a href="/generals/"><img src="/images/item-finder/event.svg" alt="" loading="lazy"/>General reference<span aria-hidden="true">›</span></a></div></article>
+<article class="small-panel"><h3>✦ &nbsp; Events &amp; generals</h3><p>Scout the calendar, chase event prizes and prepare for your next power play.</p><div class="panel-links"><a href="/calendar/"><img src="/images/item-finder/feasting-revelry.svg" alt="" loading="lazy"/>Event details<span aria-hidden="true">›</span></a><a href="/calendar/"><img src="/images/item-finder/event.svg" alt="" loading="lazy"/>Events calendar<span aria-hidden="true">›</span></a><a href="/generals/"><img src="/images/item-finder/event.svg" alt="" loading="lazy"/>General reference<span aria-hidden="true">›</span></a></div></article>
 </div>
 </section>
 <section class="categories" aria-labelledby="categories-title"><h2 id="categories-title">Explore the library</h2><div class="category-grid">
 <a class="category" href="/resources/"><img src="/images/item-finder/ymir.svg" alt="" loading="lazy"/><span><strong>Monster &amp; item rewards</strong><small>{monsterCount} catalog records · Reward sources</small></span></a>
-<a class="category" href="/events/"><img src="/images/item-finder/feasting-revelry.svg" alt="" loading="lazy"/><span><strong>Events</strong><small>Activities &amp; event rewards</small></span></a>
+<a class="category" href="/calendar/"><img src="/images/item-finder/feasting-revelry.svg" alt="" loading="lazy"/><span><strong>Events</strong><small>Activities &amp; event rewards</small></span></a>
 <a class="category" href="/chests/"><img src="/images/item-finder/box.svg" alt="" loading="lazy"/><span><strong>Chests</strong><small>Contents, ranking tiers &amp; sources</small></span></a>
 <a class="category" href="/generals/"><img src="/images/item-finder/event.svg" alt="" loading="lazy"/><span><strong>Generals</strong><small>Skills, buffs &amp; attributes</small></span></a>
 </div></section>
@@ -134,7 +134,7 @@ footer{padding:27px 0;border-top:1px solid #314c62;font-size:.81rem;color:#aebfd
   summary.textContent=entries.length?entries.length+' published sources scheduled as available today.':'No published availability recorded for today.';
   for(const entry of entries.slice(0,16)){
    const a=document.createElement('a');a.className='live-item';
-   a.href=entry.kind==='Event'?'/events/?q='+encodeURIComponent(entry.name):'/resources/?q='+encodeURIComponent(entry.name);
+   a.href=entry.kind==='Event'?'/calendar/?q='+encodeURIComponent(entry.name):'/resources/?q='+encodeURIComponent(entry.name);
    const dot=document.createElement('span');dot.className='live-dot';dot.textContent='●';
    const name=document.createElement('strong');name.textContent=entry.name;
    const kind=document.createElement('span');kind.className='live-kind';kind.textContent=entry.kind;
