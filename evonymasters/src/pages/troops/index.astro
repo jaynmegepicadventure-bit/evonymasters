@@ -14,7 +14,7 @@ const tiers=[14,15,16];
 <html lang="en">
 <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <meta name="description" content="Calculate Evony troop layers with the formulas and allocations from the Troop Layers 2024 workbook."/>
-<link rel="icon" href="/favicon.svg"/><title>Troop Layer Calculator | EvonyMasters</title>
+<link rel="icon" href="/favicon.svg"/><title>March Preset | EvonyMasters</title>
 <style>
 :root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#07111e;color:#ecf1f7}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 0,#172c43,#07111e 62%)}
@@ -50,7 +50,7 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 @media print{.site-header,.toolbar,.tiers-head button{display:none!important}body{background:white;color:black}.scroller{overflow:visible}.cols{display:grid;grid-template-columns:repeat(3,1fr);min-width:0}.card{break-inside:avoid;color:black;background:white}:global(.result-row .value){color:black}}
 </style></head>
 <body><SiteHeader active="troops"/><main>
-<div class="top"><h1>Troop Layer Calculator</h1><p>Built from the Troop Layers 2024 workbook. Enter march sizes and select which upper troop tiers you have (T14–T16). T3–T13 are always included. T1–T9 defaults for all four troop types and T10+ defaults for the other three types are reserved before the main formation is calculated.</p></div>
+<div class="top"><h1>March Preset</h1><p>Built from the Troop Layers 2024 workbook. Enter march sizes and select which upper troop tiers you have (T14–T16). T3–T13 are always included. T1–T9 defaults for all four troop types and T10+ defaults for the other three types are reserved before the main formation is calculated.</p></div>
 <div class="toolbar"><button type="button" id="clear">Clear march sizes</button><button type="button" id="reset">Restore Excel examples</button><button type="button" id="print">Print results</button></div>
 <div class="scroller"><div class="cols">{types.map(t=><section class="card" data-type={t.id}>
 <h2>{t.icon} {t.label}</h2>
