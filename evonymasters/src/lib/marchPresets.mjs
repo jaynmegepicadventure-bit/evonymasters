@@ -14,6 +14,7 @@ export const makeUnlocks=()=>Object.fromEntries(TYPES.map(type=>[type,{13:true,1
 export function hasTop(unlocked,type){return Number(!!(unlocked?.[type]?.[15]||unlocked?.[type]?.[16]));}
 function available(unlocked,type,tier){return tier<=12||!!unlocked?.[type]?.[tier];}
 function targetTier(unlocked,type,tier){
+ if(tier<=12)return tier;
  for(let t=Math.min(16,tier);t>=12;t--)if(available(unlocked,type,t))return t;
  return 12;
 }
