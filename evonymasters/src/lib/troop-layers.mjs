@@ -58,3 +58,32 @@ export function calculateFormation(type, marchInput, selectedTiers){
  const total=support+rows.reduce((s,r)=>s+r.count,0);
  return {type,march,tiers,rows,support,fixedTotal,remaining:Math.max(0,march-support-fixedTotal),total};
 }
+
+/**
+ * Present the T7–T1 same-type layers shown by "Default Layer Size" in the
+ * reference workbook. These layers are part of the existing cross-type
+ * support reserve, not extra troops added to the march.
+ *
+ * Already-calculated named layers (for example Ground T7 at 25,000) take
+ * priority over the default size, avoiding double counting.
+ */
+export function displayFormationLayers(result) {
+ const cfg=FORMATIONS[result.type];
+ if(!cfg) throw Error('Unknown formation');
+ const base=['bigSiege','smallSiege','soloSiege'].includes(result.type)?1000:10000;
+ const counts=new Map(result.rows.map(({tier,count})=>[tier,count]));
+ let remainingSupport=result.support;
+ for(let tier=7;tier>=1;tier--){
+  if((counts.get(tier)||0)>0)continue;
+  const amount=Math.min(base,remainingSupport);
+  counts.set(tier,amount);
+  remainingSupport-=amount;
+ }
+ const top=Math.max(7,...result.tiers);
+ const rows=Array.from({length:top},(_,i)=>({tier:top-i,count:counts.get(top-i)||0}));
+ const displayed=rows.reduce((sum,r)=>sum+r.count,0);
+ if(displayed+remainingSupport!==result.total){
+  throw Error('Displayed layers and support do not reconcile with march total');
+ }
+ return {rows,otherSupport:remainingSupport,displayed,total:result.total};
+}
