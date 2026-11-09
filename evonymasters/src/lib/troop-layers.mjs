@@ -90,8 +90,14 @@ export function calculateFormation(type,marchInput,selectedTiers){
   else if(remaining){result.unallocated=remaining;}
  }else{
   const weights=highest>=15?cfg.high:cfg.low;
-  const chosen=mainPool.slice(0,weights.length);
-  if(chosen.length)allocateWeighted(remaining,chosen,weights.slice(0,chosen.length),counts);
+  // The workbook's lower-tier percentages are tied to T14, T13, T12,
+  // not arbitrarily reassigned when T14 is unavailable.
+  // For T15 and T16, advance the upper formation with the highest owned tier.
+  const anchor=highest>=15?highest:14;
+  const weighted=weights.map((weight,i)=>({tier:anchor-i,weight}))
+    .filter(item=>mainPool.includes(item.tier));
+  const chosen=weighted.map(item=>item.tier);
+  if(chosen.length)allocateWeighted(remaining,chosen,weighted.map(item=>item.weight),counts);
   else if(remaining)result.unallocated=remaining;
  }
  result.support=reserve;
