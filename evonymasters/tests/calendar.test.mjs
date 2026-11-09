@@ -158,7 +158,9 @@ test("Player-facing reward, event, chest and homepage browser scripts remain syn
  assert.match(resources,/>Availability </);
  assert.doesNotMatch(resources,/>Frequency <span class="arrow"/);
  assert.doesNotMatch(resources,/>Notes \/ How to obtain <span class="arrow"/);
- assert.match(resources,/addField\("Notes \/ How to obtain",row.note\)/);
+ assert.match(resources,/rewards-breakdown/);
+ assert.match(resources,/Drop classification/);
+ assert.doesNotMatch(resources,/addField\("Notes \/ How to obtain",row.note\)/);
  assert.doesNotMatch(resources,/id="activity-filter"/);
 });
 
