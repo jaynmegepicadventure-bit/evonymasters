@@ -71,6 +71,6 @@ const breakdownFields = [['General buff', 'generalBuff'], ['Specialty 1', 'speci
 {growth && <div class="overview-growth"><h3>Attribute growth</h3><div class="stats">{growth.map(item => <div class="stat"><span class="meta">{item.label}</span><strong>{item.value}</strong></div>)}</div></div>}
 </section>
 <section class="section"><h2>All recorded effects</h2><div class="grid"><table class="results-table"><thead><tr><th>Effect</th><th>Buff / Debuff</th><th>Value</th><th>Condition</th><th>Source breakdown</th></tr></thead><tbody>{rows.map(row => <tr><td>{row.buffName}</td><td>{row.buffDebuff || 'Buff'}</td><td class="value">{row.buffDebuff?.toLowerCase() === 'debuff' ? '−' : '+'}{row.unit === 'percent' ? percent(row.buffValue) : row.buffValue == null ? '—' : fmt(row.buffValue) + (row.unit ? ' ' + row.unit : '')}</td><td>{row.condition || '—'}</td><td class="pieces">{breakdownFields.filter(([, key]) => row[key] != null).map(([label,key]) => <span>{label}: {row.unit === 'percent' ? percent(row[key]) : fmt(row[key])}</span>)}{row.notes && <span>{row.notes}</span>}</td></tr>)}</tbody></table></div>
-{first.sourceUrl && <a class="source" href={first.sourceUrl} target="_blank" rel="noopener noreferrer">Source data ↗</a>}</section>
+</section>
 </div></main>
 </body></html>
