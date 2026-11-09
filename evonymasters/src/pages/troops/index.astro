@@ -34,15 +34,20 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 .tier input{accent-color:#edbf71;margin:0;width:15px;height:15px}
 .results{margin-top:17px;padding-top:12px;border-top:1px solid #3b5268;flex:1}
 .results h3{font-size:.91rem;color:#efc77e;margin:0 0 8px}
-.result-row{display:grid;grid-template-columns:48px minmax(0,1fr);align-items:center;column-gap:20px;border-bottom:1px solid #263f56;padding:8px 4px;font-size:.9rem;min-height:35px}.result-row span:first-child{font-weight:800;color:#e5cfaa}
-.result-row .value{text-align:right;font-variant-numeric:tabular-nums;font-weight:800;color:#f4eedb;white-space:nowrap}
+/* Rows are inserted by client JavaScript, so selectors must be global rather than Astro-scoped. */
+:global(.result-row){display:grid;grid-template-columns:minmax(38px,auto) minmax(0,1fr);column-gap:18px;align-items:center;min-height:37px;padding:8px 10px;border-bottom:1px solid #30485d;background:rgba(4,18,30,.14);font-size:.91rem}
+:global(.result-row:nth-child(even)){background:rgba(50,79,104,.17)}
+:global(.result-row .tier-label){font-weight:800;color:#efcf99;text-align:left;white-space:nowrap}
+:global(.result-row .value){display:block;text-align:right;justify-self:end;font-variant-numeric:tabular-nums;font-weight:800;color:#f4eedb;white-space:nowrap}
+.rows{border:1px solid #30485d;border-radius:9px;overflow:hidden}
+:global(.result-row:last-child){border-bottom:0}
 .summary{margin-top:11px;display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:.93rem}
 .summary output{color:#f3c678;font-variant-numeric:tabular-nums}
 .stat{color:#b3c8d9;font-size:.74rem;margin:9px 0 0}.stat strong{color:#eaf1f8}
 .tip{font-size:.78rem;color:#a9bccf}
 @media(max-width:700px){main{padding:24px 12px 55px}.cols{min-width:0;grid-template-columns:1fr}.scroller{overflow:visible}.card{padding:17px} .tiers{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(min-width:701px) and (max-width:1250px){.cols{min-width:1210px;grid-template-columns:repeat(6,1fr)} .tiers{grid-template-columns:repeat(3,minmax(0,1fr))}.tier{flex-direction:row;justify-content:center;gap:5px}}
-@media print{.site-header,.toolbar,.tiers-head button{display:none!important}body{background:white;color:black}.scroller{overflow:visible}.cols{display:grid;grid-template-columns:repeat(3,1fr);min-width:0}.card{break-inside:avoid;color:black;background:white}.result-row .value{color:black}}
+@media print{.site-header,.toolbar,.tiers-head button{display:none!important}body{background:white;color:black}.scroller{overflow:visible}.cols{display:grid;grid-template-columns:repeat(3,1fr);min-width:0}.card{break-inside:avoid;color:black;background:white}:global(.result-row .value){color:black}}
 </style></head>
 <body><SiteHeader active="troops"/><main>
 <div class="top"><h1>Troop Layer Calculator</h1><p>Built from the Troop Layers 2024 workbook. Enter march sizes and select which upper troop tiers you have (T14–T16). T3–T13 are always included. Fixed support layers are reserved first, then the main formation is calculated from the troops remaining.</p></div>
@@ -51,16 +56,16 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 <h2>{t.icon} {t.label}</h2>
 <label class="field">March size<input class="march" type="text" inputmode="numeric" autocomplete="off" value={t.defaultSize.toLocaleString("en-US")} aria-label={t.label+' march size'}/></label>
 <div class="tiers-head"><strong>Upper troop tiers</strong><span>T3–T13 included</span></div>
-<div class="tiers">{tiers.map(tier=><label class="tier"><input type="checkbox" class="tier-input" value={tier} checked={tier<=((t.id==='ranged'||t.id==='ground')?15:14)}/><span>T{tier}</span></label>)}</div>
+<div class="tiers">{tiers.map(tier=><label class="tier"><input type="checkbox" class="tier-input" value={tier} checked={false}/><span>T{tier}</span></label>)}</div>
 <div class="results"><h3>Calculated layers</h3><div class="rows" aria-live="polite"></div>
-<div class="stat">Cross-type support layers: <strong class="reserved">0</strong></div>
+<div class="stat">Other support layers: <strong class="reserved">0</strong></div>
 <div class="stat">Main formation troops: <strong class="remaining">0</strong></div>
 <div class="summary"><span>Total march</span><output class="total">0</output></div></div>
 </section>)}</div></div>
-<p class="tip">The workbook contains six separate formations, including three Siege variants. Smaller screens show one card at a time. Percentages are intentionally hidden.</p>
+<p class="tip">The workbook contains six separate formations, including three Siege variants. T7–T1 use each formation's default layer size and are included in the total, not added on top. Percentages remain hidden.</p>
 </main>
 <script>
-import {calculateFormation, REFERENCE_EXAMPLES} from '../../lib/troop-layers.mjs';
+import {calculateFormation, displayFormationLayers, REFERENCE_EXAMPLES} from '../../lib/troop-layers.mjs';
 const format=n=>n.toLocaleString('en-US');
 const baseTiers=Array.from({length:11},(_,i)=>i+3);
 const cards=[...document.querySelectorAll('.card')];
@@ -70,18 +75,15 @@ function calculate(card){
  const type=card.dataset.type;
  const selected=[...baseTiers,...card.querySelectorAll('.tier-input:checked')].map(t=>typeof t==='number'?t:Number(t.value));
  const result=calculateFormation(type,parseMarch(card.querySelector('.march').value),selected);
+ const presentation=displayFormationLayers(result);
  const rows=card.querySelector('.rows');rows.replaceChildren();
- const counts=new Map(result.rows.map(r=>[r.tier,r.count]));
- const max=Math.max(7,...selected);
- // Display T7 down to T1, plus every selected upper tier; zero means the reference workbook
- // does not specify a same-type allocation at that tier. The cross-type reserve is separate.
- for(let tier=max;tier>=1;tier--){
+ for(const item of presentation.rows){
   const row=document.createElement('div');row.className='result-row';
-  const label=document.createElement('span');label.textContent='T'+tier;
-  const value=document.createElement('strong');value.className='value';value.textContent=format(counts.get(tier)||0);
+  const label=document.createElement('span');label.className='tier-label';label.textContent='T'+item.tier;
+  const value=document.createElement('strong');value.className='value';value.textContent=format(item.count);
   row.append(label,value);rows.append(row);
  }
- card.querySelector('.reserved').textContent=format(result.support);
+ card.querySelector('.reserved').textContent=format(presentation.otherSupport);
  card.querySelector('.remaining').textContent=format(result.remaining);
  card.querySelector('.total').textContent=format(result.total);
 }
