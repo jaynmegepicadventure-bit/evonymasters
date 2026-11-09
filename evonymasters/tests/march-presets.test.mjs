@@ -53,9 +53,12 @@ test("Empty unlocks, reduced marches and tier fallbacks never exceed capacity",(
 test("March page renders accessible unlock matrix, preset tabs and output",()=>{
  const page=readFileSync(new URL("../src/pages/march-presets/index.astro",import.meta.url),"utf8");
  const header=readFileSync(new URL("../src/components/SiteHeader.astro",import.meta.url),"utf8");
- assert.match(page,/id="march-size"/);assert.match(page,/id="unlock-grid"/);
- assert.match(page,/data-preset="smallSiege"/);assert.match(page,/data-preset="ranged"/);
- assert.match(page,/Select all troops/);assert.match(page,/Copy preset/);
- assert.match(page,/T16 uses a clearly labeled estimate/);
+ assert.match(page,/id="march-size"/);assert.match(page,/data-tiers/);
+ assert.match(page,/data-type="ranged"/);assert.match(page,/data-type="cavalry"/);
+ assert.match(page,/data-type="ground"/);assert.match(page,/data-type="siege"/);
+ assert.match(page,/id="all-tiers"/);assert.match(page,/Copy this preset/);
+ assert.doesNotMatch(page,/15%|20%|30%|35%|40%|65%/);
+ assert.doesNotMatch(page,/from ['"][^'"]*marchPresets/);
+ assert.match(page,/T16 recommendations are estimates/);
  assert.match(header,/href:'\/march-presets\/'/);
 });
