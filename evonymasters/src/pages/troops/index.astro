@@ -43,14 +43,14 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 :global(.result-row:last-child){border-bottom:0}
 .summary{margin-top:11px;display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:.93rem}
 .summary output{color:#f3c678;font-variant-numeric:tabular-nums}
-.stat{color:#b3c8d9;font-size:.74rem;margin:9px 0 0}.stat strong{color:#eaf1f8}
+.stat{color:#b3c8d9;font-size:.74rem;margin:9px 0 0}.stat strong{color:#eaf1f8}.warn{color:#ffd38b;font-size:.78rem;padding:8px;border:1px solid #a9844c;border-radius:6px}
 .tip{font-size:.78rem;color:#a9bccf}
 @media(max-width:700px){main{padding:24px 12px 55px}.cols{min-width:0;grid-template-columns:1fr}.scroller{overflow:visible}.card{padding:17px} .tiers{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(min-width:701px) and (max-width:1250px){.cols{min-width:1210px;grid-template-columns:repeat(6,1fr)} .tiers{grid-template-columns:repeat(3,minmax(0,1fr))}.tier{flex-direction:row;justify-content:center;gap:5px}}
 @media print{.site-header,.toolbar,.tiers-head button{display:none!important}body{background:white;color:black}.scroller{overflow:visible}.cols{display:grid;grid-template-columns:repeat(3,1fr);min-width:0}.card{break-inside:avoid;color:black;background:white}:global(.result-row .value){color:black}}
 </style></head>
 <body><SiteHeader active="troops"/><main>
-<div class="top"><h1>Troop Layer Calculator</h1><p>Built from the Troop Layers 2024 workbook. Enter march sizes and select which upper troop tiers you have (T14–T16). T3–T13 are always included. Fixed support layers are reserved first, then the main formation is calculated from the troops remaining.</p></div>
+<div class="top"><h1>Troop Layer Calculator</h1><p>Built from the Troop Layers 2024 workbook. Enter march sizes and select which upper troop tiers you have (T14–T16). T3–T13 are always included. T1–T9 defaults for all four troop types and T10+ defaults for the other three types are reserved before the main formation is calculated.</p></div>
 <div class="toolbar"><button type="button" id="clear">Clear march sizes</button><button type="button" id="reset">Restore Excel examples</button><button type="button" id="print">Print results</button></div>
 <div class="scroller"><div class="cols">{types.map(t=><section class="card" data-type={t.id}>
 <h2>{t.icon} {t.label}</h2>
@@ -58,11 +58,11 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 <div class="tiers-head"><strong>Upper troop tiers</strong><span>T3–T13 included</span></div>
 <div class="tiers">{tiers.map(tier=><label class="tier"><input type="checkbox" class="tier-input" value={tier} checked={false}/><span>T{tier}</span></label>)}</div>
 <div class="results"><h3>Calculated layers</h3><div class="rows" aria-live="polite"></div>
-<div class="stat">Other support layers: <strong class="reserved">0</strong></div>
+<div class="stat">Own T1–T9 defaults: <strong class="own-base">0</strong></div><div class="stat">Other 3 troop types: <strong class="reserved">0</strong></div><div class="stat">Extra fixed layers: <strong class="extra-fixed">0</strong></div><p class="warn" hidden></p>
 <div class="stat">Main formation troops: <strong class="remaining">0</strong></div>
 <div class="summary"><span>Total march</span><output class="total">0</output></div></div>
 </section>)}</div></div>
-<p class="tip">The workbook contains six separate formations, including three Siege variants. T7–T1 use each formation's default layer size and are included in the total, not added on top. Percentages remain hidden.</p>
+<p class="tip">The workbook contains six separate formations, including three Siege variants. T1–T9 include default layers across all four troop types. Other troop types above T9 are deducted before proportional top-tier allocations. Percentages remain hidden.</p>
 </main>
 <script>
 import {calculateFormation, displayFormationLayers, REFERENCE_EXAMPLES} from '../../lib/troop-layers.mjs';
@@ -84,6 +84,11 @@ function calculate(card){
   row.append(label,value);rows.append(row);
  }
  card.querySelector('.reserved').textContent=format(presentation.otherSupport);
+ card.querySelector('.own-base').textContent=format(result.ownLayers);
+ card.querySelector('.extra-fixed').textContent=format(result.extraFixed);
+ const warning=card.querySelector('.warn');
+ warning.hidden=!result.unallocated;
+ warning.textContent=result.total>result.march?'March too small for the required layers by '+format(result.total-result.march):'Cannot allocate '+format(result.unallocated)+' troops without an available top tier.';
  card.querySelector('.remaining').textContent=format(result.remaining);
  card.querySelector('.total').textContent=format(result.total);
 }
