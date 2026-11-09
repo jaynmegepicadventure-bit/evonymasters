@@ -41,8 +41,8 @@ function validate(input,entries,existing){
  if(!Array.isArray(input.targetIds)||!input.targetIds.length||input.targetIds.length>1500||new Set(input.targetIds).size!==input.targetIds.length)throw Error("Select 1–1500 distinct events or monsters");
  const index=new Map(entries.map(e=>[e.id,e])),targets=input.targetIds.map(id=>index.get(id));
  if(targets.some(t=>!t))throw Error("Some selected events or monsters are no longer in the catalog");
- const startDate=txt(input.startDate),endDate=txt(input.endDate),reviewAfter=txt(input.reviewAfter),name=txt(input.name);
- const selectedDates=Array.isArray(input.selectedDates)?input.selectedDates:[],excludedDates=Array.isArray(input.excludedDates)?input.excludedDates:[],daysOfWeek=Array.isArray(input.daysOfWeek)?input.daysOfWeek:[];
+ const startDate=txt(input.startDate),reviewAfter=txt(input.reviewAfter),name=txt(input.name);
+ const selectedDates=Array.isArray(input.selectedDates)?input.selectedDates:[],legacyInterval=rule==="interval"&&!selectedDates.length&&existing?.rule==="interval"&&validDate(startDate),endDate=rule==="interval"&&!legacyInterval?"":txt(input.endDate),excludedDates=Array.isArray(input.excludedDates)?input.excludedDates:[],daysOfWeek=Array.isArray(input.daysOfWeek)?input.daysOfWeek:[];
  const startTime=txt(input.startTime),endTime=txt(input.endTime),notes=txt(input.notes),sourceUrl=txt(input.sourceUrl),intervalDays=Number(input.intervalDays||1);
  if(["range","ongoing","alternate-weekends"].includes(rule)&&!validDate(startDate))throw Error("Enter a valid start date");
  if(endDate&&!validDate(endDate)||startDate&&endDate&&endDate<startDate)throw Error("Invalid end date");
@@ -50,7 +50,7 @@ function validate(input,entries,existing){
  
  if(reviewAfter&&(!validDate(reviewAfter)||startDate&&reviewAfter<startDate))throw Error("Invalid review date");
  if(startTime&&!ts.test(startTime)||endTime&&!ts.test(endTime)||startTime&&endTime&&endTime<startTime)throw Error("Enter valid UTC times, start before end");
- if(selectedDates.length>180||selectedDates.some(d=>typeof d!=="string"||!validDate(d))||["dates","interval"].includes(rule)&&!selectedDates.length)throw Error("Choose valid individual dates");
+ if(selectedDates.length>180||selectedDates.some(d=>typeof d!=="string"||!validDate(d))||["dates","interval"].includes(rule)&&!selectedDates.length&&!legacyInterval)throw Error("Choose valid individual dates");
  if(excludedDates.length>180||excludedDates.some(d=>typeof d!=="string"||!validDate(d)))throw Error("Invalid excluded dates");
  if(rule==="alternate-weekends"&&day(startDate).getUTCDay()!==6)throw Error("Choose a Saturday as the first active weekend");
   if(rule==="weekly"&&(!daysOfWeek.length||daysOfWeek.some(d=>!Number.isInteger(d)||d<0||d>6)))throw Error("Choose weekdays");
@@ -61,7 +61,7 @@ function validate(input,entries,existing){
  const ruleNames={dates:"Specific dates",daily:"Every day",weekends:"Every weekend","alternate-weekends":"Alternate weekends",weekly:"Selected weekdays",interval:"Every "+intervalDays+" days"};
   const title=name||targets.slice(0,2).map(t=>t.name).join(", ")+(targets.length>2?" +"+(targets.length-2):"")+" · "+(ruleNames[rule]||rule);
  return {id:existing?.id||crypto.randomUUID(),name:title,targets:targets.map(t=>({id:t.id,name:t.name,kind:t.kind,level:t.level||"",family:!!t.family})),rule,
- startDate:rule==="always"||rule==="daily"||rule==="weekends"||rule==="weekly"?"":["dates","interval"].includes(rule)?unique[0]:startDate,endDate:rule==="always"||rule==="daily"||rule==="weekends"||rule==="weekly"||rule==="interval"?"":endDate,
+ startDate:rule==="always"||rule==="daily"||rule==="weekends"||rule==="weekly"?"":["dates","interval"].includes(rule)&&unique.length?unique[0]:startDate,endDate:rule==="always"||rule==="daily"||rule==="weekends"||rule==="weekly"||rule==="interval"&&!legacyInterval?"":endDate,
  selectedDates:["dates","interval"].includes(rule)?unique:[],daysOfWeek:rule==="weekly"?[...new Set(daysOfWeek)].sort():[],
  intervalDays:rule==="interval"?intervalDays:1,excludedDates:[...new Set(excludedDates)].sort(),startTime,endTime,reviewAfter:rule==="always"?"":reviewAfter,
  status,notes,sourceUrl,published:input.published??true,paused:input.paused??existing?.paused??false,updatedAt:new Date().toISOString()};
