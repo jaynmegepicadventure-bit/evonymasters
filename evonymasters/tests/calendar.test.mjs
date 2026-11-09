@@ -186,3 +186,43 @@ test("Calendar planner groups monster families under expandable category heading
  assert.ok(inline);
  assert.doesNotThrow(()=>new Script(inline[1]));
 });
+
+test("Every X days repeats each calendar-selected UTC date forever and requires dates",async()=>{
+ const {env,access}=runtime();
+ const response=await worker.fetch(request("/api/admin/schedules","POST",{
+  ...basics,rule:"interval",selectedDates:[],startDate:"",endDate:"",intervalDays:5
+ }),env,access);
+ assert.equal(response.status,400,"New recurring intervals require calendar selections");
+ const saved=await add(env,access,{targetIds:[fakeCatalog[1].id],rule:"interval",selectedDates:["2026-11-10","2026-11-12","2026-11-10"],startDate:"",endDate:"2026-11-20",intervalDays:5});
+ assert.deepEqual(saved.selectedDates,["2026-11-10","2026-11-12"]);
+ assert.equal(saved.startDate,"2026-11-10");
+ assert.equal(saved.endDate,"");
+ const output=await publicEvents(env,"2026-11-09","2026-12-01");
+ assert.deepEqual(output.map(e=>e.date),["2026-11-10","2026-11-12","2026-11-15","2026-11-17","2026-11-20","2026-11-22","2026-11-25","2026-11-27","2026-11-30"]);
+ const future=await publicEvents(env,"2027-01-01","2027-01-14");
+ assert.deepEqual(future.map(e=>e.date),["2027-01-04","2027-01-06","2027-01-09","2027-01-11","2027-01-14"]);
+});
+test("Older bounded interval schedules remain unchanged when paused",async()=>{
+ const {env,access}=runtime();
+ const old=await add(env,access,{targetIds:[fakeCatalog[4].id],rule:"interval",selectedDates:["2026-11-09"],startDate:"",intervalDays:3});
+ // Simulate a schedule saved before calendar-anchor support was deployed.
+ const stored=JSON.parse(await env.CALENDAR.get("evonymasters:schedules:v2"));
+ const legacy=stored.find(s=>s.id===old.id);legacy.selectedDates=[];legacy.startDate="2026-11-09";legacy.endDate="2026-11-20";
+ await env.CALENDAR.put("evonymasters:schedules:v2",JSON.stringify(stored));
+ const saved=await worker.fetch(request("/api/admin/schedules/"+old.id,"PUT",{...legacy,targetIds:legacy.targets.map(t=>t.id),paused:true,replace:false}),env,access);
+ assert.equal(saved.status,200,await saved.clone().text());
+ const paused=(await saved.json()).schedule;
+ assert.equal(paused.endDate,"2026-11-20");
+ assert.deepEqual(paused.selectedDates,[]);
+ assert.deepEqual(await publicEvents(env,"2026-11-09","2026-11-20"),[]);
+});
+test("Interval editor shows clickable dates and no first or final date input",async()=>{
+ const {env,access}=runtime();
+ const html=await (await worker.fetch(request("/admin/"),env,access)).text();
+ assert.match(html,/Select one or more active dates/);
+ assert.match(html,/Repeat each selected date every X days/);
+ assert.match(html,/Each selected date repeats every X days indefinitely/);
+ assert.doesNotMatch(html,/Final date \(optional\)/);
+ assert.doesNotMatch(html,/First active date \(UTC\)/);
+ assert.match(html,/\["dates","interval"\]\.includes\(value\)/);
+});
