@@ -72,6 +72,13 @@ export function calculateFormation(type,marchInput,selectedTiers){
   counts.set(tier,Math.max(base,amount));
   primaryFixed.add(tier);
  }
+ // With T16 enabled, the proportionate high-tier split can stop at T13.
+ // T12 must still retain its own-type support layer rather than silently
+ // disappearing. An existing fixed T12 allocation always takes precedence.
+ if(highest===16&&tiers.includes(12)&&!counts.has(12)){
+  counts.set(12,ownDefault);
+  result.extraFixed+=ownDefault;
+ }
  // The Cavalry worksheet has an explicit 700,000 T15-era layer reserve.
  // Reconcile the small difference from generalized cross-type layer defaults.
  if(highest===15&&cfg.excelT15Reserve){
