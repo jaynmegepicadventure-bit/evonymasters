@@ -144,43 +144,102 @@ const profiles={
  source:"https://info.topgamesinc.com/civilization-celebration-the-silk-road-joyful-harvest-round/"
  }
 };
-const section=(parent,title,lines)=>{
+const eventProfiles={
+ ...profiles,
+ "crazy eggs":{
+  description:"Collect Hammers by defeating monsters and gathering resources, then smash four different eggs. Activating all four unlocks the Caesar Egg bonus.",
+  howToPlay:[
+   "Get Hammers from monster kills and gathering. Each egg costs a different number of Hammers per smash.",
+   "Smash each egg until it activates. Each smash starts a cooldown before another attempt.",
+   "Activate all four eggs before the daily reset to unlock the Caesar Egg reward. A daily Lucky Hammer can bypass one cooldown, but the smash still costs Hammers."
+  ],
+  eggCosts:[
+   ["Princess Lucy","3","30 minutes","Gems, Monarch EXP, teleporters and food"],
+   ["James Bowie","6","1 hour","Stamina, Refining Stones, artwork chests and healing speedups"],
+   ["Isabella I","8","2 hours","Gold, Arrest Warrants, lumber and treasure"],
+   ["Minamoto no Yoshitsune","12","4 hours","Gems, troop speedups, attack buffs and treasure"]
+  ],
+  rewards:["Caesar Egg bonus after all four eggs activate: Gems, Dragon Crystals, Refining Stones, material bags and speedups. Exact reward quantities may vary."],
+  source:"https://info.topgamesinc.com/evony-permanent-events-adjustment-announcement/"
+ },
+ "dwarfs lucky apple":{
+  description:"Spend Wishing Coins on Lucky Apples for prizes, then use Delicious Pies to visit the Mysterious Witch for more rewards.",
+  howToPlay:["Choose an apple and make a wish using a Wishing Coin.","Use Delicious Pies to claim additional rewards from the Mysterious Witch."],
+  source:"https://info.topgamesinc.com/evony-permanent-events-adjustment-announcement/"
+ },
+ "golden goblin":{
+  description:"Defeat Golden Goblins on the world map to collect Gold.",
+  howToPlay:["Find Golden Goblins on the world map and send troops to defeat them."],
+  source:"https://info.topgamesinc.com/evony-permanent-events-adjustment-announcement/"
+ },
+ "cerberuss treasure":{
+  description:"Defeat Cerberus monsters on the world map to earn speedups and other monster rewards.",
+  source:"https://info.topgamesinc.com/evony-permanent-events-adjustment-announcement/"
+ },
+ "resource tax gift":{
+  description:"Collect resources through the Market tax feature to unlock extra event gifts.",
+  source:"https://info.topgamesinc.com/evony-permanent-events-adjustment-announcement/"
+ },
+ "gathering event":{
+  description:"Gather resources on the world map during a boosted period, with doubled resource spots and a 50% gathering-speed increase in the announced version.",
+  source:"https://info.topgamesinc.com/evony-permanent-events-adjustment-announcement/"
+ }
+};
+function addEventSection(parent,title,lines){
+ if(!lines?.length)return;
  const wrap=el("section","event-detail-section");
  wrap.append(el("h4","",title));
- if(!lines.length){wrap.append(el("p","event-detail-empty","Not specified for this event."));}
- else for(const line of lines)wrap.append(el("p","",line));
+ for(const line of lines)wrap.append(el("p","",line));
  parent.append(wrap);
-};
+}
+function addEventTable(parent,title,headings,rows){
+ if(!rows?.length)return;
+ const wrap=el("section","event-detail-section");
+ wrap.append(el("h4","",title));
+ const table=el("table","event-reward-table");
+ const thead=el("thead"),header=el("tr");
+ for(const heading of headings)header.append(el("th","",heading));
+ thead.append(header);table.append(thead);
+ const body=el("tbody");
+ for(const values of rows){
+  const tr=el("tr");
+  for(const value of values)tr.append(el("td","",value));
+  body.append(tr);
+ }
+ table.append(body);wrap.append(table);parent.append(wrap);
+}
 function eventDetails(event){
- const guide=guideMap.get(key(event.name)),profile=profiles[key(event.name)]||{};
+ const guide=guideMap.get(key(event.name));
+ const profile=eventProfiles[key(event.name)]||{};
  const details=el("div","event-inline-details");
- const overview=profile.description||(guide?.notes&&!/not verified|not specified|check the current|review the current/i.test(guide.notes)
-  ?guide.notes:"Event activities and rewards vary by round. Open the event in-game to check current objectives.");
+ const note=guide?.notes&& !/not verified|not specified|check the current|review the current/i.test(guide.notes)?guide.notes:"";
+ const overview=profile.description||note||"A detailed event guide is not yet available. Check the current event panel in-game for its objectives and prizes.";
  details.append(el("p","event-summary",overview));
- const grid=el("div","event-activity-grid");
- section(grid,"Personal activity",profile.personalActivity?[profile.personalActivity]:[]);
- section(grid,"Personal ranking",profile.personalRanking?[profile.personalRanking]:[]);
- section(grid,"Alliance activity",profile.allianceActivity?[profile.allianceActivity]:[]);
- section(grid,"Alliance ranking",profile.allianceRanking?[profile.allianceRanking]:[]);
- details.append(grid);
+ addEventSection(details,"How to play",profile.howToPlay);
+ addEventTable(details,"The four eggs",["Egg","Hammers / smash","Cooldown","Typical rewards"],profile.eggCosts);
+ // Different events have different mechanics. Only show activity and ranking
+ // sections when specific information is known, never empty template cards.
+ const knownActivity=[
+  ["Personal activity",profile.personalActivity],
+  ["Personal ranking",profile.personalRanking],
+  ["Alliance activity",profile.allianceActivity],
+  ["Alliance ranking",profile.allianceRanking]
+ ];
+ for(const [title,info] of knownActivity)if(info)addEventSection(details,title,[info]);
+ if(profile.rewards?.length)addEventSection(details,"Rewards and bonuses",profile.rewards);
  if(guide?.rewards?.length){
-  const wrap=el("section","event-detail-section");
-  wrap.append(el("h4","","Featured rewards"));
-  const table=el("table","event-reward-table"),head=el("tr");
-  for(const label of ["Item / reward","Quantity","Classification"])head.append(el("th","",label));
-  const thead=el("thead");thead.append(head);table.append(thead);
-  const tbody=el("tbody");
-  for(const entry of guide.rewards.flatMap(v=>v.split(";").map(t=>t.trim())).filter(Boolean)){
-   if(/not verified|not specified|rewards vary|check the current/i.test(entry))continue;
-   const row=el("tr");
-   for(const cell of [entry,"—",guide.verified?"Featured":"Not confirmed"])row.append(el("td","",cell));
-   tbody.append(row);
+  const rows=[];
+  for(const raw of guide.rewards){
+   for(const entry of raw.split(";").map(v=>v.trim()).filter(Boolean)){
+    if(/not verified|not specified|rewards vary|check the current/i.test(entry))continue;
+    rows.push([entry,"Varies",guide.verified?"Featured":"Unconfirmed"]);
+   }
   }
-  if(tbody.childElementCount){table.append(tbody);wrap.append(table);details.append(wrap);}
+  addEventTable(details,"Featured event rewards",["Reward","Quantity","Type"],rows);
  }
  const source=profile.source||guide?.source;
  if(source&&/^https:\/\//.test(source)){
-  const link=el("a","event-source-link","Event information ↗");
+  const link=el("a","event-source-link","Learn more ↗");
   link.href=source;link.target="_blank";link.rel="noopener noreferrer";details.append(link);
  }
  return details;
