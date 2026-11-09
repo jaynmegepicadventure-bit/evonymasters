@@ -58,7 +58,7 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 <div class="tiers-head"><strong>Upper troop tiers</strong><span>T3–T13 included</span></div>
 <div class="tiers">{tiers.map(tier=><label class="tier"><input type="checkbox" class="tier-input" value={tier} checked={false}/><span>T{tier}</span></label>)}</div>
 <div class="results"><h3>Calculated layers</h3><div class="rows" aria-live="polite"></div>
-<div class="stat">Own T1–T9 defaults: <strong class="own-base">0</strong></div><div class="stat">Other 3 troop types: <strong class="reserved">0</strong></div><div class="stat">Extra fixed layers: <strong class="extra-fixed">0</strong></div><p class="warn" hidden></p>
+<div class="stat">Own T1–T9 defaults: <strong class="own-base">0</strong></div><div class="stat">Other 3 troop types: <strong class="reserved">0</strong></div><div class="stat">Extra fixed layers: <strong class="extra-fixed">0</strong></div><div class="stat excel-adjustment-row" hidden>Additional Excel layer reserve: <strong class="excel-adjustment">0</strong></div><p class="warn" hidden></p>
 <div class="stat">Main formation troops: <strong class="remaining">0</strong></div>
 <div class="summary"><span>Total march</span><output class="total">0</output></div></div>
 </section>)}</div></div>
@@ -86,6 +86,9 @@ function calculate(card){
  card.querySelector('.reserved').textContent=format(presentation.otherSupport);
  card.querySelector('.own-base').textContent=format(result.ownLayers);
  card.querySelector('.extra-fixed').textContent=format(result.extraFixed);
+ const excelRow=card.querySelector('.excel-adjustment-row');
+ excelRow.hidden=!result.excelAdjustment;
+ card.querySelector('.excel-adjustment').textContent=format(result.excelAdjustment);
  const warning=card.querySelector('.warn');
  warning.hidden=!result.unallocated;
  warning.textContent=result.total>result.march?'March too small for the required layers by '+format(result.total-result.march):'Cannot allocate '+format(result.unallocated)+' troops without an available top tier.';
