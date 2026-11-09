@@ -47,9 +47,9 @@ footer{border-top:1px solid #29445c;color:#9fb5c7;font-size:.8rem;padding:24px 0
 </div></header>
 <main class="wrap">
 <section class="overview" aria-label="Today's schedule summary">
-<div class="metric"><small>Live events today</small><strong id="metric-events">—</strong></div>
-<div class="metric"><small>Available monster families</small><strong id="metric-monsters">—</strong></div>
-<div class="metric"><small>Upcoming events</small><strong id="metric-upcoming">—</strong></div>
+<div class="metric"><small>Events on selected day</small><strong id="metric-events">—</strong></div>
+<div class="metric"><small>Monster families on selected day</small><strong id="metric-monsters">—</strong></div>
+<div class="metric"><small>Upcoming events in view</small><strong id="metric-upcoming">—</strong></div>
 </section>
 <div class="toolbar">
 <div class="seg" role="group" aria-label="Calendar view">
@@ -180,7 +180,7 @@ function renderPlanner(){
  root.append(grid);
 }
 function renderMetrics(){
- const info=summarized(today),upcoming=new Set(events.filter(e=>e.kind==="Event"&&e.date>today).map(e=>canonical(e).toLowerCase()));
+ const info=summarized(selected),upcoming=new Set(events.filter(e=>e.kind==="Event"&&e.date>today).map(e=>canonical(e).toLowerCase()));
  $("metric-events").textContent=info.events.length;
  $("metric-monsters").textContent=kinds.reduce((n,k)=>n+info.monsters[k].length,0);
  $("metric-upcoming").textContent=upcoming.size;
