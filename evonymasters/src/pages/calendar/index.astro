@@ -41,8 +41,8 @@ footer{border-top:1px solid #29445c;color:#9fb5c7;font-size:.8rem;padding:24px 0
 @media(max-width:590px){.wrap{padding:0 13px}.hero{padding:29px 0}.overview{gap:5px}.metric{padding:11px 9px}.metric small{font-size:.59rem}.planner{padding:8px}.week-grid,.month-grid{gap:3px}.date-card{min-height:82px;padding:7px 3px;border-radius:7px;gap:5px}.date-card.selected{padding:6px 2px}.date-number{font-size:1rem}.date-name{font-size:.6rem}.date-summary{font-size:.6rem;gap:3px}.date-card.month{min-height:63px;padding:4px 2px}.date-card.month.selected{padding:3px 1px}.date-card.month .date-summary{font-size:.56rem}.panel{padding:14px}.filter input{min-width:115px;max-width:165px}.event-card a{white-space:normal}}
 </style></head>
 <body><SiteHeader active="calendar"/>
-<header class="hero"><div class="wrap"><div class="eyebrow">EvonyMasters / Event Planner</div><h1>Know what's on. Plan your hunt.</h1>
-<p>Events and monster availability at a glance, based on published schedules. All dates follow <strong>Evony server time (UTC)</strong>.</p>
+<header class="hero"><div class="wrap"><div class="eyebrow">EvonyMasters / Event Planner</div><h1>Never miss your next move.</h1>
+<p>See what's on the horizon, spot your next monster hunt and line up the events worth watching. Times follow <strong>Evony server time (UTC)</strong>.</p>
 <div class="hero-links"><a href="/events/">Explore event rewards ↗</a><a href="/resources/">Resource Finder ↗</a><a href="https://evonymasters-calendar.jaynmegepicadventure.workers.dev/admin/">Admin dashboard ↗</a></div>
 </div></header>
 <main class="wrap">
@@ -64,9 +64,9 @@ footer{border-top:1px solid #29445c;color:#9fb5c7;font-size:.8rem;padding:24px 0
 <section class="panel" aria-labelledby="monster-title"><h2 id="monster-title">Monster availability</h2><p class="desc">Categories only. Open a category to see its full list of scheduled monsters and levels.</p><div id="monster-groups"></div></section>
 </div>
 <p class="calendar-note" id="status" role="status">Loading published schedules…</p>
-<p class="calendar-note">LIVE means scheduled for the current Evony UTC date. Schedules are maintained by EvonyMasters, not verified directly with the game.</p>
+
 </main>
-<footer><div class="wrap">EvonyMasters is an independent fan-made reference. Event dates and rewards can change in game.</div></footer>
+
 <script is:inline>
 (()=>{"use strict";
 const API="https://evonymasters-calendar.jaynmegepicadventure.workers.dev/api/events";
