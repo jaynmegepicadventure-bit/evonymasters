@@ -1,0 +1,142 @@
+---
+import SiteHeader from '../../components/SiteHeader.astro';
+import { TROOP_TRAINING_COSTS } from '../../data/troop-training-costs.mjs';
+const format = n => n.toLocaleString('en-US',{maximumFractionDigits:2});
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="Calculate the Evony Food, Wood, Stone, Ore and Gold needed to train troops from T1 through T16."/>
+<link rel="icon" href="/favicon.svg"/>
+<title>Troop Training | EvonyMasters</title>
+<style is:global>
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:#07111e;color:#f2f5f8}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 55% 0,#152b41,#07111e 66%)}
+[hidden]{display:none!important}main{max-width:1490px;margin:auto;padding:32px 22px 80px}
+h1{font-size:clamp(2rem,3vw,2.7rem);color:#f0c67d;margin:0 0 8px}p{color:#bad0e0;line-height:1.5}
+.lead{margin:0 0 22px;max-width:930px}.controls{display:flex;align-items:end;gap:14px;flex-wrap:wrap;background:#12293f;border:1px solid #37516b;border-radius:14px;padding:17px;margin:16px 0}
+.control{display:flex;flex-direction:column;gap:7px;color:#d9e8f3;font-size:.85rem;font-weight:750;min-width:165px}
+.control select{font:inherit;background:#081b2d;border:1px solid #5c7691;color:#fff;border-radius:8px;padding:10px;min-height:42px}
+.reset{font:inherit;border-radius:8px;background:#243e54;color:#f5ddb1;border:1px solid #a28457;padding:10px 14px;min-height:42px;font-weight:800;cursor:pointer}
+.summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0}
+.summary-item{border:1px solid #344e67;background:#132c41;padding:14px 16px;border-radius:11px;min-width:0}
+.summary-item span{display:block;font-size:.79rem;color:#b7cbdc;margin-bottom:7px}
+.summary-item strong{display:block;font-size:clamp(1rem,1.8vw,1.35rem);font-variant-numeric:tabular-nums;color:#f0c57a;overflow-wrap:anywhere}
+.table-wrap{overflow:auto;border:1px solid #405b72;border-radius:12px;background:#0d2133;box-shadow:0 12px 32px #020b1490}
+table{width:100%;border-collapse:separate;border-spacing:0;min-width:1180px;font-variant-numeric:tabular-nums}
+thead th{position:sticky;top:0;z-index:2;background:#263f55;color:#f7d69d;text-align:right;padding:13px 11px;font-size:.82rem;letter-spacing:.02em;white-space:nowrap;border-bottom:2px solid #61758b}
+thead th:first-child,thead th:nth-child(2){text-align:left}
+tbody tr:nth-child(even){background:#142e42}
+tbody tr:nth-child(odd){background:#0d2437}
+tbody tr:hover{background:#26445c}
+td{padding:10px 11px;border-bottom:1px solid #31495e;text-align:right;font-size:.86rem;white-space:nowrap}
+td:nth-child(1),td:nth-child(2){text-align:left}
+.tier-cell{font-weight:850;color:#f1c986}.type-cell{font-weight:700;color:#eef4fc}
+.qty{font:inherit;font-weight:800;text-align:right;background:#061b2c;color:#fff;width:136px;border:1px solid #6487a0;border-radius:7px;padding:9px 10px;font-variant-numeric:tabular-nums}
+.qty:focus{outline:2px solid #f1c176;outline-offset:1px}
+.zero{color:#7e9aac}.cost{color:#e5f0fa}.row-total{font-weight:850;color:#f4cf8a}
+tfoot th,tfoot td{background:#294358;color:#f3f7fd;font-weight:850;border-top:2px solid #668199;border-bottom:0;padding:13px 11px;text-align:right;font-size:.85rem}
+tfoot th{text-align:left;color:#f2cd89}tfoot tr+tr th,tfoot tr+tr td{background:#192f45;border-top:1px solid #4d6b80}
+.note{font-size:.8rem;color:#adc1d1;margin:14px 2px 0}
+.note strong{color:#f0c780}.visible-count{margin-left:auto;color:#a9ccdf;font-size:.84rem;font-weight:750;padding-bottom:10px}
+@media(max-width:800px){main{padding:23px 12px 50px}.summary{grid-template-columns:repeat(2,minmax(0,1fr))}.controls{gap:10px}.visible-count{margin-left:0;width:100%}}
+@media(max-width:450px){.summary{grid-template-columns:1fr 1fr}.summary-item{padding:12px 10px}.control{flex:1;min-width:125px}.controls{padding:12px}}
+</style></head>
+<body><SiteHeader active="training" /><main>
+<h1>Troop Training</h1>
+<p class="lead">Enter how many troops you want to train. Each row calculates the resources, Power and Gold for that tier and troop type using the supplied training-cost workbook. Filter by troop type to fill in all your Ground, Ranged, Cavalry or Siege amounts without scrolling through the other types.</p>
+<div class="controls">
+<label class="control">Troop type
+<select id="type-filter"><option value="all">All troop types</option><option value="Ground">Ground</option><option value="Ranged">Ranged</option><option value="Cavalry">Cavalry</option><option value="Siege">Siege</option></select></label>
+<label class="control">Troop level
+<select id="tier-filter"><option value="all">All levels (T1–T16)</option>{Array.from({length:16},(_,i)=>16-i).map(t=><option value={t}>T{t}</option>)}</select></label>
+<button type="button" class="reset" id="clear-all">Clear all amounts</button>
+<span class="visible-count" id="visible-count">64 rows shown</span>
+</div>
+<div class="summary">
+<div class="summary-item"><span>Total troops required</span><strong id="summary-troops">0</strong></div>
+<div class="summary-item"><span>Total resources (Food + Wood + Stone + Ore)</span><strong id="summary-resources">0</strong></div>
+<div class="summary-item"><span>Total Gold needed</span><strong id="summary-gold">0</strong></div>
+<div class="summary-item"><span>Total Power gained</span><strong id="summary-power">0</strong></div>
+</div>
+<div class="table-wrap">
+<table aria-label="Troop training calculator">
+<thead><tr><th scope="col">Level</th><th scope="col">Troop type</th><th scope="col">Troops Required</th><th scope="col">Food</th><th scope="col">Wood</th><th scope="col">Stone</th><th scope="col">Ore</th><th scope="col">Power</th><th scope="col">Gold</th><th scope="col">Total resources</th></tr></thead>
+<tbody id="training-rows">
+{TROOP_TRAINING_COSTS.map(t=><tr data-id={t.id} data-tier={t.tier} data-type={t.type}>
+<td class="tier-cell">T{t.tier}</td><td class="type-cell">{t.type}</td>
+<td><input class="qty" aria-label={`T${t.tier} ${t.type} troops required`} type="text" inputmode="numeric" autocomplete="off" value="0"/></td>
+{['food','wood','stone','ore','power','gold'].map(key=><td class="cost" data-key={key}>0</td>)}
+<td class="row-total" data-key="totalResources">0</td>
+</tr>)}
+</tbody>
+<tfoot>
+<tr id="filtered-total"><th scope="row" colspan="3">Filtered subtotal</th>{['food','wood','stone','ore','power','gold','totalResources'].map(key=><td data-key={key}>0</td>)}</tr>
+<tr id="grand-total"><th scope="row" colspan="3">Grand total (all entries)</th>{['food','wood','stone','ore','power','gold','totalResources'].map(key=><td data-key={key}>0</td>)}</tr>
+</tfoot>
+</table>
+</div>
+<p class="note"><strong>How totals work:</strong> Food, Wood, Stone, Ore and Gold are training costs. Power is gained from the troops. The right-hand <strong>Total resources</strong> column combines only Food + Wood + Stone + Ore; Gold and Power remain separate. Filtered subtotals count visible rows, while grand totals always include every amount you entered, even in hidden rows. All amounts start at zero on page load.</p>
+</main>
+<script>
+import { TROOP_TRAINING_COSTS, calculateTrainingRow, calculateTrainingTotals } from '../../data/troop-training-costs.mjs';
+const byId=new Map(TROOP_TRAINING_COSTS.map(t=>[t.id,t]));
+const format=n=>n.toLocaleString('en-US',{maximumFractionDigits:2});
+const tableRows=[...document.querySelectorAll('#training-rows tr')];
+const typeFilter=document.getElementById('type-filter');
+const tierFilter=document.getElementById('tier-filter');
+const number=value=>{const digits=String(value).replace(/[^\d]/g,'');return digits?Math.min(1e12,Number(digits)):0;};
+function formatInput(input){
+ const prev=input.value,caret=input.selectionStart??prev.length;
+ const beforeDigits=prev.slice(0,caret).replace(/\D/g,'').length;
+ const next=format(number(prev));input.value=next;
+ if(document.activeElement===input){
+  let pos=0,seen=0;
+  while(pos<next.length&&seen<beforeDigits){if(/\d/.test(next[pos]))seen++;pos++;}
+  input.setSelectionRange(pos,pos);
+ }
+}
+function setAmounts(row,calc){
+ for(const key of ['food','wood','stone','ore','power','gold','totalResources']){
+  const cell=row.querySelector('[data-key="'+key+'"]');
+  cell.textContent=format(calc[key]);
+  cell.classList.toggle('zero',calc[key]===0);
+ }
+}
+function setFooter(id,totals){
+ const row=document.getElementById(id);
+ for(const key of ['food','wood','stone','ore','power','gold','totalResources'])row.querySelector('[data-key="'+key+'"]').textContent=format(totals[key]);
+}
+function refresh(){
+ const type=typeFilter.value,tier=tierFilter.value;
+ const all=[],visible=[];
+ for(const row of tableRows){
+  const model=byId.get(row.dataset.id);
+  const calc=calculateTrainingRow(model,number(row.querySelector('.qty').value));
+  setAmounts(row,calc);
+  const show=(type==='all'||row.dataset.type===type)&&(tier==='all'||row.dataset.tier===tier);
+  row.hidden=!show; all.push(calc);if(show)visible.push(calc);
+ }
+ const grand=calculateTrainingTotals(all);
+ setFooter('filtered-total',calculateTrainingTotals(visible));
+ setFooter('grand-total',grand);
+ document.getElementById('summary-troops').textContent=format(grand.required);
+ document.getElementById('summary-resources').textContent=format(grand.totalResources);
+ document.getElementById('summary-gold').textContent=format(grand.gold);
+ document.getElementById('summary-power').textContent=format(grand.power);
+ document.getElementById('visible-count').textContent=visible.length+' of '+tableRows.length+' rows shown';
+}
+document.getElementById('training-rows').addEventListener('input',event=>{
+ const input=event.target;if(!input.classList.contains('qty'))return;
+ formatInput(input);refresh();
+});
+typeFilter.addEventListener('change',refresh);
+tierFilter.addEventListener('change',refresh);
+document.getElementById('clear-all').addEventListener('click',()=>{
+ for(const row of tableRows)row.querySelector('.qty').value='0';
+ refresh();
+});
+refresh();
+</script>
+</body></html>
