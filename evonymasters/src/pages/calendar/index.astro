@@ -1,5 +1,6 @@
 ---
 import SiteHeader from '../../components/SiteHeader.astro';
+import eventGuides from '../../data/events.json';
 ---
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
@@ -39,11 +40,30 @@ main{padding:27px 0 65px}.overview{display:grid;grid-template-columns:repeat(3,m
 footer{border-top:1px solid #29445c;color:#9fb5c7;font-size:.8rem;padding:24px 0}
 @media(max-width:850px){.details{grid-template-columns:1fr}.week-grid{gap:4px}.date-card{min-height:115px;padding:9px 6px}.date-card.selected{padding:8px 5px}.date-summary{font-size:.68rem}.event-card{flex-wrap:wrap}}
 @media(max-width:590px){.wrap{padding:0 13px}.hero{padding:29px 0}.overview{gap:5px}.metric{padding:11px 9px}.metric small{font-size:.59rem}.planner{padding:8px}.week-grid,.month-grid{gap:3px}.date-card{min-height:82px;padding:7px 3px;border-radius:7px;gap:5px}.date-card.selected{padding:6px 2px}.date-number{font-size:1rem}.date-name{font-size:.6rem}.date-summary{font-size:.6rem;gap:3px}.date-card.month{min-height:63px;padding:4px 2px}.date-card.month.selected{padding:3px 1px}.date-card.month .date-summary{font-size:.56rem}.panel{padding:14px}.filter input{min-width:115px;max-width:165px}.event-card a{white-space:normal}}
+
+.event-entry{border:1px solid #45647b;border-radius:12px;overflow:hidden;background:#172e44}
+.event-entry .event-card{border:0;border-radius:0}
+.event-detail-trigger{background:#efca81;color:#12283e;border:0;border-radius:7px;font:inherit;font-weight:800;font-size:.8rem;padding:9px 12px;cursor:pointer;white-space:nowrap}
+.event-detail-trigger:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.event-inline-details{padding:17px;border-top:1px solid #4d6a82;background:#10283e}
+.event-inline-details[hidden]{display:none}
+.event-summary{font-size:.88rem;color:#e1ecf4;line-height:1.6;margin:0 0 15px}
+.event-activity-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.event-detail-section{border:1px solid #37536c;background:#1a354c;border-radius:8px;padding:11px 13px;margin-bottom:12px}
+.event-detail-section h4{font-size:.82rem;color:#f3cc84;margin:0 0 8px}
+.event-detail-section p{color:#e0ecf5;font-size:.81rem;line-height:1.5;margin:0}
+.event-detail-section .event-detail-empty{color:#9eb6c8}
+.event-reward-table{width:100%;border-collapse:collapse;font-size:.83rem}
+.event-reward-table th{text-align:left;background:#294760;color:#f4ce8d;padding:9px}
+.event-reward-table td{padding:9px;border-bottom:1px solid #436079}
+.event-source-link{font-size:.83rem;font-weight:800}
+@media(max-width:590px){.event-activity-grid{grid-template-columns:1fr}.event-inline-details{padding:11px}.event-reward-table{font-size:.77rem}}
+
 </style></head>
 <body><SiteHeader active="calendar"/>
 <header class="hero banner-hero banner-calendar"><div class="wrap"><div class="eyebrow">EvonyMasters / Event Planner</div><h1>Never miss your next move.</h1>
 <p>See what's on the horizon, spot your next monster hunt and line up the events worth watching. Times follow <strong>Evony server time (UTC)</strong>.</p>
-<div class="hero-links"><a href="/events/">Explore event rewards ↗</a><a href="/resources/">Resource Finder ↗</a><a href="https://evonymasters-calendar.jaynmegepicadventure.workers.dev/admin/">Admin dashboard ↗</a></div>
+<div class="hero-links"><a href="#day-events">Explore event details ↗</a><a href="/resources/">Resource Finder ↗</a><a href="https://evonymasters-calendar.jaynmegepicadventure.workers.dev/admin/">Admin dashboard ↗</a></div>
 </div></header>
 <main class="wrap">
 <section class="overview" aria-label="Today's schedule summary">
@@ -67,6 +87,7 @@ footer{border-top:1px solid #29445c;color:#9fb5c7;font-size:.8rem;padding:24px 0
 
 </main>
 
+<script type="application/json" id="event-guide-data" set:html={JSON.stringify(eventGuides).replace(/</g,"\\u003c")} />
 <script is:inline>
 (()=>{"use strict";
 const API="https://evonymasters-calendar.jaynmegepicadventure.workers.dev/api/events";
@@ -81,6 +102,90 @@ const icons={"Boss":"⚔","Event Boss":"🐉","Regular Monster":"♞"};
 const text=(v)=>String(v??"").trim();
 const el=(tag,cls,content)=>{const x=document.createElement(tag);if(cls)x.className=cls;if(content!==undefined)x.textContent=String(content);return x};
 const canonical=e=>text(e.name).replace(/\s*·\s*Lv\s*\d+$/i,"").trim();
+
+const guides=JSON.parse(document.getElementById("event-guide-data").textContent);
+const key=name=>text(name).toLowerCase().replace(/[’']/g,"").replace(/[^a-z0-9]+/g," ").trim();
+const guideMap=new Map(guides.map(item=>[key(item.name),item]));
+const profiles={
+ "quest for treasure":{
+ description:"Find treasure using Ancient Treasure Maps, defeat Desert Bandits for clue fragments, and collect King Solomon's Treasure.",
+ allianceActivity:"Alliance points are earned through treasure hunting milestones.",
+ allianceRanking:"Alliance point rankings award prizes after the event ends.",
+ personalActivity:"Individual point milestones award rewards during the event.",
+ personalRanking:"Personal point rankings award prizes after the event ends.",
+ source:"https://info.topgamesinc.com/join-the-quest-for-treasure-event-to-get-king-solomons-treasure-in-evony-3/"
+ },
+ "alliance boss":{
+ description:"Work together to damage an Alliance Boss and earn milestone and ranking rewards.",
+ allianceActivity:"Alliance damage points unlock alliance milestone rewards.",
+ allianceRanking:"Alliance damage rankings award prizes at the event conclusion.",
+ personalActivity:"Your own damage points unlock personal milestone rewards.",
+ personalRanking:"Personal damage rankings award prizes at the event conclusion.",
+ source:"https://info.topgamesinc.com/join-evonys-new-event-alliance-boss-to-gain-massive-rewards/"
+ },
+ "wheel of civilization":{
+ description:"Collect Noble Coins from monsters, gathering or packages to spin for Civilization Scroll Fragment Chests.",
+ source:"https://info.topgamesinc.com/what-can-you-earn-in-this-round-of-civilization-celebration-events/"
+ },
+ "general portrait exhibition":{
+ description:"Collect General's Invitations and redeem them for Historic Generals, resources and General Hall tokens.",
+ source:"https://info.topgamesinc.com/what-can-you-earn-in-this-round-of-civilization-celebration-events/"
+ },
+ "historic city searching":{
+ description:"Earn Subordinate City Clues from monsters, gathering or packages for a chance at Subordinate City Keys.",
+ source:"https://www.mguwp.com/news/2651"
+ },
+ "consuming return":{
+ description:"Earn milestone prizes by consuming qualifying amounts of Gold or Speedups.",
+ source:"https://info.topgamesinc.com/civilization-celebration-the-silk-road-joyful-harvest-round/"
+ },
+ "strategic stockpile":{
+ description:"Collect daily milestone prizes by reaching Basic Gem purchase thresholds.",
+ source:"https://info.topgamesinc.com/civilization-celebration-the-silk-road-joyful-harvest-round/"
+ }
+};
+const section=(parent,title,lines)=>{
+ const wrap=el("section","event-detail-section");
+ wrap.append(el("h4","",title));
+ if(!lines.length){wrap.append(el("p","event-detail-empty","Not specified for this event."));}
+ else for(const line of lines)wrap.append(el("p","",line));
+ parent.append(wrap);
+};
+function eventDetails(event){
+ const guide=guideMap.get(key(event.name)),profile=profiles[key(event.name)]||{};
+ const details=el("div","event-inline-details");
+ const overview=profile.description||(guide?.notes&&!/not verified|not specified|check the current|review the current/i.test(guide.notes)
+  ?guide.notes:"Event activities and rewards vary by round. Open the event in-game to check current objectives.");
+ details.append(el("p","event-summary",overview));
+ const grid=el("div","event-activity-grid");
+ section(grid,"Personal activity",profile.personalActivity?[profile.personalActivity]:[]);
+ section(grid,"Personal ranking",profile.personalRanking?[profile.personalRanking]:[]);
+ section(grid,"Alliance activity",profile.allianceActivity?[profile.allianceActivity]:[]);
+ section(grid,"Alliance ranking",profile.allianceRanking?[profile.allianceRanking]:[]);
+ details.append(grid);
+ if(guide?.rewards?.length){
+  const wrap=el("section","event-detail-section");
+  wrap.append(el("h4","","Featured rewards"));
+  const table=el("table","event-reward-table"),head=el("tr");
+  for(const label of ["Item / reward","Quantity","Classification"])head.append(el("th","",label));
+  const thead=el("thead");thead.append(head);table.append(thead);
+  const tbody=el("tbody");
+  for(const entry of guide.rewards.flatMap(v=>v.split(";").map(t=>t.trim())).filter(Boolean)){
+   if(/not verified|not specified|rewards vary|check the current/i.test(entry))continue;
+   const row=el("tr");
+   for(const cell of [entry,"—",guide.verified?"Featured":"Not confirmed"])row.append(el("td","",cell));
+   tbody.append(row);
+  }
+  if(tbody.childElementCount){table.append(tbody);wrap.append(table);details.append(wrap);}
+ }
+ const source=profile.source||guide?.source;
+ if(source&&/^https:\/\//.test(source)){
+  const link=el("a","event-source-link","Event information ↗");
+  link.href=source;link.target="_blank";link.rel="noopener noreferrer";details.append(link);
+ }
+ return details;
+}
+
 let focus=dateFrom(today),selected=today,view="week",events=[],loading=false,error=false,serial=0;
 let rangeFrom="",rangeTo="",category="all";
 const allowEvents=()=>category==="all"||category==="Event";
@@ -107,7 +212,11 @@ function eventCard(event,live){
  info.append(el("strong","",event.name));
  const sub=el("small","",live?"● LIVE · Scheduled today":"Scheduled event");
  info.append(sub);card.append(symbol,info);
- const link=el("a","","Rewards ↗");link.href="/events/?q="+encodeURIComponent(event.name);card.append(link);return card;
+ const button=el("button","event-detail-trigger","Details");button.type="button";button.setAttribute("aria-expanded","false");
+ const details=eventDetails(event);details.hidden=true;
+ button.addEventListener("click",()=>{details.hidden=!details.hidden;button.setAttribute("aria-expanded",String(!details.hidden));button.textContent=details.hidden?"Details":"Hide details";});
+ card.append(button);
+ const outer=el("div","event-entry");outer.append(card,details);return outer;
 }
 function renderEvents(summary){
  const root=$("day-events");root.replaceChildren();
@@ -129,7 +238,7 @@ function renderMonsterGroups(summary){
   const populate=()=>{
    const query=input.value.trim().toLowerCase();list.replaceChildren();
    for(const item of items.filter(v=>v.name.toLowerCase().includes(query))){
-    const li=el("li"),name=el("span","",item.name),link=el("a","","Find rewards ↗");
+    const li=el("li"),name=el("span","",item.name),link=el("a","","Details ↗");
     link.href="/resources/?q="+encodeURIComponent(item.name);
     li.append(name,link);list.append(li);
    }
