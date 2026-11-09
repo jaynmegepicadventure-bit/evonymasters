@@ -1,20 +1,144 @@
 ---
 import SiteHeader from '../../components/SiteHeader.astro';
-import defaults from '../../data/troop-layer-percentages.json';
-const types=[{key:'ground',name:'Ground',icon:'🛡️'},{key:'ranged',name:'Archers',icon:'🏹'},{key:'mounted',name:'Mounted',icon:'🐎'},{key:'siege',name:'Siege',icon:'🏰'}];
+const types=[
+ {id:'ranged',label:'Ranged',icon:'🏹',defaultSize:7393200,base:10000},
+ {id:'mounted',label:'Cavalry',icon:'🐎',defaultSize:7480700,base:10000},
+ {id:'ground',label:'Ground',icon:'🛡️',defaultSize:7500000,base:10000},
+ {id:'bigSiege',label:'BIG Siege',icon:'🏰',defaultSize:6013200,base:1000},
+ {id:'smallSiege',label:'Small Siege',icon:'🏰',defaultSize:5749450,base:1000},
+ {id:'soloSiege',label:'Solo Siege',icon:'🏰',defaultSize:5549800,base:1000}
+];
+const tiers=Array.from({length:14},(_,i)=>i+3);
 ---
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="icon" href="/favicon.svg"/><title>Troop Layer Calculator | EvonyMasters</title>
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="Calculate Evony troop layers with the formulas and allocations from the Troop Layers 2024 workbook."/>
+<link rel="icon" href="/favicon.svg"/><title>Troop Layer Calculator | EvonyMasters</title>
 <style>
-:root{font-family:Inter,system-ui,sans-serif;color:#eef4fb;background:#07111e}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#20344c,#07111e 62%)}main{max-width:1300px;padding:34px 20px 80px;margin:auto}h1{font-size:clamp(2rem,4vw,3.2rem);color:#f2cb7d;margin:0 0 10px}p{line-height:1.55;color:#b9cadc}.intro{margin-bottom:26px}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}.troop{background:#12283d;border:1px solid #48617a;border-radius:14px;padding:19px;min-width:0}.troop h2{color:#f3cc81;font-size:1.4rem;margin:0 0 15px}.field{display:block;font-size:.83rem;color:#d0dfed;font-weight:700;margin-bottom:13px}.field input{display:block;width:100%;margin-top:7px;padding:12px;border-radius:8px;border:1px solid #627c95;background:#071725;color:white;font:inherit}.field input:focus-visible,.tier input:focus-visible,button:focus-visible{outline:2px solid #ffd28c;outline-offset:3px}.tier-header{display:flex;justify-content:space-between;gap:8px;align-items:center;margin:17px 0 7px;color:#c6d9e8;font-size:.79rem}.tier-header button{border:1px solid #61768d;border-radius:6px;background:#234057;color:#e8eff6;cursor:pointer;padding:5px}.tier-list{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.tier{display:flex;gap:4px;align-items:center;justify-content:center;padding:8px 3px;border:1px solid #415d74;border-radius:7px;background:#1a3349;font-size:.76rem;cursor:pointer}.tier input{accent-color:#e6ba68}.out{margin-top:17px;padding-top:14px;border-top:1px solid #496177}.out h3{font-size:.92rem;color:#f1cc85;margin:0 0 10px}.layer{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #28435b;font-size:.88rem}.layer strong{font-variant-numeric:tabular-nums;color:#f9f0d7}.summary{display:flex;align-items:center;justify-content:space-between;margin-top:12px;font-weight:800}.summary output{color:#e8bf76}.notice{font-size:.82rem;color:#a6bbcd}.actions{margin:18px 0;display:flex;flex-wrap:wrap;gap:8px}button.action{border:1px solid #bb955e;background:#2d4556;color:#fff1d1;border-radius:8px;padding:10px 14px;font-weight:750;cursor:pointer}@media(max-width:1100px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:610px){.grid{grid-template-columns:1fr}main{padding:25px 14px}}@media print{.site-header,.actions,.tier-header button{display:none}body{background:#fff;color:#000}.troop{break-inside:avoid}}
-</style></head><body><SiteHeader/><main><h1>Troop Layer Calculator</h1><p class="intro">Enter your march size for each troop type and tick the tiers you own. Your troop layers are calculated automatically. Percentages are kept off this player-facing page.</p>
-<div class="actions"><button type="button" class="action" id="all-tiers">Select all tiers</button><button type="button" class="action" id="reset">Reset calculator</button><button type="button" class="action" id="print">Print results</button></div>
-<div class="grid">{types.map(type=><section class="troop" data-type={type.key}><h2>{type.icon} {type.name}</h2><label class="field">March size<input class="march" type="number" inputmode="numeric" min="0" step="1" value="0" aria-label={type.name+' march size'}/></label><div class="tier-header"><strong>Available troop tiers</strong><button type="button" class="select-tiers">All / None</button></div><div class="tier-list">{defaults.tiers.map(tier=><label class="tier"><input type="checkbox" class="tier-choice" value={tier} checked/>{tier}</label>)}</div><div class="out"><h3>Calculated layers</h3><div class="layers" aria-live="polite"></div><div class="summary"><span>Total troops</span><output class="total">0</output></div></div></section>)}</div><p class="notice">Each troop type is calculated independently. The highest selected tier receives the highest-tier weight, followed by the second-highest and so on. Percentages remain hidden from players.</p></main>
-<script define:vars={{defaults}}>
+:root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#07111e;color:#ecf1f7}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 0,#172c43,#07111e 62%)}
+main{max-width:1590px;padding:32px 20px 70px;margin:auto}h1{margin:0 0 8px;font-size:clamp(1.9rem,3vw,2.8rem);color:#f0c77c}
+p{line-height:1.55;color:#b9cbdc}.top{margin-bottom:21px}.top p{max-width:960px;margin:8px 0}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:19px 0}
+button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;background:#1a354d;color:#ffe2ac;border-radius:8px;padding:10px 14px;font-weight:750}
+.scroller{overflow-x:auto;padding-bottom:14px;scrollbar-color:#648099 #102338}
+.cols{display:grid;grid-template-columns:repeat(6,minmax(245px,1fr));gap:12px;min-width:1510px;align-items:stretch}
+.card{background:#12283c;border:1px solid #3c5871;border-radius:14px;padding:15px;min-width:0;display:flex;flex-direction:column}
+.card h2{font-size:1.28rem;color:#efc276;margin:0 0 15px;white-space:nowrap}
+.field{font-weight:750;font-size:.84rem;color:#dae6f0;display:block}.march{width:100%;display:block;margin-top:7px;background:#091a2b;border:1px solid #607994;border-radius:8px;color:white;font:inherit;font-weight:700;padding:12px;min-width:0}
+.tiers-head{display:flex;justify-content:space-between;align-items:center;margin:16px 0 8px;gap:5px;font-size:.78rem;color:#c3d2df}
+.tiers-head button{padding:5px 7px;border:1px solid #577188;color:#d7e8f6;border-radius:6px;background:#213d55}
+.tiers{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.tier{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px;border:1px solid #3e5c73;background:#1a354c;border-radius:6px;font-size:.74rem;white-space:nowrap;cursor:pointer}
+.tier input{accent-color:#edbf71;margin:0;width:15px;height:15px}
+.results{margin-top:17px;padding-top:12px;border-top:1px solid #3b5268;flex:1}
+.results h3{font-size:.91rem;color:#efc77e;margin:0 0 8px}
+.result-row{display:flex;justify-content:space-between;align-items:baseline;gap:8px;border-bottom:1px solid #263f56;padding:6px 0;font-size:.86rem}
+.result-row .value{text-align:right;font-variant-numeric:tabular-nums;font-weight:800;color:#f4eedb}
+.summary{margin-top:11px;display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:.93rem}
+.summary output{color:#f3c678;font-variant-numeric:tabular-nums}
+.stat{color:#b3c8d9;font-size:.74rem;margin:9px 0 0}.stat strong{color:#eaf1f8}
+.tip{font-size:.78rem;color:#a9bccf}
+@media(max-width:700px){main{padding:24px 12px 55px}.cols{min-width:0;grid-template-columns:1fr}.scroller{overflow:visible}.card{padding:17px}.tiers{grid-template-columns:repeat(7,minmax(0,1fr))}}
+@media(min-width:701px) and (max-width:1250px){.cols{min-width:1210px;grid-template-columns:repeat(6,1fr)}.tiers{grid-template-columns:repeat(4,minmax(0,1fr))}.tier{flex-direction:row;justify-content:center;gap:5px}}
+@media print{.site-header,.toolbar,.tiers-head button{display:none!important}body{background:white;color:black}.scroller{overflow:visible}.cols{display:grid;grid-template-columns:repeat(3,1fr);min-width:0}.card{break-inside:avoid;color:black;background:white}.result-row .value{color:black}}
+</style></head>
+<body><SiteHeader active="troops"/><main>
+<div class="top"><h1>Troop Layer Calculator</h1><p>Built from the Troop Layers 2024 workbook. Enter march sizes and select the troop tiers you have (T3–T16). Fixed support layers are reserved first, then the main formation is calculated from the troops remaining.</p></div>
+<div class="toolbar"><button type="button" id="clear">Clear march sizes</button><button type="button" id="reset">Restore Excel examples</button><button type="button" id="print">Print results</button></div>
+<div class="scroller"><div class="cols">{types.map(t=><section class="card" data-type={t.id}>
+<h2>{t.icon} {t.label}</h2>
+<label class="field">March size<input class="march" type="number" inputmode="numeric" min="0" max="10000000000" step="1" value={t.defaultSize} aria-label={t.label+' march size'}/></label>
+<div class="tiers-head"><strong>Available troop tiers</strong><button class="all" type="button">All / None</button></div>
+<div class="tiers">{tiers.map(tier=><label class="tier"><input type="checkbox" class="tier-input" value={tier} checked={tier<=15}/><span>T{tier}</span></label>)}</div>
+<div class="results"><h3>Calculated layers</h3><div class="rows" aria-live="polite"></div>
+<div class="stat">Support layers reserved: <strong class="reserved">0</strong></div>
+<div class="stat">Troops after layers: <strong class="remaining">0</strong></div>
+<div class="summary"><span>Total allocated</span><output class="total">0</output></div></div>
+</section>)}</div></div>
+<p class="tip">The workbook contains six separate formations, including three Siege variants. Smaller screens show one card at a time. Percentages are intentionally hidden.</p>
+</main>
+<script>
 const format=n=>Math.round(n).toLocaleString();
-const settings=defaults;
-function calculate(card){const type=card.dataset.type;const raw=Number(card.querySelector('.march').value);const size=Number.isFinite(raw)?Math.min(10000000000,Math.max(0,Math.floor(raw))):0;const selected=[...card.querySelectorAll('.tier-choice')].filter(i=>i.checked).map(i=>Number(i.value.slice(1))-1);const weights=settings.types[type];selected.sort((a,b)=>b-a);let denom=selected.reduce((s,i,rank)=>s+weights[rank],0);if(!denom&&selected.length)denom=selected.length;const portions=selected.map((i,rank)=>({i,exact:size*(denom===selected.length&&!weights.slice(0,selected.length).some(w=>w>0)?1:weights[rank])/denom}));let allocated=portions.reduce((s,p)=>s+Math.floor(p.exact),0);portions.sort((a,b)=>(b.exact%1)-(a.exact%1)||b.i-a.i);for(let i=0;i<size-allocated&&i<portions.length;i++)portions[i].extra=1;portions.sort((a,b)=>b.i-a.i);const results=card.querySelector('.layers');results.replaceChildren();for(const p of portions){const line=document.createElement('div');line.className='layer';const name=document.createElement('span');name.textContent='T'+(p.i+1);const count=document.createElement('strong');count.textContent=format(Math.floor(p.exact)+(p.extra||0));line.append(name,count);results.append(line);}if(!portions.length){const msg=document.createElement('p');msg.className='notice';msg.textContent='Select at least one tier.';results.append(msg);}card.querySelector('.total').textContent=format(portions.reduce((s,p)=>s+Math.floor(p.exact)+(p.extra||0),0));}
-const cards=[...document.querySelectorAll('.troop')];for(const c of cards){c.querySelector('.march').addEventListener('input',()=>calculate(c));c.querySelectorAll('.tier-choice').forEach(t=>t.addEventListener('change',()=>calculate(c)));c.querySelector('.select-tiers').addEventListener('click',()=>{const boxes=[...c.querySelectorAll('.tier-choice')];const next=!boxes.every(b=>b.checked);boxes.forEach(b=>b.checked=next);calculate(c);});calculate(c);}
-document.getElementById('all-tiers').addEventListener('click',()=>cards.forEach(c=>{c.querySelectorAll('.tier-choice').forEach(b=>b.checked=true);calculate(c);}));
-document.getElementById('reset').addEventListener('click',()=>cards.forEach(c=>{c.querySelector('.march').value='0';c.querySelectorAll('.tier-choice').forEach(b=>b.checked=true);calculate(c);}));
+const configs={
+ ranged:{base:10000,bulk:50,extras:10000,fixed:{11:50000,10:50000,9:50000},weights:[.15,.20,.30,.35]},
+ mounted:{base:10000,bulk:48,extras:20000,fixed:{11:100000,10:25000,9:25000,8:25000,7:25000},weights:[.25,.35,.40]},
+ ground:{base:10000,bulk:48,extras:10000,fixed:{11:25000,10:25000,9:25000,8:25000,7:25000},weights:[.40,.40,.20]},
+ bigSiege:{base:1000,bulk:54,extras:2000,fixed:{},weights:[.25,.75]},
+ smallSiege:{base:1000,bulk:50,extras:2000,fixed:{14:50000,13:50000,12:50000,10:50000,9:50000},weights:[1]},
+ soloSiege:{base:1000,bulk:50,extras:2000,fixed:{},weights:[.15,.50,.35]}
+};
+function calculate(card){
+ const cfg=configs[card.dataset.type];
+ const raw=Number(card.querySelector('.march').value);
+ const march=Number.isFinite(raw)?Math.max(0,Math.min(1e10,Math.floor(raw))):0;
+ const available=[...card.querySelectorAll('.tier-input:checked')].map(x=>Number(x.value)).sort((a,b)=>b-a);
+ const allocations=new Map();
+ function add(tier,count){if(count>0)allocations.set(tier,(allocations.get(tier)||0)+count);}
+ if(!march||!available.length){render(card,allocations,0,0);return;}
+ const max=available[0];
+ // T15 Ground in the workbook also reserves a fixed T12 layer of 500,000.
+ const fixed={...cfg.fixed};
+ if(card.dataset.type==='ground'&&max>=15&&available.includes(12))fixed[12]=500000;
+ // Fixed layers are assigned only to unlocked tiers outside the primary percentage tiers.
+ const primary=card.dataset.type==='smallSiege'?[]:available.slice(0,cfg.weights.length);
+ let fixedTotal=0;
+ for(const [k,amount] of Object.entries(fixed)){
+  const tier=Number(k);
+  if(available.includes(tier)&&!primary.includes(tier)){add(tier,amount);fixedTotal+=amount;}
+ }
+ // Excel includes low-tier cross-type layers plus conditional support allocations.
+ const bulkReserve=cfg.bulk*cfg.base+cfg.extras;
+ const requestedReserve=bulkReserve+fixedTotal;
+ if(march<=requestedReserve){
+  // Tiny march sizes: prioritize actual selected tiers and never over-allocate.
+  allocations.clear();
+  const top=available[0];add(top,march);render(card,allocations,0,march);return;
+ }
+ const remaining=march-requestedReserve;
+ let tiers=primary;
+ let weights=cfg.weights.slice(0,tiers.length);
+ if(card.dataset.type==='smallSiege'){
+  tiers=available.filter(t=>!Object.hasOwn(fixed,t)).slice(0,1);
+  if(!tiers.length)tiers=available.slice(0,1);
+  weights=[1];
+ }
+ const weightSum=weights.reduce((a,b)=>a+b,0);
+ if(tiers.length&&weightSum){
+  const portions=tiers.map((tier,i)=>({tier,exact:remaining*weights[i]/weightSum}));
+  let left=remaining;
+  for(const part of portions){part.amount=Math.floor(part.exact);left-=part.amount;}
+  portions.sort((a,b)=>(b.exact-b.amount)-(a.exact-a.amount)||b.tier-a.tier);
+  for(let i=0;i<left;i++)portions[i%portions.length].amount++;
+  portions.forEach(p=>add(p.tier,p.amount));
+ }else{add(available[0],remaining);}
+ // The spreadsheet's cross-type support reserve is represented separately, not mislabeled as one troop tier.
+ render(card,allocations,requestedReserve,remaining);
+}
+function render(card,allocations,reserved,remaining){
+ const rows=card.querySelector('.rows');rows.replaceChildren();
+ for(const [tier,count] of [...allocations.entries()].sort((a,b)=>b[0]-a[0])){
+  const row=document.createElement('div');row.className='result-row';
+  const label=document.createElement('span');label.textContent='T'+tier;
+  const value=document.createElement('span');value.className='value';value.textContent=format(count);
+  row.append(label,value);rows.append(row);
+ }
+ if(!allocations.size){const p=document.createElement('p');p.className='tip';p.textContent='Enter a march size and select at least one tier.';rows.append(p);}
+ const allocated=[...allocations.values()].reduce((a,b)=>a+b,0);
+ card.querySelector('.reserved').textContent=format(reserved);
+ card.querySelector('.remaining').textContent=format(remaining);
+ card.querySelector('.total').textContent=format(allocated+Math.max(0,reserved-[...allocations.entries()].reduce((s,[tier,count])=>s+(configs[card.dataset.type].fixed[tier]||0),0)));
+}
+const cards=[...document.querySelectorAll('.card')];
+for(const card of cards){
+ const change=()=>calculate(card);
+ card.querySelector('.march').addEventListener('input',change);
+ card.querySelectorAll('.tier-input').forEach(input=>input.addEventListener('change',change));
+ card.querySelector('.all').addEventListener('click',()=>{const inputs=[...card.querySelectorAll('.tier-input')],enable=!inputs.every(i=>i.checked);inputs.forEach(i=>i.checked=enable);change();});
+ change();
+}
+document.getElementById('clear').addEventListener('click',()=>cards.forEach(c=>{c.querySelector('.march').value='0';calculate(c);}));
+document.getElementById('reset').addEventListener('click',()=>cards.forEach(c=>{c.querySelector('.march').value=({ranged:7393200,mounted:7480700,ground:7500000,bigSiege:6013200,smallSiege:5749450,soloSiege:5549800})[c.dataset.type];c.querySelectorAll('.tier-input').forEach(i=>i.checked=Number(i.value)<=15);calculate(c);}));
 document.getElementById('print').addEventListener('click',()=>window.print());
 </script></body></html>
