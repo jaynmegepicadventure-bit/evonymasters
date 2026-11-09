@@ -79,7 +79,10 @@ async function calculate(card){
  if(!Number.isSafeInteger(marchSize)||marchSize<1||marchSize>100000000){root.replaceChildren(node("p","error","Enter a valid march size from 1 to 100,000,000."));return}
  const kind=type==="siege"?card.querySelector("[data-siege]").value:type;
  const unlocked={Ranged:{},Cavalry:{},Ground:{},Siege:{}};
- for(const tier of [13,14,15,16]){const b=card.querySelector('input[data-tier="'+tier+'"]');unlocked[type==="ranged"?"Ranged":type==="cavalry"?"Cavalry":type==="ground"?"Ground":"Siege"][tier]=b.checked;}
+ for(const current of document.querySelectorAll("[data-type]")){
+  const key=current.dataset.type==="ranged"?"Ranged":current.dataset.type==="cavalry"?"Cavalry":current.dataset.type==="ground"?"Ground":"Siege";
+  for(const tier of [13,14,15,16])unlocked[key][tier]=current.querySelector('input[data-tier="'+tier+'"]').checked;
+ }
  root.replaceChildren(node("p","result-status","Calculating…"));
  try{const r=await fetch(ENDPOINT,{method:"POST",mode:"cors",headers:{"content-type":"application/json"},body:JSON.stringify({marchSize,preset:kind,unlocked})});const data=await r.json();if(id!==serial.get(type))return;if(!r.ok)throw Error(data.error||"Calculation unavailable");latest.set(type,data);renderResult(card,data)}
  catch(e){if(id!==serial.get(type))return;root.replaceChildren(node("p","error","Couldn't calculate this march. "+(e.message||"Please try again.")))}
@@ -87,7 +90,7 @@ async function calculate(card){
 const timers=new Map();
 for(const card of document.querySelectorAll("[data-type]")){
  const type=card.dataset.type,grid=card.querySelector("[data-tiers]");
- for(const tier of [13,14,15,16]){const label=node("label","tier-chip"),check=node("input");check.type="checkbox";check.dataset.tier=tier;check.checked=tier<=14;check.addEventListener("change",()=>calculate(card));label.append(check,document.createTextNode("T"+tier));grid.append(label)}
+ for(const tier of [13,14,15,16]){const label=node("label","tier-chip"),check=node("input");check.type="checkbox";check.dataset.tier=tier;check.checked=tier<=14;check.addEventListener("change",()=>{for(const column of document.querySelectorAll("[data-type]"))calculate(column)});label.append(check,document.createTextNode("T"+tier));grid.append(label)}
  const size=card.querySelector("[data-size]");
  size.addEventListener("input",()=>{clearTimeout(timers.get(type));timers.set(type,setTimeout(()=>calculate(card),300))});
  const selector=card.querySelector("[data-siege]");if(selector)selector.addEventListener("change",()=>calculate(card));
