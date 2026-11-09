@@ -51,94 +51,54 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 <h2>{t.icon} {t.label}</h2>
 <label class="field">March size<input class="march" type="number" inputmode="numeric" min="0" max="10000000000" step="1" value={t.defaultSize} aria-label={t.label+' march size'}/></label>
 <div class="tiers-head"><strong>Available troop tiers</strong><button class="all" type="button">All / None</button></div>
-<div class="tiers">{tiers.map(tier=><label class="tier"><input type="checkbox" class="tier-input" value={tier} checked={tier<=((t.id==='ranged'||t.id==='ground')?15:14)}/><span>T{tier}</span></label>)}</div>
+<div class="tiers">{tiers.map(tier=><label class="tier"><input type="checkbox" class="tier-input" value={tier} checked={tier>=7&&tier<=((t.id==='ranged'||t.id==='ground')?15:14)}/><span>T{tier}</span></label>)}</div>
 <div class="results"><h3>Calculated layers</h3><div class="rows" aria-live="polite"></div>
-<div class="stat">Support layers reserved: <strong class="reserved">0</strong></div>
-<div class="stat">Troops after layers: <strong class="remaining">0</strong></div>
+<div class="stat">Cross-type support layers: <strong class="reserved">0</strong></div>
+<div class="stat">Main formation troops: <strong class="remaining">0</strong></div>
 <div class="summary"><span>Total march</span><output class="total">0</output></div></div>
 </section>)}</div></div>
 <p class="tip">The workbook contains six separate formations, including three Siege variants. Smaller screens show one card at a time. Percentages are intentionally hidden.</p>
 </main>
 <script>
-const format=n=>Math.round(n).toLocaleString();
-const configs={
- ranged:{base:10000,bulk:50,extras:10000,fixed:{11:50000,10:50000,9:50000},weights:[.15,.20,.30,.35]},
- mounted:{base:10000,bulk:48,extras:20000,fixed:{11:100000,10:25000,9:25000,8:25000,7:25000},weights:[.25,.35,.40]},
- ground:{base:10000,bulk:48,extras:10000,fixed:{11:25000,10:25000,9:25000,8:25000,7:25000},weights:[.40,.40,.20]},
- bigSiege:{base:1000,bulk:54,extras:2000,fixed:{},weights:[.25,.75]},
- smallSiege:{base:1000,bulk:50,extras:2000,fixed:{14:50000,13:50000,12:50000,10:50000,9:50000},weights:[1]},
- soloSiege:{base:1000,bulk:50,extras:2000,fixed:{},weights:[.15,.50,.35]}
-};
-function calculate(card){
- const cfg=configs[card.dataset.type];
- const raw=Number(card.querySelector('.march').value);
- const march=Number.isFinite(raw)?Math.max(0,Math.min(1e10,Math.floor(raw))):0;
- const available=[...card.querySelectorAll('.tier-input:checked')].map(x=>Number(x.value)).sort((a,b)=>b-a);
- const allocations=new Map();
- function add(tier,count){if(count>0)allocations.set(tier,(allocations.get(tier)||0)+count);}
- if(!march||!available.length){render(card,allocations,0,0);return;}
- const max=available[0];
- // T15 Ground in the workbook also reserves a fixed T12 layer of 500,000.
- const fixed={...cfg.fixed};
- if(card.dataset.type==='ground'&&max>=15&&available.includes(12))fixed[12]=500000;
- // Fixed layers are assigned only to unlocked tiers outside the primary percentage tiers.
- const primary=card.dataset.type==='smallSiege'?[]:available.slice(0,cfg.weights.length);
- let fixedTotal=0;
- for(const [k,amount] of Object.entries(fixed)){
-  const tier=Number(k);
-  if(available.includes(tier)&&!primary.includes(tier)){add(tier,amount);fixedTotal+=amount;}
- }
- // Excel includes low-tier cross-type layers plus conditional support allocations.
- const bulkReserve=cfg.bulk*cfg.base+cfg.extras;
- const requestedReserve=bulkReserve+fixedTotal;
- if(march<=requestedReserve){
-  // Tiny march sizes: prioritize actual selected tiers and never over-allocate.
-  allocations.clear();
-  const top=available[0];add(top,march);render(card,allocations,0,march);return;
- }
- const remaining=march-requestedReserve;
- let tiers=primary;
- let weights=cfg.weights.slice(0,tiers.length);
- if(card.dataset.type==='smallSiege'){
-  tiers=available.includes(11)?[11]:available.filter(t=>!Object.hasOwn(fixed,t)).slice(0,1);
-  if(!tiers.length)tiers=available.slice(0,1);
-  weights=[1];
- }
- const weightSum=weights.reduce((a,b)=>a+b,0);
- if(tiers.length&&weightSum){
-  const portions=tiers.map((tier,i)=>({tier,exact:remaining*weights[i]/weightSum}));
-  let left=remaining;
-  for(const part of portions){part.amount=Math.floor(part.exact);left-=part.amount;}
-  portions.sort((a,b)=>(b.exact-b.amount)-(a.exact-a.amount)||b.tier-a.tier);
-  for(let i=0;i<left;i++)portions[i%portions.length].amount++;
-  portions.forEach(p=>add(p.tier,p.amount));
- }else{add(available[0],remaining);}
- // The spreadsheet's cross-type support reserve is represented separately, not mislabeled as one troop tier.
- render(card,allocations,requestedReserve,remaining,bulkReserve);
-}
-function render(card,allocations,reserved,remaining,bulkReserve=0){
- const rows=card.querySelector('.rows');rows.replaceChildren();
- for(const [tier,count] of [...allocations.entries()].sort((a,b)=>b[0]-a[0])){
-  const row=document.createElement('div');row.className='result-row';
-  const label=document.createElement('span');label.textContent='T'+tier;
-  const value=document.createElement('span');value.className='value';value.textContent=format(count);
-  row.append(label,value);rows.append(row);
- }
- if(!allocations.size){const p=document.createElement('p');p.className='tip';p.textContent='Enter a march size and select at least one tier.';rows.append(p);}
- const allocated=[...allocations.values()].reduce((a,b)=>a+b,0);
- card.querySelector('.reserved').textContent=format(reserved);
- card.querySelector('.remaining').textContent=format(remaining);
- card.querySelector('.total').textContent=format(allocated+bulkReserve);
-}
+import {calculateFormation, REFERENCE_EXAMPLES} from '../../lib/troop-layers.mjs';
+const format=n=>n.toLocaleString('en-US');
 const cards=[...document.querySelectorAll('.card')];
+function calculate(card){
+ const type=card.dataset.type;
+ const selected=[...card.querySelectorAll('.tier-input:checked')].map(t=>Number(t.value));
+ const result=calculateFormation(type,card.querySelector('.march').value,selected);
+ const rows=card.querySelector('.rows'); rows.replaceChildren();
+ for(const item of result.rows){
+  const row=document.createElement('div');row.className='result-row';
+  const tier=document.createElement('span');tier.textContent='T'+item.tier;
+  const count=document.createElement('strong');count.className='value';count.textContent=format(item.count);
+  row.append(tier,count);rows.append(row);
+ }
+ if(!result.rows.length){
+  const text=document.createElement('p');text.className='tip';
+  text.textContent='Enter a march size and select at least one troop tier.';
+  rows.append(text);
+ }
+ card.querySelector('.reserved').textContent=format(result.support);
+ card.querySelector('.remaining').textContent=format(result.remaining);
+ card.querySelector('.total').textContent=format(result.total);
+}
 for(const card of cards){
  const change=()=>calculate(card);
  card.querySelector('.march').addEventListener('input',change);
  card.querySelectorAll('.tier-input').forEach(input=>input.addEventListener('change',change));
- card.querySelector('.all').addEventListener('click',()=>{const inputs=[...card.querySelectorAll('.tier-input')],enable=!inputs.every(i=>i.checked);inputs.forEach(i=>i.checked=enable);change();});
+ card.querySelector('.all').addEventListener('click',()=>{
+  const checks=[...card.querySelectorAll('.tier-input')];const enable=!checks.every(i=>i.checked);
+  checks.forEach(i=>i.checked=enable);change();
+ });
  change();
 }
-document.getElementById('clear').addEventListener('click',()=>cards.forEach(c=>{c.querySelector('.march').value='0';calculate(c);}));
-document.getElementById('reset').addEventListener('click',()=>cards.forEach(c=>{c.querySelector('.march').value=({ranged:7393200,mounted:7480700,ground:7500000,bigSiege:6013200,smallSiege:5749450,soloSiege:5549800})[c.dataset.type];c.querySelectorAll('.tier-input').forEach(i=>i.checked=Number(i.value)<=((c.dataset.type==='ranged'||c.dataset.type==='ground')?15:14));calculate(c);}));
+document.getElementById('clear').addEventListener('click',()=>cards.forEach(c=>{c.querySelector('.march').value=0;calculate(c);}));
+document.getElementById('reset').addEventListener('click',()=>cards.forEach(c=>{
+ const example=REFERENCE_EXAMPLES[c.dataset.type];
+ c.querySelector('.march').value=example.size;
+ c.querySelectorAll('.tier-input').forEach(i=>i.checked=example.tiers.includes(Number(i.value)));
+ calculate(c);
+}));
 document.getElementById('print').addEventListener('click',()=>window.print());
 </script></body></html>
