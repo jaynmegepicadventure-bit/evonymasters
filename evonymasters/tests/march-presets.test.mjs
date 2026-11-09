@@ -59,7 +59,7 @@ test("March page renders accessible unlock matrix, preset tabs and output",()=>{
  assert.match(page,/data-type="ranged"/);assert.match(page,/data-type="cavalry"/);
  assert.match(page,/data-type="ground"/);assert.match(page,/data-type="siege"/);
  assert.match(page,/id="all-tiers"/);assert.match(page,/Copy this preset/);
- assert.doesNotMatch(page,/15%|20%|30%|35%|40%|65%/);
+ assert.doesNotMatch(page,/withTop:|withoutTop:|Allocation %|id="calc-rules"/);
  assert.doesNotMatch(page,/from ['"][^'"]*marchPresets/);
  assert.match(page,/T16 recommendations are estimates/);
  assert.match(header,/href:'\/march-presets\/'/);
