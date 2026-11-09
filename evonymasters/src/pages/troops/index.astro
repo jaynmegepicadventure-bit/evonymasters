@@ -50,7 +50,7 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 @media print{.site-header,.toolbar,.tiers-head button{display:none!important}body{background:white;color:black}.scroller{overflow:visible}.cols{display:grid;grid-template-columns:repeat(3,1fr);min-width:0}.card{break-inside:avoid;color:black;background:white}:global(.result-row .value){color:black}}
 </style></head>
 <body><SiteHeader active="troops"/><main>
-<div class="top"><h1>Build the march. Own the battle.</h1><p>Put your march capacity to work. Enter your march size, tick any upper tiers you've unlocked and see a ready-to-use troop layer breakdown. Lower tiers are built into the plan automatically.</p></div>
+<div class="top banner-hero banner-march-preset"><h1>Build the march. Own the battle.</h1><p>Put your march capacity to work. Enter your march size, tick any upper tiers you've unlocked and see a ready-to-use troop layer breakdown. Lower tiers are built into the plan automatically.</p></div>
 <div class="toolbar"><button type="button" id="clear">Clear march sizes</button><button type="button" id="reset">Restore Excel examples</button><button type="button" id="print">Print results</button></div>
 <div class="scroller"><div class="cols">{types.map(t=><section class="card" data-type={t.id}>
 <h2>{t.icon} {t.label}</h2>
