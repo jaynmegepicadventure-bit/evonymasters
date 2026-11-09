@@ -72,12 +72,21 @@ export function calculateFormation(type,marchInput,selectedTiers){
   counts.set(tier,Math.max(base,amount));
   primaryFixed.add(tier);
  }
- // With T16 enabled, the proportionate high-tier split can stop at T13.
- // T12 must still retain its own-type support layer rather than silently
- // disappearing. An existing fixed T12 allocation always takes precedence.
- if(highest===16&&tiers.includes(12)&&!counts.has(12)){
-  counts.set(12,ownDefault);
-  result.extraFixed+=ownDefault;
+ // Audit the entire T16 formation, not only T12. The percentage split
+ // covers only the leading tiers (e.g. Ground T16–T14, BIG Siege T16–T14),
+ // while Small Siege allocates its main balance to T11. Every other
+ // available own-type tier needs a default support layer before the split.
+ // Keep existing fixed layers untouched and deduct each new layer from
+ // the distributable balance so the march still reconciles exactly.
+ if(highest===16){
+  const weightedTiers=cfg.residualTier
+   ?new Set([cfg.residualTier])
+   :new Set(cfg.high.map((_,i)=>highest-i));
+  for(let tier=10;tier<=highest;tier++){
+   if(!tiers.includes(tier)||counts.has(tier)||weightedTiers.has(tier))continue;
+   counts.set(tier,ownDefault);
+   result.extraFixed+=ownDefault;
+  }
  }
  // The Cavalry worksheet has an explicit 700,000 T15-era layer reserve.
  // Reconcile the small difference from generalized cross-type layer defaults.
