@@ -55,7 +55,7 @@ test("Empty unlocks, reduced marches and tier fallbacks never exceed capacity",(
 test("March page renders accessible unlock matrix, preset tabs and output",()=>{
  const page=readFileSync(new URL("../src/pages/march-presets/index.astro",import.meta.url),"utf8");
  const header=readFileSync(new URL("../src/components/SiteHeader.astro",import.meta.url),"utf8");
- assert.match(page,/id="march-size"/);assert.match(page,/data-tiers/);
+ assert.match(page,/data-size/);assert.match(page,/data-tiers/);
  assert.match(page,/data-type="ranged"/);assert.match(page,/data-type="cavalry"/);
  assert.match(page,/data-type="ground"/);assert.match(page,/data-type="siege"/);
  assert.match(page,/id="all-tiers"/);assert.match(page,/Copy this preset/);
