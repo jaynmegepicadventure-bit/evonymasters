@@ -91,3 +91,25 @@ test('Public page starts with no upper-level checkboxes selected or march values
  assert.match(page,/value=""/);
  assert.match(page,/const tiers=\[14,15,16\]/);
 });
+
+test('Cavalry 5,874,400 with T15 reproduces Excel layer reserve and no 125k overestimate',()=>{
+ const x=calculateFormation('mounted',5874400,[...auto,14,15]);
+ const d=displayFormationLayers(x), amount=rows(x);
+ assert.equal(x.ownLayers,90000);
+ assert.equal(x.otherLayers,315000);
+ assert.equal(x.extraFixed,170000);
+ assert.equal(x.excelAdjustment,125000);
+ assert.equal(x.support,700000);
+ assert.equal(x.remaining,5174400);
+ assert.equal(amount[15],776160);
+ assert.equal(amount[14],1034880);
+ assert.equal(amount[13],1552320);
+ assert.equal(amount[12],1811040);
+ assert.equal(x.total,5874400);
+ assert.equal(d.displayed+d.otherSupport,5874400);
+});
+test('Cavalry without T15 does not apply T15-specific workbook reserve',()=>{
+ const x=calculateFormation('mounted',5874400,[...auto,14]);
+ assert.equal(x.excelAdjustment,0);
+ assert.equal(x.total,5874400);
+});
