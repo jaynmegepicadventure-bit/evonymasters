@@ -56,6 +56,13 @@ footer{border-top:1px solid #29445c;color:#9fb5c7;font-size:.8rem;padding:24px 0
 .event-reward-table{width:100%;border-collapse:collapse;font-size:.83rem}
 .event-reward-table th{text-align:left;background:#294760;color:#f4ce8d;padding:9px}
 .event-reward-table td{padding:9px;border-bottom:1px solid #436079}
+.event-sheet-rewards{margin-top:12px;overflow-x:auto}
+.event-sheet-rewards[hidden]{display:none!important}
+.event-more{margin:8px 0}
+.event-sheet-table{overflow-x:auto}
+.event-sheet-table .event-reward-table{min-width:500px}
+.event-sheet-table .event-reward-table td{vertical-align:top}
+.event-sheet-table .event-reward-table th:nth-child(2),.event-sheet-table .event-reward-table td:nth-child(2){text-align:right}
 .event-source-link{font-size:.83rem;font-weight:800}
 @media(max-width:590px){.event-activity-grid{grid-template-columns:1fr}.event-inline-details{padding:11px}.event-reward-table{font-size:.77rem}}
 
@@ -63,7 +70,7 @@ footer{border-top:1px solid #29445c;color:#9fb5c7;font-size:.8rem;padding:24px 0
 <body><SiteHeader active="calendar"/>
 <header class="hero banner-hero banner-calendar"><div class="wrap"><div class="eyebrow">EvonyMasters / Event Planner</div><h1>Never miss your next move.</h1>
 <p>See what's on the horizon, spot your next monster hunt and line up the events worth watching. Times follow <strong>Evony server time (UTC)</strong>.</p>
-<div class="hero-links"><a href="#day-events">Explore event details ↗</a><a href="/resources/">Resource Finder ↗</a><a href="https://evonymasters-calendar.jaynmegepicadventure.workers.dev/admin/">Admin dashboard ↗</a></div>
+<div class="hero-links"><a href="#day-events">Explore event details ↗</a><a href="/resources/">Resource Finder ↗</a></div>
 </div></header>
 <main class="wrap">
 <section class="overview" aria-label="Today's schedule summary">
@@ -227,21 +234,71 @@ function eventDetails(event){
  ];
  for(const [title,info] of knownActivity)if(info)addEventSection(details,title,[info]);
  if(profile.rewards?.length)addEventSection(details,"Rewards and bonuses",profile.rewards);
- if(guide?.rewards?.length){
-  const rows=[];
-  for(const raw of guide.rewards){
-   for(const entry of raw.split(";").map(v=>v.trim()).filter(Boolean)){
-    if(/not verified|not specified|rewards vary|check the current/i.test(entry))continue;
-    rows.push([entry,"Varies",guide.verified?"Featured":"Unconfirmed"]);
+ const viewMore=el("button","event-detail-trigger event-more","View more rewards");
+ viewMore.type="button";viewMore.setAttribute("aria-expanded","false");
+ const rewardArea=el("section","event-sheet-rewards");rewardArea.hidden=true;
+ const status=el("p","event-summary",""),tableArea=el("div","event-sheet-table");
+ rewardArea.append(status,tableArea);
+ let loaded=false,loading=false;
+ async function showSheetRewards(){
+  if(loaded||loading)return;
+  loading=true;status.textContent="Loading event rewards…";
+  try{
+   const records=[];
+   // Event rewards are synchronized from the Google Sheet into our own worker.
+   // Fetch each result page, filtering to the exact event title to avoid
+   // accidentally showing similarly named events.
+   for(let page=0;page<25;page++){
+    const params=new URLSearchParams({q:event.name,type:"events",page:String(page),sort:"suggested",direction:"asc"});
+    const response=await fetch("https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev/v3/search?"+params);
+    if(!response.ok)throw Error("Reward data unavailable");
+    const data=await response.json();
+    for(const group of data.groups||[]){
+     if(key(group.title)!==key(event.name))continue;
+     for(const reward of group.items||[]){
+      records.push({
+       item:reward.item||"—",
+       quantity:reward.quantity||"—",
+       classification:reward.classification&&reward.classification!=="Unspecified"?reward.classification:"—",
+       activity:reward.details?.activity||reward.details?.subEvent||group.context?.activity||group.context?.rewardActivity||"—"
+      });
+     }
+    }
+    if(!data.hasMore)break;
    }
-  }
-  addEventTable(details,"Featured event rewards",["Reward","Quantity","Type"],rows);
+   const unique=new Map();
+   for(const row of records){
+    const id=[row.item,row.quantity,row.classification,row.activity].join("|").toLowerCase();
+    if(!unique.has(id))unique.set(id,row);
+   }
+   const rows=[...unique.values()];
+   if(rows.length){
+    const table=el("table","event-reward-table"),thead=el("thead"),head=el("tr");
+    for(const label of ["Item","Quantity","Drop classification","Activity"])head.append(el("th","",label));
+    thead.append(head);table.append(thead);
+    const tbody=el("tbody");
+    for(const row of rows){
+     const tr=el("tr");
+     for(const value of [row.item,row.quantity,row.classification,row.activity])tr.append(el("td","",value));
+     tbody.append(tr);
+    }
+    table.append(tbody);tableArea.replaceChildren(table);
+    status.textContent=rows.length+" recorded reward options";
+   }else{
+    status.textContent="No reward entries for this event are available in the synced data yet.";
+   }
+   loaded=true;
+  }catch{
+   status.textContent="Event rewards could not be loaded. Try again.";
+  }finally{loading=false;}
  }
- const source=profile.source||guide?.source;
- if(source&&/^https:\/\//.test(source)){
-  const link=el("a","event-source-link","Learn more ↗");
-  link.href=source;link.target="_blank";link.rel="noopener noreferrer";details.append(link);
- }
+ viewMore.addEventListener("click",()=>{
+  rewardArea.hidden=!rewardArea.hidden;
+  viewMore.setAttribute("aria-expanded",String(!rewardArea.hidden));
+  viewMore.textContent=rewardArea.hidden?"View more rewards":"Hide rewards";
+  if(!rewardArea.hidden)showSheetRewards();
+ });
+ details.append(viewMore,rewardArea);
  return details;
 }
 
