@@ -51,7 +51,7 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 </style></head>
 <body><SiteHeader active="troops"/><main>
 <div class="top banner-hero banner-march-preset"><h1>Build the march. Own the battle.</h1><p>Put your march capacity to work. Enter your march size, tick any upper tiers you've unlocked and see a ready-to-use troop layer breakdown. Lower tiers are built into the plan automatically.</p></div>
-<div class="toolbar"><button type="button" id="clear">Clear march sizes</button><button type="button" id="reset">Restore Excel examples</button><button type="button" id="print">Print results</button></div>
+<div class="toolbar"><button type="button" id="clear">Clear march sizes</button><button type="button" id="print">Print results</button></div>
 <div class="scroller"><div class="cols">{types.map(t=><section class="card" data-type={t.id}>
 <h2>{t.icon} {t.label}</h2>
 <label class="field">March size<input class="march" type="text" inputmode="numeric" autocomplete="off" value="" aria-label={t.label+' march size'}/></label>
@@ -65,7 +65,7 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 
 </main>
 <script>
-import {calculateFormation, displayFormationLayers, REFERENCE_EXAMPLES} from '../../lib/troop-layers.mjs';
+import {calculateFormation, displayFormationLayers} from '../../lib/troop-layers.mjs';
 const format=n=>n.toLocaleString('en-US');
 const baseTiers=Array.from({length:11},(_,i)=>i+3);
 const cards=[...document.querySelectorAll('.card')];
@@ -114,11 +114,5 @@ for(const card of cards){
  calculate(card);
 }
 document.getElementById('clear').addEventListener('click',()=>cards.forEach(c=>{c.querySelector('.march').value='0';calculate(c);}));
-document.getElementById('reset').addEventListener('click',()=>cards.forEach(c=>{
- const example=REFERENCE_EXAMPLES[c.dataset.type];
- c.querySelector('.march').value=format(example.size);
- c.querySelectorAll('.tier-input').forEach(i=>i.checked=example.tiers.includes(Number(i.value)));
- calculate(c);
-}));
 document.getElementById('print').addEventListener('click',()=>window.print());
 </script></body></html>
