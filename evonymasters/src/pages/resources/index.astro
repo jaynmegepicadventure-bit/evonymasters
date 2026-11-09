@@ -58,6 +58,18 @@ h1{font-size:clamp(2rem,4.2vw,3rem);letter-spacing:-.043em;line-height:1.1;margi
 .load{display:block;margin:18px auto 35px;padding:11px 24px;border:1px solid #e0b66d;border-radius:9px;background:#f0c670;color:#13253a;font:inherit;font-weight:800;cursor:pointer}
 footer{border-top:1px solid #314c66;color:#abc1d4;font-size:.82rem;padding:23px 0;line-height:1.6}
 @media(max-width:700px){.hero{padding-top:26px}.wrap{padding:0 14px}.tabs{gap:6px}.tab{padding:8px 12px}.table-frame{margin:0 -14px;border-radius:0}.heading{margin-top:17px}.results-table{min-width:860px}}
+
+.rewards-breakdown{width:100%;border-collapse:collapse;table-layout:auto;font-size:.88rem;color:#e6f0f9}
+.rewards-breakdown th{padding:11px 12px;text-align:left;background:#29445f;color:#f5cd81;font-weight:800;border-bottom:2px solid #62809b}
+.rewards-breakdown td{padding:10px 12px;text-align:left;white-space:normal;vertical-align:top;border-bottom:1px solid #395672}
+.rewards-breakdown tbody tr:nth-child(even){background:#173047}
+.rewards-breakdown tbody tr:nth-child(odd){background:#10283e}
+.rewards-breakdown th:nth-child(2),.rewards-breakdown td:nth-child(2){text-align:right;white-space:nowrap}
+.rewards-breakdown td:nth-child(3){font-weight:750;color:#b9e7c8}
+.reward-detail{overflow-x:auto}
+.reward-detail h3{margin:0 0 12px;color:#f0c77e;font-size:1rem}
+.detail-row td{padding:0 13px 15px!important}
+
 </style></head><body>
 <SiteHeader active="resources"/>
 <main><section class="hero banner-hero banner-resources"><div class="wrap">
@@ -78,7 +90,7 @@ footer{border-top:1px solid #314c66;color:#abc1d4;font-size:.82rem;padding:23px 
 </div><label class="live-filter"><input type="checkbox" id="live-only"> Show Live Only</label><span class="sort-hint">Click a column heading to sort all matching sources</span>
 </div>
 
-<div class="heading"><div><h2 id="results-heading">Find an item to get started</h2><p id="results-description">Browse recorded reward sources by quantity and source type.</p></div><span class="sync" id="sync-status"></span></div>
+<div class="heading"><div><h2 id="results-heading">Find an item to get started</h2><p id="results-description">Find a monster, event or item and explore its rewards.</p></div><span class="sync" id="sync-status"></span></div>
 <div id="empty" class="empty">Start typing an item name to see where it can be obtained.</div>
 <div class="table-frame" id="table-frame" hidden>
 <table class="results-table" aria-label="Item Finder comparison results"><thead><tr>
@@ -122,49 +134,31 @@ const artwork=row=>{
 };
 const label=row=>names[row.source]||row.source;
 function detailedRow(row){
- const details=node("tr","detail-row"),td=node("td");td.colSpan=["all","events"].includes(type)?7:5;
- const wrapper=node("div"),fields=node("div","detail-grid");
- const addField=(title,value)=>{const v=toText(value);if(!v)return;const field=node("div","detail-field");field.append(node("b","",title),node("span","",v));fields.append(field);};
- const c=row.context||{};
- if(row.source==="events"){
-  addField("Event location",c.location);addField("Event category",c.event);
-  addField("Event / activity",c.subEvent);addField("Activity type",c.activity);addField("Reward activity",c.rewardActivity);
-  addField("Recurrence",c.recurrence);addField("Frequency",c.frequency);
-  addField("Level",c.level);addField("Stamina",c.stamina);
-  addField("Item availability",c.availability);addField("General",c.general);addField("Castle",c.castle);
-  addField("Instructions",c.detail);
- }else if(row.source==="boxes"){
-  addField("Box source",c.sourceNote);
- }else{
-  addField("Monster type",c.monsterType);addField("Monster level",c.level);
-  addField("Monster power",c.power);addField("Stamina",c.stamina);addField("Associated event",c.event);
- }
- addField("Notes / How to obtain",row.note);if(fields.childElementCount){const section=node("section","detail-section");section.append(node("h3","","Source information"),fields);wrapper.append(section);}
+ const details=node("tr","detail-row"),td=node("td");
+ td.colSpan=["all","events"].includes(type)?7:5;
+ const wrapper=node("div","reward-detail"),c=row.context||{};
  if(row.source==="boxes"){
-  const section=node("section","detail-section");
-  section.append(node("h3","","Chest contents by rank and tier"));
-  section.append(node("p","meta","For complete recorded rewards, quantities and nested items, expand this chest in Chest Finder. Ranking variants are shown separately."));
-  const link=node("a","link-detail","Open Chest Finder · Expand");
+  const link=node("a","link-detail","View chest contents");
   link.href="/chests/?q="+encodeURIComponent(row.title);
-  section.append(link);wrapper.append(section);
-  td.append(wrapper);details.append(td);return details;
+  wrapper.append(link);td.append(wrapper);details.append(td);return details;
  }
- const section=node("section","detail-section");section.append(node("h3","","Recorded reward options"));
- const ul=node("ul");
- for(const item of row.items||[]){
-  const li=node("li");
-  const quantity=toText(item.quantity)||"Quantity missing";
-  const cl=toText(item.classification)==="Unspecified"?"Data missing":toText(item.classification);
-  li.append(node("strong","",item.item+" × "+quantity+" · "+cl));
-  if(item.route?.length>1)li.append(node("div","sub","Path: "+item.route.join(" → ")));
-  const d=item.details||{};
-  const moreInfo=[["Event location",d.location],["Sub-event",d.subEvent],["Activity",d.activity],["Level",d.level||d.boxLevel],["Stamina",d.stamina],["Instructions",d.detail],["Box source",d.boxSource],["Box notes",d.boxNotes],["Availability",d.availability]].filter(([,v])=>toText(v));
-  if(moreInfo.length)li.append(node("div","sub",moreInfo.map(([k,v])=>k+": "+v).join(" · ")));
-  ul.append(li);
+ const items=row.items||[];
+ const table=node("table","rewards-breakdown");
+ const thead=node("thead"),header=node("tr");
+ for(const heading of ["Item","Quantity","Drop classification","Activity"])header.append(node("th","",heading));
+ thead.append(header);table.append(thead);
+ const body=node("tbody");
+ for(const item of items){
+  const tr=node("tr"),activity=item.details?.activity||item.details?.subEvent||c.rewardActivity||c.activity||"—";
+  const cl=toText(item.classification);
+  for(const val of [item.item,toText(item.quantity)||"—",cl&&cl!=="Unspecified"?cl:"—",activity])tr.append(node("td","",val));
+  body.append(tr);
  }
- section.append(ul);
- if(row.matchingRewards>(row.items||[]).length)section.append(node("small","","More matching reward records exist. Narrow the item search for additional entries."));
- wrapper.append(section);
+ table.append(body);wrapper.append(table);
+ if(row.source==="events"){
+  const activity=c.activity||c.rewardActivity||c.subEvent;
+  if(activity)wrapper.prepend(node("h3","",activity));
+ }
  td.append(wrapper);details.append(td);return details;
 }
 function resultRow(row){
@@ -175,7 +169,7 @@ function resultRow(row){
  const info=node("div");info.append(node("div","name",row.title));
  const level=toText(row.context?.level),event=toText(row.context?.event);
  if(level||event)info.append(node("div","sub",[level?"Lv "+level:"",event].filter(Boolean).join(" · ")));
- const toggle=node("button","link-detail","View reward details");toggle.type="button";toggle.setAttribute("aria-expanded","false");
+ const toggle=node("button","link-detail","Details");toggle.type="button";toggle.setAttribute("aria-expanded","false");
  const id="detail-"+Math.random().toString(36).slice(2);toggle.setAttribute("aria-controls",id);
  info.append(toggle);sourceLine.append(img,info);source.append(sourceLine);tr.append(source);
  tr.append(node("td","meta",label(row)));
@@ -189,7 +183,7 @@ function resultRow(row){
  toggle.addEventListener("click",()=>{
   extra.hidden=!extra.hidden;
   toggle.setAttribute("aria-expanded",String(!extra.hidden));
-  toggle.textContent=extra.hidden?"View reward details":"Hide reward details";
+  toggle.textContent=extra.hidden?"Details":"Hide details";
  });
  return [tr,extra];
 }
@@ -219,8 +213,8 @@ async function fetchResults(append=false){
   frame.hidden=recordCount===0;more.hidden=!hasMore;
   empty.hidden=recordCount>0;
   if(!recordCount)empty.textContent="No matches. Try a different item name or another category.";
-  desc.textContent=recordCount+" matching "+(recordCount===1?"source":"sources")+" · "+(tbody.querySelectorAll(".main-row").length)+" shown. Quantities are per recorded reward, not additive totals.";
-  status.textContent=data.updatedAt?"Sheet updated "+new Date(data.updatedAt).toLocaleString():"";
+  desc.textContent=recordCount+" matching "+(recordCount===1?"source":"sources")+" · "+(tbody.querySelectorAll(".main-row").length)+" shown.";
+  status.textContent="";
  }catch(error){
   if(error.name==="AbortError")return;
   empty.hidden=false;empty.textContent="Search is temporarily unavailable. Please try again.";
