@@ -4,15 +4,14 @@ import {readFileSync} from 'node:fs';
 import {DEFAULT_LAYERS,FORMATIONS,REFERENCE_EXAMPLES,calculateFormation,displayFormationLayers} from '../src/lib/troop-layers.mjs';
 const auto=Array.from({length:11},(_,i)=>i+3);
 function rows(result){return Object.fromEntries(result.rows.map(row=>[row.tier,row.count]));}
-const crossTypeSum=Object.values(DEFAULT_LAYERS).reduce((a,b)=>a+b,0);
 for(const [type,example] of Object.entries(REFERENCE_EXAMPLES)){
  test(type+' deducts all 4 troop types to T9 and other 3 above T9',()=>{
   const x=calculateFormation(type,example.size,[...auto,...example.tiers.filter(t=>t>=14)]);
   const cfg=FORMATIONS[type], own=DEFAULT_LAYERS[cfg.troopType];
   const highest=x.tiers[0];
   assert.equal(x.ownLayers,own*9);
-  assert.equal(x.otherLayers,(crossTypeSum-own)*(9+highest-9));
-  assert.equal(x.baseLayers,9*crossTypeSum+(highest-9)*(crossTypeSum-own));
+  assert.equal(x.otherLayers,3*own*highest);
+  assert.equal(x.baseLayers,9*own+3*own*highest);
   assert.equal(x.total,example.size);
   assert.equal(x.rows.reduce((s,r)=>s+r.count,0)+x.otherLayers,example.size);
   const d=displayFormationLayers(x);
@@ -22,13 +21,13 @@ for(const [type,example] of Object.entries(REFERENCE_EXAMPLES)){
 }
 test('Ground 7,500,000 reserves all four troop types and respects 40/40/20',()=>{
  const x=calculateFormation('ground',7500000,[...auto,14,15]);
- assert.equal(x.baseLayers,405000);
+ assert.equal(x.baseLayers,540000);
  assert.equal(x.extraFixed,595000);
- assert.equal(x.remaining,6500000);
- assert.equal(x.otherLayers,315000);
- assert.equal(rows(x)[15],2600000);
- assert.equal(rows(x)[14],2600000);
- assert.equal(rows(x)[13],1300000);
+ assert.equal(x.remaining,6365000);
+ assert.equal(x.otherLayers,450000);
+ assert.equal(rows(x)[15],2546000);
+ assert.equal(rows(x)[14],2546000);
+ assert.equal(rows(x)[13],1273000);
  assert.equal(rows(x)[12],500000);
  assert.equal(rows(x)[9],25000);
  assert.equal(rows(x)[8],25000);
@@ -37,13 +36,13 @@ test('Ground 7,500,000 reserves all four troop types and respects 40/40/20',()=>
 });
 test('Ranged 7,393,200 matches percentages after the revised layer deductions',()=>{
  const x=calculateFormation('ranged',7393200,[...auto,14,15]);
- assert.equal(x.baseLayers,405000);
+ assert.equal(x.baseLayers,540000);
  assert.equal(x.extraFixed,140000);
- assert.equal(x.remaining,6848200);
- assert.equal(rows(x)[15],1027230);
- assert.equal(rows(x)[14],1369640);
- assert.equal(rows(x)[13],2054460);
- assert.equal(rows(x)[12],2396870);
+ assert.equal(x.remaining,6713200);
+ assert.equal(rows(x)[15],1006980);
+ assert.equal(rows(x)[14],1342640);
+ assert.equal(rows(x)[13],2013960);
+ assert.equal(rows(x)[12],2349620);
  assert.equal(x.total,7393200);
 });
 test('Only T3–T13 enabled applies low-T14 percentages to their actual tiers',()=>{
@@ -59,8 +58,8 @@ test('All siege variants reserve just one underlying siege troop type',()=>{
  for(const type of ['bigSiege','smallSiege','soloSiege']){
   const x=calculateFormation(type,7500000,[...auto,14]);
   assert.equal(x.ownLayers,9000);
-  assert.equal(x.otherLayers,420000);
-  assert.equal(x.baseLayers,429000);
+  assert.equal(x.otherLayers,42000);
+  assert.equal(x.baseLayers,51000);
   assert.equal(x.total,7500000);
  }
 });
@@ -68,7 +67,7 @@ test('Small Siege fixed T9 increases the existing T9 default, not duplicated',()
  const x=calculateFormation('smallSiege',5749450,[...auto,14]);
  assert.equal(rows(x)[9],50000);
  assert.equal(x.extraFixed,249000);
- assert.equal(rows(x)[11],5071450);
+ assert.equal(rows(x)[11],5449450);
  assert.equal(x.total,5749450);
 });
 test('Inputs never return negative tiers and insufficient march warns rather than silently over-allocating',()=>{
@@ -96,9 +95,9 @@ test('Cavalry 5,874,400 with T15 reproduces Excel layer reserve and no 125k over
  const x=calculateFormation('mounted',5874400,[...auto,14,15]);
  const d=displayFormationLayers(x), amount=rows(x);
  assert.equal(x.ownLayers,90000);
- assert.equal(x.otherLayers,315000);
+ assert.equal(x.otherLayers,450000);
  assert.equal(x.extraFixed,170000);
- assert.equal(x.excelAdjustment,125000);
+ assert.equal(x.excelAdjustment,-10000);
  assert.equal(x.support,700000);
  assert.equal(x.remaining,5174400);
  assert.equal(amount[15],776160);
@@ -112,4 +111,22 @@ test('Cavalry without T15 does not apply T15-specific workbook reserve',()=>{
  const x=calculateFormation('mounted',5874400,[...auto,14]);
  assert.equal(x.excelAdjustment,0);
  assert.equal(x.total,5874400);
+});
+
+test('Archer T15 at 5,819,100 reserves the missing 135,000 across cross-type layers',()=>{
+ const x=calculateFormation('ranged',5819100,[...auto,14,15]);
+ const quantities=rows(x);
+ // Old cross-type calculation: 15*(10k Ground +10k Cavalry +1k Siege)=315k.
+ // Correct: 15*3*10k=450k. Difference equals the reported 135k.
+ assert.equal(x.otherLayers,450000);
+ assert.equal(x.baseLayers,540000);
+ assert.equal(x.extraFixed,140000);
+ assert.equal(x.support,680000);
+ assert.equal(x.remaining,5139100);
+ assert.equal(quantities[15],770865);
+ assert.equal(quantities[14],1027820);
+ assert.equal(quantities[13],1541730);
+ assert.equal(quantities[12],1798685);
+ assert.equal(x.total,5819100);
+ assert.equal(displayFormationLayers(x).displayed+displayFormationLayers(x).otherSupport,5819100);
 });
