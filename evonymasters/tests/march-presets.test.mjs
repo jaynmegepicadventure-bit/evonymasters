@@ -62,6 +62,8 @@ test("March page renders accessible unlock matrix, preset tabs and output",()=>{
  assert.doesNotMatch(page,/withTop:|withoutTop:|Allocation %|id="calc-rules"/);
  assert.doesNotMatch(page,/from ['"][^'"]*marchPresets/);
  assert.match(page,/T16 recommendations are estimates/);
+ const inline=page.match(/<script is:inline>([\s\S]*?)<\/script>/);
+ assert.ok(inline);assert.doesNotThrow(()=>new Script(inline[1]));
  assert.match(header,/href:'\/march-presets\/'/);
 });
 
