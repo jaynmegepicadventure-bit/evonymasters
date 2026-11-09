@@ -54,7 +54,7 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 <div class="toolbar"><button type="button" id="clear">Clear march sizes</button><button type="button" id="reset">Restore Excel examples</button><button type="button" id="print">Print results</button></div>
 <div class="scroller"><div class="cols">{types.map(t=><section class="card" data-type={t.id}>
 <h2>{t.icon} {t.label}</h2>
-<label class="field">March size<input class="march" type="text" inputmode="numeric" autocomplete="off" value={t.defaultSize.toLocaleString("en-US")} aria-label={t.label+' march size'}/></label>
+<label class="field">March size<input class="march" type="text" inputmode="numeric" autocomplete="off" value="" aria-label={t.label+' march size'}/></label>
 <div class="tiers-head"><strong>Upper troop tiers</strong><span>T3–T13 included</span></div>
 <div class="tiers">{tiers.map(tier=><label class="tier"><input type="checkbox" class="tier-input" value={tier} checked={false}/><span>T{tier}</span></label>)}</div>
 <div class="results"><h3>Calculated layers</h3><div class="rows" aria-live="polite"></div>
