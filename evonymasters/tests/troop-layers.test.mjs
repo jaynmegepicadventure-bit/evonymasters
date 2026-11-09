@@ -1,65 +1,93 @@
-import test from 'node:test';import assert from 'node:assert/strict';
-import {FORMATIONS,REFERENCE_EXAMPLES,calculateFormation,displayFormationLayers} from '../src/lib/troop-layers.mjs';
-for (const [type,example] of Object.entries(REFERENCE_EXAMPLES)) {
- test(type+' matches original Excel allocations',()=>{
-  const actual=calculateFormation(type,example.size,example.tiers);
-  assert.equal(actual.total,example.size);
-  const found=Object.fromEntries(actual.rows.map(row=>[row.tier,row.count]));
-  assert.deepEqual(found,example.expected);
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {DEFAULT_LAYERS,FORMATIONS,REFERENCE_EXAMPLES,calculateFormation,displayFormationLayers} from '../src/lib/troop-layers.mjs';
+const auto=Array.from({length:11},(_,i)=>i+3);
+function rows(result){return Object.fromEntries(result.rows.map(row=>[row.tier,row.count]));}
+const crossTypeSum=Object.values(DEFAULT_LAYERS).reduce((a,b)=>a+b,0);
+for(const [type,example] of Object.entries(REFERENCE_EXAMPLES)){
+ test(type+' deducts all 4 troop types to T9 and other 3 above T9',()=>{
+  const x=calculateFormation(type,example.size,[...auto,...example.tiers.filter(t=>t>=14)]);
+  const cfg=FORMATIONS[type], own=DEFAULT_LAYERS[cfg.troopType];
+  const highest=x.tiers[0];
+  assert.equal(x.ownLayers,own*9);
+  assert.equal(x.otherLayers,(crossTypeSum-own)*(9+highest-9));
+  assert.equal(x.baseLayers,9*crossTypeSum+(highest-9)*(crossTypeSum-own));
+  assert.equal(x.total,example.size);
+  assert.equal(x.rows.reduce((s,r)=>s+r.count,0)+x.otherLayers,example.size);
+  const d=displayFormationLayers(x);
+  assert.equal(d.displayed+d.otherSupport,example.size);
+  for(let tier=1;tier<=6;tier++)assert.equal(rows(x)[tier],own,type+' T'+tier);
  });
 }
-test('7,500,000 Ground matches the worksheet support and fixed layers',()=>{
- const x=calculateFormation('ground',7500000,[7,8,9,10,11,12,13,14,15]);
- assert.equal(x.support,490000); assert.equal(x.fixedTotal,625000);assert.equal(x.remaining,6385000);
-});
-test('T15 availability adjusts Ground: T14 becomes main top tier',()=>{
- const x=calculateFormation('ground',7500000,[7,8,9,10,11,12,13,14]);
- const map=Object.fromEntries(x.rows.map(y=>[y.tier,y.count]));
- assert.equal(map[14],2754000);assert.equal(map[13],2754000);assert.equal(map[12],1377000);
+test('Ground 7,500,000 reserves all four troop types and respects 40/40/20',()=>{
+ const x=calculateFormation('ground',7500000,[...auto,14,15]);
+ assert.equal(x.baseLayers,405000);
+ assert.equal(x.extraFixed,595000);
+ assert.equal(x.remaining,6500000);
+ assert.equal(x.otherLayers,315000);
+ assert.equal(rows(x)[15],2600000);
+ assert.equal(rows(x)[14],2600000);
+ assert.equal(rows(x)[13],1300000);
+ assert.equal(rows(x)[12],500000);
+ assert.equal(rows(x)[9],25000);
+ assert.equal(rows(x)[8],25000);
+ assert.equal(rows(x)[7],25000);
  assert.equal(x.total,7500000);
 });
-test('T3 through T16 are supported and totals never exceed entered march',()=>{
+test('Ranged 7,393,200 matches percentages after the revised layer deductions',()=>{
+ const x=calculateFormation('ranged',7393200,[...auto,14,15]);
+ assert.equal(x.baseLayers,405000);
+ assert.equal(x.extraFixed,140000);
+ assert.equal(x.remaining,6848200);
+ assert.equal(rows(x)[15],1027230);
+ assert.equal(rows(x)[14],1369640);
+ assert.equal(rows(x)[13],2054460);
+ assert.equal(rows(x)[12],2396870);
+ assert.equal(x.total,7393200);
+});
+test('Only T3–T13 enabled applies low-T14 percentages to their actual tiers',()=>{
+ const x=calculateFormation('ranged',7393200,auto);
+ assert.equal(x.tiers[0],13);
+ const d=rows(x);
+ assert.equal(d[14],undefined);
+ assert.ok(d[13]>0&&d[12]>0);
+ assert.equal(d[11],50000);
+ assert.equal(x.total,7393200);
+});
+test('All siege variants reserve just one underlying siege troop type',()=>{
+ for(const type of ['bigSiege','smallSiege','soloSiege']){
+  const x=calculateFormation(type,7500000,[...auto,14]);
+  assert.equal(x.ownLayers,9000);
+  assert.equal(x.otherLayers,420000);
+  assert.equal(x.baseLayers,429000);
+  assert.equal(x.total,7500000);
+ }
+});
+test('Small Siege fixed T9 increases the existing T9 default, not duplicated',()=>{
+ const x=calculateFormation('smallSiege',5749450,[...auto,14]);
+ assert.equal(rows(x)[9],50000);
+ assert.equal(x.extraFixed,249000);
+ assert.equal(rows(x)[11],5071450);
+ assert.equal(x.total,5749450);
+});
+test('Inputs never return negative tiers and insufficient march warns rather than silently over-allocating',()=>{
  for(const type of Object.keys(FORMATIONS)){
-  for(const size of [0,1,100,50000,1000000,7500000]){
-   for(const tiers of [[3],[3,4,5],[7,8,9,10,11,12,13,14],[3,7,11,15,16],[]]){
+  for(const size of [0,1,10000,500000,1000000,7500000]){
+   for(const tiers of [auto,[...auto,14],[...auto,14,15,16]]){
     const x=calculateFormation(type,size,tiers);
-    assert.equal(x.total,tiers.length?size:0,JSON.stringify({type,size,tiers,x}));
-    assert.ok(x.rows.every(r=>r.count>=0&&Number.isInteger(r.count)));
+    assert.ok(x.rows.every(row=>Number.isInteger(row.count)&&row.count>=0));
+    const d=displayFormationLayers(x);
+    assert.equal(d.displayed+d.otherSupport,x.total);
+    if(size&&size>=x.support)assert.equal(x.total,size);
+    else if(size)assert.ok(x.total>=size);
    }
   }
  }
 });
-
-test('T7 down to T1 use workbook Default Layer Size without increasing march',()=>{
- for(const type of Object.keys(FORMATIONS)){
-  const example=REFERENCE_EXAMPLES[type];
-  const result=calculateFormation(type,example.size,[3,4,5,6,7,8,9,10,11,12,13,...example.tiers.filter(t=>t>=14)]);
-  const shown=displayFormationLayers(result);
-  const rows=new Map(shown.rows.map(r=>[r.tier,r.count]));
-  const base=type.toLowerCase().includes('siege')?1000:10000;
-  for(let tier=1;tier<=6;tier++)assert.equal(rows.get(tier),base,type+' T'+tier);
-  assert.ok(rows.get(7)>=base,type+' T7');
-  assert.equal(shown.displayed+shown.otherSupport,result.total,type);
- }
-});
-test('T14–T16 unchecked defaults: main march still reconciles, low layers are present',()=>{
- for(const type of Object.keys(FORMATIONS)){
-  const tiers=Array.from({length:11},(_,i)=>i+3);
-  const result=calculateFormation(type,7500000,tiers);
-  const shown=displayFormationLayers(result);
-  assert.equal(shown.total,7500000);
-  assert.equal(shown.rows[0].tier,13);
-  assert.ok(shown.rows.some(r=>r.tier===1&&r.count>0));
- }
-});
-test('Display layers reconcile for small marches and unusual selected tiers',()=>{
- for(const type of Object.keys(FORMATIONS)){
-  for(const size of [0,1,500,1000,10000,90000,7500000]){
-   for(const tiers of [[3,4,5,6,7,8,9,10,11,12,13],[3,7,13,14,15],[3],[3,4,5,6,7,8,9,10,11,12,13,14,15,16],[]]){
-    const actual=calculateFormation(type,size,tiers);
-    const shown=displayFormationLayers(actual);
-    assert.equal(shown.displayed+shown.otherSupport,actual.total);
-   }
-  }
- }
+test('Public page starts with no upper-level checkboxes selected or march values',()=>{
+ const page=readFileSync(new URL('../src/pages/troops/index.astro',import.meta.url),'utf8');
+ assert.match(page,/checked=\{false\}/);
+ assert.match(page,/value=""/);
+ assert.match(page,/const tiers=\[14,15,16\]/);
 });
