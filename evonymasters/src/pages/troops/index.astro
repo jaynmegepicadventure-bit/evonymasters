@@ -51,11 +51,11 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 <h2>{t.icon} {t.label}</h2>
 <label class="field">March size<input class="march" type="number" inputmode="numeric" min="0" max="10000000000" step="1" value={t.defaultSize} aria-label={t.label+' march size'}/></label>
 <div class="tiers-head"><strong>Available troop tiers</strong><button class="all" type="button">All / None</button></div>
-<div class="tiers">{tiers.map(tier=><label class="tier"><input type="checkbox" class="tier-input" value={tier} checked={tier<=15}/><span>T{tier}</span></label>)}</div>
+<div class="tiers">{tiers.map(tier=><label class="tier"><input type="checkbox" class="tier-input" value={tier} checked={tier<=((t.id==='ranged'||t.id==='ground')?15:14)}/><span>T{tier}</span></label>)}</div>
 <div class="results"><h3>Calculated layers</h3><div class="rows" aria-live="polite"></div>
 <div class="stat">Support layers reserved: <strong class="reserved">0</strong></div>
 <div class="stat">Troops after layers: <strong class="remaining">0</strong></div>
-<div class="summary"><span>Total allocated</span><output class="total">0</output></div></div>
+<div class="summary"><span>Total march</span><output class="total">0</output></div></div>
 </section>)}</div></div>
 <p class="tip">The workbook contains six separate formations, including three Siege variants. Smaller screens show one card at a time. Percentages are intentionally hidden.</p>
 </main>
@@ -100,7 +100,7 @@ function calculate(card){
  let tiers=primary;
  let weights=cfg.weights.slice(0,tiers.length);
  if(card.dataset.type==='smallSiege'){
-  tiers=available.filter(t=>!Object.hasOwn(fixed,t)).slice(0,1);
+  tiers=available.includes(11)?[11]:available.filter(t=>!Object.hasOwn(fixed,t)).slice(0,1);
   if(!tiers.length)tiers=available.slice(0,1);
   weights=[1];
  }
@@ -114,9 +114,9 @@ function calculate(card){
   portions.forEach(p=>add(p.tier,p.amount));
  }else{add(available[0],remaining);}
  // The spreadsheet's cross-type support reserve is represented separately, not mislabeled as one troop tier.
- render(card,allocations,requestedReserve,remaining);
+ render(card,allocations,requestedReserve,remaining,bulkReserve);
 }
-function render(card,allocations,reserved,remaining){
+function render(card,allocations,reserved,remaining,bulkReserve=0){
  const rows=card.querySelector('.rows');rows.replaceChildren();
  for(const [tier,count] of [...allocations.entries()].sort((a,b)=>b[0]-a[0])){
   const row=document.createElement('div');row.className='result-row';
@@ -128,7 +128,7 @@ function render(card,allocations,reserved,remaining){
  const allocated=[...allocations.values()].reduce((a,b)=>a+b,0);
  card.querySelector('.reserved').textContent=format(reserved);
  card.querySelector('.remaining').textContent=format(remaining);
- card.querySelector('.total').textContent=format(allocated+Math.max(0,reserved-[...allocations.entries()].reduce((s,[tier,count])=>s+(configs[card.dataset.type].fixed[tier]||0),0)));
+ card.querySelector('.total').textContent=format(allocated+bulkReserve);
 }
 const cards=[...document.querySelectorAll('.card')];
 for(const card of cards){
@@ -139,6 +139,6 @@ for(const card of cards){
  change();
 }
 document.getElementById('clear').addEventListener('click',()=>cards.forEach(c=>{c.querySelector('.march').value='0';calculate(c);}));
-document.getElementById('reset').addEventListener('click',()=>cards.forEach(c=>{c.querySelector('.march').value=({ranged:7393200,mounted:7480700,ground:7500000,bigSiege:6013200,smallSiege:5749450,soloSiege:5549800})[c.dataset.type];c.querySelectorAll('.tier-input').forEach(i=>i.checked=Number(i.value)<=15);calculate(c);}));
+document.getElementById('reset').addEventListener('click',()=>cards.forEach(c=>{c.querySelector('.march').value=({ranged:7393200,mounted:7480700,ground:7500000,bigSiege:6013200,smallSiege:5749450,soloSiege:5549800})[c.dataset.type];c.querySelectorAll('.tier-input').forEach(i=>i.checked=Number(i.value)<=((c.dataset.type==='ranged'||c.dataset.type==='ground')?15:14));calculate(c);}));
 document.getElementById('print').addEventListener('click',()=>window.print());
 </script></body></html>
