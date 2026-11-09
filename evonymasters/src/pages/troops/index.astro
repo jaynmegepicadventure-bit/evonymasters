@@ -50,7 +50,7 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 @media print{.site-header,.toolbar,.tiers-head button{display:none!important}body{background:white;color:black}.scroller{overflow:visible}.cols{display:grid;grid-template-columns:repeat(3,1fr);min-width:0}.card{break-inside:avoid;color:black;background:white}:global(.result-row .value){color:black}}
 </style></head>
 <body><SiteHeader active="troops"/><main>
-<div class="top"><h1>March Preset</h1><p>Built from the Troop Layers 2024 workbook. Enter march sizes and select which upper troop tiers you have (T14–T16). T3–T13 are always included. T1–T9 defaults for all four troop types and T10+ defaults for the other three types are reserved before the main formation is calculated.</p></div>
+<div class="top"><h1>Build the march. Own the battle.</h1><p>Put your march capacity to work. Enter your march size, tick any upper tiers you've unlocked and see a ready-to-use troop layer breakdown. Lower tiers are built into the plan automatically.</p></div>
 <div class="toolbar"><button type="button" id="clear">Clear march sizes</button><button type="button" id="reset">Restore Excel examples</button><button type="button" id="print">Print results</button></div>
 <div class="scroller"><div class="cols">{types.map(t=><section class="card" data-type={t.id}>
 <h2>{t.icon} {t.label}</h2>
@@ -62,7 +62,7 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 <div class="stat">Main formation troops: <strong class="remaining">0</strong></div>
 <div class="summary"><span>Total march</span><output class="total">0</output></div></div>
 </section>)}</div></div>
-<p class="tip">The workbook contains six separate formations, including three Siege variants. T1–T9 include default layers across all four troop types. Other troop types above T9 are deducted before proportional top-tier allocations. Percentages remain hidden.</p>
+
 </main>
 <script>
 import {calculateFormation, displayFormationLayers, REFERENCE_EXAMPLES} from '../../lib/troop-layers.mjs';
