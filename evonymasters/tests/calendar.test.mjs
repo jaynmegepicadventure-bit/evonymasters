@@ -174,7 +174,7 @@ test("Calendar planner groups monster families under expandable category heading
  assert.match(html,/data-view="week" aria-pressed="true"/);
  assert.match(html,/data-view="month"/);
  assert.match(html,/data-view="agenda"/);
- assert.match(html,/const labels=\{"Boss":"Boss Monsters","Event Boss":"Event Bosses","Regular Monster":"Regular Monsters"\}/);
+ assert.match(html,/labels=\{"Boss":"Boss Monsters","Event Boss":"Event Bosses","Regular Monster":"Regular Monsters"\}/);
  assert.match(html,/toggle\.setAttribute\("aria-expanded","false"\)/);
  assert.match(html,/const dedupe=items=>/);
  assert.match(html,/canonical=e=>/);
