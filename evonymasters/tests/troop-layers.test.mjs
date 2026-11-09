@@ -146,3 +146,35 @@ test('March Preset does not display or bind a Restore Excel examples button',()=
  assert.doesNotMatch(page,/Restore Excel examples/);
  assert.doesNotMatch(page,/getElementById\('reset'\)/);
 });
+
+test('Every T16 march type has no empty own-type tiers at 7 million',()=>{
+ const all=[...auto,14,15,16];
+ for(const type of Object.keys(FORMATIONS)){
+  const formation=calculateFormation(type,7000000,all);
+  const displayed=displayFormationLayers(formation);
+  const expected=DEFAULT_LAYERS[FORMATIONS[type].troopType];
+  for(let tier=1;tier<=16;tier++){
+   const layer=displayed.rows.find(row=>row.tier===tier);
+   assert.ok(layer&&layer.count>=expected,
+     `${type}: T${tier} is missing its ${expected}-troop minimum layer`);
+  }
+  assert.equal(formation.total,7000000,`${type}: march did not reconcile`);
+  assert.equal(displayed.displayed+displayed.otherSupport,7000000);
+ }
+});
+test('T16 Ground and Siege preserve fixed layers and distribute only the remaining capacity',()=>{
+ const all=[...auto,14,15,16];
+ const ground=calculateFormation('ground',7000000,all);
+ const g=rows(ground);
+ assert.equal(g[12],500000);
+ assert.equal(g[13],10000);
+ assert.equal(g[11],25000);
+ assert.ok(g[16]>0&&g[15]>0&&g[14]>0);
+ const big=rows(calculateFormation('bigSiege',7000000,all));
+ for(const tier of [10,11,12,13])assert.equal(big[tier],1000);
+ for(const tier of [14,15,16])assert.ok(big[tier]>1000);
+ const small=rows(calculateFormation('smallSiege',7000000,all));
+ for(const tier of [15,16])assert.equal(small[tier],1000);
+ for(const tier of [12,13,14])assert.equal(small[tier],50000);
+ assert.ok(small[11]>0);
+});
