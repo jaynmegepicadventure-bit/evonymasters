@@ -168,3 +168,21 @@ test("Saved schedule rendering declares its own title binding",async()=>{
  assert.match(html,/const article=document\.createElement\("article"\),title=document\.createElement\("strong"\)/);
  assert.doesNotMatch(html,/article\.className="entry",title=document\.createElement/);
 });
+
+test("Calendar planner groups monster families under expandable category headings",()=>{
+ const html=readFileSync(new URL("../src/pages/calendar/index.astro",import.meta.url),"utf8");
+ assert.match(html,/data-view="week" aria-pressed="true"/);
+ assert.match(html,/data-view="month"/);
+ assert.match(html,/data-view="agenda"/);
+ assert.match(html,/labels=\{"Boss":"Boss Monsters","Event Boss":"Event Bosses","Regular Monster":"Regular Monsters"\}/);
+ assert.match(html,/toggle\.setAttribute\("aria-expanded","false"\)/);
+ assert.match(html,/const dedupe=items=>/);
+ assert.match(html,/canonical=e=>/);
+ assert.match(html,/monster-search/);
+ assert.match(html,/const summary=el\("span","date-summary"\)/);
+ assert.doesNotMatch(html,/for\(const e of dayEvents\.slice\(0,4\)\)/);
+ assert.doesNotMatch(html,/getElementById\("show-always"\)/);
+ const inline=html.match(/<script is:inline>([\s\S]*?)<\/script>/);
+ assert.ok(inline);
+ assert.doesNotThrow(()=>new Script(inline[1]));
+});
