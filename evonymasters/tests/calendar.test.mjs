@@ -65,7 +65,7 @@ test("Daily, weekly, interval and ongoing schedules expand according to UTC days
  const {env,access}=runtime();
  await add(env,access,{targetIds:[fakeCatalog[0].id],rule:"daily",selectedDates:[],startDate:"",endDate:""});
  await add(env,access,{targetIds:[fakeCatalog[1].id],rule:"weekly",selectedDates:[],startDate:"2026-11-08",endDate:"2026-11-23",daysOfWeek:[1,5]});
- await add(env,access,{targetIds:[fakeCatalog[4].id],rule:"interval",selectedDates:[],startDate:"2026-11-09",endDate:"2026-11-20",intervalDays:3,excludedDates:["2026-11-15"]});
+ await add(env,access,{targetIds:[fakeCatalog[4].id],rule:"interval",selectedDates:["2026-11-09"],startDate:"",endDate:"2026-11-20",intervalDays:3,excludedDates:["2026-11-15"]});
  await add(env,access,{targetIds:[fakeCatalog[5].id],rule:"ongoing",selectedDates:[],startDate:"2026-11-10",endDate:"2026-11-12"});
  const events=await publicEvents(env,"2026-11-08","2026-11-20");
  const on=id=>events.filter(e=>e.sourceId===id).map(e=>e.date);
@@ -200,7 +200,7 @@ test("Every X days repeats each calendar-selected UTC date forever and requires 
  const output=await publicEvents(env,"2026-11-09","2026-12-01");
  assert.deepEqual(output.map(e=>e.date),["2026-11-10","2026-11-12","2026-11-15","2026-11-17","2026-11-20","2026-11-22","2026-11-25","2026-11-27","2026-11-30"]);
  const future=await publicEvents(env,"2027-01-01","2027-01-14");
- assert.deepEqual(future.map(e=>e.date),["2027-01-04","2027-01-06","2027-01-09","2027-01-11","2027-01-14"]);
+ assert.deepEqual(future.map(e=>e.date),["2027-01-01","2027-01-04","2027-01-06","2027-01-09","2027-01-11","2027-01-14"]);
 });
 test("Older bounded interval schedules remain unchanged when paused",async()=>{
  const {env,access}=runtime();
