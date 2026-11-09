@@ -226,3 +226,21 @@ test("Interval editor shows clickable dates and no first or final date input",as
  assert.doesNotMatch(html,/First active date \(UTC\)/);
  assert.match(html,/\["dates","interval"\]\.includes\(value\)/);
 });
+
+test("Admin catalog presents sortable schedule status, totals and inline rules",async()=>{
+ const {env,access}=runtime();
+ const html=await (await worker.fetch(request("/admin/"),env,access)).text();
+ assert.match(html,/id="sort-status"/);
+ assert.match(html,/Schedule Status/);
+ assert.match(html,/id="schedule-totals"/);
+ assert.match(html,/statusSort==="scheduled"/);
+ assert.match(html,/statusSort==="unscheduled"/);
+ assert.match(html,/function schedulesFor\(id\)/);
+ assert.match(html,/View schedule/);
+ assert.match(html,/aria-expanded/);
+ assert.match(html,/Unscheduled/);
+ assert.match(html,/Every /);
+ const script=html.match(/<script>([\s\S]*?)<\/script>/);
+ assert.ok(script);
+ assert.doesNotThrow(()=>new Script(script[1]));
+});
