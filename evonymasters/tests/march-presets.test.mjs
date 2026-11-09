@@ -56,6 +56,6 @@ test("March page renders accessible unlock matrix, preset tabs and output",()=>{
  assert.match(page,/id="march-size"/);assert.match(page,/id="unlock-grid"/);
  assert.match(page,/data-preset="smallSiege"/);assert.match(page,/data-preset="ranged"/);
  assert.match(page,/Select all troops/);assert.match(page,/Copy preset/);
- assert.match(page,/T16 is not/);
+ assert.match(page,/T16 uses a clearly labeled estimate/);
  assert.match(header,/href:'\/march-presets\/'/);
 });
