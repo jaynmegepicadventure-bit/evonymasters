@@ -43,8 +43,8 @@ footer{margin-top:30px;border-top:1px solid #334f69;padding:25px 0;color:#b5c8d9
 @media(max-width:640px){.wrap{padding:0 14px}.hero{padding:23px 0}.search input,.search select{width:100%}.chest-list{display:block}.chest{margin:10px 0}}
 </style></head><body>
 <SiteHeader active="chests"/>
-<header class="hero"><div class="wrap"><div class="eyebrow">PLAYER TOOLS / CHEST FINDER</div><h1>What's inside that chest?</h1>
-<p class="subtitle">Search by chest name or reward item. Compare up to four chests, see recorded quantities, and trace their known sources.</p>
+<header class="hero"><div class="wrap"><div class="eyebrow">PLAYER TOOLS / CHEST FINDER</div><h1>Crack the chest code.</h1>
+<p class="subtitle">Don't leave your loot to guesswork. Peek inside reward chests, compare up to four side by side and find the bosses or events that can deliver them.</p>
 <div class="search"><label for="q" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden">Chest or reward item</label><input id="q" type="search" placeholder="Search a chest or its contents…" autocomplete="off"/>
 <label for="source" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden">Reward source</label>
 <select id="source"><option value="all">All sources</option><option value="bosses">Bosses</option><option value="events">Events</option><option value="activities">Activities</option><option value="unlinked">Source not recorded</option></select></div>
@@ -61,7 +61,7 @@ footer{margin-top:30px;border-top:1px solid #334f69;padding:25px 0;color:#b5c8d9
 <button id="more" class="pill more" hidden>Show more chests</button>
 <section class="panel" id="comparison-panel" hidden><h2>Compare chest contents</h2><p class="muted">Every recorded item is shown. A possible reward is not a guaranteed payout. Nested chests are listed separately from the contents of their child chests.</p>
 <div class="table-wrap"><table class="comparison"><thead id="compare-head"></thead><tbody id="compare-body"></tbody></table></div></section>
-</main><footer><div class="wrap">EvonyMasters is an independent community project. Reward information reflects recorded sources; missing classifications mean data still to be collected.</div></footer>
+</main>
 <script is:inline>
 (()=>{
 "use strict";
