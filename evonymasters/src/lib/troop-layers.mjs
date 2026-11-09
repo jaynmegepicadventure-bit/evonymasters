@@ -71,7 +71,13 @@ export function calculateFormation(type,marchInput,selectedTiers){
   counts.set(tier,Math.max(base,amount));
   primaryFixed.add(tier);
  }
- // Excel 'March Layers' E6 reserves 700,000 for Cavalry's T15-era formation.\n // Our generic four-type defaults reserve 575,000, missing 125,000.\n // Keep this workbook-specific difference explicit, never disguise it as top-tier troops.\n if(highest===15&&cfg.excelT15Reserve){\n  result.excelAdjustment=Math.max(0,cfg.excelT15Reserve-(result.baseLayers+result.extraFixed));\n }\n const reserve=result.baseLayers+result.extraFixed+result.excelAdjustment;
+ // Excel 'March Layers' E6 reserves 700,000 for Cavalry's T15-era formation.
+ // Our generic four-type defaults reserve 575,000, missing 125,000.
+ // Keep this workbook-specific difference explicit, never disguise it as top-tier troops.
+ if(highest===15&&cfg.excelT15Reserve){
+  result.excelAdjustment=Math.max(0,cfg.excelT15Reserve-(result.baseLayers+result.extraFixed));
+ }
+ const reserve=result.baseLayers+result.extraFixed+result.excelAdjustment;
  // A march smaller than mandatory layers is marked insufficient rather than
  // inventing a top-tier allocation or exceeding the entered march size.
  if(march<reserve){
