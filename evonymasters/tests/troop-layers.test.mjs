@@ -130,3 +130,19 @@ test('Archer T15 at 5,819,100 reserves the missing 135,000 across cross-type lay
  assert.equal(x.total,5819100);
  assert.equal(displayFormationLayers(x).displayed+displayFormationLayers(x).otherSupport,5819100);
 });
+
+test('T16 formations retain a nonzero T12 support layer without exceeding march capacity',()=>{
+ for(const type of Object.keys(FORMATIONS)){
+  const result=calculateFormation(type,7500000,[...auto,14,15,16]);
+  const byTier=rows(result);
+  const ownDefault=DEFAULT_LAYERS[FORMATIONS[type].troopType];
+  assert.ok(byTier[12]>=ownDefault,`${type} T12 missing when T16 is selected`);
+  assert.equal(result.total,7500000,`${type} march no longer reconciles`);
+  assert.equal(displayFormationLayers(result).displayed+displayFormationLayers(result).otherSupport,7500000);
+ }
+});
+test('March Preset does not display or bind a Restore Excel examples button',()=>{
+ const page=readFileSync(new URL('../src/pages/troops/index.astro',import.meta.url),'utf8');
+ assert.doesNotMatch(page,/Restore Excel examples/);
+ assert.doesNotMatch(page,/getElementById\('reset'\)/);
+});
