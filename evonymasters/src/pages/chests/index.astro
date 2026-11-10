@@ -97,7 +97,7 @@ footer{margin-top:30px;border-top:1px solid #334f69;padding:25px 0;color:#b5c8d9
 <button type="button" id="add-item-search" class="search-add">+ Add item</button>
 <label for="source" class="source-control" hidden>Source <select id="source"><option value="all">All sources</option><option value="bosses">Bosses</option><option value="events">Events</option><option value="activities">Activities</option><option value="unlinked">Source not recorded</option></select></label></div><div id="search-items" class="search-chips" aria-live="polite"></div><p class="search-help">Select up to 3 items to find chests and activities that offer your rewards.</p>
 <div class="finder-filters"><label><input type="checkbox" id="live-filter"/> Live sources only</label>
-<label id="monster-level-wrap">Monster level <select id="monster-level"><option value="all">All levels</option><option value="1-10">1–10</option><option value="11-20">11–20</option><option value="21+">21+</option></select></label>
+<label id="monster-level-wrap">Monster level <select id="monster-level"><option value="all">All levels</option><option value="1-10">1–10</option><option value="11-20">11–20</option><option value="21+">21+</option></select></label><label>Drop type <select id="drop-type"><option value="all">All drops</option><option value="guaranteed">Guaranteed</option><option value="possible">Possible / chance</option></select></label>
 <button type="button" class="pill secondary" id="clear-filters">Clear filters</button></div>
 <div class="advanced" id="event-search" hidden>
 <label for="event-filter">Event name<select id="event-filter"><option value="">All events</option></select></label>
@@ -121,7 +121,7 @@ const API="https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev";
 const q=document.getElementById("q"),source=document.getElementById("source"),eventFilter=document.getElementById("event-filter"),participationFilter=document.getElementById("participation-filter"),rankFilter=document.getElementById("rank-filter"),eventSearch=document.getElementById("event-search"),cards=document.getElementById("chests"),more=document.getElementById("more"),status=document.getElementById("status"),count=document.getElementById("count"),compare=document.getElementById("compare"),reset=document.getElementById("reset"),selection=document.getElementById("selected-count"),panel=document.getElementById("comparison-panel"),head=document.getElementById("compare-head"),body=document.getElementById("compare-body");
 const selected=new Map();let page=0,hasMore=false,serial=0,timer=null,request=null,availability=null;
 const tabStrip=document.getElementById("finder-tabs"),tabHelp=document.getElementById("tab-description"),dock=document.getElementById("comparison-dock");
-const liveFilter=document.getElementById("live-filter"),monsterLevel=document.getElementById("monster-level"),monsterLevelWrap=document.getElementById("monster-level-wrap");
+const liveFilter=document.getElementById("live-filter"),monsterLevel=document.getElementById("monster-level"),monsterLevelWrap=document.getElementById("monster-level-wrap"),dropType=document.getElementById("drop-type");
 const suggest=document.getElementById("chest-suggestions");
 let currentTab="monsters",allFound=new Map(),searchComplete=true;
 
@@ -174,12 +174,12 @@ function refreshSelected(){selection.textContent=selected.size+" of 4 selected";
 function card(c){
  const article=el("article","chest"),top=el("div","chest-head"),pic=document.createElement("img");
  pic.src="/images/item-finder/box.svg";pic.alt="";pic.width=84;pic.height=66;pic.loading="lazy";
- const labels=el("div");labels.append(el("h3","",c.name),el("div","sub",[c.level?"Tier "+c.level:"",c.rank?"Rank "+c.rank:"",c.itemCount+" recorded rewards"].filter(Boolean).join(" · ")),el("span","source-availability","Checking source availability…"));article._chestRecord=c;paintAvailability(article,c);
+ const labels=el("div");labels.append(el("h3","",c.name),el("div","sub",[c.level?"Tier "+c.level:"",c.rank?"Rank "+c.rank:"",c.itemCount+" recorded rewards"].filter(Boolean).join(" · ")),el("span","source-availability","Checking source availability…"));article._chestRecord=c;
  if(c._matchedItems?.length){
  const matches=el("div","chest-matches"+(c._matchedItems.length===terms().filter(Boolean).length&&terms().filter(Boolean).length>1?" best-match":""),c._matchedItems.length+" of "+terms().filter(Boolean).length+" rewards matched");
  labels.append(matches);
 }
- top.append(pic,labels);article.append(top);
+ top.append(pic,labels);article.append(top);paintAvailability(article,c);
  const list=el("ul","items");
  for(const item of sortedRewards(c.items).slice(0,5)){
   const li=el("li");li.append(el("span","",item.item),el("span","",item.quantity||"Quantity missing"));list.append(li);
@@ -188,8 +188,8 @@ function card(c){
  if(c.nestedCount)list.append(el("li","muted",c.nestedCount+" nested reward paths"));
  article.append(list);
  const origin=(c.sources||[]).slice(0,2).map(s=>s.type+": "+s.name+(s.rank?" (Rank "+s.rank+")":s.level?" (Lv "+s.level+")":""));
- if(origin.length)article.append(el("div","detail","From: "+origin.join(" · ")));
- else if(c.sourceNotes.length)article.append(el("div","detail","Recorded source: "+c.sourceNotes.join(" · ")));
+ if(origin.length)article.append(el("div","detail","Where to get it: "+origin.join(" · ")));
+ 
  else article.append(el("div","detail","Source not yet linked in data"));
  const actions=el("div","card-actions"),label=document.createElement("label"),cb=document.createElement("input");
  cb.type="checkbox";cb.checked=selected.has(c.id);cb.disabled=!cb.checked&&selected.size>=4;
@@ -275,13 +275,17 @@ function passesLevel(chest){
  if(!values.length)return false;
  return values.some(n=>monsterLevel.value==="1-10"?n>=1&&n<=10:monsterLevel.value==="11-20"?n>=11&&n<=20:n>=21);
 }
+function passesDrop(chest){
+ if(dropType.value==="all")return true;
+ return [...(chest.items||[]),...(chest.nestedItems||[])].some(item=>toText(item.classification).toLowerCase()===dropType.value);
+}
 function availableNow(chest){
  if(!availability)return false;
  return (chest.sources||[]).some(src=>availability.get(sourceKey(src.name))?.live);
 }
 function renderResults(){
  const all=[...allFound.values()];
- const visible=all.filter(chest=>sourceMatchesTab(chest)&&passesLevel(chest)&&(!liveFilter.checked||availableNow(chest)));
+ const visible=all.filter(chest=>sourceMatchesTab(chest)&&passesLevel(chest)&&passesDrop(chest)&&(!liveFilter.checked||availableNow(chest)));
  // The first ranking key is the number of DISTINCT selected reward items
  // actually found inside the chest (directly or in nested chests).
  visible.sort((a,b)=>matchCount(b)-matchCount(a)||compareChest(a,b));
@@ -368,9 +372,10 @@ tabStrip.addEventListener("click",event=>{
 });
 liveFilter.addEventListener("change",renderResults);
 monsterLevel.addEventListener("change",renderResults);
+dropType.addEventListener("change",renderResults);
 document.getElementById("clear-filters").addEventListener("click",()=>{
  selectedItems.splice(0);q.value="";renderItemChips();
- liveFilter.checked=false;monsterLevel.value="all";eventFilter.value="";
+ liveFilter.checked=false;monsterLevel.value="all";dropType.value="all";eventFilter.value="";
  participationFilter.value="all";rankFilter.value="";schedule();
 });
 let suggestionTimer;
@@ -397,7 +402,7 @@ async function loadEventChoices(){
   }
   const initial=new URLSearchParams(location.search),requested=initial.get("event");
   if(requested&&[...eventFilter.options].some(option=>option.value===requested)){
-   selectTab("events");eventFilter.value=requested;load();
+   eventFilter.value=requested;load();
   }
  }catch{/* The main chest search remains functional if event suggestions are unavailable. */}
 }
@@ -441,6 +446,8 @@ compare.addEventListener("click",async()=>{
 const initial=new URLSearchParams(location.search);q.value=initial.get("q")||"";
 const requestedSource=initial.get("source"),requestedEvent=initial.get("event");
 const initialTab=requestedEvent||["events","activities"].includes(requestedSource)?"events":requestedSource==="all"||requestedSource==="unlinked"?"all":"monsters";
-loadEventChoices();renderItemChips();refreshSelected();selectTab(initialTab);loadAvailability();
+loadEventChoices();renderItemChips();refreshSelected();selectTab(initialTab);
+if(requestedSource==="unlinked")source.value="unlinked";
+loadAvailability();
 })();
 </script></body></html>
