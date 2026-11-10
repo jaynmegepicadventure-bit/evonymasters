@@ -130,11 +130,10 @@ const calendarName=x=>sourceKey(x).replace(/\s+lv\s+\d+$/,"");
 function matchSchedule(row){
  if(!calendarAvailability)return null;
  const candidates=[row.title,row.context?.event].filter(Boolean).map(calendarName);
- const candidatesWithKind=[row.source==="events"?"Event":row.source==="event-bosses"?"Event Boss":row.source==="regular"?"Regular Monster":"Boss"];
  let schedules=[];
  for(const [k,entry] of calendarAvailability){
-  const parts=k.split("|"),name=parts.slice(1).join("|");
-  if(candidates.some(q=>q===name||q.length>9&&(name.startsWith(q+" ")||q.startsWith(name+" ")))&&(!candidatesWithKind.length||parts[0]===candidatesWithKind[0].toLowerCase()||row.context?.event))schedules.push(entry);
+  const name=k.slice(k.indexOf("|")+1);
+  if(candidates.some(q=>q===name||q.length>9&&(name.startsWith(q+" ")||q.startsWith(name+" "))))schedules.push(entry);
  }
  if(!schedules.length)return null;
  const active=schedules.some(x=>x.live);
@@ -170,7 +169,7 @@ function renderChips(){
   remove.addEventListener("click",()=>{selectedItems=selectedItems.filter(v=>v!==item);renderChips();schedule();});
   chip.append(remove);selectedBox.append(chip);
  }
- addSearch.disabled=selectedItems.length>=3;addSearch.textContent=selectedItems.length>=3?"3 items selected":"+ Add item";
+ addSearch.disabled=selectedItems.length>=3;query.disabled=selectedItems.length>=3;addSearch.textContent=selectedItems.length>=3?"3 items selected":"+ Add item";
 }
 function addItem(){
  const value=query.value.trim();
