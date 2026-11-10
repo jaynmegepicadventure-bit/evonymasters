@@ -1,6 +1,6 @@
 ---
 const {active=''}=Astro.props;
-const links=[{href:'/',label:'Home',key:'home'},{href:'/resources/',label:'Resource Finder',key:'resources'},{href:'/chests/',label:'Chest Finder',key:'chests'},{href:'/calendar/',label:'Calendar',key:'calendar'},{href:'/troops/',label:'March Preset',key:'troops'},{href:'/training/',label:'Troop Training',key:'training'}];
+const links=[{href:'/',label:'Home',key:'home'},{href:'/resources/',label:'Item Finder',key:'resources'},{href:'/chests/',label:'Chest Finder',key:'chests'},{href:'/calendar/',label:'Calendar',key:'calendar'},{href:'/troops/',label:'March Preset',key:'troops'},{href:'/training/',label:'Troop Training',key:'training'}];
 ---
 <header class="site-header"><div class="site-nav-wrap"><a class="site-brand" href="/">evony<span>masters</span></a><nav class="site-desktop-nav" aria-label="Main navigation">{links.map(link=><a href={link.href} aria-current={active===link.key?'page':undefined}>{link.label}</a>)}<span class="site-planned" title="Coming soon">Generals <small>Soon</small></span><span class="site-planned" title="Coming soon">Upgrades <small>Soon</small></span></nav><details class="site-mobile-menu"><summary aria-label="Open navigation menu">☰ <span>Menu</span></summary><nav aria-label="Mobile navigation">{links.map(link=><a href={link.href} aria-current={active===link.key?'page':undefined}>{link.label}</a>)}<span class="site-planned">Generals · Coming soon</span><span class="site-planned">Upgrades · Coming soon</span></nav></details></div></header>
 <style is:global>
