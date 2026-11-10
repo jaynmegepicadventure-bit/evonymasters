@@ -75,8 +75,9 @@ footer{margin-top:30px;border-top:1px solid #334f69;padding:25px 0;color:#b5c8d9
 .chest-expanded .reward-table{min-width:425px}
 .chest-expanded .reward-path,.chest-note{display:none}
 .chest-expanded .reward-heading{margin-top:12px}
-.comparison-dock{position:sticky;bottom:12px;z-index:15;max-width:860px;margin:16px auto 8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding:13px 17px;background:#203950;border:1px solid #d3a865;border-radius:13px;box-shadow:0 8px 28px #050d19ba}
+.comparison-dock{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);width:min(860px,calc(100% - 24px));z-index:15;max-width:860px;margin:0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding:13px 17px;background:#203950;border:1px solid #d3a865;border-radius:13px;box-shadow:0 8px 28px #050d19ba}
 .comparison-dock[hidden]{display:none}
+main.wrap{padding-bottom:120px}
 .comparison-dock .selection{justify-content:flex-end}
 .comparison-dock .dock-title{font-weight:800;color:#f2cf8e}
 .chest-results-order{font-size:.8rem;color:#9ff1bc}
