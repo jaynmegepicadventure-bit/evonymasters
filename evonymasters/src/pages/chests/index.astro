@@ -156,7 +156,7 @@ q.addEventListener("keydown",event=>{if(event.key==="Enter"){event.preventDefaul
 
 const sourceKey=v=>String(v??"").trim().toLowerCase().replace(/\s*·\s*lv\s*\d+$/i,"").replace(/\s+/g," ");
 function paintAvailability(article,c){const badge=article.querySelector(".source-availability");if(!badge)return;if(!availability){badge.textContent="Source availability: checking…";return}const matches=(c.sources||[]).map(src=>availability.get(sourceKey(src.name))).filter(Boolean);const live=matches.some(v=>v.live),upcoming=matches.map(v=>v.next).filter(Boolean).sort()[0];badge.classList.toggle("live",live);badge.textContent=live?"● Source LIVE":upcoming?"Source upcoming · "+upcoming+" UTC":"Source schedule not recorded";}
-async function loadAvailability(){try{const today=new Date().toISOString().slice(0,10),to=new Date(Date.parse(today+"T00:00:00Z")+92*86400000).toISOString().slice(0,10);const r=await fetch("https://evonymasters-calendar.jaynmegepicadventure.workers.dev/api/events?"+new URLSearchParams({from:today,to,kind:"all",includeAlways:"true"}));if(!r.ok)throw Error("Calendar unavailable");const d=await r.json(),next=new Map();for(const e of d.events||[]){const key=sourceKey(e.name),old=next.get(key)||{live:false,next:""};if(e.date===today)old.live=true;else if(!old.next||e.date<old.next)old.next=e.date;next.set(key,old);}availability=next;for(const article of cards.querySelectorAll(".chest"))if(article._chestRecord)paintAvailability(article,article._chestRecord)}catch{availability=new Map();for(const article of cards.querySelectorAll(".chest"))if(article._chestRecord){const badge=article.querySelector(".source-availability");if(badge)badge.textContent="Source availability unavailable"}}}
+async function loadAvailability(){try{const today=new Date().toISOString().slice(0,10),to=new Date(Date.parse(today+"T00:00:00Z")+92*86400000).toISOString().slice(0,10);const r=await fetch("https://evonymasters-calendar.jaynmegepicadventure.workers.dev/api/events?"+new URLSearchParams({from:today,to,kind:"all",includeAlways:"true"}));if(!r.ok)throw Error("Calendar unavailable");const d=await r.json(),next=new Map();for(const e of d.events||[]){const key=sourceKey(e.name),old=next.get(key)||{live:false,next:""};if(e.date===today)old.live=true;else if(!old.next||e.date<old.next)old.next=e.date;next.set(key,old);}availability=next;renderResults()}catch{availability=new Map();renderResults()}}
 const toText=x=>String(x??"").trim();
 const collator=new Intl.Collator("en",{numeric:true,sensitivity:"base"});
 const sortedRewards=rows=>[...rows].sort((a,b)=>collator.compare(a.item,b.item)
@@ -257,46 +257,136 @@ function card(c){
  actions.append(label,expand);article.append(actions,expanded);
  return article;
 }
+const matchCount=chest=>(chest._matchedItems||[]).length;
+const matchReward=(chest,term)=>{
+ const phrase=term.trim().toLowerCase();
+ return [...(chest.items||[]),...(chest.nestedItems||[])].some(item=>toText(item.item).toLowerCase().includes(phrase));
+};
+function sourceMatchesTab(chest){
+ if(currentTab==="all")return true;
+ const sourceTypes=(chest.sources||[]).map(s=>toText(s.type).toLowerCase());
+ return currentTab==="events"?sourceTypes.includes("event"):
+  sourceTypes.some(t=>t.includes("boss")||t.includes("monster"));
+}
+function passesLevel(chest){
+ if(currentTab!=="monsters"||monsterLevel.value==="all")return true;
+ const values=(chest.sources||[]).filter(s=>/boss|monster/i.test(s.type||""))
+  .map(s=>Number.parseInt(toText(s.level).replace(/,/g,""),10)).filter(Number.isFinite);
+ if(!values.length)return false;
+ return values.some(n=>monsterLevel.value==="1-10"?n>=1&&n<=10:monsterLevel.value==="11-20"?n>=11&&n<=20:n>=21);
+}
+function availableNow(chest){
+ if(!availability)return false;
+ return (chest.sources||[]).some(src=>availability.get(sourceKey(src.name))?.live);
+}
+function renderResults(){
+ const all=[...allFound.values()];
+ const visible=all.filter(chest=>sourceMatchesTab(chest)&&passesLevel(chest)&&(!liveFilter.checked||availableNow(chest)));
+ // The first ranking key is the number of DISTINCT selected reward items
+ // actually found inside the chest (directly or in nested chests).
+ visible.sort((a,b)=>matchCount(b)-matchCount(a)||compareChest(a,b));
+ cards.replaceChildren();
+ for(const chest of visible)cards.append(card(chest));
+ count.textContent=visible.length+" matching "+(visible.length===1?"chest":"chests")+
+  (hasMore?" shown · more to load":"")+
+  (terms().filter(Boolean).length>1?" · most matched rewards first":"");
+ more.hidden=!hasMore;
+ status.textContent=visible.length?"":liveFilter.checked&&!availability?"Checking live schedules…":
+   "No matching chests for these filters. Try another reward, level or source.";
+ refreshSelected();
+}
 async function load(append=false){
  const my=++serial;
  if(request)request.abort();request=new AbortController();
- if(!append){page=0;cards.replaceChildren();shownChestIds=new Set();totalChests=0;more.hidden=true;panel.hidden=true;}
- status.textContent="Loading chests…";
- const list=terms();
+ if(!append){page=0;allFound=new Map();shownChestIds=new Set();hasMore=false;cards.replaceChildren();more.hidden=true;panel.hidden=true;}
+ status.textContent="Finding your best matches…";
+ const list=terms(),searching=list.some(Boolean),maxPages=searching?50:1;
  try{
+  // Read all available result pages for a reward query BEFORE ranking. Sorting
+  // only the first 15 results would hide three-item matches on later pages.
   const batches=await Promise.all(list.map(async term=>{
-   const params=new URLSearchParams({q:term,source:source.value,event:eventFilter.value,participation:participationFilter.value,rank:rankFilter.value.trim(),page:String(page)});
-   const response=await fetch(API+"/v4/chests?"+params,{signal:request.signal});
-   if(!response.ok)throw Error("Server "+response.status);
-   const data=await response.json();
-   return {term,data};
+   const records=[];
+   let offset=append?page:0,morePages=false,passes=0;
+   do{
+    const params=new URLSearchParams({q:term,source:source.value,event:eventFilter.value,
+      participation:participationFilter.value,rank:rankFilter.value.trim(),page:String(offset)});
+    const response=await fetch(API+"/v4/chests?"+params,{signal:request.signal});
+    if(!response.ok)throw Error("Chest search unavailable");
+    const data=await response.json();
+    records.push(...data.chests||[]);
+    morePages=Boolean(data.hasMore);
+    offset++;passes++;
+   }while(morePages&&passes<maxPages);
+   return {term,records,morePages,pages:passes};
   }));
   if(my!==serial)return;
-  const merged=new Map();
-  for(const {term,data} of batches){
-   for(const chest of data.chests||[]){
-    const existing=merged.get(chest.id);
-    if(existing){if(term&&!existing._matchedItems.includes(term))existing._matchedItems.push(term);}
-    else merged.set(chest.id,{...chest,_matchedItems:term?[term]:[]});
+  const merged=append?new Map(allFound):new Map();
+  for(const {term,records} of batches){
+   for(const chest of records){
+    const old=merged.get(chest.id);
+    if(old){
+     if(term&&matchReward(chest,term)&&!old._matchedItems.includes(term))old._matchedItems.push(term);
+    }else{
+     merged.set(chest.id,{...chest,_matchedItems:term&&matchReward(chest,term)?[term]:[]});
+    }
    }
   }
-  const ordered=[...merged.values()].sort((a,b)=>(b._matchedItems?.length||0)-(a._matchedItems?.length||0)||compareChest(a,b));
-  for(const chest of ordered){
-   if(shownChestIds.has(chest.id))continue;
-   shownChestIds.add(chest.id);cards.append(card(chest));
-  }
-  hasMore=batches.some(x=>x.data.hasMore);
-  more.hidden=!hasMore;
-  count.textContent=shownChestIds.size+" matching chests shown"+(hasMore?" · more available":"");
-  status.textContent=!shownChestIds.size?"No matching chests. Try another item or source.":"";
- }catch(e){if(e.name!=="AbortError")status.textContent="Chest Finder is temporarily unavailable. Please try again.";}
+  allFound=merged;
+  hasMore=batches.some(x=>x.morePages);
+  if(hasMore)page+=Math.max(...batches.map(x=>x.pages));
+  renderResults();
+ }catch(error){
+  if(error.name!=="AbortError")status.textContent="Chest Finder is temporarily unavailable. Please try again.";
+ }
 }
-const schedule=()=>{clearTimeout(timer);if(request)request.abort();timer=setTimeout(()=>load(),260)};
+const schedule=()=>{clearTimeout(timer);if(request)request.abort();timer=setTimeout(()=>load(),280)};
+const tabSettings={
+ monsters:{source:"bosses",help:"Explore monster and boss chests. Filter by monster level and see exactly what they can drop."},
+ events:{source:"events",help:"Find chests from events, milestones and rankings. Focus on the rewards worth pursuing."},
+ all:{source:"all",help:"Browse every recorded chest, including chests without a confirmed source."}
+};
+function selectTab(tab){
+ currentTab=tab;
+ for(const button of tabStrip.querySelectorAll("[data-tab]"))
+  button.setAttribute("aria-selected",String(button.dataset.tab===tab));
+ tabHelp.textContent=tabSettings[tab].help;
+ source.value=tabSettings[tab].source;
+ document.querySelector(".source-control").hidden=tab!=="all";
+ monsterLevelWrap.hidden=tab!=="monsters";
+ if(tab!=="monsters")monsterLevel.value="all";
+ setEventMode();
+ schedule();
+}
 function setEventMode(){
- const show=["events","activities"].includes(source.value);
+ const show=currentTab==="events"||currentTab==="all"&&["events","activities"].includes(source.value);
  eventSearch.hidden=!show;
  if(!show){eventFilter.value="";participationFilter.value="all";rankFilter.value="";}
 }
+tabStrip.addEventListener("click",event=>{
+ const button=event.target.closest("[data-tab]");
+ if(button)selectTab(button.dataset.tab);
+});
+liveFilter.addEventListener("change",renderResults);
+monsterLevel.addEventListener("change",renderResults);
+document.getElementById("clear-filters").addEventListener("click",()=>{
+ selectedItems.splice(0);q.value="";renderItemChips();
+ liveFilter.checked=false;monsterLevel.value="all";eventFilter.value="";
+ participationFilter.value="all";rankFilter.value="";schedule();
+});
+let suggestionTimer;
+q.addEventListener("input",()=>{
+ clearTimeout(suggestionTimer);
+ const term=q.value.trim();if(term.length<2)return;
+ suggestionTimer=setTimeout(async()=>{
+  try{
+   const response=await fetch(API+"/v2/suggest?q="+encodeURIComponent(term));
+   if(!response.ok)return;
+   const data=await response.json();
+   if(q.value.trim()!==term)return;
+   suggest.replaceChildren(...(data.items||[]).map(item=>{const option=document.createElement("option");option.value=item;return option;}));
+  }catch{}
+ },300);
+});
 async function loadEventChoices(){
  try{
   const result=await fetch(API+"/v4/chests/events");
@@ -307,7 +397,7 @@ async function loadEventChoices(){
   }
   const initial=new URLSearchParams(location.search),requested=initial.get("event");
   if(requested&&[...eventFilter.options].some(option=>option.value===requested)){
-   source.value="events";eventFilter.value=requested;setEventMode();load();
+   selectTab("events");eventFilter.value=requested;load();
   }
  }catch{/* The main chest search remains functional if event suggestions are unavailable. */}
 }
@@ -316,7 +406,7 @@ source.addEventListener("change",()=>{setEventMode();schedule()});
 eventFilter.addEventListener("change",schedule);
 participationFilter.addEventListener("change",schedule);
 rankFilter.addEventListener("input",schedule);
-more.addEventListener("click",()=>{if(hasMore){page++;load(true)}});
+more.addEventListener("click",()=>{if(hasMore)load(true);});
 reset.addEventListener("click",()=>{selected.clear();for(const cb of cards.querySelectorAll('input[type="checkbox"]')){cb.checked=false;cb.disabled=false}refreshSelected();panel.hidden=true;});
 compare.addEventListener("click",async()=>{
  const ids=[...selected.keys()],params=new URLSearchParams();ids.forEach(id=>params.append("id",id));
@@ -348,6 +438,9 @@ compare.addEventListener("click",async()=>{
   panel.hidden=false;status.textContent="";panel.scrollIntoView({behavior:"smooth",block:"start"});
  }catch{status.textContent="Could not compare these chests. Try again."}
 });
-const initial=new URLSearchParams(location.search);q.value=initial.get("q")||"";if(initial.get("source")&&[...source.options].some(o=>o.value===initial.get("source")))source.value=initial.get("source");setEventMode();loadEventChoices();load();loadAvailability();
+const initial=new URLSearchParams(location.search);q.value=initial.get("q")||"";
+const requestedSource=initial.get("source"),requestedEvent=initial.get("event");
+const initialTab=requestedEvent||["events","activities"].includes(requestedSource)?"events":requestedSource==="all"||requestedSource==="unlinked"?"all":"monsters";
+loadEventChoices();renderItemChips();refreshSelected();selectTab(initialTab);loadAvailability();
 })();
 </script></body></html>
