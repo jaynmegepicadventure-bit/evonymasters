@@ -282,7 +282,11 @@ async function verifyFullRewards(merged,phrases,signal){
     const data=await response.json();
     for(const full of data.chests||[]){
      const found=merged.get(full.id);
-     if(found)found._matchedItems=phrases.filter(term=>term&&matchReward(full,term));
+     if(found){
+      found._matchedItems=phrases.filter(term=>term&&matchReward(full,term));
+      found.items=full.items;found.nestedItems=full.nestedItems;
+      found.itemCount=full.items.length;found.nestedCount=full.nestedItems.length;
+     }
     }
    }catch(error){
     if(error.name==="AbortError")throw error;
@@ -293,10 +297,10 @@ async function verifyFullRewards(merged,phrases,signal){
  return complete;
 }
 function sourceMatchesTab(chest){
- if(currentTab==="all")return true;
- const sourceTypes=(chest.sources||[]).map(s=>toText(s.type).toLowerCase());
- return currentTab==="events"?sourceTypes.includes("event"):
-  sourceTypes.some(t=>t.includes("boss")||t.includes("monster"));
+ // The sheet-sync endpoint already performs the source filter against ALL
+ // source records. A chest may have more than 12 links, so checking the
+ // shortened card metadata here would incorrectly hide valid matches.
+ return true;
 }
 function passesLevel(chest){
  if(currentTab!=="monsters"||monsterLevel.value==="all")return true;
