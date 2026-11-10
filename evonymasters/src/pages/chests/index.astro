@@ -41,13 +41,22 @@ h1{font-size:clamp(2rem,4vw,3rem);margin:7px 0 9px;letter-spacing:-.04em}.subtit
 .empty{padding:25px;border:1px dashed #57718a;text-align:center;border-radius:10px;color:#bcd0df}
 footer{margin-top:30px;border-top:1px solid #334f69;padding:25px 0;color:#b5c8d9;font-size:.82rem}
 @media(max-width:640px){.wrap{padding:0 14px}.hero{padding:23px 0}.search input,.search select{width:100%}.chest-list{display:block}.chest{margin:10px 0}}
+.search-add{border:1px solid #dfad5e;border-radius:8px;padding:10px 13px;background:#efca7d;color:#17293a;font-weight:850;cursor:pointer}
+.search-add:disabled{opacity:.55;cursor:not-allowed}
+.search-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.search-chips:empty{display:none}
+.search-chip{display:inline-flex;align-items:center;gap:10px;background:#223d55;color:#f3d497;border:1px solid #b18b52;border-radius:999px;padding:7px 11px;font-size:.84rem;font-weight:800}
+.search-chip button{background:transparent;border:0;color:inherit;cursor:pointer;font:inherit;font-weight:900}
+.search-help{font-size:.78rem;color:#bcd1e0;margin:9px 0 0}
+.chest-matches{color:#9ae1b1;font-size:.78rem;font-weight:800;margin:7px 0}
+
 </style></head><body>
 <SiteHeader active="chests"/>
 <header class="hero banner-hero banner-chests"><div class="wrap"><div class="eyebrow">PLAYER TOOLS / CHEST FINDER</div><h1>Crack the chest code.</h1>
 <p class="subtitle">Don't leave your loot to guesswork. Peek inside reward chests, compare up to four side by side and find the bosses or events that can deliver them.</p>
 <div class="search"><label for="q" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden">Chest or reward item</label><input id="q" type="search" placeholder="Search a chest or its contents…" autocomplete="off"/>
+<button type="button" id="add-item-search" class="search-add">+ Add item</button>
 <label for="source" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden">Reward source</label>
-<select id="source"><option value="all">All sources</option><option value="bosses">Bosses</option><option value="events">Events</option><option value="activities">Activities</option><option value="unlinked">Source not recorded</option></select></div>
+<select id="source"><option value="all">All sources</option><option value="bosses">Bosses</option><option value="events">Events</option><option value="activities">Activities</option><option value="unlinked">Source not recorded</option></select></div><div id="search-items" class="search-chips" aria-live="polite"></div><p class="search-help">Select up to 3 items to find chests and activities that offer your rewards.</p>
 <div class="advanced" id="event-search" hidden>
 <label for="event-filter">Event name<select id="event-filter"><option value="">All events</option></select></label>
 <label for="participation-filter">Participation<select id="participation-filter"><option value="all">Personal + Alliance</option><option value="personal">Personal</option><option value="alliance">Alliance</option></select></label>
@@ -68,6 +77,35 @@ footer{margin-top:30px;border-top:1px solid #334f69;padding:25px 0;color:#b5c8d9
 const API="https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev";
 const q=document.getElementById("q"),source=document.getElementById("source"),eventFilter=document.getElementById("event-filter"),participationFilter=document.getElementById("participation-filter"),rankFilter=document.getElementById("rank-filter"),eventSearch=document.getElementById("event-search"),cards=document.getElementById("chests"),more=document.getElementById("more"),status=document.getElementById("status"),count=document.getElementById("count"),compare=document.getElementById("compare"),reset=document.getElementById("reset"),selection=document.getElementById("selected-count"),panel=document.getElementById("comparison-panel"),head=document.getElementById("compare-head"),body=document.getElementById("compare-body");
 const selected=new Map();let page=0,hasMore=false,serial=0,timer=null,request=null,availability=null;
+const selectedItems=[],itemChips=document.getElementById("search-items"),addItemButton=document.getElementById("add-item-search");
+let shownChestIds=new Set(),totalChests=0;
+function terms(){
+ const value=q.value.trim(),list=[...selectedItems];
+ if(value.length>=2&&list.length<3&&!list.some(item=>item.toLowerCase()===value.toLowerCase()))list.push(value);
+ return list.length?list:[""];
+}
+function renderItemChips(){
+ itemChips.replaceChildren();
+ for(const item of [...selectedItems]){
+  const chip=document.createElement("span");chip.className="search-chip";chip.append(document.createTextNode(item));
+  const remove=document.createElement("button");remove.type="button";remove.textContent="×";remove.setAttribute("aria-label","Remove "+item);
+  remove.addEventListener("click",()=>{
+   const idx=selectedItems.indexOf(item);if(idx>=0)selectedItems.splice(idx,1);
+   renderItemChips();schedule();
+  });
+  chip.append(remove);itemChips.append(chip);
+ }
+ addItemButton.disabled=selectedItems.length===3;
+ addItemButton.textContent=selectedItems.length===3?"3 items selected":"+ Add item";
+}
+function addSearchItem(){
+ const value=q.value.trim();
+ if(value.length<2||selectedItems.length>=3||selectedItems.some(v=>v.toLowerCase()===value.toLowerCase()))return;
+ selectedItems.push(value);q.value="";renderItemChips();schedule();
+}
+addItemButton.addEventListener("click",addSearchItem);
+q.addEventListener("keydown",event=>{if(event.key==="Enter"){event.preventDefault();addSearchItem();}});
+
 const sourceKey=v=>String(v??"").trim().toLowerCase().replace(/\s*·\s*lv\s*\d+$/i,"").replace(/\s+/g," ");
 function paintAvailability(article,c){const badge=article.querySelector(".source-availability");if(!badge)return;if(!availability){badge.textContent="Source availability: checking…";return}const matches=(c.sources||[]).map(src=>availability.get(sourceKey(src.name))).filter(Boolean);const live=matches.some(v=>v.live),upcoming=matches.map(v=>v.next).filter(Boolean).sort()[0];badge.classList.toggle("live",live);badge.textContent=live?"● Source LIVE":upcoming?"Source upcoming · "+upcoming+" UTC":"Source schedule not recorded";}
 async function loadAvailability(){try{const today=new Date().toISOString().slice(0,10),to=new Date(Date.parse(today+"T00:00:00Z")+92*86400000).toISOString().slice(0,10);const r=await fetch("https://evonymasters-calendar.jaynmegepicadventure.workers.dev/api/events?"+new URLSearchParams({from:today,to,kind:"all",includeAlways:"true"}));if(!r.ok)throw Error("Calendar unavailable");const d=await r.json(),next=new Map();for(const e of d.events||[]){const key=sourceKey(e.name),old=next.get(key)||{live:false,next:""};if(e.date===today)old.live=true;else if(!old.next||e.date<old.next)old.next=e.date;next.set(key,old);}availability=next;for(const article of cards.querySelectorAll(".chest"))if(article._chestRecord)paintAvailability(article,article._chestRecord)}catch{availability=new Map();for(const article of cards.querySelectorAll(".chest"))if(article._chestRecord){const badge=article.querySelector(".source-availability");if(badge)badge.textContent="Source availability unavailable"}}}
@@ -89,6 +127,7 @@ function card(c){
  const article=el("article","chest"),top=el("div","chest-head"),pic=document.createElement("img");
  pic.src="/images/item-finder/box.svg";pic.alt="";pic.width=84;pic.height=66;pic.loading="lazy";
  const labels=el("div");labels.append(el("h3","",c.name),el("div","sub",[c.level?"Tier "+c.level:"",c.rank?"Rank "+c.rank:"",c.itemCount+" recorded rewards"].filter(Boolean).join(" · ")),el("span","source-availability","Checking source availability…"));article._chestRecord=c;paintAvailability(article,c);
+ if(c._matchedItems?.length>1)labels.append(el("div","chest-matches","Matches "+c._matchedItems.length+" items: "+c._matchedItems.join(", ")));
  top.append(pic,labels);article.append(top);
  const list=el("ul","items");
  for(const item of sortedRewards(c.items).slice(0,5)){
@@ -173,17 +212,34 @@ function card(c){
 async function load(append=false){
  const my=++serial;
  if(request)request.abort();request=new AbortController();
- if(!append){page=0;cards.replaceChildren();more.hidden=true;panel.hidden=true;}
+ if(!append){page=0;cards.replaceChildren();shownChestIds=new Set();totalChests=0;more.hidden=true;panel.hidden=true;}
  status.textContent="Loading chests…";
- const params=new URLSearchParams({q:q.value.trim(),source:source.value,event:eventFilter.value,participation:participationFilter.value,rank:rankFilter.value.trim(),page:String(page)});
+ const list=terms();
  try{
-  const r=await fetch(API+"/v4/chests?"+params,{signal:request.signal});
-  if(!r.ok)throw Error("Server "+r.status);
-  const data=await r.json();if(my!==serial)return;
-  for(const chest of data.chests||[])cards.append(card(chest));
-  count.textContent=data.total+" recorded "+(data.total===1?"chest":"chests")+" · "+cards.childElementCount+" shown";
-  hasMore=Boolean(data.hasMore);more.hidden=!hasMore;
-  status.textContent=!data.total?"No matching chests. Try another item or source.":"";
+  const batches=await Promise.all(list.map(async term=>{
+   const params=new URLSearchParams({q:term,source:source.value,event:eventFilter.value,participation:participationFilter.value,rank:rankFilter.value.trim(),page:String(page)});
+   const response=await fetch(API+"/v4/chests?"+params,{signal:request.signal});
+   if(!response.ok)throw Error("Server "+response.status);
+   const data=await response.json();
+   return {term,data};
+  }));
+  if(my!==serial)return;
+  const merged=new Map();
+  for(const {term,data} of batches){
+   for(const chest of data.chests||[]){
+    const existing=merged.get(chest.id);
+    if(existing){if(term&&!existing._matchedItems.includes(term))existing._matchedItems.push(term);}
+    else merged.set(chest.id,{...chest,_matchedItems:term?[term]:[]});
+   }
+  }
+  for(const chest of merged.values()){
+   if(shownChestIds.has(chest.id))continue;
+   shownChestIds.add(chest.id);cards.append(card(chest));
+  }
+  hasMore=batches.some(x=>x.data.hasMore);
+  more.hidden=!hasMore;
+  count.textContent=shownChestIds.size+" matching chests shown"+(hasMore?" · more available":"");
+  status.textContent=!shownChestIds.size?"No matching chests. Try another item or source.":"";
  }catch(e){if(e.name!=="AbortError")status.textContent="Chest Finder is temporarily unavailable. Please try again.";}
 }
 const schedule=()=>{clearTimeout(timer);if(request)request.abort();timer=setTimeout(()=>load(),260)};
