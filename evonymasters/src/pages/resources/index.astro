@@ -156,7 +156,7 @@ async function refreshCalendar(){
    else if(e.date>today&&(!state.next||e.date<state.next))state.next=e.date;
    index.set(key,state);
   }
-  calendarAvailability=index;
+  calendarAvailability=index;liveOnly.disabled=false;
   for(const td of tbody.querySelectorAll('[data-availability]'))if(td._group)fillAvailability(td,td._group);
   if(liveOnly.checked)renderCurrentResults();
  }catch{calendarAvailability=null;}finally{calendarLoading=false;}
@@ -269,6 +269,7 @@ function renderCurrentResults(){
  tbody.replaceChildren();
  const groups=[...multiGroups.values()];
  const visible=liveOnly.checked?groups.filter(g=>(matchSchedule(g)?.availability||g.availability)==="Live"):groups;
+ if(sort==="suggested"&&currentTerms().length>1)visible.sort((a,b)=>(b._matchedItems?.length||0)-(a._matchedItems?.length||0)||a.title.localeCompare(b.title));
  if(sort==="availability")visible.sort((a,b)=>{
   const rank=v=>({Live:0,Upcoming:1,Unscheduled:2,Unknown:3}[matchSchedule(v)?.availability||v.availability]??3);
   return rank(a)-rank(b)||a.title.localeCompare(b.title);
