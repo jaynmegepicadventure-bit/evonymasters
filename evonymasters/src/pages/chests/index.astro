@@ -262,6 +262,35 @@ const matchReward=(chest,term)=>{
  const phrase=term.trim().toLowerCase();
  return [...(chest.items||[]),...(chest.nestedItems||[])].some(item=>toText(item.item).toLowerCase().includes(phrase));
 };
+async function verifyFullRewards(merged,phrases,signal){
+ if(phrases.filter(Boolean).length<2)return true;
+ const all=[...merged.values()],batches=[];
+ for(let i=0;i<all.length;i+=4)batches.push(all.slice(i,i+4));
+ let complete=true;
+ // The compact search endpoint exposes only the first 12 direct rewards.
+ // Use the full contents endpoint for multi-reward ranking, so a reward
+ // further down the list cannot be overlooked.
+ for(let index=0;index<batches.length;index+=4){
+  const chunk=batches.slice(index,index+4);
+  await Promise.all(chunk.map(async batch=>{
+   try{
+    const params=new URLSearchParams();
+    for(const chest of batch)params.append("id",chest.id);
+    const response=await fetch(API+"/v4/chests/compare?"+params,{signal});
+    if(!response.ok)throw Error("Full rewards unavailable");
+    const data=await response.json();
+    for(const full of data.chests||[]){
+     const found=merged.get(full.id);
+     if(found)found._matchedItems=phrases.filter(term=>term&&matchReward(full,term));
+    }
+   }catch(error){
+    if(error.name==="AbortError")throw error;
+    complete=false;
+   }
+  }));
+ }
+ return complete;
+}
 function sourceMatchesTab(chest){
  if(currentTab==="all")return true;
  const sourceTypes=(chest.sources||[]).map(s=>toText(s.type).toLowerCase());
@@ -335,10 +364,13 @@ async function load(append=false){
     }
    }
   }
+  const verified=await verifyFullRewards(merged,list,request.signal);
+  if(my!==serial)return;
   allFound=merged;
   hasMore=batches.some(x=>x.morePages);
   if(hasMore)page+=Math.max(...batches.map(x=>x.pages));
   renderResults();
+  if(!verified)status.textContent="Some full chest details could not be verified; match rankings may be incomplete.";
  }catch(error){
   if(error.name!=="AbortError")status.textContent="Chest Finder is temporarily unavailable. Please try again.";
  }
