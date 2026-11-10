@@ -70,17 +70,27 @@ footer{border-top:1px solid #314c66;color:#abc1d4;font-size:.82rem;padding:23px 
 .reward-detail h3{margin:0 0 12px;color:#f0c77e;font-size:1rem}
 .detail-row td{padding:0 13px 15px!important}
 
+.searchbox #add-search{width:auto;height:auto;padding:9px 13px;border-radius:8px;background:#f1c776;color:#102538;font-weight:850;font-size:.84rem;white-space:nowrap}
+.searchbox #add-search:disabled{opacity:.45;cursor:not-allowed}
+.selected-items{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px}
+.selected-items:empty{display:none}
+.item-chip{display:inline-flex;gap:10px;align-items:center;background:#17364b;border:1px solid #d6aa62;border-radius:999px;padding:7px 10px;color:#f9deb0;font-size:.84rem;font-weight:750}
+.item-chip button{border:0;background:transparent;color:#ffe5b8;cursor:pointer;font:inherit;font-weight:900}
+.search-instructions{font-size:.78rem;color:#c5d9e5;margin:9px 0 0}
+.match-pill{display:block;color:#a2e4b5;font-weight:750;font-size:.72rem;margin-top:6px}
+@media(max-width:600px){.searchbox{flex-wrap:wrap;padding:8px}.searchbox input{min-width:140px}.searchbox #add-search{width:100%}}
+
 </style></head><body>
 <SiteHeader active="resources"/>
 <main><section class="hero banner-hero banner-resources"><div class="wrap">
 <div class="eyebrow">Player Tools / Item Finder</div>
-<h1>Hunt smarter. Loot bigger.</h1>
+<h1>Item Finder. Hunt smarter. Loot bigger.</h1>
 <p class="intro">Know what you need? Find out who drops it, which events hand it out and where your next haul is hiding.</p>
 <div class="searchbox"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
 <label for="query" style="position:absolute;width:1px;height:1px;clip:rect(0,0,0,0);overflow:hidden">Find a reward</label>
 <input id="query" type="search" list="item-suggestions" placeholder="Search Gems, Refining Stone, Source of Life…" autocomplete="off"/>
-<button id="clear-search" type="button" aria-label="Clear search" hidden>×</button>
-<datalist id="item-suggestions"></datalist></div></div></section>
+<button id="add-search" type="button" aria-label="Add item to search">+ Add item</button><button id="clear-search" type="button" aria-label="Clear search" hidden>×</button>
+<datalist id="item-suggestions"></datalist></div><div id="selected-items" class="selected-items" aria-live="polite"></div><p class="search-instructions">Add up to 3 items to discover sources that offer several rewards.</p></div></section>
 <section class="wrap"><div class="toolbar">
 <div class="tabs" id="tabs" role="tablist" aria-label="Reward source">
 <button class="tab" role="tab" type="button" aria-selected="true" data-type="all">All</button>
@@ -113,11 +123,70 @@ const query=document.getElementById("query"),clear=document.getElementById("clea
 frame=document.getElementById("table-frame"),tbody=document.getElementById("results"),heading=document.getElementById("results-heading"),
 desc=document.getElementById("results-description"),status=document.getElementById("sync-status"),empty=document.getElementById("empty"),
 more=document.getElementById("load-more"),suggestions=document.getElementById("item-suggestions"),liveOnly=document.getElementById("live-only");
+const addSearch=document.getElementById("add-search"),selectedBox=document.getElementById("selected-items");
+let selectedItems=[],multiGroups=new Map(),calendarAvailability=null,calendarLoading=false;
+const sourceKey=x=>String(x??"").toLowerCase().replace(/[’']/g,"").replace(/[^a-z0-9]+/g," ").trim().replace(/\\b(barbarians|monsters)\\b/g,v=>v==="barbarians"?"barbarian":"monster");
+const calendarName=x=>sourceKey(x).replace(/\\s+lv\\s+\\d+$/,"");
+function matchSchedule(row){
+ if(!calendarAvailability)return null;
+ const candidates=[row.title,row.context?.event].filter(Boolean).map(calendarName);
+ const candidatesWithKind=[row.source==="events"?"Event":row.source==="event-bosses"?"Event Boss":row.source==="regular"?"Regular Monster":"Boss"];
+ let schedules=[];
+ for(const [k,entry] of calendarAvailability){
+  const parts=k.split("|"),name=parts.slice(1).join("|");
+  if(candidates.some(q=>q===name||q.length>9&&(name.startsWith(q+" ")||q.startsWith(name+" ")))&&(!candidatesWithKind.length||parts[0]===candidatesWithKind[0].toLowerCase()||row.context?.event))schedules.push(entry);
+ }
+ if(!schedules.length)return null;
+ const active=schedules.some(x=>x.live);
+ const dates=schedules.map(x=>x.next).filter(Boolean).sort();
+ return {availability:active?"Live":dates.length?"Upcoming":"Unscheduled",nextAvailable:dates[0]||""};
+}
+async function refreshCalendar(){
+ if(calendarLoading)return;
+ calendarLoading=true;
+ try{
+  const today=new Date().toISOString().slice(0,10);
+  const end=new Date(Date.parse(today+"T00:00:00Z")+92*86400000).toISOString().slice(0,10);
+  const response=await fetch("https://evonymasters-calendar.jaynmegepicadventure.workers.dev/api/events?"+new URLSearchParams({from:today,to:end,kind:"all",includeAlways:"true"}));
+  if(!response.ok)throw Error("Calendar unavailable");
+  const data=await response.json(),index=new Map();
+  for(const e of data.events||[]){
+   const name=calendarName(e.name),kind=String(e.kind||"").toLowerCase(),key=kind+"|"+name;
+   const state=index.get(key)||{live:false,next:""};
+   if(e.date===today)state.live=true;
+   else if(e.date>today&&(!state.next||e.date<state.next))state.next=e.date;
+   index.set(key,state);
+  }
+  calendarAvailability=index;
+  for(const td of tbody.querySelectorAll('[data-availability]'))if(td._group)fillAvailability(td,td._group);
+  if(liveOnly.checked)renderCurrentResults();
+ }catch{calendarAvailability=null;}finally{calendarLoading=false;}
+}
+function renderChips(){
+ selectedBox.replaceChildren();
+ for(const item of selectedItems){
+  const chip=document.createElement("span");chip.className="item-chip";chip.append(document.createTextNode(item));
+  const remove=document.createElement("button");remove.type="button";remove.textContent="×";remove.setAttribute("aria-label","Remove "+item);
+  remove.addEventListener("click",()=>{selectedItems=selectedItems.filter(v=>v!==item);renderChips();schedule();});
+  chip.append(remove);selectedBox.append(chip);
+ }
+ addSearch.disabled=selectedItems.length>=3;addSearch.textContent=selectedItems.length>=3?"3 items selected":"+ Add item";
+}
+function addItem(){
+ const value=query.value.trim();
+ if(value.length<2||selectedItems.some(x=>x.toLowerCase()===value.toLowerCase())||selectedItems.length>=3)return;
+ selectedItems.push(value);query.value="";suggestions.replaceChildren();clear.hidden=true;renderChips();schedule();
+}
+addSearch.addEventListener("click",addItem);
+query.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();addItem();}});
+
 let type="all",sort="suggested",direction="asc",page=0,token=0,controller=null,delay=null,suggestDelay=null,hasMore=false,recordCount=0;
 function fillAvailability(td,row){
- const state=row.availability||"Unknown";
+ td._group=row;
+ const schedule=matchSchedule(row),state=schedule?.availability||row.availability||"Unknown";
+ const nextAvailable=schedule?.nextAvailable||row.nextAvailable;
  td.className=state==="Live"?"live-indicator":"meta";
- td.textContent=state==="Live"?"● LIVE":state==="Upcoming"?"Upcoming · "+row.nextAvailable:state==="Not applicable"?"—":state==="Unscheduled"?"Unscheduled":"Not connected";
+ td.textContent=state==="Live"?"● LIVE":state==="Upcoming"?"Upcoming · "+nextAvailable:state==="Not applicable"?"—":state==="Unscheduled"?"Unscheduled":"Not connected";
  td.title=state==="Live"?"Scheduled as available today (Evony UTC)":state==="Unknown"?"Calendar availability is not connected":state==="Upcoming"?"Next scheduled date in Evony UTC":"";
 }
 const names={events:"Event",bosses:"Boss","event-bosses":"Event boss",regular:"Regular monster",boxes:"Box"};
@@ -167,6 +236,7 @@ function resultRow(row){
  const sourceLine=node("div","source");
  const img=document.createElement("img");img.src=artwork(row);img.alt="";img.loading="lazy";img.width=74;img.height=54;
  const info=node("div");info.append(node("div","name",row.title));
+ if(row._matchedItems?.length>1)info.append(node("span","match-pill","Matches "+row._matchedItems.length+" items: "+row._matchedItems.join(", ")));
  const level=toText(row.context?.level),event=toText(row.context?.event);
  if(level||event)info.append(node("div","sub",[level?"Lv "+level:"",event].filter(Boolean).join(" · ")));
  const toggle=node("button","link-detail","Details");toggle.type="button";toggle.setAttribute("aria-expanded","false");
@@ -194,32 +264,62 @@ function updateSortIndicators(){
   btn.closest("th").setAttribute("aria-sort",active?(direction==="desc"?"descending":"ascending"):"none");
  }
 }
+const groupKey=g=>JSON.stringify([g.source,g.title,g.context?.level,g.context?.event,g.context?.subEvent,g.context?.activity,g.context?.detail]);
+const currentTerms=()=>{const draft=query.value.trim(),list=[...selectedItems];if(draft.length>=2&&list.length<3&&!list.some(x=>x.toLowerCase()===draft.toLowerCase()))list.push(draft);return list;};
+function renderCurrentResults(){
+ tbody.replaceChildren();
+ const groups=[...multiGroups.values()];
+ const visible=liveOnly.checked?groups.filter(g=>(matchSchedule(g)?.availability||g.availability)==="Live"):groups;
+ if(sort==="availability")visible.sort((a,b)=>{
+  const rank=v=>({Live:0,Upcoming:1,Unscheduled:2,Unknown:3}[matchSchedule(v)?.availability||v.availability]??3);
+  return rank(a)-rank(b)||a.title.localeCompare(b.title);
+ });
+ if(sort==="source")visible.sort((a,b)=>a.title.localeCompare(b.title));
+ for(const group of visible)tbody.append(...resultRow(group));
+ frame.hidden=!visible.length;empty.hidden=!!visible.length;
+ if(!visible.length)empty.textContent=liveOnly.checked?"No matching live sources in the loaded results.":"No matching sources.";
+ desc.textContent=visible.length+" sources shown"+(selectedItems.length?" · matching up to "+selectedItems.length+" selected items":"")+(hasMore?" · more available":"");
+ more.hidden=!hasMore;
+}
 async function fetchResults(append=false){
- const term=query.value.trim();
- if(!append){page=0;tbody.replaceChildren();frame.hidden=true;more.hidden=true;}
- if(term.length<2){empty.hidden=false;empty.textContent="Type at least two characters to search recorded rewards.";heading.textContent="Find an item to get started";desc.textContent="Browse reward sources by quantity and source type.";status.textContent="";return;}
+ const terms=currentTerms();
+ if(!append){page=0;multiGroups.clear();tbody.replaceChildren();frame.hidden=true;more.hidden=true;}
+ if(!terms.length){empty.hidden=false;empty.textContent="Type at least two characters or add up to three items.";heading.textContent="Find an item to get started";desc.textContent="Search items to find their sources.";return;}
  if(controller)controller.abort();controller=new AbortController();const current=++token;
- heading.textContent='Results for “'+term+'”';
- empty.hidden=false;empty.textContent="Searching recorded rewards…";
- const params=new URLSearchParams({q:term,type,sort,direction,page:String(page),liveOnly:String(liveOnly.checked)});
- try {
-  const response=await fetch(API+"/v3/search?"+params,{signal:controller.signal});
-  if(!response.ok)throw Error("Search returned HTTP "+response.status);
-  const data=await response.json();
-  if(current!==token||!Array.isArray(data.groups))return;
-   liveOnly.disabled=data.availabilityConfigured===false;liveOnly.title=data.availabilityConfigured===false?"Connect the CALENDAR KV binding to enable global availability filtering":"";
-  for(const group of data.groups)tbody.append(...resultRow(group));
-  recordCount=data.total;hasMore=Boolean(data.hasMore);
-  frame.hidden=recordCount===0;more.hidden=!hasMore;
-  empty.hidden=recordCount>0;
-  if(!recordCount)empty.textContent="No matches. Try a different item name or another category.";
-  desc.textContent=recordCount+" matching "+(recordCount===1?"source":"sources")+" · "+(tbody.querySelectorAll(".main-row").length)+" shown.";
-  status.textContent="";
+ heading.textContent=terms.length===1?'Results for “'+terms[0]+'”':"Sources for "+terms.join(" + ");
+ empty.hidden=false;empty.textContent="Searching selected items…";
+ try{
+  const batches=await Promise.all(terms.map(async term=>{
+   const params=new URLSearchParams({q:term,type,sort,direction,page:String(page),liveOnly:"false"});
+   const response=await fetch(API+"/v3/search?"+params,{signal:controller.signal});
+   if(!response.ok)throw Error("Search returned HTTP "+response.status);
+   const data=await response.json();
+   if(!Array.isArray(data.groups))throw Error("Invalid search results");
+   return {term,data};
+  }));
+  if(current!==token)return;
+  hasMore=batches.some(x=>x.data.hasMore);
+  recordCount=batches.reduce((sum,x)=>sum+x.data.total,0);
+  liveOnly.disabled=batches.every(x=>x.data.availabilityConfigured===false)&&!calendarAvailability;
+  for(const {term,data} of batches)for(const group of data.groups){
+   const id=groupKey(group),old=multiGroups.get(id);
+   if(!old){multiGroups.set(id,{...group,items:[...group.items||[]],_matchedItems:[term]});continue;}
+   if(!old._matchedItems.includes(term))old._matchedItems.push(term);
+   const seen=new Set(old.items.map(item=>JSON.stringify([item.item,item.quantity,item.classification,item.route])));
+   for(const item of group.items||[]){
+    const key=JSON.stringify([item.item,item.quantity,item.classification,item.route]);
+    if(!seen.has(key)){old.items.push(item);seen.add(key);}
+   }
+   old._matchedItems.sort((a,b)=>terms.indexOf(a)-terms.indexOf(b));
+   old.quantityDisplay="See details";
+   if(group.availability==="Live")old.availability="Live";
+  }
+  renderCurrentResults();
+  if(!calendarAvailability)refreshCalendar();
  }catch(error){
   if(error.name==="AbortError")return;
   empty.hidden=false;empty.textContent="Search is temporarily unavailable. Please try again.";
-  if(!append)frame.hidden=true;
-  more.hidden=true;
+  if(!append)frame.hidden=true;more.hidden=true;
  }
 }
 function schedule(){clearTimeout(delay);if(controller)controller.abort();delay=setTimeout(()=>fetchResults(),280);}
@@ -236,7 +336,7 @@ query.addEventListener("input",()=>{
   }catch{}
  },320);
 });
-clear.addEventListener("click",()=>{query.value="";clear.hidden=true;query.dispatchEvent(new Event("input"));query.focus();});
+clear.addEventListener("click",()=>{query.value="";selectedItems=[];renderChips();clear.hidden=true;query.dispatchEvent(new Event("input"));query.focus();});
 tabs.addEventListener("click",e=>{
  const button=e.target.closest("button[data-type]");if(!button)return;
  type=button.dataset.type;
@@ -246,7 +346,7 @@ tabs.addEventListener("click",e=>{
  schedule();
 });
 
-liveOnly.addEventListener("change",()=>{sort=liveOnly.checked?"availability":"suggested";direction="asc";updateSortIndicators();schedule();});
+liveOnly.addEventListener("change",()=>{sort=liveOnly.checked?"availability":"suggested";direction="asc";updateSortIndicators();renderCurrentResults();});
 document.querySelectorAll("[data-sort]").forEach(btn=>btn.addEventListener("click",()=>{
  const value=btn.dataset.sort;
  if(value===sort)direction=direction==="asc"?"desc":"asc";
@@ -257,6 +357,7 @@ more.addEventListener("click",()=>{if(hasMore){page++;fetchResults(true);}});
 updateSortIndicators();
 const initial=new URLSearchParams(location.search).get("q");
 if(initial)query.value=initial;
+renderChips();refreshCalendar();
 clear.hidden=!query.value;if(query.value.trim().length>=2)schedule();
 })();
 </script></body></html>
