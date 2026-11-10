@@ -49,27 +49,70 @@ footer{margin-top:30px;border-top:1px solid #334f69;padding:25px 0;color:#b5c8d9
 .search-help{font-size:.78rem;color:#bcd1e0;margin:9px 0 0}
 .chest-matches{color:#9ae1b1;font-size:.78rem;font-weight:800;margin:7px 0}
 
+
+/* Compact, source-first chest finder */
+.finder-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.finder-tab{border:1px solid #64819b;border-radius:999px;background:#142c42;color:#ebf2f9;font:inherit;font-size:.92rem;font-weight:800;cursor:pointer;padding:11px 19px}
+.finder-tab[aria-selected="true"]{background:#f0c778;color:#14263c;border-color:#f0c778}
+.finder-tab:focus-visible{outline:3px solid white;outline-offset:3px}
+.finder-help{color:#d1e0ed;font-size:.87rem;line-height:1.5;margin:13px 0 2px;max-width:790px}
+.finder-filters{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px}
+.finder-filters label{color:#c7daea;font-size:.83rem;display:flex;align-items:center;gap:8px}
+.finder-filters select{color:#ecf3f8;background:#1b3851;border:1px solid #6b8298;border-radius:8px;font:inherit;padding:9px}
+.finder-filters input{accent-color:#f2c778;width:17px;height:17px}
+.chest-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+.chest{gap:9px;padding:14px}
+.chest-head{align-items:flex-start}
+.chest img{width:62px;height:58px;flex:none}
+.chest .items{display:none}
+.chest .items:has(+.detail){display:none}
+.chest .detail{margin-top:1px;font-size:.79rem;line-height:1.5}
+.chest .sub{font-size:.76rem}
+.chest h3{font-size:1.02rem;line-height:1.4}
+.chest-matches{display:inline-block;margin:7px 0 0;padding:4px 8px;border:1px solid #70aa83;background:#1d4639;border-radius:7px;color:#b4f6c6;font-size:.77rem}
+.chest-matches.best-match{background:#f1d28a;color:#152d40;border-color:#f1d28a}
+.chest-expanded{overflow-x:auto}
+.chest-expanded .reward-table{min-width:425px}
+.chest-expanded .reward-path,.chest-note{display:none}
+.chest-expanded .reward-heading{margin-top:12px}
+.comparison-dock{position:sticky;bottom:12px;z-index:15;max-width:860px;margin:16px auto 8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding:13px 17px;background:#203950;border:1px solid #d3a865;border-radius:13px;box-shadow:0 8px 28px #050d19ba}
+.comparison-dock[hidden]{display:none}
+.comparison-dock .selection{justify-content:flex-end}
+.comparison-dock .dock-title{font-weight:800;color:#f2cf8e}
+.chest-results-order{font-size:.8rem;color:#9ff1bc}
+.chest.card-match-0{opacity:.92}
+@media(max-width:740px){.chest-list{grid-template-columns:1fr}.finder-tab{flex:1;padding:10px 8px}.comparison-dock{bottom:4px;padding:10px}.comparison-dock .selection{width:100%;justify-content:space-between}}
+
 </style></head><body>
 <SiteHeader active="chests"/>
 <header class="hero banner-hero banner-chests"><div class="wrap"><div class="eyebrow">PLAYER TOOLS / CHEST FINDER</div><h1>Crack the chest code.</h1>
 <p class="subtitle">Don't leave your loot to guesswork. Peek inside reward chests, compare up to four side by side and find the bosses or events that can deliver them.</p>
-<div class="search"><label for="q" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden">Chest or reward item</label><input id="q" type="search" placeholder="Search a chest or its contents…" autocomplete="off"/>
+<div class="finder-tabs" id="finder-tabs" role="tablist" aria-label="Chest source">
+<button type="button" class="finder-tab" role="tab" aria-selected="true" data-tab="monsters">⚔️ Monsters</button>
+<button type="button" class="finder-tab" role="tab" aria-selected="false" data-tab="events">🏆 Events</button>
+<button type="button" class="finder-tab" role="tab" aria-selected="false" data-tab="all">📦 All Chests</button>
+</div>
+<p class="finder-help" id="tab-description">Find boss and monster chests, then check which rewards they contain.</p>
+<div class="search"><label for="q" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden">Chest or reward item</label><input id="q" type="search" placeholder="Search chest names or rewards…" autocomplete="off" list="chest-suggestions"/><datalist id="chest-suggestions"></datalist>
 <button type="button" id="add-item-search" class="search-add">+ Add item</button>
-<label for="source" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden">Reward source</label>
-<select id="source"><option value="all">All sources</option><option value="bosses">Bosses</option><option value="events">Events</option><option value="activities">Activities</option><option value="unlinked">Source not recorded</option></select></div><div id="search-items" class="search-chips" aria-live="polite"></div><p class="search-help">Select up to 3 items to find chests and activities that offer your rewards.</p>
+<label for="source" class="source-control" hidden>Source <select id="source"><option value="all">All sources</option><option value="bosses">Bosses</option><option value="events">Events</option><option value="activities">Activities</option><option value="unlinked">Source not recorded</option></select></label></div><div id="search-items" class="search-chips" aria-live="polite"></div><p class="search-help">Select up to 3 items to find chests and activities that offer your rewards.</p>
+<div class="finder-filters"><label><input type="checkbox" id="live-filter"/> Live sources only</label>
+<label id="monster-level-wrap">Monster level <select id="monster-level"><option value="all">All levels</option><option value="1-10">1–10</option><option value="11-20">11–20</option><option value="21+">21+</option></select></label>
+<button type="button" class="pill secondary" id="clear-filters">Clear filters</button></div>
 <div class="advanced" id="event-search" hidden>
 <label for="event-filter">Event name<select id="event-filter"><option value="">All events</option></select></label>
 <label for="participation-filter">Participation<select id="participation-filter"><option value="all">Personal + Alliance</option><option value="personal">Personal</option><option value="alliance">Alliance</option></select></label>
 <label for="rank-filter">Ranking position<input id="rank-filter" type="search" placeholder="e.g. 1 or 11–20" autocomplete="off"/></label>
 </div></div></header>
 <main class="wrap">
-<div class="controls"><div><h2>Browse reward chests</h2><p id="count">Loading recorded chests…</p></div>
-<div class="selection"><span id="selected-count">0 of 4 selected</span><button class="pill" id="compare" disabled>Compare selected</button><button class="pill secondary" id="reset" disabled>Clear selection</button></div></div>
+<div class="controls"><div><h2>Matching chests</h2><p id="count">Loading recorded chests…</p><span class="chest-results-order">Best matches first, based on your selected rewards</span></div></div>
 <div id="status" class="status" role="status"></div>
 <div class="chest-list" id="chests"></div>
 <button id="more" class="pill more" hidden>Show more chests</button>
 <section class="panel" id="comparison-panel" hidden><h2>Compare chest contents</h2><p class="muted">Every recorded item is shown. A possible reward is not a guaranteed payout. Nested chests are listed separately from the contents of their child chests.</p>
 <div class="table-wrap"><table class="comparison"><thead id="compare-head"></thead><tbody id="compare-body"></tbody></table></div></section>
+<div class="comparison-dock" id="comparison-dock" hidden><span class="dock-title">Compare chests · <span id="selected-count">0 of 4 selected</span></span>
+<div class="selection"><button class="pill" id="compare" disabled>Compare selected</button><button class="pill secondary" id="reset" disabled>Clear selection</button></div></div>
 </main>
 <script is:inline>
 (()=>{
@@ -77,6 +120,11 @@ footer{margin-top:30px;border-top:1px solid #334f69;padding:25px 0;color:#b5c8d9
 const API="https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev";
 const q=document.getElementById("q"),source=document.getElementById("source"),eventFilter=document.getElementById("event-filter"),participationFilter=document.getElementById("participation-filter"),rankFilter=document.getElementById("rank-filter"),eventSearch=document.getElementById("event-search"),cards=document.getElementById("chests"),more=document.getElementById("more"),status=document.getElementById("status"),count=document.getElementById("count"),compare=document.getElementById("compare"),reset=document.getElementById("reset"),selection=document.getElementById("selected-count"),panel=document.getElementById("comparison-panel"),head=document.getElementById("compare-head"),body=document.getElementById("compare-body");
 const selected=new Map();let page=0,hasMore=false,serial=0,timer=null,request=null,availability=null;
+const tabStrip=document.getElementById("finder-tabs"),tabHelp=document.getElementById("tab-description"),dock=document.getElementById("comparison-dock");
+const liveFilter=document.getElementById("live-filter"),monsterLevel=document.getElementById("monster-level"),monsterLevelWrap=document.getElementById("monster-level-wrap");
+const suggest=document.getElementById("chest-suggestions");
+let currentTab="monsters",allFound=new Map(),searchComplete=true;
+
 const selectedItems=[],itemChips=document.getElementById("search-items"),addItemButton=document.getElementById("add-item-search");
 let shownChestIds=new Set(),totalChests=0;
 function terms(){
@@ -122,12 +170,15 @@ const compareChest=(a,b)=>collator.compare(chestFamily(a.name),chestFamily(b.nam
  ||collator.compare(a.name,b.name);
 
 const el=(tag,cls,value)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(value!==undefined)n.textContent=toText(value);return n;};
-function refreshSelected(){selection.textContent=selected.size+" of 4 selected";compare.disabled=selected.size<2;reset.disabled=!selected.size;}
+function refreshSelected(){selection.textContent=selected.size+" of 4 selected";compare.disabled=selected.size<2;reset.disabled=!selected.size;dock.hidden=!selected.size;}
 function card(c){
  const article=el("article","chest"),top=el("div","chest-head"),pic=document.createElement("img");
  pic.src="/images/item-finder/box.svg";pic.alt="";pic.width=84;pic.height=66;pic.loading="lazy";
  const labels=el("div");labels.append(el("h3","",c.name),el("div","sub",[c.level?"Tier "+c.level:"",c.rank?"Rank "+c.rank:"",c.itemCount+" recorded rewards"].filter(Boolean).join(" · ")),el("span","source-availability","Checking source availability…"));article._chestRecord=c;paintAvailability(article,c);
- if(c._matchedItems?.length>1)labels.append(el("div","chest-matches","Matches "+c._matchedItems.length+" items: "+c._matchedItems.join(", ")));
+ if(c._matchedItems?.length){
+ const matches=el("div","chest-matches"+(c._matchedItems.length===terms().filter(Boolean).length&&terms().filter(Boolean).length>1?" best-match":""),c._matchedItems.length+" of "+terms().filter(Boolean).length+" rewards matched");
+ labels.append(matches);
+}
  top.append(pic,labels);article.append(top);
  const list=el("ul","items");
  for(const item of sortedRewards(c.items).slice(0,5)){
@@ -136,7 +187,7 @@ function card(c){
  if(c.itemCount>5)list.append(el("li","muted","+"+(c.itemCount-5)+" additional recorded items"));
  if(c.nestedCount)list.append(el("li","muted",c.nestedCount+" nested reward paths"));
  article.append(list);
- const origin=c.sources.slice(0,3).map(s=>s.type+": "+s.name+(s.rank?" (Rank "+s.rank+")":s.level?" (Lv "+s.level+")":"")+(s.participation?" · "+s.participation:""));
+ const origin=(c.sources||[]).slice(0,2).map(s=>s.type+": "+s.name+(s.rank?" (Rank "+s.rank+")":s.level?" (Lv "+s.level+")":""));
  if(origin.length)article.append(el("div","detail","From: "+origin.join(" · ")));
  else if(c.sourceNotes.length)article.append(el("div","detail","Recorded source: "+c.sourceNotes.join(" · ")));
  else article.append(el("div","detail","Source not yet linked in data"));
@@ -149,7 +200,7 @@ function card(c){
   for(const checkbox of cards.querySelectorAll('input[type="checkbox"]'))checkbox.disabled=!checkbox.checked&&selected.size>=4;
  });
  label.append(cb,document.createTextNode(" Compare"));
- const expand=el("button","expand-btn","Expand");expand.type="button";expand.setAttribute("aria-expanded","false");
+ const expand=el("button","expand-btn","View chest contents");expand.type="button";expand.setAttribute("aria-expanded","false");
  const expanded=el("section","chest-expanded");expanded.hidden=true;expanded.id="chest-"+Math.random().toString(36).slice(2);expand.setAttribute("aria-controls",expanded.id);
  const openDetails=async()=>{
   expanded.replaceChildren();expanded.append(el("p","chest-note","Loading all recorded rewards…"));expanded.hidden=false;expand.disabled=true;
@@ -161,17 +212,14 @@ function card(c){
    if(!chest)throw Error("No chest data");
    expanded.replaceChildren();
    expanded.append(el("h4","","All "+chest.items.length+" recorded rewards"));
-   if(chest.rank||chest.level)expanded.append(el("p","chest-note",[
-    chest.rank?"Ranking position: "+chest.rank:"",
-    chest.level?"Chest tier: "+chest.level:""
-   ].filter(Boolean).join(" · ")));
+
    const table=el("table","reward-table"),thead=el("thead"),tr=el("tr");
    for(const name of ["Reward","Quantity","Chance"]){const th=el("th","",name);th.scope="col";tr.append(th)}
    thead.append(tr);table.append(thead);
    const tbody=el("tbody");
    for(const item of sortedRewards(chest.items)){
     const row=el("tr"),name=el("td","",item.item);
-    if(item.notes)name.append(el("small","reward-path",item.notes));
+    
     row.append(name,el("td","",item.quantity||"Not recorded"),el("td","",item.classification==="Unspecified"?"Not recorded":item.classification||"Not recorded"));
     tbody.append(row);
    }
@@ -184,27 +232,27 @@ function card(c){
     nh.append(nr);nestedTable.append(nh);const nb=el("tbody");
     for(const item of sortedRewards(chest.nestedItems)){
      const row=el("tr"),name=el("td","",item.item);
-     if(item.via?.length)name.append(el("small","reward-path","Via "+item.via.join(" → ")));
+     
      row.append(name,el("td","",item.quantity||"Not recorded"),el("td","",item.classification==="Unspecified"?"Not recorded":item.classification||"Not recorded"));nb.append(row);
     }
     nestedTable.append(nb);expanded.append(nestedTable);
-    expanded.append(el("p","chest-note","Nested rewards depend on receiving and opening the inner chest."));
+    
    }
    if(chest.sources?.length){
     const sourceText=[...new Set(chest.sources.map(s=>[s.type,s.name,s.rank?"Rank "+s.rank:"",s.participation||""].filter(Boolean).join(" · ")))];
     expanded.append(el("div","reward-heading","Where it comes from"));
-    for(const line of sourceText)expanded.append(el("p","chest-note",line));
+    for(const line of sourceText)expanded.append(el("p","detail",line));
    }
-   expand.textContent="Collapse";expand.setAttribute("aria-expanded","true");
+   expand.textContent="Hide contents";expand.setAttribute("aria-expanded","true");
   }catch{
    expanded.replaceChildren(el("p","chest-note","Unable to load the full chest record. Please try Expand again."));
    expand.textContent="Retry";
   }finally{expand.disabled=false;}
  };
  expand.addEventListener("click",()=>{
-  if(!expanded.hidden){expanded.hidden=true;expand.textContent="Expand";expand.setAttribute("aria-expanded","false");}
-  else if(expanded.dataset.loaded==="true"){expanded.hidden=false;expand.textContent="Collapse";expand.setAttribute("aria-expanded","true");}
-  else {openDetails().then(()=>{if(expand.textContent==="Collapse")expanded.dataset.loaded="true";});}
+  if(!expanded.hidden){expanded.hidden=true;expand.textContent="View chest contents";expand.setAttribute("aria-expanded","false");}
+  else if(expanded.dataset.loaded==="true"){expanded.hidden=false;expand.textContent="Hide contents";expand.setAttribute("aria-expanded","true");}
+  else {openDetails().then(()=>{if(expand.textContent==="Hide contents")expanded.dataset.loaded="true";});}
  });
  actions.append(label,expand);article.append(actions,expanded);
  return article;
