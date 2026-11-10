@@ -125,8 +125,8 @@ desc=document.getElementById("results-description"),status=document.getElementBy
 more=document.getElementById("load-more"),suggestions=document.getElementById("item-suggestions"),liveOnly=document.getElementById("live-only");
 const addSearch=document.getElementById("add-search"),selectedBox=document.getElementById("selected-items");
 let selectedItems=[],multiGroups=new Map(),calendarAvailability=null,calendarLoading=false;
-const sourceKey=x=>String(x??"").toLowerCase().replace(/[’']/g,"").replace(/[^a-z0-9]+/g," ").trim().replace(/\\b(barbarians|monsters)\\b/g,v=>v==="barbarians"?"barbarian":"monster");
-const calendarName=x=>sourceKey(x).replace(/\\s+lv\\s+\\d+$/,"");
+const sourceKey=x=>String(x??"").toLowerCase().replace(/[’']/g,"").replace(/[^a-z0-9]+/g," ").trim().replace(/\b(barbarians|monsters)\b/g,v=>v==="barbarians"?"barbarian":"monster");
+const calendarName=x=>sourceKey(x).replace(/\s+lv\s+\d+$/,"");
 function matchSchedule(row){
  if(!calendarAvailability)return null;
  const candidates=[row.title,row.context?.event].filter(Boolean).map(calendarName);
