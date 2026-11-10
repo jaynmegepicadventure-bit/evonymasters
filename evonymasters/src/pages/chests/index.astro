@@ -232,7 +232,8 @@ async function load(append=false){
     else merged.set(chest.id,{...chest,_matchedItems:term?[term]:[]});
    }
   }
-  for(const chest of merged.values()){
+  const ordered=[...merged.values()].sort((a,b)=>(b._matchedItems?.length||0)-(a._matchedItems?.length||0)||compareChest(a,b));
+  for(const chest of ordered){
    if(shownChestIds.has(chest.id))continue;
    shownChestIds.add(chest.id);cards.append(card(chest));
   }
