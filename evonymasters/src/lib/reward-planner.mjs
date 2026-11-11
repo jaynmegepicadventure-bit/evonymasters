@@ -79,7 +79,7 @@ export function eligibleRecord(row,target,index,day=dayUTC()) {
     if(event.kind!==sourceKind||event.date!==day)return false;
     const familyName=normalise(row.title);
     const actualName=normalise(event.name);
-    const calendarName=actualName.replace(/ lv (?:level )?\\d+$/,"").trim();
+    const calendarName=actualName.replace(/ lv (?:level )?\d+$/,"").trim();
     if(calendarName!==familyName)return false;
     if(event.family)return true;
     const eventLevel=normalise(event.level||"");
