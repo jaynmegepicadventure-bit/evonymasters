@@ -254,3 +254,88 @@ export function periodYield(records,index,{stamina,days,start=dayUTC(),checkedDa
   // are not verified, so the combined figure must NOT be labelled guaranteed.
   hasConditionalEvents:opportunities.length>0};
 }
+
+/**
+ * The event subtotal is composed of distinct confirmed Calendar events.
+ * Within each event, keep one qualifying award per recorded activity, rather
+ * than stacking alternative ranking prizes or chest tiers. First place is
+ * selected where rank is explicit; among tiers select the highest published N.
+ * All event amounts remain conditional on satisfying the reward requirements.
+ */
+export function rewardQualification(record) {
+ const ctx=record.context||{};
+ const details=[ctx.detail,ctx.rewardActivity,ctx.subEvent,record.detail].filter(Boolean).join(" · ");
+ const text=normalise(details);
+ const rankLabel=String(ctx.rank||ctx.ranking||"").trim();
+ const tierLabel=String(ctx.tier||"").trim();
+ const rankTerms=/(?:rank(?:ing)?|place|position|leaderboard|top\s*\d+)/i.test(details);
+ const ranking=rankTerms||Boolean(rankLabel);
+ const first=/(?:^|[^a-z0-9])(?:rank\s*(?:1|one)|1st\s*place|first\s*place|top\s*1|no\.?\s*1)(?:$|[^a-z0-9])/i.test(details+" "+rankLabel)
+   ||/^1(?:st)?$/i.test(rankLabel);
+ const explicitlyLower=/(?:rank\s*(?:[2-9]|\d{2,})|(?:[2-9]|\d{2,})(?:nd|rd|th)\s*place|top\s*(?:[2-9]|\d{2,}))/i.test(details)
+  || /^(?:[2-9]|\d{2,})(?:nd|rd|th)?$/i.test(rankLabel);
+ const tierMatch=(details+" "+tierLabel).match(/\btier\s*(?:n\s*)?(\d+)\b/i);
+ const tier=tierMatch?Number(tierMatch[1]):null;
+ // An explicit ranking prize not shown as first place cannot be projected as
+ // the requested first-place outcome.
+ return {ranked:ranking,first:first&&!explicitlyLower,eligible:!ranking||(first&&!explicitlyLower),tier,
+   activity:normalise([ctx.subEvent,ctx.activity,ctx.rewardActivity].filter(Boolean).join("|"))||"event"};
+}
+export function periodBreakdown(records,index,{stamina,days,start=dayUTC(),checkedDays=days}={}) {
+ const budget=parseAmount(stamina),horizon=parseAmount(days),coverageRaw=parseAmount(checkedDays);
+ if(budget===null||horizon===null||!Number.isInteger(horizon)||horizon<1||horizon>60||coverageRaw===null||coverageRaw<1)return null;
+ const coverage=Math.min(horizon,coverageRaw);
+ const all=(records||[]).filter(row=>row?.guaranteed>0);
+ const dates=Array.from({length:coverage},(_,i)=>dayAdd(start,i));
+ const eventGroups=new Map();
+ for(const row of all.filter(x=>x.source==="events")) {
+  const qual=rewardQualification(row);
+  if(!qual.eligible)continue;
+  const eventId=row.calendarIds?.[0]||"event:"+normalise(row.name);
+  if(!eventGroups.has(eventId))eventGroups.set(eventId,{name:row.name,id:eventId,activities:new Map()});
+  const group=eventGroups.get(eventId);
+  const activityKey=qual.activity;
+  if(!group.activities.has(activityKey))group.activities.set(activityKey,[]);
+  group.activities.get(activityKey).push({...row,qualification:qual});
+ }
+ const events=[];
+ for(const group of eventGroups.values()) {
+  const validDates=dates.filter(date=>(index?.occurrences||[]).some(entry=>
+   entry.kind==="Event"&&entry.date===date&&entry.status==="Confirmed"&&
+   (entry.sourceId===group.id||normalise(entry.name)===normalise(group.name))
+  ));
+  if(!validDates.length)continue;
+  const awards=[];
+  for(const candidates of group.activities.values()) {
+   const maxTier=Math.max(...candidates.map(x=>x.qualification.tier).filter(x=>x!==null),-1);
+   const matching=candidates.filter(x=>maxTier<0||x.qualification.tier===null||x.qualification.tier===maxTier);
+   matching.sort((a,b)=>b.guaranteed-a.guaranteed);
+   if(matching.length)awards.push(matching[0]);
+  }
+  const perCompletion=awards.reduce((total,row)=>total+row.guaranteed,0);
+  if(perCompletion<=0)continue;
+  events.push({name:group.name,dates:validDates,occurrences:validDates.length,
+    activities:awards.length,perCompletion,conditionalTotal:perCompletion*validDates.length,
+    assumptions:"Complete the eligible activity; highest recorded tier and first place where ranking applies"});
+ }
+ events.sort((a,b)=>b.conditionalTotal-a.conditionalTotal||a.name.localeCompare(b.name));
+ const eventTotal=events.reduce((total,row)=>total+row.conditionalTotal,0);
+ // Each monster row is an ALTERNATIVE way to spend the same stamina.
+ // Never add the top-ten yields together.
+ const monsters=all.filter(x=>x.source!=="events"&&x.stamina>0)
+  .map(row=>{
+   const hunts=Math.floor(budget/row.stamina);
+   return {name:row.name,level:row.level||row.context?.level||"",
+    staminaPerKill:row.stamina,staminaUsed:hunts*row.stamina,staminaRemaining:budget-hunts*row.stamina,
+    kills:hunts,perKill:row.guaranteed,total:hunts*row.guaranteed,
+    source:row.source};
+  }).sort((a,b)=>b.total-a.total||b.perKill/b.staminaPerKill-a.perKill/a.staminaPerKill||a.name.localeCompare(b.name));
+ const unique=new Map();
+ for(const monster of monsters){
+  const key=[monster.source,normalise(monster.name),normalise(monster.level)].join("|");
+  if(!unique.has(key))unique.set(key,monster);
+ }
+ const topMonsters=[...unique.values()].slice(0,10);
+ return {days:horizon,checkedDays:coverage,complete:coverage===horizon,stamina:budget,
+   events,eventTotal,monsters:topMonsters,topMonster:topMonsters[0]||null};
+}
