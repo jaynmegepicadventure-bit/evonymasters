@@ -1,6 +1,13 @@
 // Reward Planner calculation primitives. No guessed drop rates or chest contents.
 export const RESOURCE_TYPES = ["Food","Wood","Stone","Ore"];
 export const MILLION = 1000000;
+// Safe resources contribute to the same resource target as their regular versions.
+export const RESOURCE_ALIASES = Object.freeze({
+  food:"Food", "safe food":"Food", "food safe":"Food",
+  wood:"Wood", lumber:"Wood", "safe wood":"Wood", "safe lumber":"Wood", "wood safe":"Wood", "lumber safe":"Wood",
+  stone:"Stone", "safe stone":"Stone", "stone safe":"Stone",
+  ore:"Ore", "safe ore":"Ore", "ore safe":"Ore"
+});
 export const RSS_CHESTS = Object.freeze({
   "super resources chest": [MILLION,MILLION,MILLION,MILLION],
   "super resource chest": [MILLION,MILLION,MILLION,MILLION],
@@ -22,14 +29,15 @@ export function resourcesFor(item,quantity) {
   if(n===null || n===0)return null;
   const key=normalise(item),chest=RSS_CHESTS[key];
   if(chest)return Object.fromEntries(RESOURCE_TYPES.map((type,i)=>[type,chest[i]*n]));
-  const resource=RESOURCE_TYPES.find(type=>normalise(type)===key || (type==="Wood"&&key==="lumber"));
+  const resource=RESOURCE_ALIASES[key];
   if(resource)return Object.fromEntries(RESOURCE_TYPES.map(type=>[type,type===resource?n:0]));
   return null;
 }
 export function valueFor(item,quantity,target) {
   const resources=resourcesFor(item,quantity);
   if(target==="Combined Resources")return resources?Object.values(resources).reduce((s,n)=>s+n,0):0;
-  if(RESOURCE_TYPES.includes(target))return resources?resources[target]:0;
+  const targetResource=RESOURCE_ALIASES[normalise(target)];
+  if(targetResource)return resources?resources[targetResource]:0;
   return normalise(item)===normalise(target)?parseAmount(quantity)??0:0;
 }
 export function dayUTC(now=new Date()) { return now.toISOString().slice(0,10); }

@@ -95,3 +95,22 @@ test('manually claimed amount, never checked tasks, changes remaining target',()
  assert.equal(remainingTarget('7B',null),7_000_000_000);
  assert.equal(remainingTarget(null,'10M'),null);
 });
+
+test('5B Food goal includes regular and Safe Food, but only food share of resource chests',()=>{
+ assert.equal(valueFor('Food','500M','Food'),500_000_000);
+ assert.equal(valueFor('Safe Food','250M','Food'),250_000_000);
+ assert.equal(valueFor('Super Resources Chest','15','Food'),15_000_000);
+ assert.equal(valueFor('Super Safe Resource Chest','15','Food'),15_000_000);
+ assert.equal(valueFor('Super Safe Resources Chest','15','Food'),15_000_000);
+ assert.equal(valueFor('Super Resources Chest','15','Combined Resources'),60_000_000);
+ assert.equal(valueFor('Super Safe Resource Chest','15','Combined Resources'),60_000_000);
+ assert.equal(valueFor('Wood','500M','Food'),0);
+ assert.equal(valueFor('Safe Ore','500M','Food'),0);
+ assert.equal(remainingTarget('5B','250M'),4_750_000_000);
+});
+test('safe and standard single-resource rewards count toward their own targets',()=>{
+ for(const [name,target] of [['Safe Food','Food'],['Safe Wood','Wood'],['Safe Lumber','Wood'],['Safe Stone','Stone'],['Safe Ore','Ore']]){
+  assert.equal(valueFor(name,'25M',target),25_000_000);
+  assert.equal(valueFor(name,'25M','Combined Resources'),25_000_000);
+ }
+});
