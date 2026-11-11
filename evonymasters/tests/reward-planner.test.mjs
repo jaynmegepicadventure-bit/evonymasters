@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {parseAmount,resourcesFor,valueFor,liveIndex,isLive,eligibleRecord,plan,scheduledDays} from '../src/lib/reward-planner.mjs';
+import {parseAmount,resourcesFor,valueFor,liveIndex,isLive,eligibleRecord,plan,scheduledDays,dailyChecklist,remainingTarget} from '../src/lib/reward-planner.mjs';
 
 test('quantity input supports suffixes but ignores unverified amounts',()=>{
  assert.equal(parseAmount('7B'),7_000_000_000);
@@ -74,4 +74,24 @@ test('exclude possible rewards and direct alternatives never get summed',()=>{
 test('tentative calendar records do not count as confirmed LIVE availability',()=>{
  const index=liveIndex([{date:'2026-11-12',name:'Crazy Eggs',kind:'Event',status:'Tentative'}]);
  assert.equal(isLive(index,'Event','Crazy Eggs','2026-11-12'),false);
+});
+
+test('checklist has only returned eligible events and stamina-allocated monsters',()=>{
+ const result={
+  events:[{id:'crazy',name:'Crazy Eggs',detail:'Egg prize',guaranteed:60e6}],
+  allocation:[{id:'ymir',name:'Ymir',hunts:2,totalStamina:80,guaranteedTotal:4e6}],
+  monsters:[{id:'not-selected',name:'Other Monster',guaranteed:99e6}]
+ };
+ const tasks=dailyChecklist(result,'2026-11-12');
+ assert.deepEqual(tasks.map(x=>x.category),['Event','Monster']);
+ assert.equal(tasks[0].recordedReward,60e6);
+ assert.equal(tasks[1].stamina,80);
+ assert.equal(tasks[1].recordedReward,4e6);
+ assert.ok(tasks.every(x=>x.id.includes('2026-11-12')));
+});
+test('manually claimed amount, never checked tasks, changes remaining target',()=>{
+ assert.equal(remainingTarget('7B','250M'),6_750_000_000);
+ assert.equal(remainingTarget('100K','150K'),0);
+ assert.equal(remainingTarget('7B',null),7_000_000_000);
+ assert.equal(remainingTarget(null,'10M'),null);
 });
