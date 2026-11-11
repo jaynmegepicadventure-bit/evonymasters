@@ -138,3 +138,34 @@ export function remainingTarget(quantity,claimed) {
   if(goal===null)return null;
   return Math.max(0,goal-(earned??0));
 }
+
+/**
+ * A forecast, not a promised payout. Only one highest recorded guaranteed
+ * milestone is counted for this named event on each confirmed Calendar date.
+ * Every such payout still requires the player to qualify for the milestone.
+ */
+export function eventForecast(events,index,quantity,today=dayUTC(),horizon=60) {
+ const goal=parseAmount(quantity);
+ const top=[...(events||[])].filter(x=>x.guaranteed>0).sort((a,b)=>b.guaranteed-a.guaranteed)[0];
+ if(!top)return null;
+ const dates=scheduledDays(index,"Event",top.name,today,horizon);
+ const reward=top.guaranteed;
+ const claims=goal===null?null:Math.ceil(goal/reward);
+ const when=claims!==null&&claims>0&&dates.length>=claims?dates[claims-1]:null;
+ return {name:top.name,reward,dates,firstDate:dates[0]||null,
+  opportunities:dates.length,goal,claimsNeeded:claims,completionDate:when,
+  daysUntil:when===null?null:Math.round((Date.parse(when+"T00:00:00Z")-Date.parse(today+"T00:00:00Z"))/86400000)+1,
+  forecastTotal:dates.length*reward};
+}
+export function monsterForecast(monsters,quantity,stamina=null) {
+ const goal=parseAmount(quantity),budget=parseAmount(stamina);
+ const top=rankRecords((monsters||[]).filter(x=>x.guaranteed>0&&x.stamina>0))[0];
+ if(!top)return null;
+ const huntsNeeded=goal===null?null:Math.ceil(goal/top.guaranteed);
+ const staminaNeeded=huntsNeeded===null?null:huntsNeeded*top.stamina;
+ const huntsInBudget=budget===null?null:Math.floor(budget/top.stamina);
+ return {name:top.name,perHunt:top.guaranteed,staminaPerHunt:top.stamina,
+  perStamina:top.guaranteed/top.stamina,goal,huntsNeeded,staminaNeeded,
+  huntsInBudget,rewardInBudget:huntsInBudget===null?null:huntsInBudget*top.guaranteed,
+  meetsGoal:huntsInBudget===null||goal===null?null:huntsInBudget*top.guaranteed>=goal};
+}
