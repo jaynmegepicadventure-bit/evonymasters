@@ -53,7 +53,7 @@ export function liveIndex(occurrences, day=dayUTC()) {
     days.get(key).add(event.date);
     if(event.date===day)today.add(key);
   }
-  return {days,today,families};
+  return {days,today,families,occurrences:occurrences.filter(event=>event?.date&&event?.name&&event.status==="Confirmed")};
 }
 export function isLive(index, kind, name, day=dayUTC()) {
   if(!index)return false;
@@ -71,7 +71,21 @@ export function eligibleRecord(row,target,index,day=dayUTC()) {
   const familyName=normalise(row.context?.event||"");
   const familyKey=sourceKind+"|"+familyName;
   const familyLive=Boolean(familyName && [...(index.days.get(familyKey)||[])].includes(day) && index.families?.has(familyKey));
-  if(!directLive && !familyLive)return null;
+  // The Calendar catalog identifies individual monster levels with
+  // "Monster Name · Lv N", while reward search returns the family name and
+  // level separately. Match the exact scheduled level or a confirmed family.
+  const level=normalise(row.context?.level||"");
+  const calendarLevelMatch=sourceKind!=="Event"&&Boolean(index?.occurrences?.some(event=>{
+    if(event.kind!==sourceKind||event.date!==day)return false;
+    const familyName=normalise(row.title);
+    const actualName=normalise(event.name);
+    const calendarName=actualName.replace(/ lv (?:level )?\\d+$/,"").trim();
+    if(calendarName!==familyName)return false;
+    if(event.family)return true;
+    const eventLevel=normalise(event.level||"");
+    return !level||eventLevel===level||eventLevel==="level "+level;
+  }));
+  if(!directLive && !familyLive && !calendarLevelMatch)return null;
   // Direct quantified rewards only. Nested chest items are not a guaranteed payout.
   const rewards=(row.items||[])
     .filter(item=>Array.isArray(item.route) && item.route.length===1 && item.classification==="Guaranteed")
