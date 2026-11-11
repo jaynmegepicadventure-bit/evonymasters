@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {parseAmount,resourcesFor,valueFor,liveIndex,isLive,eligibleRecord,plan,scheduledDays,dailyChecklist,remainingTarget,eventForecast,monsterForecast,hasBudgetedMonster,calendarSourceIds} from '../src/lib/reward-planner.mjs';
+import {parseAmount,resourcesFor,valueFor,liveIndex,isLive,eligibleRecord,plan,scheduledDays,dailyChecklist,remainingTarget,eventForecast,monsterForecast,hasBudgetedMonster,calendarSourceIds,yieldForecast} from '../src/lib/reward-planner.mjs';
 
 test('quantity input supports suffixes but ignores unverified amounts',()=>{
  assert.equal(parseAmount('7B'),7_000_000_000);
@@ -198,4 +198,38 @@ test('event completion forecast uses confirmed Calendar IDs even when display na
  const forecast=eventForecast([{name:'Crazy Eggs',calendarIds:[id],guaranteed:50e6}],ix,'100M',today,3);
  assert.equal(forecast.opportunities,2);
  assert.equal(forecast.completionDate,'2026-11-13');
+});
+
+test('yield forecast counts a total stamina budget only once over seven days',()=>{
+ const today='2026-11-12',id='event:'+encodeURIComponent('crazy eggs');
+ const ix=liveIndex([
+  {name:'Crazy Eggs',sourceId:id,kind:'Event',date:today,status:'Confirmed'},
+  {name:'Crazy Eggs',sourceId:id,kind:'Event',date:'2026-11-13',status:'Confirmed'},
+  {name:'Crazy Eggs',sourceId:id,kind:'Event',date:'2026-11-13',status:'Confirmed'},
+  {name:'Crazy Eggs',sourceId:id,kind:'Event',date:'2026-11-14',status:'Tentative'}
+ ],today);
+ const rows=[
+  {source:'events',name:'Crazy Eggs',calendarIds:[id],guaranteed:15e6},
+  {source:'events',name:'Crazy Eggs',calendarIds:[id],guaranteed:10e6},
+  {source:'bosses',name:'A',id:'a',guaranteed:2e6,stamina:20},
+  {source:'bosses',name:'B',id:'b',guaranteed:5e6,stamina:100}
+ ];
+ const result=yieldForecast(rows,ix,{stamina:'100',days:'7',today});
+ assert.equal(result.hunts,5);
+ assert.equal(result.spent,100);
+ assert.equal(result.monsterTotal,10e6);
+ assert.equal(result.eventsPotential,30e6);
+ assert.equal(result.scenarioTotal,40e6);
+ assert.equal(result.eventLines[0].opportunities,2);
+ assert.equal(result.end,'2026-11-18');
+});
+test('yield forecast handles absent monsters, events and invalid input',()=>{
+ const ix=liveIndex([]);
+ const result=yieldForecast([],ix,{stamina:'0',days:'3',today:'2026-11-12'});
+ assert.equal(result.scenarioTotal,0);
+ assert.equal(result.staminaLeft,0);
+ assert.equal(result.bestMonster,null);
+ assert.deepEqual(result.eventLines,[]);
+ assert.equal(yieldForecast([],ix,{stamina:'',days:'3'}),null);
+ assert.equal(yieldForecast([],ix,{stamina:'100',days:'0'}),null);
 });
