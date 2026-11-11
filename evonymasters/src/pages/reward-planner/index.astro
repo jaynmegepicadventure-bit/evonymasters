@@ -2,7 +2,7 @@
 import SiteHeader from '../../components/SiteHeader.astro';
 ---
 <!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Reward Planner Prototype | EvonyMasters</title><meta name="description" content="Plan Evony rewards with LIVE events, monsters, stamina and recorded drops."/>
+<title>Reward Planner (Beta) | EvonyMasters</title><meta name="description" content="Plan Evony rewards with LIVE events, monsters, stamina and recorded drops."/>
 <style is:global>
 :root{font:16px Inter,system-ui,sans-serif;color:#edf3fa;background:#0b1929}*{box-sizing:border-box}body{margin:0}a{color:#f2ce8e}
 .wrap{max-width:1180px;padding:28px 22px 70px;margin:auto}.eyebrow{color:#f6cb84;text-transform:uppercase;font-size:.74rem;letter-spacing:.13em;font-weight:800}
@@ -38,7 +38,7 @@ table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 10p
 <div class="scroll"><table><thead><tr><th>Event / activity</th><th>Largest recorded guaranteed reward</th><th>Frequency</th></tr></thead><tbody id="events"></tbody></table></div>
 </section>
 <section class="panel" id="monster-section" hidden><h2>2. LIVE monsters</h2>
-<p class="muted">Ranked with guaranteed rewards first; possible rewards are shown separately. Drop odds are not assumed, and the chest's contents do not imply a chest drops each hunt.</p>
+<p class="muted">Only recorded guaranteed rewards are shown. Unknown chest drops and possible rewards are excluded.</p>
 <div class="scroll"><table><thead><tr><th>Monster</th><th>Stamina / hunt</th><th>Guaranteed / hunt</th></tr></thead><tbody id="monsters"></tbody></table></div>
 </section>
 <section class="panel" id="allocation-section" hidden><h2>3. Stamina allocation</h2><div id="allocation"></div></section>
@@ -91,12 +91,12 @@ function mergeGroups(groups) {
 function show(rows,target,quantity,stamina,days,wasTruncated,calendarTruncated) {
  const result=plan(rows,{target,quantity,stamina,days});
  const summary=$("summary");summary.replaceChildren();
- for(const [title,val] of [["Item",target],["Target",result.quantity===null?"Player target not specified":fmt(result.quantity)],["Stamina",result.stamina===null?"Suggested from sources":fmt(result.stamina)],["Timeframe",result.days===null?"Not specified":result.days+" days"],["Daily target",fmt(result.dailyGoal)],["LIVE sources",rows.length],["Suggested obtainable from stamina",fmt(result.suggestedGuaranteedQuantity)],["Excluded possible rewards","Not counted"]]) {
+ for(const [title,val] of [["Item",target],["Target",result.quantity===null?"Player target not specified":fmt(result.quantity)],["Stamina",result.stamina===null?"Not specified":fmt(result.stamina)],["Timeframe",result.days===null?"Not specified":result.days+" days"],["Daily target",fmt(result.dailyGoal)],["LIVE sources",rows.length],["Suggested obtainable from stamina",fmt(result.suggestedGuaranteedQuantity)],["Possible rewards","Excluded"]]) {
   const card=document.createElement("div");card.className="stat";
   const small=document.createElement("span");small.textContent=title;small.className="muted";const strong=document.createElement("strong");strong.textContent=String(val);
   card.append(small,strong);summary.append(card);
  }
- const warning=["Reward listings are NOT automatically earned. The planner does not sum milestone alternatives, multiply daily events without checking each day's schedule, or assume chest drop odds.",result.warning];
+ const warning=["Reward listings are NOT automatically earned. Each row shows the largest single recorded reward, not a sum of event milestones. No chest drops, event repetitions or completion times are assumed.",result.warning];
  if(wasTruncated)warning.push("Reward search reached its paging limit; more sources may exist.");
  if(calendarTruncated)warning.push("Calendar results were truncated; this plan may omit LIVE sources.");
  $("caveat").textContent=warning.join(" ");
