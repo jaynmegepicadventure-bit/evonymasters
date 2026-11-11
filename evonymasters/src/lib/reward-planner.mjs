@@ -104,3 +104,29 @@ export function plan(records,{target,quantity=null,stamina=null,days=null}={}) {
     // No event income is assumed: rank, activity and milestone requirements vary.
     warning:"Showing confirmed LIVE schedules and quantified guaranteed reward entries only. Event payouts require completing the stated activities. Resource costs, repeats and chest mechanics remain unverified; completion dates are not estimated."};
 }
+
+/**
+ * Build today's actionable checklist without automatically awarding event prizes.
+ * A "completed" tick is an activity log, not proof that any reward was received.
+ */
+export function dailyChecklist(result, date=dayUTC()) {
+  const items=[];
+  for(const event of result.events||[]) {
+    items.push({id:"event|"+date+"|"+event.id,category:"Event",
+      name:event.name,detail:event.detail||"Complete the event requirements",
+      recordedReward:event.guaranteed,stamina:0,
+      note:"Recorded guaranteed reward is conditional on qualifying for the activity. Verify the actual prize."});
+  }
+  for(const monster of result.allocation||[]) {
+    items.push({id:"monster|"+date+"|"+monster.id,category:"Monster",
+      name:monster.name,detail:"Hunt up to "+monster.hunts+" times",
+      recordedReward:monster.guaranteedTotal,stamina:monster.totalStamina,
+      note:"Hunt quantity is a stamina-budget suggestion, not an automatic reward."});
+  }
+  return items;
+}
+export function remainingTarget(quantity,claimed) {
+  const goal=parseAmount(quantity),earned=parseAmount(claimed);
+  if(goal===null)return null;
+  return Math.max(0,goal-(earned??0));
+}
