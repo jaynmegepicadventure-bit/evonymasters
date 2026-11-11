@@ -208,3 +208,39 @@ export function hasBudgetedMonster(monster,goal) {
   monster!==null && monster!==undefined &&
   monster.rewardInBudget!==null && Number.isFinite(monster.rewardInBudget);
 }
+
+/**
+ * Budget-and-time forecast. The monster budget is spent ONCE across the
+ * whole timeframe. Each confirmed event is counted at most once per date,
+ * using only its largest single recorded direct guaranteed award.
+ * Event opportunities are conditional, not a promised earned quantity.
+ */
+export function yieldForecast(records,index,{stamina,days,today=dayUTC()}={}) {
+ const budget=parseAmount(stamina),horizon=parseAmount(days);
+ if(budget===null||horizon===null||horizon<1||!Number.isSafeInteger(horizon))return null;
+ const end=dayAdd(today,horizon-1);
+ const monsters=rankRecords(records.filter(x=>x.source!=="events"&&x.stamina>0&&x.guaranteed>0));
+ const bestMonster=monsters[0]||null;
+ const hunts=bestMonster?Math.floor(budget/bestMonster.stamina):0;
+ const spent=bestMonster?hunts*bestMonster.stamina:0;
+ const monsterTotal=bestMonster?hunts*bestMonster.guaranteed:0;
+ const chosenEvents=new Map();
+ for(const row of records.filter(x=>x.source==="events"&&x.guaranteed>0)) {
+  const key=normalise(row.name);
+  if(!chosenEvents.has(key)||row.guaranteed>chosenEvents.get(key).guaranteed)chosenEvents.set(key,row);
+ }
+ const eventLines=[];
+ for(const row of chosenEvents.values()) {
+  const dates=Array.from({length:horizon},(_,i)=>dayAdd(today,i)).filter(date=>
+   isLive(index,"Event",row.name,date)||
+   (index?.occurrences||[]).some(e=>e.date===date&&e.kind==="Event"&&row.calendarIds?.includes(e.sourceId)));
+  if(!dates.length)continue;
+  eventLines.push({name:row.name,perCompletion:row.guaranteed,dates,opportunities:dates.length,
+   potential:row.guaranteed*dates.length});
+ }
+ eventLines.sort((a,b)=>b.potential-a.potential||a.name.localeCompare(b.name));
+ const eventsPotential=eventLines.reduce((sum,e)=>sum+e.potential,0);
+ return {budget,days:horizon,today,end,bestMonster,hunts,spent,staminaLeft:budget-spent,
+  monsterTotal,eventLines,eventsPotential,scenarioTotal:monsterTotal+eventsPotential,
+  note:"Monster yield assumes all recommended hunts can be completed during the selected days. Event yield is a conditional opportunity scenario: one largest recorded qualifying reward per confirmed event per calendar day; rank and milestone requirements must still be met. Simultaneous events may compete for time or resources. No possible or nested drops are counted."};
+}
