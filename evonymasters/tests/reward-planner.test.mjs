@@ -231,3 +231,50 @@ test('partial Calendar coverage does not pretend to estimate all requested days'
  assert.equal(forecast.monsterTotal,0);
  assert.equal(periodYield([],index,{stamina:'100',days:'61',start:day}),null);
 });
+
+test('event total is exactly the sum of ranked first-place and best-tier event breakdown rows',()=>{
+ const start='2026-11-12', egg='event:'+encodeURIComponent('crazy eggs'), barbarian='event:'+encodeURIComponent('barbarian');
+ const calendar=liveIndex([
+  {kind:'Event',sourceId:egg,name:'Crazy Eggs',date:start,status:'Confirmed'},
+  {kind:'Event',sourceId:egg,name:'Crazy Eggs',date:'2026-11-13',status:'Confirmed'},
+  {kind:'Event',sourceId:barbarian,name:'Barbarian',date:start,status:'Confirmed'},
+  {kind:'Event',sourceId:barbarian,name:'Barbarian',date:'2026-11-13',status:'Tentative'}
+ ],start);
+ const records=[
+  {source:'events',name:'Crazy Eggs',calendarIds:[egg],guaranteed:3e6,context:{subEvent:'Egg A',detail:'Tier 1'}},
+  {source:'events',name:'Crazy Eggs',calendarIds:[egg],guaranteed:15e6,context:{subEvent:'Egg A',detail:'Tier 5'}},
+  {source:'events',name:'Crazy Eggs',calendarIds:[egg],guaranteed:4e6,context:{subEvent:'Egg B'}},
+  {source:'events',name:'Barbarian',calendarIds:[barbarian],guaranteed:100e6,context:{subEvent:'Leaderboard',detail:'Ranking · Rank 2'}},
+  {source:'events',name:'Barbarian',calendarIds:[barbarian],guaranteed:60e6,context:{subEvent:'Leaderboard',detail:'Ranking · Rank 1'}},
+  {source:'bosses',name:'Test boss',level:'3',stamina:40,guaranteed:2e6}
+ ];
+ const result=periodBreakdown(records,calendar,{stamina:'1000',days:'2',checkedDays:2,start});
+ assert.equal(result.events.length,2);
+ assert.equal(result.eventTotal,2*(15e6+4e6)+60e6);
+ assert.equal(result.eventTotal,result.events.reduce((total,row)=>total+row.conditionalTotal,0));
+ assert.equal(result.topMonster.kills,25);
+ assert.equal(result.topMonster.total,50e6);
+ assert.equal(result.complete,true);
+});
+test('monsters are top ten independent choices ranked by full-budget item return',()=>{
+ const day='2026-11-12',ix=liveIndex([]);
+ const entries=Array.from({length:12},(_,i)=>({
+  name:'Monster '+i,level:String(i+1),source:'bosses',stamina:10+i,guaranteed:(i+1)*1e6
+ }));
+ const result=periodBreakdown(entries,ix,{stamina:'1000',days:'7',checkedDays:7,start:day});
+ assert.equal(result.monsters.length,10);
+ assert.equal(result.monsters[0].name,'Monster 11');
+ for(const monster of result.monsters){
+  assert.equal(monster.kills,Math.floor(1000/monster.staminaPerKill));
+  assert.equal(monster.total,monster.kills*monster.perKill);
+ }
+ assert.equal(result.eventTotal,0);
+ assert.equal(periodBreakdown([],ix,{stamina:'1000',days:'7',checkedDays:7,start:day}).monsters.length,0);
+});
+test('ranked rewards are first-place only and higher documented tier is chosen',()=>{
+ assert.equal(rewardQualification({context:{detail:'Ranking · Rank 1'}}).eligible,true);
+ assert.equal(rewardQualification({context:{detail:'Ranking · Rank 2'}}).eligible,false);
+ assert.equal(rewardQualification({context:{detail:'Ranking rewards · 1st place'}}).eligible,true);
+ assert.equal(rewardQualification({context:{detail:'Tier 5 reward'}}).tier,5);
+ assert.equal(rewardQualification({context:{detail:'Leaderboard, rank unspecified'}}).eligible,false);
+});
