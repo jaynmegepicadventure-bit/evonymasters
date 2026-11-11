@@ -40,6 +40,7 @@ table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 10p
 <h2 id="recommend-title">Loot Compass recommendation</h2>
 <p id="recommend-intro"></p>
 <div class="summary" id="summary"></div>
+<p id="combined-estimate" class="note" style="margin-top:15px"></p>
 </div>
 <div class="recommend-grid">
 <article class="panel" id="event-card">
@@ -149,6 +150,24 @@ function show(rows,target,quantity,stamina,days,wasTruncated,index,today,windowD
  $("recommend-title").textContent=amount===null?"Best LIVE sources for "+target:"Best route toward "+fmt(amount)+" "+target;
  let intro=event&&monster?"Start with the highest recorded LIVE event opportunity, then farm the most efficient eligible monster.":event?"Your best recorded LIVE option is an event.":monster?"Your best recorded LIVE option is monster farming.":"No quantified guaranteed rewards were found among confirmed LIVE sources for this item.";
  $("recommend-intro").textContent=intro;
+ let combination="Without a target and one-time stamina amount, a combined completion estimate cannot be calculated.";
+ if(amount!==null&&monster?.rewardInBudget!==null){
+  const fromMonster=Math.min(amount,monster.rewardInBudget);
+  const stillNeeded=Math.max(0,amount-fromMonster);
+  if(stillNeeded===0){
+   combination="Monster-only scenario: the supplied stamina could cover this goal with "+fmt(monster.huntsNeeded)+" hunts (requiring "+fmt(monster.staminaNeeded)+" stamina). Actual days depend on your hunting pace.";
+  }else if(event){
+   const combinedEvent=eventForecast(result.events,index,String(stillNeeded),today,windowDays);
+   combination=combinedEvent?.completionDate
+    ?"Combined scenario: up to "+fmt(fromMonster)+" "+target+" from your stamina budget, followed by "+fmt(combinedEvent.claimsNeeded)+" qualifying "+event.name+" completions. Earliest supported Calendar date: "+combinedEvent.completionDate+" (UTC), conditional on earning every stated reward."
+    :"Combined scenario: up to "+fmt(fromMonster)+" "+target+" from your stamina budget, leaving "+fmt(stillNeeded)+". There are not enough confirmed "+event.name+" dates within the checked Calendar window to estimate completion.";
+  }else{
+   combination="Monster-only scenario: the stamina budget could yield "+fmt(fromMonster)+" "+target+", leaving "+fmt(stillNeeded)+" without a confirmed event completion estimate.";
+  }
+ }else if(amount!==null&&event){
+  combination="Event-only scenario: "+(event.completionDate?"conditional completion by "+event.completionDate+" (UTC), if all "+fmt(event.claimsNeeded)+" qualifying rewards are earned.":"no supported completion date within the checked Calendar window.");
+ }
+ $("combined-estimate").textContent=combination;
  const stats=$("summary");stats.replaceChildren();
  const summary=[["Goal",amount===null?"No quantity set":fmt(amount)],["Total stamina",result.stamina===null?"Not specified":fmt(result.stamina)],["Daily target",fmt(result.dailyGoal)]];
  for(const [label,value] of summary){
