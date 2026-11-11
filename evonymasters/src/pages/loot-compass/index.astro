@@ -93,18 +93,31 @@ function stableRecordKey(row){
  return [row.source,row.title,row.context?.subEvent,row.context?.detail,row.context?.level,row.context?.activity].map(normalise).join("|");
 }
 async function fetchSearch(term,signal) {
- const groups=[];let truncated=false;
+ const groups=[];let truncated=false,compatibility=false;
  for(let page=0;page<20;page++){
-  const args=new URLSearchParams({q:term,type:"all",drop:"Guaranteed",page:String(page),sort:"suggested"});
-  const response=await fetch(SHEET+"/v3/search?"+args,{signal});
-  if(!response.ok)throw Error("Reward search service returned "+response.status);
-  const data=await response.json();
-  if(!Array.isArray(data.groups))throw Error("Invalid reward search response");
+  let data=null,failures=[];
+  // Prefer guaranteed-only results to avoid a 12-detail cap. Older Worker
+  // deployments may only accept the Item Finder search parameters.
+  for(const guaranteed of [true,false]){
+   const args=new URLSearchParams({q:term,type:"all",page:String(page),sort:"suggested"});
+   if(guaranteed)args.set("drop","Guaranteed");
+   try{
+    const response=await fetch(SHEET+"/v3/search?"+args,{signal,mode:"cors"});
+    if(!response.ok)throw Error("HTTP "+response.status);
+    const next=await response.json();
+    if(!Array.isArray(next.groups))throw Error("Invalid search response");
+    data=next;compatibility ||= !guaranteed;break;
+   }catch(error){
+    if(error.name==="AbortError")throw error;
+    failures.push((guaranteed?"guaranteed":"standard")+" request: "+(error.message||"network failure"));
+   }
+  }
+  if(!data)throw Error(term+": "+failures.join("; "));
   groups.push(...data.groups.filter(x=>x.source!=="boxes"));
   if(!data.hasMore)break;
   if(page===19)truncated=true;
  }
- return {groups,truncated};
+ return {groups,truncated,compatibility};
 }
 async function calendarWindow(today,span,signal){
  const params=new URLSearchParams({from:today,to:dayAdd(today,span-1),kind:"all",includeAlways:"true"});
@@ -152,7 +165,7 @@ async function fetchAllRewards(target,signal){
    else failures.push(requested[i+j]+": "+(x.reason?.message||"connection failed"));
   }
  }
- if(!searches.length)throw Error("Reward search connection failed for all guaranteed item queries. Check the Sheet Sync Worker.");
+ if(!searches.length)throw Error("Reward Worker could not be reached for any item. "+failures.slice(0,3).join(" | ")+". Open "+SHEET+"/health to test the Worker. If health responds but search fails, check its deployment, CORS allowance for this Pages domain, and DATA binding.");
  return {searches,failures};
 }
 function mergeGroups(groups) {
@@ -188,7 +201,7 @@ function show(rows,target,stamina,days,index,today,calendar,diagnostics,partialR
  }
  const note=[];
  if(!forecast.complete)note.push("Calendar coverage is incomplete: only "+forecast.checkedDays+" of "+forecast.days+" days verified. All event amounts below cover only those days.");
- if(partialRewards)note.push("Some reward queries were incomplete; matching results may be missing.");
+ if(partialRewards)note.push("Some reward queries used compatibility search, failed or were truncated. Returned entries are still filtered to direct Guaranteed rewards, but results may be incomplete.");
  note.push("Events assume qualification for the stated reward, including highest documented Tier N and rank 1 where applicable. Event rewards may require overlapping actions or costs. The event total is the sum of the event rows below, not a guaranteed amount already earned.");
  $("combined-estimate").textContent=note.join(" ");
  const eb=$("event-breakdown");eb.replaceChildren();
@@ -248,7 +261,7 @@ $("form").addEventListener("submit",async event=>{
   show(rows,target,stamina,days,index,today,calendar,{
    confirmed:calendar.events.filter(x=>x.status==="Confirmed").length,
    groups:allGroups.length
-  },searches.some(x=>x.truncated)||rewards.failures.length>0);
+  },searches.some(x=>x.truncated||x.compatibility)||rewards.failures.length>0);
   stateMsg(rows.length?
     "Forecast uses "+calendar.daysChecked+" confirmed Calendar day(s), "+rows.length+" matching reward sources.":
     "No recorded guaranteed LIVE matches found; see details below.");
