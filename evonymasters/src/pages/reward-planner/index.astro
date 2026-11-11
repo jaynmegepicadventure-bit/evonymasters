@@ -15,6 +15,7 @@ form .actions{display:flex;align-items:center;gap:15px;margin-top:15px;flex-wrap
 table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid #36516b;vertical-align:top;font-size:.9rem}th{color:#e5be7d}td:nth-child(n+2),th:nth-child(n+2){text-align:right}.scroll{overflow:auto}
 .note{background:#233a50;border-left:3px solid #dab56d;padding:13px;border-radius:5px;font-size:.85rem;color:#d8e4ee}.error{color:#ffb9aa}.badge{border:1px solid #7599b0;border-radius:99px;padding:3px 7px;font-size:.73rem}
 #suggestions{max-width:490px}section[hidden]{display:none!important}@media(max-width:750px){.inputs{grid-template-columns:repeat(2,1fr)}.summary{grid-template-columns:1fr}}@media(max-width:460px){.inputs{grid-template-columns:1fr}}
+.checklist-row{display:flex;align-items:flex-start;gap:12px;padding:13px 0;border-bottom:1px solid #36516b}.checklist-row input[type=checkbox]{width:20px;height:20px;flex:none;accent-color:#e8bc70;margin:3px 0 0}.checklist-row label{display:block;color:#edf3fa;flex:1;font-size:.94rem;cursor:pointer}.checklist-row label small{display:block;color:#afc3d5;font-weight:400;line-height:1.6;margin-top:3px}.checklist-row.done label strong{text-decoration:line-through;opacity:.75}.checklist-header{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap}.checklist-header .muted{margin:0}.checklist-progress{font-weight:800;color:#f0cb8b}.claim-form{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap}.claim-form label{max-width:250px}.claim-form input{max-width:240px}.claim-form button{flex:none}.claim-note{font-size:.83rem;color:#b7c9d7}
 </style></head><body><SiteHeader/><main class="wrap">
 <div class="eyebrow">Player tools · Live reward planning</div>
 <h1>Reward Planner</h1>
@@ -41,14 +42,24 @@ table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 10p
 <p class="muted">Only recorded guaranteed rewards are shown. Unknown chest drops and possible rewards are excluded.</p>
 <div class="scroll"><table><thead><tr><th>Monster</th><th>Stamina / hunt</th><th>Guaranteed / hunt</th></tr></thead><tbody id="monsters"></tbody></table></div>
 </section>
-<section class="panel" id="allocation-section" hidden><h2>3. Stamina allocation</h2><div id="allocation"></div></section>
+<section class="panel" id="checklist-section" hidden>
+<div class="checklist-header"><h2>3. Today's farming checklist</h2><span id="checklist-progress" class="checklist-progress">0 / 0 marked</span></div>
+<p class="muted">Only confirmed LIVE activity opportunities appear here. Tick tasks to keep track of what you have done in this browser tab. Ticking a task never credits its reward automatically.</p>
+<div id="checklist-items"></div>
+<div class="claim-form" style="margin-top:20px">
+<label for="claimed">Actually earned or already owned (optional)<input id="claimed" placeholder="e.g. 250M" inputmode="decimal"/></label>
+<button id="record-claimed" type="button">Update progress</button>
+</div>
+<p id="claim-progress" class="claim-note" aria-live="polite">Enter only rewards you have actually received. A completed activity is not the same as a claimed prize.</p>
+</section>
+<section class="panel" id="allocation-section" hidden><h2>4. Stamina allocation</h2><div id="allocation"></div></section>
 </main>
 <script>
-import {normalise,parseAmount,dayUTC,dayAdd,liveIndex,eligibleRecord,plan} from '../../lib/reward-planner.mjs';
+import {normalise,parseAmount,dayUTC,dayAdd,liveIndex,eligibleRecord,plan,dailyChecklist,remainingTarget} from '../../lib/reward-planner.mjs';
 const SHEET="https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev";
 const CALENDAR="https://evonymasters-calendar.jaynmegepicadventure.workers.dev/api/events";
 const $=id=>document.getElementById(id),fmt=n=>n===null||n===undefined?"—":new Intl.NumberFormat("en-US",{maximumFractionDigits:0}).format(n);
-const state={busy:false},line=(parent,values)=>{const tr=document.createElement("tr");for(const value of values){const cell=document.createElement("td");cell.textContent=value;tr.append(cell)}parent.append(tr)};
+const state={busy:false,checklist:[],goal:null,checks:new Set()},line=(parent,values)=>{const tr=document.createElement("tr");for(const value of values){const cell=document.createElement("td");cell.textContent=value;tr.append(cell)}parent.append(tr)};
 const stateMsg=(message,error=false)=>{$("status").textContent=message;$("status").className=error?"error":"muted"};
 function terms(target) {
  if(normalise(target)==="combined resources"||["food","wood","stone","ore"].includes(normalise(target))) {
@@ -105,13 +116,44 @@ function show(rows,target,quantity,stamina,days,wasTruncated,calendarTruncated) 
  for(const m of result.monsters)line(monsters,[m.name+(m.detail?" · "+m.detail:""),fmt(m.stamina),fmt(m.guaranteed)]);
  if(!result.events.length)line(events,["No LIVE events with quantified guaranteed rewards","—","—"]);
  if(!result.monsters.length)line(monsters,["No LIVE monsters with quantified guaranteed rewards","—","—"]);
- const alloc=$("allocation");alloc.replaceChildren();
+ // Checklist is rebuilt for the selected LIVE UTC date and current item target.
+ state.goal=result.quantity;
+ state.checks=new Set();
+ state.checklist=dailyChecklist(result,dayUTC());
+ const checklist=$("checklist-items");checklist.replaceChildren();
+ for(const item of state.checklist){
+  const container=document.createElement("div");container.className="checklist-row";
+  const tick=document.createElement("input");tick.type="checkbox";tick.id="tick-"+state.checklist.indexOf(item);
+  tick.addEventListener("change",()=>{
+   if(tick.checked)state.checks.add(item.id);else state.checks.delete(item.id);
+   container.classList.toggle("done",tick.checked);renderChecklistProgress();
+  });
+  const label=document.createElement("label");label.htmlFor=tick.id;
+  const strong=document.createElement("strong");strong.textContent=item.category+" · "+item.name;
+  const description=document.createElement("small");
+  description.textContent=item.detail+" · Recorded maximum single guaranteed amount: "+fmt(item.recordedReward)+(item.stamina?" · Budget: "+fmt(item.stamina)+" stamina":"")+". "+item.note;
+  label.append(strong,description);container.append(tick,label);checklist.append(container);
+ }
+ if(!state.checklist.length){const empty=document.createElement("p");empty.className="muted";empty.textContent="No quantified confirmed LIVE tasks are available for this item today.";checklist.append(empty)}
+ $("claimed").value="";renderChecklistProgress();
+  const alloc=$("allocation");alloc.replaceChildren();
  const text=document.createElement("p");
  if(result.allocation.length){const a=result.allocation[0];text.textContent=a.hunts+" hunts of "+a.name+" consume "+fmt(a.totalStamina)+" stamina. Recorded guaranteed reward per hunt: "+fmt(a.guaranteed)+". Guaranteed reward budget: "+fmt(a.guaranteedTotal)+". Remaining stamina: "+fmt(result.staminaRemaining)+".";}
  else text.textContent="No reliable stamina allocation is available from eligible LIVE monster records. An estimated completion day requires verified obtainable rewards, repeat limits and replenishment.";
  alloc.append(text);
- for(const id of ["result","event-section","monster-section","allocation-section"])$(id).hidden=false;
+ for(const id of ["result","event-section","monster-section","checklist-section","allocation-section"])$(id).hidden=false;
 }
+function renderChecklistProgress(){
+ $("checklist-progress").textContent=state.checks.size+" / "+state.checklist.length+" marked";
+ const raw=$("claimed").value.trim(),earned=raw?parseAmount(raw):null;
+ if(raw&&earned===null){$("claim-progress").textContent="Enter a valid amount such as 250M or 1B.";return}
+ const remaining=remainingTarget(state.goal,earned);
+ $("claim-progress").textContent=remaining===null
+  ? "Activities marked complete do not add rewards. Enter a target quantity to track the remaining amount."
+  : "Actually earned / already owned: "+fmt(earned??0)+". Remaining target: "+fmt(remaining)+". Checked activities do not change this amount.";
+}
+$("record-claimed").addEventListener("click",renderChecklistProgress);
+$("claimed").addEventListener("input",renderChecklistProgress);
 let abort=null;
 $("form").addEventListener("submit",async event=>{
  event.preventDefault();if(abort)abort.abort();abort=new AbortController();
