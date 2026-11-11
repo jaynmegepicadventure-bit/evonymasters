@@ -113,6 +113,20 @@ async function fetchSearch(term,signal) {
  }
  return {groups,truncated};
 }
+async function fetchCalendar(today,desiredDays,signal) {
+ let span=desiredDays;
+ while(span>=1){
+  const params=new URLSearchParams({from:today,to:dayAdd(today,span-1),kind:"all",includeAlways:"true"});
+  const response=await fetch(CALENDAR+"?"+params,{signal});
+  if(!response.ok)throw Error("Calendar returned "+response.status);
+  const data=await response.json();
+  if(!Array.isArray(data.events))throw Error("Calendar response is missing schedules");
+  if(!data.truncated)return {...data,daysChecked:span};
+  if(span===1)throw Error("Calendar has too many results even for one day");
+  span=span>14?Math.floor(span/2):span>3?Math.floor(span/2):1;
+ }
+ throw Error("No Calendar dates could be checked");
+}
 function mergeGroups(groups) {
  const unique=new Map();
  for(const row of groups){
@@ -182,17 +196,15 @@ $("form").addEventListener("submit",async event=>{
  $("calculate").disabled=true;stateMsg("Loading LIVE availability and item rewards…");
  try{
   const today=dayUTC(),horizon=Math.min(60,Math.max(1,parseAmount(days)||60));
-  const calendarParams=new URLSearchParams({from:today,to:dayAdd(today,horizon-1),kind:"all",includeAlways:"true"});
   const [calendar,...searches]=await Promise.all([
-   fetch(CALENDAR+"?"+calendarParams,{signal:abort.signal}).then(async r=>{if(!r.ok)throw Error("Calendar returned "+r.status);return r.json()}),
+   fetchCalendar(today,horizon,abort.signal),
    ...terms(target).map(q=>fetchSearch(q,abort.signal))
   ]);
-  if(!Array.isArray(calendar.events)||calendar.truncated)throw Error("Calendar response is incomplete");
   const index=liveIndex(calendar.events,today);
   const rows=mergeGroups(searches.flatMap(x=>x.groups))
    .map(row=>eligibleRecord(row,target,index,today)).filter(Boolean);
-  show(rows,target,quantity||null,stamina||null,days||null,searches.some(x=>x.truncated),index,today,horizon);
-  stateMsg("Showing eligible LIVE reward sources for "+today+" (UTC). "+rows.length+" matching rows.");
+  show(rows,target,quantity||null,stamina||null,days||null,searches.some(x=>x.truncated),index,today,calendar.daysChecked);
+  stateMsg("Showing "+rows.length+" confirmed LIVE matching sources for "+today+" (UTC); "+calendar.daysChecked+" Calendar day(s) checked.");
  }catch(e){if(e.name!=="AbortError")stateMsg("Unable to produce a LIVE plan: "+e.message+". No fallback to unverified availability was used.",true)}
  finally{$("calculate").disabled=false}
 });
