@@ -16,10 +16,11 @@ table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 10p
 .note{background:#233a50;border-left:3px solid #dab56d;padding:13px;border-radius:5px;font-size:.85rem;color:#d8e4ee}.error{color:#ffb9aa}.badge{border:1px solid #7599b0;border-radius:99px;padding:3px 7px;font-size:.73rem}
 #suggestions{max-width:490px}section[hidden]{display:none!important}@media(max-width:750px){.inputs{grid-template-columns:repeat(2,1fr)}.summary{grid-template-columns:1fr}}@media(max-width:460px){.inputs{grid-template-columns:1fr}}
 .checklist-row{display:flex;align-items:flex-start;gap:12px;padding:13px 0;border-bottom:1px solid #36516b}.checklist-row input[type=checkbox]{width:20px;height:20px;flex:none;accent-color:#e8bc70;margin:3px 0 0}.checklist-row label{display:block;color:#edf3fa;flex:1;font-size:.94rem;cursor:pointer}.checklist-row label small{display:block;color:#afc3d5;font-weight:400;line-height:1.6;margin-top:3px}.checklist-row.done label strong{text-decoration:line-through;opacity:.75}.checklist-header{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap}.checklist-header .muted{margin:0}.checklist-progress{font-weight:800;color:#f0cb8b}.claim-form{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap}.claim-form label{max-width:250px}.claim-form input{max-width:240px}.claim-form button{flex:none}.claim-note{font-size:.83rem;color:#b7c9d7}
+.spotlight{background:linear-gradient(115deg,#233b50,#162a40);border-color:#b9965b}.recommend-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.recommend-grid .panel{margin-top:19px}.rec-number{font-weight:800;color:#ffe0a2;font-size:1.5rem;margin:8px 0}.opportunities{display:grid;gap:9px}.opportunity{padding:12px 14px;border:1px solid #395873;border-radius:10px;display:flex;justify-content:space-between;gap:18px}.opportunity strong{color:#f6d18c}.opportunity small{display:block;color:#a8bed1;margin-top:4px}.spotlight h2{font-size:1.7rem;color:#f6d18c}@media(max-width:760px){.recommend-grid{grid-template-columns:1fr}} 
 </style></head><body><SiteHeader/><main class="wrap">
 <div class="eyebrow">Player tools · Your next haul, mapped</div>
 <h1>Loot Compass <span style="color:#e6bc73;font-size:.48em;vertical-align:middle">BETA</span></h1>
-<p>Enter an item to find your best confirmed LIVE sources. Add an optional quantity, stamina budget or days to shape the plan. Guaranteed rewards come first; chance drops stay out of this beta.</p>
+<p>Search once. Loot Compass recommends the best confirmed LIVE event and monster, with reward amounts, stamina needs and a completion outlook where the Calendar supports it. No event selection or checklist required.</p>
 <div class="panel" style="border-color:#a38a58;background:#25364a;margin-top:15px;padding:15px 20px" role="note"><strong>Accuracy notice · Beta</strong><p style="margin:6px 0 0">This planner reads the latest synced EvonyMasters rewards and published Calendar schedules. Drop rates, chest values, milestone rules and availability may be incomplete or change in-game. Guaranteed rewards still require completing the activity. Possible drops are excluded entirely. Verify rewards in-game before committing stamina or resources. When LIVE availability cannot be checked, this planner does not guess.</p></div>
 <div class="panel"><form id="form">
 <div class="inputs">
@@ -30,36 +31,54 @@ table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 10p
 <label>Total stamina (optional)<input id="stamina" placeholder="e.g. 10000"/></label>
 <label>Number of days (optional)<input id="days" placeholder="Suggest a timeframe"/></label>
 </div>
-<div class="actions"><button type="submit" id="calculate">Calculate reward plan</button><span class="muted">Blank inputs stay optional. Stamina is a one-time budget.</span></div>
+<div class="actions"><button type="submit" id="calculate">Find my best route</button><span class="muted">Blank inputs stay optional. Stamina is a one-time budget.</span></div>
 </form></div>
 <p id="status" role="status" class="muted">Search to check confirmed LIVE schedules and freshly synced rewards.</p>
-<section class="panel" id="result" hidden><h2>Goal overview</h2><div id="summary" class="summary"></div><p class="note" id="caveat"></p></section>
-<section class="panel" id="event-section" hidden><h2>1. LIVE events &amp; activities</h2>
-<p class="muted">Reward opportunities are conditional on meeting the activity or milestone requirements. No event reward is automatically credited to your goal.</p>
-<div class="scroll"><table><thead><tr><th>Event / activity</th><th>Largest recorded guaranteed reward</th><th>Frequency</th></tr></thead><tbody id="events"></tbody></table></div>
-</section>
-<section class="panel" id="monster-section" hidden><h2>2. LIVE monsters</h2>
-<p class="muted">Only recorded guaranteed rewards are shown. Unknown chest drops and possible rewards are excluded.</p>
-<div class="scroll"><table><thead><tr><th>Monster</th><th>Stamina / hunt</th><th>Guaranteed / hunt</th></tr></thead><tbody id="monsters"></tbody></table></div>
-</section>
-<section class="panel" id="checklist-section" hidden>
-<div class="checklist-header"><h2>3. Today's farming checklist</h2><span id="checklist-progress" class="checklist-progress">0 / 0 marked</span></div>
-<p class="muted">Only confirmed LIVE activity opportunities appear here. Tick tasks to keep track of what you have done in this browser tab. Ticking a task never credits its reward automatically.</p>
-<div id="checklist-items"></div>
-<div class="claim-form" style="margin-top:20px">
-<label for="claimed">Actually earned or already owned (optional)<input id="claimed" placeholder="e.g. 250M" inputmode="decimal"/></label>
-<button id="record-claimed" type="button">Update progress</button>
+<section id="result" hidden aria-live="polite">
+<div class="panel spotlight">
+<div class="eyebrow">Your recommended route</div>
+<h2 id="recommend-title">Loot Compass recommendation</h2>
+<p id="recommend-intro"></p>
+<div class="summary" id="summary"></div>
 </div>
-<p id="claim-progress" class="claim-note" aria-live="polite">Enter only rewards you have actually received. A completed activity is not the same as a claimed prize.</p>
+<div class="recommend-grid">
+<article class="panel" id="event-card">
+<div class="eyebrow">01 · Events first</div>
+<h2 id="event-name">Recommended LIVE event</h2>
+<p class="rec-number" id="event-reward"></p>
+<p id="event-explanation"></p>
+<div class="note" id="event-estimate"></div>
+</article>
+<article class="panel" id="monster-card">
+<div class="eyebrow">02 · Monster farming</div>
+<h2 id="monster-name">Recommended LIVE monster</h2>
+<p class="rec-number" id="monster-reward"></p>
+<p id="monster-explanation"></p>
+<div class="note" id="monster-estimate"></div>
+</article>
+</div>
+<div class="panel">
+<h2>Other confirmed LIVE opportunities</h2>
+<p class="muted">Automatically ranked. No need to select, tick or claim anything here.</p>
+<div id="other-results" class="opportunities"></div>
+</div>
+<div class="panel">
+<h2>How reliable is this plan?</h2>
+<p id="caveat" class="note"></p>
+</div>
 </section>
-<section class="panel" id="allocation-section" hidden><h2>4. Stamina allocation</h2><div id="allocation"></div></section>
 </main>
 <script>
-import {normalise,parseAmount,dayUTC,dayAdd,liveIndex,eligibleRecord,plan,dailyChecklist,remainingTarget} from '../../lib/reward-planner.mjs';
+import {normalise,parseAmount,dayUTC,dayAdd,liveIndex,eligibleRecord,plan,eventForecast,monsterForecast} from '../../lib/reward-planner.mjs';
 const SHEET="https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev";
 const CALENDAR="https://evonymasters-calendar.jaynmegepicadventure.workers.dev/api/events";
 const $=id=>document.getElementById(id),fmt=n=>n===null||n===undefined?"—":new Intl.NumberFormat("en-US",{maximumFractionDigits:0}).format(n);
-const state={busy:false,checklist:[],goal:null,checks:new Set()},line=(parent,values)=>{const tr=document.createElement("tr");for(const value of values){const cell=document.createElement("td");cell.textContent=value;tr.append(cell)}parent.append(tr)};
+const line=(container,name,reward,detail)=>{
+ const row=document.createElement("div");row.className="opportunity";
+ const left=document.createElement("div"),label=document.createElement("strong"),small=document.createElement("small"),amount=document.createElement("strong");
+ label.textContent=name;small.textContent=detail||"";amount.textContent=fmt(reward);
+ left.append(label,small);row.append(left,amount);container.append(row);
+};
 const stateMsg=(message,error=false)=>{$("status").textContent=message;$("status").className=error?"error":"muted"};
 function terms(target) {
  const aliases={
@@ -108,70 +127,61 @@ function mergeGroups(groups) {
  }
  return [...unique.values()];
 }
-function show(rows,target,quantity,stamina,days,wasTruncated,calendarTruncated) {
+function show(rows,target,quantity,stamina,days,wasTruncated,index,today,windowDays){
  const result=plan(rows,{target,quantity,stamina,days});
- const summary=$("summary");summary.replaceChildren();
- for(const [title,val] of [["Item",target],["Target",result.quantity===null?"Player target not specified":fmt(result.quantity)],["Stamina",result.stamina===null?"Not specified":fmt(result.stamina)],["Timeframe",result.days===null?"Not specified":result.days+" days"],["Daily target",fmt(result.dailyGoal)],["LIVE sources",rows.length],["Suggested obtainable from stamina",fmt(result.suggestedGuaranteedQuantity)],["Possible rewards","Excluded"]]) {
-  const card=document.createElement("div");card.className="stat";
-  const small=document.createElement("span");small.textContent=title;small.className="muted";const strong=document.createElement("strong");strong.textContent=String(val);
-  card.append(small,strong);summary.append(card);
+ const event=eventForecast(result.events,index,quantity,today,windowDays);
+ const monster=monsterForecast(result.monsters,quantity,stamina);
+ const amount=result.quantity;
+ $("recommend-title").textContent=amount===null?"Best LIVE sources for "+target:"Best route toward "+fmt(amount)+" "+target;
+ let intro=event&&monster?"Start with the highest recorded LIVE event opportunity, then farm the most efficient eligible monster.":event?"Your best recorded LIVE option is an event.":monster?"Your best recorded LIVE option is monster farming.":"No quantified guaranteed rewards were found among confirmed LIVE sources for this item.";
+ $("recommend-intro").textContent=intro;
+ const stats=$("summary");stats.replaceChildren();
+ const summary=[["Goal",amount===null?"No quantity set":fmt(amount)],["Total stamina",result.stamina===null?"Not specified":fmt(result.stamina)],["Daily target",fmt(result.dailyGoal)]];
+ for(const [label,value] of summary){
+  const item=document.createElement("div");item.className="stat";
+  const caption=document.createElement("span");caption.className="muted";caption.textContent=label;
+  const strong=document.createElement("strong");strong.textContent=value;
+  item.append(caption,strong);stats.append(item);
  }
- const warning=["Reward listings are NOT automatically earned. Each row shows the largest single recorded reward, not a sum of event milestones. No chest drops, event repetitions or completion times are assumed.",result.warning];
- if(wasTruncated)warning.push("Reward search reached its paging limit; more sources may exist.");
- if(calendarTruncated)warning.push("Calendar results were truncated; this plan may omit LIVE sources.");
- $("caveat").textContent=warning.join(" ");
- const events=$("events"),monsters=$("monsters");events.replaceChildren();monsters.replaceChildren();
- for(const e of result.events)line(events,[e.name+(e.detail?" · "+e.detail:""),fmt(e.guaranteed),e.frequency||"Check event rules"]);
- for(const m of result.monsters)line(monsters,[m.name+(m.detail?" · "+m.detail:""),fmt(m.stamina),fmt(m.guaranteed)]);
- if(!result.events.length)line(events,["No LIVE events with quantified guaranteed rewards","—","—"]);
- if(!result.monsters.length)line(monsters,["No LIVE monsters with quantified guaranteed rewards","—","—"]);
- // Checklist is rebuilt for the selected LIVE UTC date and current item target.
- state.goal=result.quantity;
- state.checks=new Set();
- state.checklist=dailyChecklist(result,dayUTC());
- const checklist=$("checklist-items");checklist.replaceChildren();
- for(const item of state.checklist){
-  const container=document.createElement("div");container.className="checklist-row";
-  const tick=document.createElement("input");tick.type="checkbox";tick.id="tick-"+state.checklist.indexOf(item);
-  tick.addEventListener("change",()=>{
-   if(tick.checked)state.checks.add(item.id);else state.checks.delete(item.id);
-   container.classList.toggle("done",tick.checked);renderChecklistProgress();
-  });
-  const label=document.createElement("label");label.htmlFor=tick.id;
-  const strong=document.createElement("strong");strong.textContent=item.category+" · "+item.name;
-  const description=document.createElement("small");
-  description.textContent=item.detail+" · Recorded maximum single guaranteed amount: "+fmt(item.recordedReward)+(item.stamina?" · Budget: "+fmt(item.stamina)+" stamina":"")+". "+item.note;
-  label.append(strong,description);container.append(tick,label);checklist.append(container);
- }
- if(!state.checklist.length){const empty=document.createElement("p");empty.className="muted";empty.textContent="No quantified confirmed LIVE tasks are available for this item today.";checklist.append(empty)}
- $("claimed").value="";renderChecklistProgress();
-  const alloc=$("allocation");alloc.replaceChildren();
- const text=document.createElement("p");
- if(result.allocation.length){const a=result.allocation[0];text.textContent=a.hunts+" hunts of "+a.name+" consume "+fmt(a.totalStamina)+" stamina. Recorded guaranteed reward per hunt: "+fmt(a.guaranteed)+". Guaranteed reward budget: "+fmt(a.guaranteedTotal)+". Remaining stamina: "+fmt(result.staminaRemaining)+".";}
- else text.textContent="No reliable stamina allocation is available from eligible LIVE monster records. An estimated completion day requires verified obtainable rewards, repeat limits and replenishment.";
- alloc.append(text);
- for(const id of ["result","event-section","monster-section","checklist-section","allocation-section"])$(id).hidden=false;
+ $("event-name").textContent=event?event.name:"No confirmed matching event";
+ $("event-reward").textContent=event?fmt(event.reward)+" "+target+" per qualifying completion":"No verified event reward";
+ $("event-explanation").textContent=event?"The top single recorded guaranteed reward, conditional on finishing the event requirements. Other event milestones are not added together.":"No scheduled event with a quantified guaranteed matching reward is currently eligible.";
+ let eventEstimate="A completion date requires a target quantity and confirmed future Calendar appearances.";
+ if(event&&amount!==null){
+  eventEstimate=event.completionDate
+   ?"Event-only scenario: "+event.claimsNeeded+" qualifying completions; estimated "+event.daysUntil+" calendar day(s), through "+event.completionDate+" (UTC). This assumes the recorded reward can be earned once per scheduled day."
+   :"Event-only scenario: "+fmt(event.claimsNeeded)+" qualifying completions needed. Only "+fmt(event.opportunities)+" confirmed dates were found in the next "+windowDays+" days; a completion date cannot be supported.";
+ } else if(event)eventEstimate="Confirmed scheduled appearances in the next "+windowDays+" days: "+fmt(event.opportunities)+". Add a target quantity to estimate completion.";
+ $("event-estimate").textContent=eventEstimate;
+ $("monster-name").textContent=monster?monster.name:"No confirmed matching monster";
+ $("monster-reward").textContent=monster?fmt(monster.perHunt)+" "+target+" / hunt":"No verified monster reward";
+ $("monster-explanation").textContent=monster?"Stamina per hunt: "+fmt(monster.staminaPerHunt)+". Reward per stamina: "+fmt(Math.round(monster.perStamina))+". Only direct guaranteed rewards are considered.":"No confirmed LIVE monster with quantified guaranteed matching rewards and known stamina was found.";
+ let monsterEstimate="Add a target quantity to calculate hunts and total stamina. Days cannot be inferred without a daily hunt or stamina budget.";
+ if(monster&&amount!==null){
+  monsterEstimate="Monster-only route: "+fmt(monster.huntsNeeded)+" hunts, requiring "+fmt(monster.staminaNeeded)+" stamina.";
+  if(monster.huntsInBudget!==null)monsterEstimate+=" Your one-time "+fmt(result.stamina)+" stamina funds "+fmt(monster.huntsInBudget)+" hunts and up to "+fmt(monster.rewardInBudget)+" "+target+" of recorded guaranteed rewards.";
+  monsterEstimate+=" Time depends on how many hunts you can do per day.";
+ }else if(monster&&monster.huntsInBudget!==null)monsterEstimate="With your one-time stamina budget: "+fmt(monster.huntsInBudget)+" hunts and "+fmt(monster.rewardInBudget)+" "+target+" from recorded guaranteed rewards.";
+ $("monster-estimate").textContent=monsterEstimate;
+ const other=$("other-results");other.replaceChildren();
+ const alternatives=[
+  ...result.events.filter(x=>!event||x.name!==event.name).slice(0,4).map(x=>({name:"Event · "+x.name,reward:x.guaranteed,detail:"Qualifying event reward; check milestone requirements"})),
+  ...result.monsters.filter(x=>!monster||x.name!==monster.name).slice(0,4).map(x=>({name:"Monster · "+x.name,reward:x.guaranteed,detail:fmt(x.stamina)+" stamina / hunt"}))
+ ];
+ for(const alternative of alternatives)line(other,alternative.name,alternative.reward,alternative.detail);
+ if(!alternatives.length){const p=document.createElement("p");p.className="muted";p.textContent="No other confirmed matching sources today.";other.append(p)}
+ $("caveat").textContent="Guaranteed means the prize is guaranteed after meeting its activity, ranking or milestone conditions. Event completion estimates assume the selected reward can be earned once per confirmed scheduled date. This is a conditional best-case scenario, not automatic earnings. Monster estimates assume every counted direct reward is obtained per hunt. Nested chests, possible drops, unverified quantities and resource costs are excluded. "+(wasTruncated?"Search paging was limited; some sources may be missing. ":"")+result.warning;
+ $("result").hidden=false;
 }
-function renderChecklistProgress(){
- $("checklist-progress").textContent=state.checks.size+" / "+state.checklist.length+" marked";
- const raw=$("claimed").value.trim(),earned=raw?parseAmount(raw):null;
- if(raw&&earned===null){$("claim-progress").textContent="Enter a valid amount such as 250M or 1B.";return}
- const remaining=remainingTarget(state.goal,earned);
- $("claim-progress").textContent=remaining===null
-  ? "Activities marked complete do not add rewards. Enter a target quantity to track the remaining amount."
-  : "Actually earned / already owned: "+fmt(earned??0)+". Remaining target: "+fmt(remaining)+". Checked activities do not change this amount.";
-}
-$("record-claimed").addEventListener("click",renderChecklistProgress);
-$("claimed").addEventListener("input",renderChecklistProgress);
 let abort=null;
 $("form").addEventListener("submit",async event=>{
  event.preventDefault();if(abort)abort.abort();abort=new AbortController();
  const target=$("item").value.trim(),quantity=$("quantity").value.trim(),stamina=$("stamina").value.trim(),days=$("days").value.trim();
  if(!target||[quantity,stamina,days].some(x=>x!==""&&parseAmount(x)===null)||days!==""&&parseAmount(days)===0){stateMsg("Enter a valid item and nonnegative whole quantities; days must be positive.",true);return}
- for(const id of ["result","event-section","monster-section","checklist-section","allocation-section"])$(id).hidden=true;
+ $("result").hidden=true;
  $("calculate").disabled=true;stateMsg("Loading LIVE availability and item rewards…");
  try{
-  const today=dayUTC(),horizon=Math.min(60,Math.max(1,parseAmount(days)||1));
+  const today=dayUTC(),horizon=Math.min(60,Math.max(1,parseAmount(days)||60));
   const calendarParams=new URLSearchParams({from:today,to:dayAdd(today,horizon-1),kind:"all",includeAlways:"true"});
   const [calendar,...searches]=await Promise.all([
    fetch(CALENDAR+"?"+calendarParams,{signal:abort.signal}).then(async r=>{if(!r.ok)throw Error("Calendar returned "+r.status);return r.json()}),
@@ -181,7 +191,7 @@ $("form").addEventListener("submit",async event=>{
   const index=liveIndex(calendar.events,today);
   const rows=mergeGroups(searches.flatMap(x=>x.groups))
    .map(row=>eligibleRecord(row,target,index,today)).filter(Boolean);
-  show(rows,target,quantity||null,stamina||null,days||null,searches.some(x=>x.truncated),Boolean(calendar.truncated));
+  show(rows,target,quantity||null,stamina||null,days||null,searches.some(x=>x.truncated),index,today,horizon);
   stateMsg("Showing eligible LIVE reward sources for "+today+" (UTC). "+rows.length+" matching rows.");
  }catch(e){if(e.name!=="AbortError")stateMsg("Unable to produce a LIVE plan: "+e.message+". No fallback to unverified availability was used.",true)}
  finally{$("calculate").disabled=false}
@@ -194,11 +204,8 @@ window.addEventListener("pageshow",()=>{
  $("quantity").value="";
  $("stamina").value="";
  $("days").value="";
- $("claimed").value="";
  $("suggestions").replaceChildren();
- $("checklist-items").replaceChildren();
- state.checklist=[];state.checks.clear();state.goal=null;
- for(const id of ["result","event-section","monster-section","checklist-section","allocation-section"])$(id).hidden=true;
+ $("result").hidden=true;
  $("calculate").disabled=false;
  stateMsg("Choose an item to start a new one-time LIVE search.");
 });
