@@ -102,7 +102,7 @@ export function plan(records,{target,quantity=null,stamina=null,days=null}={}) {
     // Allocate all to the best qualifying monster. Other options remain visible separately.
     break;
   }
-  return {target,quantity:amount,stamina:budget,days:horizon,events,monsters,allocation,monsterGuaranteed:guaranteed,monsterPossible:possible,staminaRemaining:remaining,
+  return {target,quantity:amount,stamina:budget,days:horizon,events,monsters,allocation,monsterGuaranteed:guaranteed,monsterPossible:possible,staminaRemaining:remaining,\n    suggestedGuaranteedQuantity:budget===null?null:guaranteed, suggestedConditionalQuantity:budget===null?null:guaranteed+possible,
     dailyGoal:amount!==null&&horizon?Math.ceil(amount/horizon):null,
     warning:"Only verified LIVE sources are shown. Event milestones are not automatically counted as earned; possible rewards have unknown drop rates."};
 }
