@@ -69,7 +69,7 @@ export function scheduledDays(index, kind, name, start, count) {
 // before falling back to display names, which can differ by level and punctuation.
 export function calendarSourceIds(row) {
  const kind=row.source==="events"?"Event":row.source==="event-bosses"?"Event Boss":row.source==="regular"?"Regular Monster":"Boss";
- const key=value=>String(value??"").trim().toLocaleLowerCase("en").replace(/\\s+/g," ");
+ const key=value=>String(value??"").trim().toLocaleLowerCase("en").replace(/\s+/g," ");
  const name=key(row.title),level=key(row.context?.level);
  if(!name)return [];
  if(kind==="Event")return ["event:"+encodeURIComponent(name)];
