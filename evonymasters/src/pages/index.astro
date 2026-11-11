@@ -3,9 +3,10 @@ import SiteHeader from '../components/SiteHeader.astro';
 import monsters from '../data/monsters.json';
 const monsterCount=monsters.length;
 const features=[
+ {href:'/loot-compass/',image:'/images/item-finder/box.svg',eyebrow:'Guaranteed LIVE rewards',title:'Loot Compass (Beta)',text:'Find confirmed LIVE events and monsters with quantified guaranteed rewards. Set an optional goal, stamina budget or days, and plan your farming.',action:'Find your loot'},
  {href:'/resources/',image:'/images/item-finder/ymir.svg',eyebrow:'Find the best source',title:'Item Finder',text:'Search recorded rewards, compare monster drops and see where the items you need can be earned.',action:'Find a reward'},
  {href:'/chests/',image:'/images/item-finder/box.svg',eyebrow:'Open the possibilities',title:'Chest Finder',text:'Explore complete chest contents, ranking variants and known event or boss sources.',action:'Explore chests'},
- {href:'/reward-planner/',image:'/images/item-finder/box.svg',eyebrow:'Plan with live schedules',title:'Reward Planner (Beta)',text:'Set a resource or item target, optionally add stamina and days, and compare LIVE event and monster rewards. Estimates may be incomplete.',action:'Plan your rewards'},
+ {href:'/loot-compass/',image:'/images/item-finder/box.svg',eyebrow:'Guaranteed LIVE rewards',title:'Loot Compass (Beta)',text:'Find confirmed LIVE events and monsters with quantified guaranteed rewards. Set an optional goal, stamina budget or days, and plan your farming.',action:'Find your loot'},
  {href:'/calendar/',image:'/images/item-finder/feasting-revelry.svg',eyebrow:'Plan your next move',title:'Event Calendar',text:'Discover event activities, featured rewards and the details that matter when planning your next move.',action:'View calendar'}
 ];
 const shortcuts=[
@@ -15,7 +16,8 @@ const shortcuts=[
  {href:'/resources/?q=Alliance%20Honor',label:'Alliance Honor'},
  {href:'/chests/?source=events',label:'Event Chests'},
  {href:'/chests/?source=bosses',label:'Boss Chests'},
- {href:'/calendar/',label:'Event Calendar'}
+ {href:'/calendar/',label:'Event Calendar'},
+ {href:'/loot-compass/',label:'Loot Compass'}
 ];
 ---
 <!doctype html>
@@ -94,7 +96,7 @@ footer{padding:27px 0;border-top:1px solid #314c62;font-size:.81rem;color:#aebfd
 <div class="kicker">EvonyMasters · Player tools</div>
 <h1 id="home-title">Rule smarter. <span>Raid richer. Play sharper.</span></h1>
 <p class="hero-intro">Your command center for the good stuff. Hunt down the rewards you want, crack open chest possibilities, track events and make every move count.</p>
-<div class="actions"><a class="btn primary" href="/resources/">⌕ &nbsp; Explore Item Finder <span aria-hidden="true">→</span></a><a class="btn secondary" href="/chests/">▣ &nbsp; Open Chest Finder <span aria-hidden="true">→</span></a></div>
+<div class="actions"><a class="btn primary" href="/loot-compass/">✦ &nbsp; Try Loot Compass <span aria-hidden="true">→</span></a><a class="btn secondary" href="/chests/">▣ &nbsp; Open Chest Finder <span aria-hidden="true">→</span></a></div>
 
 </div></div></section>
 <div class="wrap main-content">
