@@ -112,7 +112,7 @@ export function eligibleRecord(row,target,index,day=dayUTC()) {
   const guaranteed=Math.max(...rewards.map(x=>x.value));
   const stamina=parseAmount(row.context?.stamina);
   return {id:row.source+"|"+row.title+"|"+JSON.stringify(row.context||{}),
-    name:row.title,source:row.source,frequency:row.context?.frequency||"",
+    name:row.title,source:row.source,calendarIds:calendarSourceIds(row),frequency:row.context?.frequency||"",
     detail:row.note||"",stamina,guaranteed,rewards};
 }
 export function rankRecords(records) {
@@ -177,7 +177,11 @@ export function eventForecast(events,index,quantity,today=dayUTC(),horizon=60) {
  const goal=parseAmount(quantity);
  const top=[...(events||[])].filter(x=>x.guaranteed>0).sort((a,b)=>b.guaranteed-a.guaranteed)[0];
  if(!top)return null;
- const dates=scheduledDays(index,"Event",top.name,today,horizon);
+ const confirmed=new Set((index?.occurrences||[])
+  .filter(event=>event.kind==="Event"&&(top.calendarIds||[]).includes(event.sourceId))
+  .map(event=>event.date));
+ const dates=Array.from({length:horizon},(_,i)=>dayAdd(today,i))
+  .filter(date=>confirmed.has(date)||isLive(index,"Event",top.name,date));
  const reward=top.guaranteed;
  const claims=goal===null?null:Math.ceil(goal/reward);
  const when=claims!==null&&claims>0&&dates.length>=claims?dates[claims-1]:null;
