@@ -159,7 +159,7 @@ $("form").addEventListener("submit",async event=>{
  event.preventDefault();if(abort)abort.abort();abort=new AbortController();
  const target=$("item").value.trim(),quantity=$("quantity").value.trim(),stamina=$("stamina").value.trim(),days=$("days").value.trim();
  if(!target||[quantity,stamina,days].some(x=>x!==""&&parseAmount(x)===null)||days!==""&&parseAmount(days)===0){stateMsg("Enter a valid item and nonnegative whole quantities; days must be positive.",true);return}
- for(const id of ["result","event-section","monster-section","allocation-section"])$(id).hidden=true;
+ for(const id of ["result","event-section","monster-section","checklist-section","allocation-section"])$(id).hidden=true;
  $("calculate").disabled=true;stateMsg("Loading LIVE availability and item rewards…");
  try{
   const today=dayUTC(),horizon=Math.min(60,Math.max(1,parseAmount(days)||1));
