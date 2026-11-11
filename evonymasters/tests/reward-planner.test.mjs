@@ -32,8 +32,7 @@ test('only matching scheduled and confirmed dates qualify',()=>{
  assert.deepEqual(scheduledDays(index,'Event','Crazy Eggs','2026-11-12',3),['2026-11-12','2026-11-13']);
  const ymir={source:'event-bosses',title:'Ymir - Level 5',context:{event:'Ymir',stamina:'40'},items:[{item:'Super Safe Resource Chest',quantity:'2',classification:'Guaranteed',route:['Boss Chest','Super Safe Resource Chest']}]};
  const matched=eligibleRecord(ymir,'Combined Resources',index,'2026-11-12');
- assert.equal(matched.guaranteed,0);
- assert.equal(matched.possible,8e6);
+ assert.equal(matched,null);
 });
 test('nested chest not mistaken for guaranteed loot and unknown quantity ignored',()=>{
  const index=liveIndex([{date:'2026-11-12',name:'Crazy Eggs',kind:'Event',status:'Confirmed'}]);
@@ -43,14 +42,14 @@ test('nested chest not mistaken for guaranteed loot and unknown quantity ignored
  ]};
  const eligible=eligibleRecord(row,'Combined Resources',index,'2026-11-12');
  assert.equal(eligible.guaranteed,60e6);
- assert.equal(eligible.possible,0);
+ assert.equal(eligible.rewards.length,1);
 });
 test('one-time stamina budget is not multiplied by number of days',()=>{
  const monster={name:'Test Monster',source:'bosses',stamina:40,guaranteed:1e6,possible:4e6};
  const result=plan([monster],{target:'Combined Resources',quantity:'7B',stamina:'10000',days:'7'});
  assert.equal(result.allocation[0].hunts,250);
  assert.equal(result.monsterGuaranteed,250e6);
- assert.equal(result.monsterPossible,1e9);
+ assert.equal(result.monsterGuaranteed,250e6);
  assert.equal(result.dailyGoal,1e9);
 });
 test('no stamina leaves recommendation visible without inventing hunts',()=>{
@@ -58,4 +57,21 @@ test('no stamina leaves recommendation visible without inventing hunts',()=>{
  const result=plan([monster],{target:'Ore',quantity:'7B'});
  assert.equal(result.allocation.length,0);
  assert.equal(result.stamina,null);
+});
+
+test('exclude possible rewards and direct alternatives never get summed',()=>{
+ const index=liveIndex([{date:'2026-11-12',name:'Crazy Eggs',kind:'Event',status:'Confirmed'}]);
+ const row={source:'events',title:'Crazy Eggs',context:{},items:[
+  {item:'Super Safe Resources Chest',quantity:'5',classification:'Guaranteed',route:['Super Safe Resources Chest']},
+  {item:'Super Safe Resources Chest',quantity:'15',classification:'Guaranteed',route:['Super Safe Resources Chest']},
+  {item:'Super Safe Resources Chest',quantity:'100',classification:'Possible',route:['Super Safe Resources Chest']},
+  {item:'Ore',quantity:'500M',classification:'Guaranteed',route:['Boss Chest','Ore']}
+ ]};
+ const eligible=eligibleRecord(row,'Combined Resources',index,'2026-11-12');
+ assert.equal(eligible.guaranteed,60e6);
+ assert.equal(eligible.rewards.length,2);
+});
+test('tentative calendar records do not count as confirmed LIVE availability',()=>{
+ const index=liveIndex([{date:'2026-11-12',name:'Crazy Eggs',kind:'Event',status:'Tentative'}]);
+ assert.equal(isLive(index,'Event','Crazy Eggs','2026-11-12'),false);
 });
