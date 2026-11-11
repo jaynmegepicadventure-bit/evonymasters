@@ -34,42 +34,35 @@ table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 10p
 <p id="status" role="status" class="muted">Search to check confirmed LIVE schedules and freshly synced rewards.</p>
 <section id="result" hidden aria-live="polite">
 <div class="panel spotlight">
-<div class="eyebrow">Your reward outlook</div>
-<h2 id="recommend-title">Loot Compass recommendation</h2>
-<p id="no-results-explanation" class="note" hidden></p>
+<div class="eyebrow">Confirmed calendar reward outlook</div>
+<h2 id="recommend-title">Loot Compass</h2>
 <p id="recommend-intro"></p>
+<p id="no-results-explanation" class="note" hidden></p>
 <div class="summary" id="summary"></div>
 <p id="combined-estimate" class="note" style="margin-top:15px"></p>
 </div>
-<div class="recommend-grid">
-<article class="panel" id="event-card">
-<div class="eyebrow">01 · Events first</div>
-<h2 id="event-name">Recommended LIVE event</h2>
-<p class="rec-number" id="event-reward"></p>
-<p id="event-explanation"></p>
-<div class="note" id="event-estimate"></div>
-</article>
-<article class="panel" id="monster-card">
-<div class="eyebrow">02 · Monster farming</div>
-<h2 id="monster-name">Recommended LIVE monster</h2>
-<p class="rec-number" id="monster-reward"></p>
-<p id="monster-explanation"></p>
-<div class="note" id="monster-estimate"></div>
-</article>
+<div class="panel" id="event-card">
+<div class="eyebrow">01 · Event rewards (not stamina-limited)</div>
+<h2>Events contributing to your total</h2>
+<p class="muted">Assumes all qualifying activities are completed, the highest documented tier is reached, and first place is achieved for ranking prizes. These are conditional guaranteed prize entries, not automatically received items.</p>
+<div class="scroll"><table><thead><tr><th>LIVE event</th><th>Confirmed days</th><th>Per qualifying day</th><th>Event total</th></tr></thead><tbody id="event-breakdown"></tbody></table></div>
+<p class="note" id="event-estimate"></p>
+</div>
+<div class="panel" id="monster-card">
+<div class="eyebrow">02 · Monster farming (stamina only)</div>
+<h2>Top 10 highest-returning LIVE monsters</h2>
+<p class="muted">Each row independently spends your full total stamina budget on that monster. These are alternatives, not rewards that can all be collected with the same stamina.</p>
+<div class="scroll"><table><thead><tr><th>Monster</th><th>Stamina / kill</th><th>Item / kill</th><th>Number to kill</th><th>Return</th></tr></thead><tbody id="monster-breakdown"></tbody></table></div>
+<p id="monster-empty" class="note" hidden>No live monsters provide this item.</p>
 </div>
 <div class="panel">
-<h2>Other confirmed LIVE opportunities</h2>
-<p class="muted">Automatically ranked. No need to select, tick or claim anything here.</p>
-<div id="other-results" class="opportunities"></div>
-</div>
-<div class="panel">
-<h2>How reliable is this plan?</h2>
+<h2>How the estimate works</h2>
 <p id="caveat" class="note"></p>
 </div>
 </section>
 </main>
 <script>
-import {normalise,parseAmount,dayUTC,dayAdd,liveIndex,eligibleRecord,periodYield} from '../../lib/reward-planner.mjs';
+import {normalise,parseAmount,dayUTC,dayAdd,liveIndex,eligibleRecord,periodBreakdown} from '../../lib/reward-planner.mjs';
 const SHEET="https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev";
 const CALENDAR="https://evonymasters-calendar.jaynmegepicadventure.workers.dev/api/events";
 const $=id=>document.getElementById(id),fmt=n=>n===null||n===undefined?"—":new Intl.NumberFormat("en-US",{maximumFractionDigits:0}).format(n);
@@ -176,51 +169,55 @@ function mergeGroups(groups) {
  }
  return [...unique.values()];
 }
-function show(rows,target,stamina,days,index,today,calendar,diagnostics,partialRewards){
- const estimate=periodYield(rows,index,{stamina,days,start:today,checkedDays:calendar.daysChecked});
- if(!estimate)throw Error("Enter valid total stamina and number of days");
- const event=estimate.events[0]||null,monster=estimate.monster;
- const empty=$("no-results-explanation");
- empty.hidden=rows.length>0;
- if(!rows.length)empty.textContent="No quantified directly guaranteed "+target+" matches were found on confirmed Calendar dates. The Calendar listed "+diagnostics.confirmed+" confirmed occurrences in the checked period, and reward search returned "+diagnostics.groups+" source groups. Possible rewards and unverified chest contents are excluded.";
- $("recommend-title").textContent="What could you earn in "+estimate.days+" day"+(estimate.days===1?"":"s")+"?";
- $("recommend-intro").textContent="For "+fmt(estimate.stamina)+" total stamina, here is your farming scenario based on confirmed Calendar records and direct guaranteed prize entries.";
+function show(rows,target,stamina,days,index,today,calendar,diagnostics,partialRewards) {
+ const forecast=periodBreakdown(rows,index,{stamina,days,start:today,checkedDays:calendar.daysChecked});
+ if(!forecast)throw Error("Enter valid total stamina and a number of days from 1 to 60");
+ const title=$("recommend-title");
+ title.textContent="Your "+target+" outlook for "+forecast.days+" day"+(forecast.days===1?"":"s");
+ $("recommend-intro").textContent="Event qualifying rewards are separate from monster stamina. Monster rankings use "+fmt(forecast.stamina)+" TOTAL stamina, once, across the period.";
  const summary=$("summary");summary.replaceChildren();
  for(const [label,value] of [
-  ["Monster farming",fmt(estimate.monsterTotal)+" "+target],
-  ["Conditional event rewards",fmt(estimate.eventConditionalTotal)+" "+target],
-  ["Illustrative combined",fmt(estimate.illustrativeCombined)+" "+target]
- ]){
+  ["Event total (assuming completion)",fmt(forecast.eventTotal)+" "+target],
+  ["Best monster with full stamina",forecast.topMonster?fmt(forecast.topMonster.total)+" "+target:"No LIVE monster"],
+  ["Confirmed Calendar days",fmt(forecast.checkedDays)+" / "+fmt(forecast.days)]
+ ]) {
   const card=document.createElement("div");card.className="stat";
-  const caption=document.createElement("span");caption.className="muted";caption.textContent=label;
-  const strong=document.createElement("strong");strong.textContent=value;
-  card.append(caption,strong);summary.append(card);
+  const name=document.createElement("span");name.className="muted";name.textContent=label;
+  const valueNode=document.createElement("strong");valueNode.textContent=value;
+  card.append(name,valueNode);summary.append(card);
  }
  const note=[];
- if(!estimate.complete)note.push("Only "+estimate.checkedDays+" of "+estimate.days+" requested Calendar days could be verified. Totals cover those confirmed dates only.");
- if(partialRewards)note.push("Some reward queries failed or were truncated, so actual recorded opportunities may be missing.");
- note.push("The combined number is an illustrative opportunity total, NOT guaranteed earnings. Event rewards require completing eligible milestones, may overlap, and may consume additional stamina or resources.");
+ if(!forecast.complete)note.push("Calendar coverage is incomplete: only "+forecast.checkedDays+" of "+forecast.days+" days verified. All event amounts below cover only those days.");
+ if(partialRewards)note.push("Some reward queries were incomplete; matching results may be missing.");
+ note.push("Events assume qualification for the stated reward, including highest documented Tier N and rank 1 where applicable. Event rewards may require overlapping actions or costs. The event total is the sum of the event rows below, not a guaranteed amount already earned.");
  $("combined-estimate").textContent=note.join(" ");
- $("event-name").textContent=event?event.name:"No matching confirmed event";
- $("event-reward").textContent=event?fmt(event.conditionalTotal)+" "+target+" potential":"No conditional event amount found";
- $("event-explanation").textContent=event?
-  fmt(event.perCompletion)+" "+target+" per qualifying completion on "+event.occurrences+" confirmed Calendar day(s).":
-  "No confirmed Calendar event with quantified direct guaranteed "+target+" was found for the checked dates.";
- $("event-estimate").textContent=event?
-  "Confirmed dates: "+event.dates.join(", ")+". Reward requires completing the event conditions."+(event.staminaCostKnown?" Recorded stamina per completion: "+fmt(event.staminaPerCompletion)+", NOT subtracted from the monster allocation.":" Event costs are not included in the monster stamina budget."):
-  "Event income is not counted as automatically earned. Check the Calendar for future confirmed appearances.";
- $("monster-name").textContent=monster?monster.name:"No matching confirmed monster";
- $("monster-reward").textContent=monster?fmt(monster.total)+" "+target+" from "+fmt(monster.hunts)+" hunts":"No monster yield calculated";
- $("monster-explanation").textContent=monster?
-  fmt(monster.rewardPerHunt)+" "+target+" guaranteed per hunt, "+fmt(monster.staminaPerHunt)+" stamina each. Recommended for reward per stamina.":
-  "No confirmed LIVE monster with a quantified direct guaranteed "+target+" reward and known stamina cost was found today.";
- $("monster-estimate").textContent=monster?
-  "Use "+fmt(monster.staminaUsed)+" of your "+fmt(estimate.stamina)+" total stamina; "+fmt(monster.remainingStamina)+" remains. These hunts may be spread across the requested days, subject to monster availability and your pace.":
-  "No monster stamina is allocated. We don't invent drop chances or hunt rates.";
- const other=$("other-results");other.replaceChildren();
- for(const e of estimate.events.slice(1,7))line(other,"Event · "+e.name,e.conditionalTotal,e.occurrences+" confirmed day(s) × "+fmt(e.perCompletion)+" per qualifying completion");
- if(!estimate.events.length){const msg=document.createElement("p");msg.className="muted";msg.textContent="No further quantified guaranteed event opportunities in the checked Calendar window.";other.append(msg)}
- $("caveat").textContent="Guaranteed classification describes the recorded prize after its conditions have been met, not a guaranteed completion or automatic payout. Only one top recorded award is counted per named event per confirmed day; different events are shown as separate opportunities and may have mutually exclusive requirements. Monster yield assumes each counted direct guaranteed reward applies to each hunt and that the monster remains available. Super and Super Safe Resource Chests count only their "+target+" share. Possible drops, nested chests and unknown quantities are excluded. No stamina regeneration or daily stamina multiplication is assumed.";
+ const eb=$("event-breakdown");eb.replaceChildren();
+ for(const event of forecast.events){
+  const tr=document.createElement("tr");
+  for(const value of [event.name,event.occurrences,fmt(event.perCompletion),fmt(event.conditionalTotal)]){
+   const td=document.createElement("td");td.textContent=String(value);tr.append(td);
+  }
+  eb.append(tr);
+ }
+ if(!forecast.events.length){
+  const tr=document.createElement("tr"),td=document.createElement("td");
+  td.colSpan=4;td.textContent="No confirmed LIVE events have qualifying guaranteed "+target+" rewards in the verified period.";tr.append(td);eb.append(tr);
+ }
+ $("event-estimate").textContent="Event subtotal: "+fmt(forecast.eventTotal)+" "+target+" assuming all listed completion and first-place requirements are fulfilled. Ranking rewards without identifiable first-place values are excluded.";
+ const mb=$("monster-breakdown");mb.replaceChildren();
+ for(const monster of forecast.monsters) {
+  const tr=document.createElement("tr");
+  const displayName=monster.name+(monster.level?" · Lv "+monster.level:"");
+  for(const value of [displayName,fmt(monster.staminaPerKill),fmt(monster.perKill),fmt(monster.kills),fmt(monster.total)]){
+   const td=document.createElement("td");td.textContent=String(value);tr.append(td);
+  }
+  mb.append(tr);
+ }
+ $("monster-empty").hidden=forecast.monsters.length>0;
+ $("caveat").textContent="Only direct, quantified Guaranteed reward entries from confirmed Calendar sources are included. First-place rankings and highest documented tiers are assumptions, not guaranteed achievements. For each event activity, the largest qualifying entry is used rather than stacking mutually exclusive prize variants. The event subtotal adds all shown events and assumes their conditions can all be met. Each monster row is an alternative use of the SAME stamina budget: floor(total stamina ÷ stamina per kill) × recorded guaranteed item per kill. Possible drops, nested chests, unknown quantities and stamina regeneration are excluded. Food includes Safe Food and the Food portion of Super and Super Safe Resource Chests.";
+ const empty=$("no-results-explanation");
+ empty.hidden=forecast.events.length>0||forecast.monsters.length>0;
+ if(!empty.hidden)empty.textContent="No qualifying guaranteed "+target+" matches were found. Calendar supplied "+diagnostics.confirmed+" confirmed occurrences and reward search returned "+diagnostics.groups+" groups before LIVE and ranking checks.";
  $("result").hidden=false;
 }
 let abort=null;
