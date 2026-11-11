@@ -37,6 +37,7 @@ table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 10p
 <div class="panel spotlight">
 <div class="eyebrow">Your recommended route</div>
 <h2 id="recommend-title">Loot Compass recommendation</h2>
+<p id="no-results-explanation" class="note" hidden></p>
 <p id="recommend-intro"></p>
 <div class="summary" id="summary"></div>
 <p id="combined-estimate" class="note" style="margin-top:15px"></p>
@@ -167,8 +168,13 @@ function mergeGroups(groups) {
  }
  return [...unique.values()];
 }
-function show(rows,target,quantity,stamina,days,wasTruncated,index,today,windowDays){
+function show(rows,target,quantity,stamina,days,wasTruncated,index,today,windowDays,diagnostics){
  const result=plan(rows,{target,quantity,stamina,days});
+ const missing=$("no-results-explanation");
+ missing.hidden=rows.length>0;
+ if(!rows.length){
+  missing.textContent="No confirmed LIVE sources have a quantified, directly guaranteed reward matching "+target+" for "+today+" (UTC). Calendar returned "+diagnostics.confirmed+" confirmed entries today; reward search returned "+diagnostics.groups+" groups before the guaranteed-only and LIVE checks. This can also mean an event reward is recorded as a possible drop, nested chest content, or an unquantified milestone. No values have been invented.";
+ }
  const event=eventForecast(result.events,index,quantity,today,windowDays);
  const monster=monsterForecast(result.monsters,quantity,stamina);
  const amount=result.quantity;
@@ -246,10 +252,10 @@ $("form").addEventListener("submit",async event=>{
   ]);
   const searches=rewards.searches;
   const index=liveIndex(calendar.events,today);
-  const rows=mergeGroups(searches.flatMap(x=>x.groups))
-   .map(row=>eligibleRecord(row,target,index,today)).filter(Boolean);
-  show(rows,target,quantity||null,stamina||null,days||null,searches.some(x=>x.truncated)||rewards.failures.length>0,index,today,calendar.daysChecked);
-  stateMsg("Showing "+rows.length+" confirmed LIVE matching sources for "+today+" (UTC); "+calendar.daysChecked+" Calendar day(s) checked."+(calendar.forecastLimited?" Future forecast is limited by Calendar response size or availability.":"")+(rewards.failures.length?" Some reward queries could not load; recommendations may be incomplete.":""));
+  const allGroups=mergeGroups(searches.flatMap(x=>x.groups));
+  const rows=allGroups.map(row=>eligibleRecord(row,target,index,today)).filter(Boolean);
+  show(rows,target,quantity||null,stamina||null,days||null,searches.some(x=>x.truncated)||rewards.failures.length>0,index,today,calendar.daysChecked,{confirmed:calendar.events.filter(x=>x.date===today&&x.status==="Confirmed").length,groups:allGroups.length});
+  stateMsg(rows.length?"Showing "+rows.length+" confirmed LIVE matching sources for "+today+" (UTC); "+calendar.daysChecked+" Calendar day(s) checked.":"No quantified guaranteed matching LIVE rewards found today. See the explanation below."+(calendar.forecastLimited?" Future forecast is limited by Calendar response size or availability.":"")+(rewards.failures.length?" Some reward queries could not load; recommendations may be incomplete.":""));
  }catch(e){if(e.name!=="AbortError")stateMsg("Unable to produce a LIVE plan: "+e.message+". No fallback to unverified availability was used.",true)}
  finally{$("calculate").disabled=false}
 });
