@@ -208,3 +208,49 @@ export function hasBudgetedMonster(monster,goal) {
   monster!==null && monster!==undefined &&
   monster.rewardInBudget!==null && Number.isFinite(monster.rewardInBudget);
 }
+
+/**
+ * Period yield scenarios. Stamina is a single total budget, never daily.
+ * One qualifying direct award per event per confirmed date; separate events
+ * may have overlapping requirements, so event totals are conditional only.
+ */
+export function periodYield(records,index,{stamina,days,start=dayUTC(),checkedDays=days}={}) {
+ const budget=parseAmount(stamina),horizon=parseAmount(days),covered=parseAmount(checkedDays);
+ if(budget===null||horizon===null||horizon<1||horizon>60||covered===null||covered<1)return null;
+ const coverage=Math.min(horizon,covered);
+ const entries=(records||[]).filter(record=>record?.guaranteed>0);
+ const events=entries.filter(record=>record.source==="events");
+ const monsters=rankRecords(entries.filter(record=>record.source!=="events"&&record.stamina>0));
+ const monster=monsters[0]||null;
+ const hunts=monster?Math.floor(budget/monster.stamina):0;
+ const monsterTotal=monster?hunts*monster.guaranteed:0;
+ const bestPerEvent=new Map();
+ for(const record of events) {
+  const key=record.calendarIds?.[0]||"Event|"+normalise(record.name);
+  const previous=bestPerEvent.get(key);
+  if(!previous||record.guaranteed>previous.guaranteed)bestPerEvent.set(key,record);
+ }
+ const opportunities=[];
+ for(const event of bestPerEvent.values()) {
+  const sourceIds=new Set(event.calendarIds||[]);
+  const dates=Array.from({length:coverage},(_,i)=>dayAdd(start,i)).filter(date=>
+    (index?.occurrences||[]).some(entry=>entry.kind==="Event"&&entry.date===date&&
+      (sourceIds.has(entry.sourceId)||normalise(entry.name)===normalise(event.name)))
+  );
+  if(!dates.length)continue;
+  opportunities.push({name:event.name,perCompletion:event.guaranteed,dates,
+    occurrences:dates.length,conditionalTotal:dates.length*event.guaranteed,
+    staminaCostKnown:event.stamina>0,staminaPerCompletion:event.stamina||null});
+ }
+ opportunities.sort((a,b)=>b.conditionalTotal-a.conditionalTotal||a.name.localeCompare(b.name));
+ const eventConditionalTotal=opportunities.reduce((sum,event)=>sum+event.conditionalTotal,0);
+ return {stamina:budget,days:horizon,checkedDays:coverage,complete:coverage===horizon,
+  monster:monster?{name:monster.name,staminaPerHunt:monster.stamina,
+    rewardPerHunt:monster.guaranteed,hunts,staminaUsed:hunts*monster.stamina,
+    remainingStamina:budget-hunts*monster.stamina,total:monsterTotal}:null,
+  events:opportunities,eventConditionalTotal,monsterTotal,
+  illustrativeCombined:monsterTotal+eventConditionalTotal,
+  // Event eligibility, mutual exclusions, required tasks and stamina costs
+  // are not verified, so the combined figure must NOT be labelled guaranteed.
+  hasConditionalEvents:opportunities.length>0};
+}
