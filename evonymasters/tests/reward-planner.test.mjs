@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {parseAmount,resourcesFor,valueFor,liveIndex,isLive,eligibleRecord,plan,scheduledDays,dailyChecklist,remainingTarget} from '../src/lib/reward-planner.mjs';
+import {parseAmount,resourcesFor,valueFor,liveIndex,isLive,eligibleRecord,plan,scheduledDays,dailyChecklist,remainingTarget,eventForecast,monsterForecast} from '../src/lib/reward-planner.mjs';
 
 test('quantity input supports suffixes but ignores unverified amounts',()=>{
  assert.equal(parseAmount('7B'),7_000_000_000);
@@ -113,4 +113,34 @@ test('safe and standard single-resource rewards count toward their own targets',
   assert.equal(valueFor(name,'25M',target),25_000_000);
   assert.equal(valueFor(name,'25M','Combined Resources'),25_000_000);
  }
+});
+
+test('event-only completion outlook uses confirmed dates and one prize per appearance',()=>{
+ const today='2026-11-12';
+ const idx=liveIndex([
+  {date:today,name:'Crazy Eggs',kind:'Event',status:'Confirmed'},
+  {date:'2026-11-13',name:'Crazy Eggs',kind:'Event',status:'Confirmed'},
+  {date:'2026-11-13',name:'Crazy Eggs',kind:'Event',status:'Confirmed'},
+  {date:'2026-11-14',name:'Crazy Eggs',kind:'Event',status:'Tentative'},
+  {date:'2026-11-16',name:'Crazy Eggs',kind:'Event',status:'Confirmed'}
+ ],today);
+ const result=eventForecast([{name:'Crazy Eggs',guaranteed:60e6,stamina:null}],idx,'120M',today,7);
+ assert.equal(result.claimsNeeded,2);
+ assert.equal(result.opportunities,3);
+ assert.equal(result.completionDate,'2026-11-13');
+ assert.equal(result.daysUntil,2);
+ const insufficient=eventForecast([{name:'Crazy Eggs',guaranteed:60e6}],idx,'300M',today,7);
+ assert.equal(insufficient.completionDate,null);
+});
+test('monster forecast shows hunt and stamina needs without inventing hunt duration',()=>{
+ const result=monsterForecast([
+  {name:'A',guaranteed:6e6,stamina:40},
+  {name:'B',guaranteed:4e6,stamina:20}
+ ],'5B','10000');
+ assert.equal(result.name,'B');
+ assert.equal(result.huntsNeeded,1250);
+ assert.equal(result.staminaNeeded,25000);
+ assert.equal(result.huntsInBudget,500);
+ assert.equal(result.rewardInBudget,2e9);
+ assert.equal(result.meetsGoal,false);
 });
