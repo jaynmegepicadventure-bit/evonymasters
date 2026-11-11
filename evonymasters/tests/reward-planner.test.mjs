@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {parseAmount,resourcesFor,valueFor,liveIndex,isLive,eligibleRecord,plan,scheduledDays,dailyChecklist,remainingTarget,eventForecast,monsterForecast,hasBudgetedMonster} from '../src/lib/reward-planner.mjs';
+import {parseAmount,resourcesFor,valueFor,liveIndex,isLive,eligibleRecord,plan,scheduledDays,dailyChecklist,remainingTarget,eventForecast,monsterForecast,hasBudgetedMonster,calendarSourceIds} from '../src/lib/reward-planner.mjs';
 
 test('quantity input supports suffixes but ignores unverified amounts',()=>{
  assert.equal(parseAmount('7B'),7_000_000_000);
@@ -166,4 +166,25 @@ test('Calendar monster level and family IDs match reward search grouped names',(
  assert.equal(eligibleRecord(matching,'Food',familyIndex,day)?.guaranteed,2e6);
  const tentative=liveIndex([{name:'Ymir · Lv 5',kind:'Event Boss',level:'5',date:day,status:'Tentative'}],day);
  assert.equal(eligibleRecord(matching,'Food',tentative,day),null);
+});
+
+test('Calendar published source IDs match the reward catalog even with different display names',()=>{
+ const day='2026-11-12';
+ const eventRow={source:'events',title:'Crazy Eggs',context:{},items:[
+  {item:'Safe Food',quantity:'50M',classification:'Guaranteed',route:['Safe Food']}
+ ]};
+ const eventId='event:'+encodeURIComponent('crazy eggs');
+ assert.deepEqual(calendarSourceIds(eventRow),[eventId]);
+ const eventIdx=liveIndex([{name:'Crazy Eggs Daily',sourceId:eventId,kind:'Event',status:'Confirmed',date:day}],day);
+ assert.equal(eligibleRecord(eventRow,'Food',eventIdx,day)?.guaranteed,50e6);
+ const boss={source:'event-bosses',title:'Ymir',context:{level:'5',stamina:'40'},items:[
+  {item:'Food',quantity:'2M',classification:'Guaranteed',route:['Food']}
+ ]};
+ const id='monster:'+encodeURIComponent('event boss|ymir|5');
+ const idx=liveIndex([{name:'Ymir level five',sourceId:id,kind:'Event Boss',date:day,status:'Confirmed',level:'5'}],day);
+ assert.equal(eligibleRecord(boss,'Food',idx,day)?.guaranteed,2e6);
+ const wrong={...boss,context:{level:'4',stamina:'40'}};
+ assert.equal(eligibleRecord(wrong,'Food',idx,day),null);
+ const tentative=liveIndex([{name:'Other',sourceId:id,kind:'Event Boss',date:day,status:'Tentative'}],day);
+ assert.equal(eligibleRecord(boss,'Food',tentative,day),null);
 });
