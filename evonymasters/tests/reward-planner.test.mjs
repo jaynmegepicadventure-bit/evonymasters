@@ -188,3 +188,14 @@ test('Calendar published source IDs match the reward catalog even with different
  const tentative=liveIndex([{name:'Other',sourceId:id,kind:'Event Boss',date:day,status:'Tentative'}],day);
  assert.equal(eligibleRecord(boss,'Food',tentative,day),null);
 });
+
+test('event completion forecast uses confirmed Calendar IDs even when display names differ',()=>{
+ const today='2026-11-12',id='event:'+encodeURIComponent('crazy eggs');
+ const ix=liveIndex([
+  {name:'Crazy Eggs · Daily',sourceId:id,kind:'Event',status:'Confirmed',date:today},
+  {name:'Crazy Eggs · Daily',sourceId:id,kind:'Event',status:'Confirmed',date:'2026-11-13'}
+ ],today);
+ const forecast=eventForecast([{name:'Crazy Eggs',calendarIds:[id],guaranteed:50e6}],ix,'100M',today,3);
+ assert.equal(forecast.opportunities,2);
+ assert.equal(forecast.completionDate,'2026-11-13');
+});
