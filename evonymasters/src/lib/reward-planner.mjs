@@ -146,7 +146,7 @@ export function remainingTarget(quantity,claimed) {
  */
 export function eventForecast(events,index,quantity,today=dayUTC(),horizon=60) {
  const goal=parseAmount(quantity);
- const top=rankRecords((events||[]).filter(x=>x.guaranteed>0))[0];
+ const top=[...(events||[])].filter(x=>x.guaranteed>0).sort((a,b)=>b.guaranteed-a.guaranteed)[0];
  if(!top)return null;
  const dates=scheduledDays(index,"Event",top.name,today,horizon);
  const reward=top.guaranteed;
