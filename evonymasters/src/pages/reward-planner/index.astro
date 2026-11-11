@@ -24,10 +24,10 @@ table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 10p
 <div class="panel"><form id="form">
 <div class="inputs">
 <label>Item
-<input id="item" list="suggestions" placeholder="Gems, Ore, Refining Stone…" value="Combined Resources" required autocomplete="off"/>
+<input id="item" list="suggestions" placeholder="Gems, Ore, Refining Stone…" required autocomplete="off"/>
 <datalist id="suggestions"></datalist></label>
-<label>Target quantity (optional)<input id="quantity" placeholder="7B" value="7B"/></label>
-<label>Total stamina (optional)<input id="stamina" placeholder="10000" value="10000"/></label>
+<label>Target quantity (optional)<input id="quantity" placeholder="e.g. 7B"/></label>
+<label>Total stamina (optional)<input id="stamina" placeholder="e.g. 10000"/></label>
 <label>Number of days (optional)<input id="days" placeholder="Suggest a timeframe"/></label>
 </div>
 <div class="actions"><button type="submit" id="calculate">Calculate reward plan</button><span class="muted">Blank inputs stay optional. Stamina is a one-time budget.</span></div>
@@ -176,6 +176,22 @@ $("form").addEventListener("submit",async event=>{
   stateMsg("Showing eligible LIVE reward sources for "+today+" (UTC). "+rows.length+" matching rows.");
  }catch(e){if(e.name!=="AbortError")stateMsg("Unable to produce a LIVE plan: "+e.message+". No fallback to unverified availability was used.",true)}
  finally{$("calculate").disabled=false}
+});
+// Start a clean one-time search even when the browser restores this page from cache.
+window.addEventListener("pageshow",()=>{
+ if(abort)abort.abort();
+ $("form").reset();
+ $("item").value="";
+ $("quantity").value="";
+ $("stamina").value="";
+ $("days").value="";
+ $("claimed").value="";
+ $("suggestions").replaceChildren();
+ $("checklist-items").replaceChildren();
+ state.checklist=[];state.checks.clear();state.goal=null;
+ for(const id of ["result","event-section","monster-section","checklist-section","allocation-section"])$(id).hidden=true;
+ $("calculate").disabled=false;
+ stateMsg("Choose an item to start a new one-time LIVE search.");
 });
 let timer;
 $("item").addEventListener("input",()=>{
