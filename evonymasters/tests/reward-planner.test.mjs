@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {parseAmount,resourcesFor,valueFor,liveIndex,isLive,eligibleRecord,plan,scheduledDays,dailyChecklist,remainingTarget,eventForecast,monsterForecast} from '../src/lib/reward-planner.mjs';
+import {parseAmount,resourcesFor,valueFor,liveIndex,isLive,eligibleRecord,plan,scheduledDays,dailyChecklist,remainingTarget,eventForecast,monsterForecast,hasBudgetedMonster} from '../src/lib/reward-planner.mjs';
 
 test('quantity input supports suffixes but ignores unverified amounts',()=>{
  assert.equal(parseAmount('7B'),7_000_000_000);
@@ -143,4 +143,13 @@ test('monster forecast shows hunt and stamina needs without inventing hunt durat
  assert.equal(result.huntsInBudget,500);
  assert.equal(result.rewardInBudget,2e9);
  assert.equal(result.meetsGoal,false);
+});
+
+test('combined estimate handles no matching LIVE monster and missing stamina',()=>{
+ assert.equal(hasBudgetedMonster(null,5e9),false);
+ assert.equal(hasBudgetedMonster(undefined,5e9),false);
+ assert.equal(hasBudgetedMonster({rewardInBudget:null},5e9),false);
+ assert.equal(hasBudgetedMonster({rewardInBudget:5e8},null),false);
+ assert.equal(hasBudgetedMonster({rewardInBudget:5e8},5e9),true);
+ assert.equal(hasBudgetedMonster({rewardInBudget:0},5e9),true);
 });
