@@ -112,7 +112,7 @@ export function eligibleRecord(row,target,index,day=dayUTC()) {
   const guaranteed=Math.max(...rewards.map(x=>x.value));
   const stamina=parseAmount(row.context?.stamina);
   return {id:row.source+"|"+row.title+"|"+JSON.stringify(row.context||{}),
-    name:row.title,source:row.source,calendarIds:calendarSourceIds(row),frequency:row.context?.frequency||"",
+    name:row.title,source:row.source,level:row.context?.level||"",context:row.context||{},calendarIds:calendarSourceIds(row),frequency:row.context?.frequency||"",
     detail:row.note||"",stamina,guaranteed,rewards};
 }
 export function rankRecords(records) {
