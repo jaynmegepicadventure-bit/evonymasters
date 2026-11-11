@@ -37,7 +37,7 @@ export function dayAdd(day,delta) {return new Date(Date.parse(day+"T00:00:00Z")+
 export function liveIndex(occurrences, day=dayUTC()) {
   const days=new Map(),today=new Set(),families=new Set();
   for(const event of occurrences) {
-    if(!event || !event.date || !event.name || !["Confirmed","Tentative"].includes(event.status))continue;
+    if(!event || !event.date || !event.name || event.status!=="Confirmed")continue;
     const name=normalise(event.name),kind=event.kind;
     const key=kind+"|"+name;
     if(!days.has(key))days.set(key,new Set());
@@ -64,46 +64,43 @@ export function eligibleRecord(row,target,index,day=dayUTC()) {
   const familyKey=sourceKind+"|"+familyName;
   const familyLive=Boolean(familyName && [...(index.days.get(familyKey)||[])].includes(day) && index.families?.has(familyKey));
   if(!directLive && !familyLive)return null;
-  // Search result nested paths describe potential box contents, not an owned chest.
-  // Never multiply nested rewards without verified chest mechanics.
+  // Direct quantified rewards only. Nested chest items are not a guaranteed payout.
   const rewards=(row.items||[])
-    .map(item=>({...item,value:valueFor(item.item,item.quantity,target),
-      classification:(item.route||[]).length>1?"Possible":item.classification}))
-    .filter(item=>item.value>0 && ["Guaranteed","Possible"].includes(item.classification));
+    .filter(item=>Array.isArray(item.route) && item.route.length===1 && item.classification==="Guaranteed")
+    .map(item=>({...item,value:valueFor(item.item,item.quantity,target)}))
+    .filter(item=>item.value>0);
   if(!rewards.length)return null;
-  const guaranteed=rewards.filter(x=>x.classification==="Guaranteed").reduce((s,x)=>s+x.value,0);
-  const possible=rewards.filter(x=>x.classification==="Possible").reduce((s,x)=>s+x.value,0);
+  // Search details can contain alternatives or multiple milestones, so keep
+  // the highest recorded single reward, never sum them into an invented payout.
+  const guaranteed=Math.max(...rewards.map(x=>x.value));
   const stamina=parseAmount(row.context?.stamina);
-  return {id:row.source+"|"+row.title+"|"+JSON.stringify(row.context||{}),name:row.title,source:row.source,frequency:row.context?.frequency||"",detail:row.note||"",stamina,guaranteed,possible,rewards};
+  return {id:row.source+"|"+row.title+"|"+JSON.stringify(row.context||{}),
+    name:row.title,source:row.source,frequency:row.context?.frequency||"",
+    detail:row.note||"",stamina,guaranteed,rewards};
 }
 export function rankRecords(records) {
-  return [...records].sort((a,b)=> {
-    const weight=x=>x.guaranteed>0?0:1;
-    return weight(a)-weight(b) ||
-      (b.guaranteed/Math.max(1,b.stamina||1))-(a.guaranteed/Math.max(1,a.stamina||1)) ||
-      (b.possible/Math.max(1,b.stamina||1))-(a.possible/Math.max(1,a.stamina||1)) ||
-      a.name.localeCompare(b.name);
-  });
+  return [...records].sort((a,b)=>
+    (b.guaranteed/Math.max(1,b.stamina||1))-(a.guaranteed/Math.max(1,a.stamina||1)) ||
+    b.guaranteed-a.guaranteed || a.name.localeCompare(b.name));
 }
 export function plan(records,{target,quantity=null,stamina=null,days=null}={}) {
   const amount=parseAmount(quantity),budget=parseAmount(stamina),horizon=parseAmount(days);
   const events=rankRecords(records.filter(x=>x.source==="events"));
   const monsters=rankRecords(records.filter(x=>x.source!=="events"&&x.stamina>0));
-  let remaining=budget===null?null:budget,guaranteed=0,possible=0;
+  let remaining=budget,guaranteed=0;
   const allocation=[];
-  for(const monster of monsters) {
-    if(remaining===null)break;
-    const hunts=Math.floor(remaining/monster.stamina);
-    if(hunts<=0)continue;
-    const limited=hunts;remaining-=limited*monster.stamina;
-    allocation.push({...monster,hunts:limited,totalStamina:limited*monster.stamina,guaranteedTotal:limited*monster.guaranteed,possibleTotal:limited*monster.possible});
-    guaranteed+=limited*monster.guaranteed;
-    possible+=limited*monster.possible;
-    // Allocate all to the best qualifying monster. Other options remain visible separately.
-    break;
+  if(remaining!==null && monsters.length) {
+    const best=monsters[0],hunts=Math.floor(remaining/best.stamina);
+    if(hunts>0) {
+      remaining-=hunts*best.stamina;
+      guaranteed=hunts*best.guaranteed;
+      allocation.push({...best,hunts,totalStamina:hunts*best.stamina,guaranteedTotal:guaranteed});
+    }
   }
-  return {target,quantity:amount,stamina:budget,days:horizon,events,monsters,allocation,monsterGuaranteed:guaranteed,monsterPossible:possible,staminaRemaining:remaining,
-    suggestedGuaranteedQuantity:budget===null?null:guaranteed, suggestedConditionalQuantity:budget===null?null:guaranteed+possible,
+  return {target,quantity:amount,stamina:budget,days:horizon,events,monsters,allocation,
+    monsterGuaranteed:guaranteed,staminaRemaining:remaining,
+    suggestedGuaranteedQuantity:budget===null?null:guaranteed,
     dailyGoal:amount!==null&&horizon?Math.ceil(amount/horizon):null,
-    warning:"Only verified LIVE sources are shown. Event milestones are not automatically counted as earned; possible rewards have unknown drop rates."};
+    // No event income is assumed: rank, activity and milestone requirements vary.
+    warning:"Showing confirmed LIVE schedules and quantified guaranteed reward entries only. Event payouts require completing the stated activities. Resource costs, repeats and chest mechanics remain unverified; completion dates are not estimated."};
 }
