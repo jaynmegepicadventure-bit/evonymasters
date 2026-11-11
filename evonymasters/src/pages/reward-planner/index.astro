@@ -90,7 +90,7 @@ function mergeGroups(groups) {
 function show(rows,target,quantity,stamina,days,wasTruncated,calendarTruncated) {
  const result=plan(rows,{target,quantity,stamina,days});
  const summary=$("summary");summary.replaceChildren();
- for(const [title,val] of [["Item",target],["Target",result.quantity===null?"Suggested from available sources":fmt(result.quantity)],["Stamina",result.stamina===null?"Suggested from sources":fmt(result.stamina)],["Timeframe",result.days===null?"Not specified":result.days+" days"],["Daily target",fmt(result.dailyGoal)],["LIVE sources",rows.length]]) {
+ for(const [title,val] of [["Item",target],["Target",result.quantity===null?"Player target not specified":fmt(result.quantity)],["Stamina",result.stamina===null?"Suggested from sources":fmt(result.stamina)],["Timeframe",result.days===null?"Not specified":result.days+" days"],["Daily target",fmt(result.dailyGoal)],["LIVE sources",rows.length],["Suggested obtainable from stamina",fmt(result.suggestedGuaranteedQuantity)],["Conditional extra potential",fmt(result.monsterPossible)]]) {
   const card=document.createElement("div");card.className="stat";
   const small=document.createElement("span");small.textContent=title;small.className="muted";const strong=document.createElement("strong");strong.textContent=String(val);
   card.append(small,strong);summary.append(card);
