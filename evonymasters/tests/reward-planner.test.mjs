@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {parseAmount,resourcesFor,valueFor,liveIndex,isLive,eligibleRecord,plan,scheduledDays,dailyChecklist,remainingTarget,eventForecast,monsterForecast,hasBudgetedMonster,calendarSourceIds,periodYield} from '../src/lib/reward-planner.mjs';
+import {parseAmount,resourcesFor,valueFor,liveIndex,isLive,eligibleRecord,plan,scheduledDays,dailyChecklist,remainingTarget,eventForecast,monsterForecast,hasBudgetedMonster,calendarSourceIds,periodYield,periodBreakdown,rewardQualification} from '../src/lib/reward-planner.mjs';
 
 test('quantity input supports suffixes but ignores unverified amounts',()=>{
  assert.equal(parseAmount('7B'),7_000_000_000);
