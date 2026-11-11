@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {parseAmount,resourcesFor,valueFor,liveIndex,isLive,eligibleRecord,plan,scheduledDays,dailyChecklist,remainingTarget,eventForecast,monsterForecast,hasBudgetedMonster,calendarSourceIds} from '../src/lib/reward-planner.mjs';
+import {parseAmount,resourcesFor,valueFor,liveIndex,isLive,eligibleRecord,plan,scheduledDays,dailyChecklist,remainingTarget,eventForecast,monsterForecast,hasBudgetedMonster,calendarSourceIds,periodYield} from '../src/lib/reward-planner.mjs';
 
 test('quantity input supports suffixes but ignores unverified amounts',()=>{
  assert.equal(parseAmount('7B'),7_000_000_000);
@@ -198,4 +198,36 @@ test('event completion forecast uses confirmed Calendar IDs even when display na
  const forecast=eventForecast([{name:'Crazy Eggs',calendarIds:[id],guaranteed:50e6}],ix,'100M',today,3);
  assert.equal(forecast.opportunities,2);
  assert.equal(forecast.completionDate,'2026-11-13');
+});
+
+test('period yield uses one total stamina budget across days and food-only chest share',()=>{
+ const today='2026-11-12',id='event:'+encodeURIComponent('crazy eggs');
+ const index=liveIndex([
+  {name:'Crazy Eggs',sourceId:id,kind:'Event',status:'Confirmed',date:today},
+  {name:'Crazy Eggs',sourceId:id,kind:'Event',status:'Confirmed',date:'2026-11-13'},
+  {name:'Crazy Eggs',sourceId:id,kind:'Event',status:'Tentative',date:'2026-11-14'}
+ ],today);
+ const records=[
+  {name:'Crazy Eggs',source:'events',calendarIds:[id],guaranteed:15e6},
+  {name:'Crazy Eggs',source:'events',calendarIds:[id],guaranteed:3e6},
+  {name:'Food Boss',source:'bosses',stamina:40,guaranteed:2e6}
+ ];
+ const estimate=periodYield(records,index,{stamina:'10000',days:'3',start:today,checkedDays:3});
+ assert.equal(estimate.monster.hunts,250);
+ assert.equal(estimate.monsterTotal,500e6);
+ assert.equal(estimate.events.length,1);
+ assert.equal(estimate.events[0].occurrences,2);
+ assert.equal(estimate.eventConditionalTotal,30e6);
+ assert.equal(estimate.illustrativeCombined,530e6);
+ assert.equal(estimate.complete,true);
+});
+test('partial Calendar coverage does not pretend to estimate all requested days',()=>{
+ const day='2026-11-12',id='event:'+encodeURIComponent('crazy eggs');
+ const index=liveIndex([{name:'Crazy Eggs',sourceId:id,kind:'Event',status:'Confirmed',date:day}],day);
+ const forecast=periodYield([{name:'Crazy Eggs',source:'events',calendarIds:[id],guaranteed:15e6}],index,{stamina:'1000',days:'10',checkedDays:1,start:day});
+ assert.equal(forecast.complete,false);
+ assert.equal(forecast.checkedDays,1);
+ assert.equal(forecast.eventConditionalTotal,15e6);
+ assert.equal(forecast.monsterTotal,0);
+ assert.equal(periodYield([],index,{stamina:'100',days:'61',start:day}),null);
 });
