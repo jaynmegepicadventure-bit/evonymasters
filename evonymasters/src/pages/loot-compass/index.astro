@@ -69,7 +69,7 @@ table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 10p
 </section>
 </main>
 <script>
-import {normalise,parseAmount,dayUTC,dayAdd,liveIndex,eligibleRecord,plan,eventForecast,monsterForecast} from '../../lib/reward-planner.mjs';
+import {normalise,parseAmount,dayUTC,dayAdd,liveIndex,eligibleRecord,plan,eventForecast,monsterForecast,hasBudgetedMonster} from '../../lib/reward-planner.mjs';
 const SHEET="https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev";
 const CALENDAR="https://evonymasters-calendar.jaynmegepicadventure.workers.dev/api/events";
 const $=id=>document.getElementById(id),fmt=n=>n===null||n===undefined?"—":new Intl.NumberFormat("en-US",{maximumFractionDigits:0}).format(n);
@@ -176,7 +176,7 @@ function show(rows,target,quantity,stamina,days,wasTruncated,index,today,windowD
  let intro=event&&monster?"Start with the highest recorded LIVE event opportunity, then farm the most efficient eligible monster.":event?"Your best recorded LIVE option is an event.":monster?"Your best recorded LIVE option is monster farming.":"No quantified guaranteed rewards were found among confirmed LIVE sources for this item.";
  $("recommend-intro").textContent=intro;
  let combination="Without a target and one-time stamina amount, a combined completion estimate cannot be calculated.";
- if(amount!==null&&monster?.rewardInBudget!==null){
+ if(hasBudgetedMonster(monster,amount)){
   const fromMonster=Math.min(amount,monster.rewardInBudget);
   const stillNeeded=Math.max(0,amount-fromMonster);
   if(stillNeeded===0){
