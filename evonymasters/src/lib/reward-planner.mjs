@@ -65,6 +65,17 @@ export function scheduledDays(index, kind, name, start, count) {
   const dates=index.days.get(kind+"|"+normalise(name))||new Set();
   return Array.from({length:count},(_,i)=>dayAdd(start,i)).filter(x=>dates.has(x));
 }
+// Calendar and Sheet Sync share stable catalog source IDs. Use those IDs
+// before falling back to display names, which can differ by level and punctuation.
+export function calendarSourceIds(row) {
+ const kind=row.source==="events"?"Event":row.source==="event-bosses"?"Event Boss":row.source==="regular"?"Regular Monster":"Boss";
+ const key=value=>String(value??"").trim().toLocaleLowerCase("en").replace(/\s+/g," ");
+ const name=key(row.title),level=key(row.context?.level);
+ if(!name)return [];
+ if(kind==="Event")return ["event:"+encodeURIComponent(name)];
+ const base=key(kind)+"|"+name;
+ return [...(level?["monster:"+encodeURIComponent(base+"|"+level)]:[]),"family:"+encodeURIComponent(base)];
+}
 export function eligibleRecord(row,target,index,day=dayUTC()) {
   const sourceKind=row.source==="events"?"Event":row.source==="event-bosses"?"Event Boss":row.source==="regular"?"Regular Monster":"Boss";
   const directLive=isLive(index,sourceKind,row.title,day);
@@ -85,7 +96,11 @@ export function eligibleRecord(row,target,index,day=dayUTC()) {
     const eventLevel=normalise(event.level||"");
     return !level||eventLevel===level||eventLevel==="level "+level;
   }));
-  if(!directLive && !familyLive && !calendarLevelMatch)return null;
+  const ids=new Set(calendarSourceIds(row));
+  const catalogLive=Boolean(index?.occurrences?.some(event=>
+    event.date===day&&event.kind===sourceKind&&ids.has(event.sourceId)
+  ));
+  if(!directLive && !familyLive && !calendarLevelMatch && !catalogLive)return null;
   // Direct quantified rewards only. Nested chest items are not a guaranteed payout.
   const rewards=(row.items||[])
     .filter(item=>Array.isArray(item.route) && item.route.length===1 && item.classification==="Guaranteed")
@@ -97,7 +112,7 @@ export function eligibleRecord(row,target,index,day=dayUTC()) {
   const guaranteed=Math.max(...rewards.map(x=>x.value));
   const stamina=parseAmount(row.context?.stamina);
   return {id:row.source+"|"+row.title+"|"+JSON.stringify(row.context||{}),
-    name:row.title,source:row.source,frequency:row.context?.frequency||"",
+    name:row.title,source:row.source,calendarIds:calendarSourceIds(row),frequency:row.context?.frequency||"",
     detail:row.note||"",stamina,guaranteed,rewards};
 }
 export function rankRecords(records) {
@@ -162,7 +177,11 @@ export function eventForecast(events,index,quantity,today=dayUTC(),horizon=60) {
  const goal=parseAmount(quantity);
  const top=[...(events||[])].filter(x=>x.guaranteed>0).sort((a,b)=>b.guaranteed-a.guaranteed)[0];
  if(!top)return null;
- const dates=scheduledDays(index,"Event",top.name,today,horizon);
+ const confirmed=new Set((index?.occurrences||[])
+  .filter(event=>event.kind==="Event"&&(top.calendarIds||[]).includes(event.sourceId))
+  .map(event=>event.date));
+ const dates=Array.from({length:horizon},(_,i)=>dayAdd(today,i))
+  .filter(date=>confirmed.has(date)||isLive(index,"Event",top.name,date));
  const reward=top.guaranteed;
  const claims=goal===null?null:Math.ceil(goal/reward);
  const when=claims!==null&&claims>0&&dates.length>=claims?dates[claims-1]:null;
