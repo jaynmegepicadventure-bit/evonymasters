@@ -169,3 +169,9 @@ export function monsterForecast(monsters,quantity,stamina=null) {
   huntsInBudget,rewardInBudget:huntsInBudget===null?null:huntsInBudget*top.guaranteed,
   meetsGoal:huntsInBudget===null||goal===null?null:huntsInBudget*top.guaranteed>=goal};
 }
+
+export function hasBudgetedMonster(monster,goal) {
+ return goal!==null && Number.isFinite(goal) &&
+  monster!==null && monster!==undefined &&
+  monster.rewardInBudget!==null && Number.isFinite(monster.rewardInBudget);
+}
