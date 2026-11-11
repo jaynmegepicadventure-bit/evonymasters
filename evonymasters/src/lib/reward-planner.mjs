@@ -35,16 +35,17 @@ export function valueFor(item,quantity,target) {
 export function dayUTC(now=new Date()) { return now.toISOString().slice(0,10); }
 export function dayAdd(day,delta) {return new Date(Date.parse(day+"T00:00:00Z")+delta*86400000).toISOString().slice(0,10);}
 export function liveIndex(occurrences, day=dayUTC()) {
-  const days=new Map(),today=new Set();
+  const days=new Map(),today=new Set(),families=new Set();
   for(const event of occurrences) {
     if(!event || !event.date || !event.name || !["Confirmed","Tentative"].includes(event.status))continue;
     const name=normalise(event.name),kind=event.kind;
     const key=kind+"|"+name;
     if(!days.has(key))days.set(key,new Set());
+    if(event.family)families.add(key);
     days.get(key).add(event.date);
     if(event.date===day)today.add(key);
   }
-  return {days,today};
+  return {days,today,families};
 }
 export function isLive(index, kind, name, day=dayUTC()) {
   if(!index)return false;
@@ -58,11 +59,16 @@ export function scheduledDays(index, kind, name, start, count) {
 }
 export function eligibleRecord(row,target,index,day=dayUTC()) {
   const sourceKind=row.source==="events"?"Event":row.source==="event-bosses"?"Event Boss":row.source==="regular"?"Regular Monster":"Boss";
-  if(!isLive(index,sourceKind,row.title,day))return null;
+  const directLive=isLive(index,sourceKind,row.title,day);
+  const familyName=normalise(row.context?.event||"");
+  const familyKey=sourceKind+"|"+familyName;
+  const familyLive=Boolean(familyName && [...(index.days.get(familyKey)||[])].includes(day) && index.families?.has(familyKey));
+  if(!directLive && !familyLive)return null;
   // Search result nested paths describe potential box contents, not an owned chest.
   // Never multiply nested rewards without verified chest mechanics.
-  const rewards=(row.items||[]).filter(item=>(item.route||[]).length<=1)
-    .map(item=>({...item,value:valueFor(item.item,item.quantity,target)}))
+  const rewards=(row.items||[])
+    .map(item=>({...item,value:valueFor(item.item,item.quantity,target),
+      classification:(item.route||[]).length>1?"Possible":item.classification}))
     .filter(item=>item.value>0 && ["Guaranteed","Possible"].includes(item.classification));
   if(!rewards.length)return null;
   const guaranteed=rewards.filter(x=>x.classification==="Guaranteed").reduce((s,x)=>s+x.value,0);
