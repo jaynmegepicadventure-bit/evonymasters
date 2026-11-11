@@ -97,7 +97,7 @@ const adminHTML="<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\">
 export default {
  async fetch(request,env,ctx){
   const url=new URL(request.url),path=url.pathname,origin=request.headers.get("origin")||"";
-  const cors=origin===SITE?{"access-control-allow-origin":origin,"vary":"Origin"}:{};
+  const cors=[SITE,"https://evonymasters.pages.dev"].includes(origin)?{"access-control-allow-origin":origin,"vary":"Origin"}:{};
   if(path==="/api/events"){
    if(request.method==="OPTIONS")return new Response(null,{status:204,headers:{...cors,"access-control-allow-methods":"GET, OPTIONS"}});
    if(request.method!=="GET")return respond({error:"Method not allowed"},405,cors);

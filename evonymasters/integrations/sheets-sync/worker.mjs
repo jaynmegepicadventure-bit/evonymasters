@@ -3,7 +3,7 @@
 // Bind DATA (KV namespace) and SYNC_SECRET (Worker secret).
 const MAX_BYTES = 5_000_000;
 const HEADERS = { "content-type": "application/json; charset=utf-8", "cache-control": "no-store", "x-content-type-options": "nosniff" };
-const PUBLIC_ORIGINS = new Set(['https://evonymasters.jaynmegepicadventure.workers.dev']);
+const PUBLIC_ORIGINS = new Set(['https://evonymasters.jaynmegepicadventure.workers.dev','https://evonymasters.pages.dev']);
 const publicHeaders = origin => PUBLIC_ORIGINS.has(origin) ? {'access-control-allow-origin':origin,'vary':'Origin'} : {};
 const reply = (obj, status = 200, headers = {}) => new Response(JSON.stringify(obj), { status, headers: {...HEADERS,...headers} });
 const clean = x => String(x ?? "").trim();
