@@ -62,9 +62,18 @@ const $=id=>document.getElementById(id),fmt=n=>n===null||n===undefined?"—":new
 const state={busy:false,checklist:[],goal:null,checks:new Set()},line=(parent,values)=>{const tr=document.createElement("tr");for(const value of values){const cell=document.createElement("td");cell.textContent=value;tr.append(cell)}parent.append(tr)};
 const stateMsg=(message,error=false)=>{$("status").textContent=message;$("status").className=error?"error":"muted"};
 function terms(target) {
- if(normalise(target)==="combined resources"||["food","wood","stone","ore"].includes(normalise(target))) {
-  const main=normalise(target)==="combined resources"?["Food","Wood","Stone","Ore"]:[target];
-  return [...main,"Super Resources Chest","Super Safe Resource Chest","Super Safe Resources Chest"];
+ const aliases={
+  food:["Food","Safe Food"],
+  wood:["Wood","Lumber","Safe Wood","Safe Lumber"],
+  stone:["Stone","Safe Stone"],
+  ore:["Ore","Safe Ore"]
+ };
+ const canonical=normalise(target);
+ const expanded=canonical==="combined resources"
+  ?Object.values(aliases).flat()
+  :Object.entries(aliases).find(([,names])=>names.some(name=>normalise(name)===canonical))?.[1];
+ if(expanded) {
+  return [...new Set([...expanded,"Super Resources Chest","Super Resource Chest","Super Safe Resource Chest","Super Safe Resources Chest"])];
  }
  return [target];
 }
