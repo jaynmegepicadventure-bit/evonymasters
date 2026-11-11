@@ -153,3 +153,17 @@ test('combined estimate handles no matching LIVE monster and missing stamina',()
  assert.equal(hasBudgetedMonster({rewardInBudget:5e8},5e9),true);
  assert.equal(hasBudgetedMonster({rewardInBudget:0},5e9),true);
 });
+
+test('Calendar monster level and family IDs match reward search grouped names',()=>{
+ const day='2026-11-12';
+ const levelIndex=liveIndex([{name:'Ymir · Lv 5',kind:'Event Boss',level:'5',date:day,status:'Confirmed',family:false}],day);
+ const matching={source:'event-bosses',title:'Ymir',context:{level:'5',stamina:'40'},items:[
+  {item:'Food',quantity:'2M',classification:'Guaranteed',route:['Food']}
+ ]};
+ assert.equal(eligibleRecord(matching,'Food',levelIndex,day)?.guaranteed,2e6);
+ assert.equal(eligibleRecord({...matching,context:{level:'4',stamina:'40'}},'Food',levelIndex,day),null);
+ const familyIndex=liveIndex([{name:'Ymir',kind:'Event Boss',date:day,status:'Confirmed',family:true}],day);
+ assert.equal(eligibleRecord(matching,'Food',familyIndex,day)?.guaranteed,2e6);
+ const tentative=liveIndex([{name:'Ymir · Lv 5',kind:'Event Boss',level:'5',date:day,status:'Tentative'}],day);
+ assert.equal(eligibleRecord(matching,'Food',tentative,day),null);
+});
