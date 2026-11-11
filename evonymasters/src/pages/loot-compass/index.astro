@@ -103,7 +103,7 @@ function stableRecordKey(row){
 async function fetchSearch(term,signal) {
  const groups=[];let truncated=false;
  for(let page=0;page<20;page++){
-  const args=new URLSearchParams({q:term,type:"all",page:String(page),sort:"suggested"});
+  const args=new URLSearchParams({q:term,type:"all",drop:"Guaranteed",page:String(page),sort:"suggested"});
   const response=await fetch(SHEET+"/v3/search?"+args,{signal});
   if(!response.ok)throw Error("Reward search service returned "+response.status);
   const data=await response.json();
@@ -151,7 +151,7 @@ async function fetchAllRewards(target,signal){
    else failures.push(requested[i+j]+": "+(x.reason?.message||"connection failed"));
   }
  }
- if(!searches.length)throw Error("Reward search connection failed for all item queries. Check the Sheet Sync Worker.");
+ if(!searches.length)throw Error("Reward search connection failed for all guaranteed item queries. Check the Sheet Sync Worker.");
  return {searches,failures};
 }
 function mergeGroups(groups) {
@@ -173,7 +173,7 @@ function show(rows,target,quantity,stamina,days,wasTruncated,index,today,windowD
  const missing=$("no-results-explanation");
  missing.hidden=rows.length>0;
  if(!rows.length){
-  missing.textContent="No confirmed LIVE sources have a quantified, directly guaranteed reward matching "+target+" for "+today+" (UTC). Calendar returned "+diagnostics.confirmed+" confirmed entries today; reward search returned "+diagnostics.groups+" groups before the guaranteed-only and LIVE checks. This can also mean an event reward is recorded as a possible drop, nested chest content, or an unquantified milestone. No values have been invented.";
+  missing.textContent="No confirmed LIVE sources have a quantified, directly guaranteed reward matching "+target+" for "+today+" (UTC). Calendar returned "+diagnostics.confirmed+" confirmed entries today; guaranteed-only reward search returned "+diagnostics.groups+" groups before LIVE matching. This can also mean an event reward is recorded as a possible drop, nested chest content, or an unquantified milestone. No values have been invented.";
  }
  const event=eventForecast(result.events,index,quantity,today,windowDays);
  const monster=monsterForecast(result.monsters,quantity,stamina);
