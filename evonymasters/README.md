@@ -65,15 +65,15 @@ git push -u origin main
 
 Create the **empty** GitHub repository before adding `origin`. The workflow at `.github/workflows/ci.yml` validates data, tests search, type-checks Astro and builds on pushes and PRs. Never commit `.env`.
 
-## Cloudflare Pages setup
+## Live deployment and production hostname
 
-1. In Cloudflare Dashboard, go to **Workers & Pages → Create → Pages → Connect to Git** and authorize the GitHub repository.
-2. Select `evonymasters`; framework preset **Astro** (or configure manually).
-3. Build command: `npm run build`; output directory: `dist`; Node.js version: `22` (set environment variable `NODE_VERSION=22` if necessary).
-4. Deploy. Cloudflare supplies a `*.pages.dev` URL and preview deployments for pull requests.
-5. Optionally configure a custom domain later. Set `SITE_URL` to the production URL if using canonical URLs in future.
+The currently verified public website is served from a Cloudflare **Worker**:
 
-GitHub Actions performs CI; Cloudflare's Git integration performs deployment on pushes to `main` and generates previews. Do **not** also add a second deployment action unless you deliberately switch deployment strategies.
+https://evonymasters.jaynmegepicadventure.workers.dev/
+
+The older `evonymasters.pages.dev` address does not resolve and must not be used for sitemap, Search Console, analytics hostname, or canonical links. The Astro `site` setting defaults to the live Workers URL. If a `SITE_URL` environment variable is configured in the deployment, it must be set to that same production URL (or updated consistently when a paid domain is added). Check the Worker deployment in the Cloudflare dashboard after each GitHub build: a successful GitHub Action alone does not prove the public Worker has deployed.
+
+For Cloudflare Web Analytics, register the live `evonymasters.jaynmegepicadventure.workers.dev` hostname and install the site token through `src/components/SeoMetadata.astro`. Be careful not to inject a second analytics script. When eventually moving to a custom domain, also update `public/robots.txt` and the Cloudflare analytics site settings.
 
 ## Next development milestones
 

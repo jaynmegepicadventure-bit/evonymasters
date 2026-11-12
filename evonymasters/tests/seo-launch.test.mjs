@@ -18,7 +18,7 @@ test('sitemap includes real route types but not obsolete redirects',()=>{
  assert.match(code,/buffs/);
  assert.doesNotMatch(code,/['"]\/reward-planner\/['"]/);
  assert.doesNotMatch(code,/['"]\/events\/['"]/);
- assert.match(read('../public/robots.txt'),/Sitemap: https:\/\/evonymasters\.pages\.dev\/sitemap\.xml/);
+ assert.match(read('../public/robots.txt'),/Sitemap: https:\/\/evonymasters\.jaynmegepicadventure\.workers\.dev\/sitemap\.xml/);
 });
 test('metadata uses configured Astro site and homepage has website structured data',()=>{
  const seo=read('../src/components/SeoMetadata.astro');
@@ -37,4 +37,15 @@ test('Cloudflare Web Analytics is installed once in the shared metadata componen
  const privacy=read('../src/pages/privacy/index.astro');
  assert.match(privacy,/Cloudflare Web Analytics is enabled/);
  assert.match(privacy,/Advertising is planned/);
+});
+
+test('configured production base matches confirmed Cloudflare Workers hostname',()=>{
+ const config=read('../astro.config.mjs');
+ const production='https://evonymasters.jaynmegepicadventure.workers.dev';
+ assert.ok(config.includes(production));
+ const sitemap=read('../src/pages/sitemap.xml.ts');
+ assert.ok(sitemap.includes(production));
+ const metadata=read('../src/components/SeoMetadata.astro');
+ assert.ok(metadata.includes(production));
+ assert.ok(!metadata.includes('https://evonymasters.pages.dev'));
 });

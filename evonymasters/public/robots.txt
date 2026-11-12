@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://evonymasters.pages.dev/sitemap.xml
+Sitemap: https://evonymasters.jaynmegepicadventure.workers.dev/sitemap.xml

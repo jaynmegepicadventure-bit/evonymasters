@@ -9,7 +9,7 @@ const pages=['/','/resources/','/chests/','/calendar/','/loot-compass/','/troops
 const escapeXml=(value:string)=>value.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const slugify=(name:string)=>name.toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 export const GET:APIRoute=({site})=>{
- const base=site||new URL('https://evonymasters.pages.dev');
+ const base=site||new URL('https://evonymasters.jaynmegepicadventure.workers.dev');
  const paths=new Set(pages);
  for(const monster of monsters)paths.add('/bosses/'+encodeURIComponent(monster.id)+'/');
  for(const item of items.filter(item=>/^lv\d+-boss-monster-chest$/.test(item.id)))
