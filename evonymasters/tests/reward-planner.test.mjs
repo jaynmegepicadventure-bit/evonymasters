@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {parseAmount,resourcesFor,valueFor,liveIndex,isLive,eligibleRecord,plan,scheduledDays,dailyChecklist,remainingTarget,eventForecast,monsterForecast,hasBudgetedMonster,calendarSourceIds,periodYield,periodBreakdown,rewardQualification} from '../src/lib/reward-planner.mjs';
+import {parseAmount,resourcesFor,valueFor,liveIndex,isLive,eligibleRecord,plan,scheduledDays,dailyChecklist,remainingTarget,eventForecast,monsterForecast,hasBudgetedMonster,calendarSourceIds,periodYield,periodBreakdown,rewardQualification,guaranteedMonsterResourceValue} from '../src/lib/reward-planner.mjs';
 
 test('quantity input supports suffixes but ignores unverified amounts',()=>{
  assert.equal(parseAmount('7B'),7_000_000_000);
@@ -277,4 +277,43 @@ test('ranked rewards are first-place only and higher documented tier is chosen',
  assert.equal(rewardQualification({context:{detail:'Ranking rewards · 1st place'}}).eligible,true);
  assert.equal(rewardQualification({context:{detail:'Tier 5 reward'}}).tier,5);
  assert.equal(rewardQualification({context:{detail:'Leaderboard, rank unspecified'}}).eligible,false);
+});
+
+test('regular and ordinary boss monsters can provide guaranteed rewards without event calendars',()=>{
+ const index=liveIndex([],'2026-11-12');
+ const item={item:'Food',quantity:'2M',classification:'Guaranteed',route:['Food']};
+ for(const source of ['regular','bosses']){
+  const row={source,title:'Always present monster',context:{level:'3',stamina:'20'},items:[item]};
+  assert.equal(eligibleRecord(row,'Food',index,'2026-11-12')?.guaranteed,2e6);
+ }
+ const eventBoss={source:'event-bosses',title:'Special boss',context:{level:'3',stamina:'20'},items:[item]};
+ assert.equal(eligibleRecord(eventBoss,'Food',index,'2026-11-12'),null);
+});
+test('known guaranteed monster chest and guaranteed contents are counted by chest count per kill',()=>{
+ const row={source:'bosses',title:'Boss',context:{stamina:'40'},items:[
+  {item:'Boss Reward Chest',quantity:'2',classification:'Guaranteed',route:['Boss Reward Chest']},
+  {item:'Food',quantity:'3M',classification:'Guaranteed',route:['Boss Reward Chest','Food']},
+  {item:'Safe Food',quantity:'1M',classification:'Guaranteed',route:['Boss Reward Chest','Safe Food']},
+  {item:'Stone',quantity:'20M',classification:'Guaranteed',route:['Boss Reward Chest','Stone']},
+  {item:'Food',quantity:'999M',classification:'Possible',route:['Boss Reward Chest','Food']}
+ ]};
+ assert.equal(guaranteedMonsterResourceValue(row,'Food'),8e6);
+ assert.equal(guaranteedMonsterResourceValue(row,'Combined Resources'),48e6);
+ const eligible=eligibleRecord(row,'Food',liveIndex([]),'2026-11-12');
+ assert.equal(eligible?.guaranteed,8e6);
+ assert.equal(periodBreakdown([eligible],liveIndex([]),{stamina:'400',days:'2',start:'2026-11-12',checkedDays:2}).topMonster.total,80e6);
+});
+test('never infer a guaranteed chest count, possible award or deeper nested chest chain',()=>{
+ const row={source:'regular',title:'Mob',context:{stamina:'10'},items:[
+  {item:'Monster Chest',quantity:'1',classification:'Possible',route:['Monster Chest']},
+  {item:'Food',quantity:'3M',classification:'Possible',route:['Monster Chest','Food']},
+  {item:'Food',quantity:'4M',classification:'Guaranteed',route:['Monster Chest','Food']}
+ ]};
+ assert.equal(guaranteedMonsterResourceValue(row,'Food'),0);
+ assert.equal(eligibleRecord(row,'Food',liveIndex([])),null);
+ row.items[0].classification='Guaranteed';row.items[0].quantity='Unknown';
+ assert.equal(guaranteedMonsterResourceValue(row,'Food'),0);
+ row.items[0].quantity='1';
+ row.items.push({item:'Food',quantity:'99M',classification:'Guaranteed',route:['Monster Chest','Another Chest','Food']});
+ assert.equal(guaranteedMonsterResourceValue(row,'Food'),4e6);
 });
