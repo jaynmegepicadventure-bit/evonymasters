@@ -16,10 +16,10 @@ table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 10p
 .note{background:#233a50;border-left:3px solid #dab56d;padding:13px;border-radius:5px;font-size:.85rem;color:#d8e4ee}.error{color:#ffb9aa}.badge{border:1px solid #7599b0;border-radius:99px;padding:3px 7px;font-size:.73rem}
 #suggestions{max-width:490px}section[hidden]{display:none!important}@media(max-width:750px){.inputs{grid-template-columns:repeat(2,1fr)}.summary{grid-template-columns:1fr}}@media(max-width:460px){.inputs{grid-template-columns:1fr}}
 .spotlight{background:linear-gradient(115deg,#233b50,#162a40);border-color:#b9965b}.recommend-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.recommend-grid .panel{margin-top:19px}.rec-number{font-weight:800;color:#ffe0a2;font-size:1.5rem;margin:8px 0}.opportunities{display:grid;gap:9px}.opportunity{padding:12px 14px;border:1px solid #395873;border-radius:10px;display:flex;justify-content:space-between;gap:18px}.opportunity strong{color:#f6d18c}.opportunity small{display:block;color:#a8bed1;margin-top:4px}.spotlight h2{font-size:1.7rem;color:#f6d18c}@media(max-width:760px){.recommend-grid{grid-template-columns:1fr}} 
+.loot-hero{height:clamp(210px,28vw,330px);border-radius:17px;border:1px solid #655640;overflow:hidden;position:relative;background:#101d29 url('/images/loot-compass-banner.svg') center center/cover no-repeat;box-shadow:0 14px 34px #0005;margin-bottom:20px}.loot-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,18,29,.87),rgba(6,18,29,.3) 55%,transparent 90%);pointer-events:none}.loot-hero-content{position:absolute;z-index:1;bottom:22px;left:clamp(20px,4vw,48px);max-width:78%}.loot-hero h1{color:#fff4dc;text-shadow:0 3px 12px #000b;margin:10px 0 0}.beta-mark{color:#e6bc73;font-size:.48em;vertical-align:middle}@media(max-width:460px){.loot-hero{height:205px;background-position:60% center}.loot-hero-content{left:18px;bottom:17px;max-width:92%}.loot-hero h1{font-size:2rem}}
 </style></head><body><SiteHeader/><main class="wrap">
-<div class="eyebrow">Player tools · Your next haul, mapped</div>
-<h1>Loot Compass <span style="color:#e6bc73;font-size:.48em;vertical-align:middle">BETA</span></h1>
-<p>Pick an item, enter your total stamina and how many days you have. Loot Compass estimates the rewards you could earn from confirmed Calendar events and monster farming. One search, no goal quantity or activity checklist.</p>
+<div class="loot-hero" role="img" aria-label="Golden compass on a parchment map in a fantasy kingdom war room"><div class="loot-hero-content"><div class="eyebrow">Player tools · Your next haul, mapped</div><h1>Loot Compass <span class="beta-mark">BETA</span></h1></div></div>
+<p>Pick an item, enter your total stamina and how many days you have. Loot Compass estimates the rewards you could earn from confirmed Calendar events and monster farming.</p>
 <div class="panel" style="border-color:#a38a58;background:#25364a;margin-top:15px;padding:15px 20px" role="note"><strong>Accuracy notice · Beta</strong><p style="margin:6px 0 0">This planner reads the latest synced EvonyMasters rewards and published Calendar schedules. Drop rates, chest values, milestone rules and availability may be incomplete or change in-game. Guaranteed rewards still require completing the activity. Possible drops are excluded entirely. Verify rewards in-game before committing stamina or resources. When LIVE availability cannot be checked, this planner does not guess.</p></div>
 <div class="panel"><form id="form">
 <div class="inputs">
@@ -54,10 +54,6 @@ table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 10p
 <p class="muted">Each row independently spends your full total stamina budget on that monster. These are alternatives, not rewards that can all be collected with the same stamina.</p>
 <div class="scroll"><table><thead><tr><th>Monster</th><th>Stamina / kill</th><th>Item / kill</th><th>Number to kill</th><th>Return</th></tr></thead><tbody id="monster-breakdown"></tbody></table></div>
 <p id="monster-empty" class="note" hidden>No live monsters provide this item.</p>
-</div>
-<div class="panel">
-<h2>How the estimate works</h2>
-<p id="caveat" class="note"></p>
 </div>
 </section>
 </main>
@@ -245,7 +241,6 @@ function show(rows,target,stamina,days,index,today,calendar,diagnostics,partialR
   mb.append(tr);
  }
  $("monster-empty").hidden=forecast.monsters.length>0;
- $("caveat").textContent="Only quantified Guaranteed reward entries and verified guaranteed monster chest contents are included. Event rewards and event bosses require confirmed Calendar dates. First-place rankings and highest documented tiers are assumptions, not guaranteed achievements. For each event activity, the largest qualifying entry is used rather than stacking mutually exclusive prize variants. The event subtotal adds all shown events and assumes their conditions can all be met. Regular monsters and ordinary bosses are persistent, while event bosses require a confirmed LIVE Calendar schedule. Guaranteed monster chest contents count only when the chest award quantity and its guaranteed contents are both documented. Each monster row is an alternative use of the SAME stamina budget: floor(total stamina ÷ stamina per kill) × recorded guaranteed item per kill. Possible drops, nested chests, unknown quantities and stamina regeneration are excluded. Food includes Safe Food and the Food portion of Super and Super Safe Resource Chests.";
  const empty=$("no-results-explanation");
  empty.hidden=forecast.events.length>0||forecast.monsters.length>0;
  if(!empty.hidden)empty.textContent="No qualifying guaranteed "+target+" matches were found. Calendar supplied "+diagnostics.confirmed+" confirmed occurrences and reward search returned "+diagnostics.groups+" groups before LIVE and ranking checks.";
