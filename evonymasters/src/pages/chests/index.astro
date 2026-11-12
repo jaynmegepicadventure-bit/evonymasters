@@ -90,9 +90,9 @@ main.wrap{padding-bottom:120px}
 <header class="hero banner-hero banner-chests"><div class="wrap"><div class="eyebrow">PLAYER TOOLS / CHEST FINDER</div><h1>Crack the chest code.</h1>
 <p class="subtitle">Don't leave your loot to guesswork. Peek inside reward chests, compare up to four side by side and find the bosses or events that can deliver them.</p>
 <div class="finder-tabs" id="finder-tabs" role="tablist" aria-label="Chest source">
-<button type="button" class="finder-tab" role="tab" aria-selected="true" data-tab="monsters">⚔️ Monsters</button>
+<button type="button" class="finder-tab" role="tab" aria-selected="false" data-tab="monsters">⚔️ Monsters</button>
 <button type="button" class="finder-tab" role="tab" aria-selected="false" data-tab="events">🏆 Events</button>
-<button type="button" class="finder-tab" role="tab" aria-selected="false" data-tab="all">📦 All Chests</button>
+<button type="button" class="finder-tab" role="tab" aria-selected="true" data-tab="all">📦 All Chests</button>
 </div>
 <p class="finder-help" id="tab-description">Find boss and monster chests, then check which rewards they contain.</p>
 <div class="search"><label for="q" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden">Chest or reward item</label><input id="q" type="search" placeholder="Search chest names or rewards…" autocomplete="off" list="chest-suggestions"/><datalist id="chest-suggestions"></datalist>
@@ -125,7 +125,7 @@ const selected=new Map();let page=0,hasMore=false,serial=0,timer=null,request=nu
 const tabStrip=document.getElementById("finder-tabs"),tabHelp=document.getElementById("tab-description"),dock=document.getElementById("comparison-dock");
 const liveFilter=document.getElementById("live-filter"),monsterLevel=document.getElementById("monster-level"),monsterLevelWrap=document.getElementById("monster-level-wrap"),dropType=document.getElementById("drop-type");
 const suggest=document.getElementById("chest-suggestions");
-let currentTab="monsters",allFound=new Map(),searchComplete=true;
+let currentTab="all",allFound=new Map(),searchComplete=true;
 
 const selectedItems=[],itemChips=document.getElementById("search-items"),addItemButton=document.getElementById("add-item-search");
 let shownChestIds=new Set(),totalChests=0;
@@ -483,7 +483,7 @@ compare.addEventListener("click",async()=>{
 });
 const initial=new URLSearchParams(location.search);q.value=initial.get("q")||"";
 const requestedSource=initial.get("source"),requestedEvent=initial.get("event");
-const initialTab=requestedEvent||["events","activities"].includes(requestedSource)?"events":requestedSource==="all"||requestedSource==="unlinked"?"all":"monsters";
+const initialTab=requestedEvent||["events","activities"].includes(requestedSource)?"events":requestedSource==="bosses"?"monsters":"all";
 loadEventChoices();renderItemChips();refreshSelected();selectTab(initialTab);
 if(requestedSource==="unlinked")source.value="unlinked";
 loadAvailability();
