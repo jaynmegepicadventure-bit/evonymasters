@@ -42,6 +42,15 @@ footer{border-top:1px solid #29445c;color:#9fb5c7;font-size:.8rem;padding:24px 0
 @media(max-width:850px){.details{grid-template-columns:1fr}.week-grid{gap:4px}.date-card{min-height:115px;padding:9px 6px}.date-card.selected{padding:8px 5px}.date-summary{font-size:.68rem}.event-card{flex-wrap:wrap}}
 @media(max-width:590px){.wrap{padding:0 13px}.hero{padding:29px 0}.overview{gap:5px}.metric{padding:11px 9px}.metric small{font-size:.59rem}.planner{padding:8px}.week-grid,.month-grid{gap:3px}.date-card{min-height:82px;padding:7px 3px;border-radius:7px;gap:5px}.date-card.selected{padding:6px 2px}.date-number{font-size:1rem}.date-name{font-size:.6rem}.date-summary{font-size:.6rem;gap:3px}.date-card.month{min-height:63px;padding:4px 2px}.date-card.month.selected{padding:3px 1px}.date-card.month .date-summary{font-size:.56rem}.panel{padding:14px}.filter input{min-width:115px;max-width:165px}.event-card a{white-space:normal}}
 
+.calendar-guide{margin:28px 0 10px;padding:23px;background:#142c41;border:1px solid #46637b;border-radius:14px}
+.calendar-guide h2{margin:0 0 12px;color:#f2d08e;font-size:1.45rem}
+.calendar-guide h3{color:#f2d08e;font-size:1.1rem;margin:22px 0 8px}
+.calendar-guide p{color:#d3e1eb;line-height:1.65;max-width:1000px}
+.calendar-reference-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;list-style:none;padding:0;margin:16px 0}
+.calendar-reference-list li{background:#1b3851;border:1px solid #3d5c76;border-radius:9px;padding:12px;color:#e7f1f8}
+.calendar-reference-list strong{display:block;color:#ffe0a8}
+.calendar-reference-list span{display:block;color:#bed0dd;font-size:.85rem;line-height:1.5;margin-top:5px}
+@media(max-width:650px){.calendar-reference-list{grid-template-columns:1fr}.calendar-guide{padding:16px}}
 .event-entry{border:1px solid #45647b;border-radius:12px;overflow:hidden;background:#172e44}
 .event-entry .event-card{border:0;border-radius:0}
 .event-detail-trigger{background:#efca81;color:#12283e;border:0;border-radius:7px;font:inherit;font-weight:800;font-size:.8rem;padding:9px 12px;cursor:pointer;white-space:nowrap}
@@ -92,6 +101,16 @@ footer{border-top:1px solid #29445c;color:#9fb5c7;font-size:.8rem;padding:24px 0
 <section class="panel" aria-labelledby="monster-title"><h2 id="monster-title">Monster availability</h2><p class="desc">Categories only. Open a category to see its full list of scheduled monsters and levels.</p><div id="monster-groups"></div></section>
 </div>
 <p class="calendar-note" id="status" role="status">Loading published schedules…</p>
+<section class="calendar-guide" aria-labelledby="calendar-guide-title">
+<h2 id="calendar-guide-title">Plan Evony events and monster hunts</h2>
+<p>This interactive event planner helps you review recorded Evony event activity by server date (UTC). Switch between week, month and agenda views, select a date, and filter event types or scheduled monster families. The calendar reflects published schedule records rather than guaranteed in-game availability; always confirm event times and rewards inside the game.</p>
+<h3>Event reference library</h3>
+<p>These are examples of events in our reference data, not a claim that they are active today. Select a calendar date above to see the corresponding recorded schedule.</p>
+<ul class="calendar-reference-list">
+{eventGuides.filter(item=>item.name).slice(0,12).map(item=><li><strong>{item.name}</strong>{item.notes&&<span>{item.notes}</span>}</li>)}
+</ul>
+<p>Looking for a specific prize? Visit the <a href="/resources/">Item Finder</a> to search reward sources or the <a href="/chests/">Chest Finder</a> to explore recorded chest contents.</p>
+</section>
 
 </main>
 
