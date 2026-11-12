@@ -1,4 +1,5 @@
 ---
+import SeoMetadata from '../../components/SeoMetadata.astro';
 import monsters from '../../data/monsters.json';
 import items from '../../data/items.json';
 export function getStaticPaths(){return monsters.map(monster=>({params:{id:monster.id},props:{monster}}));}
@@ -10,7 +11,7 @@ const stats='stats' in monster ? monster.stats : null;
 const otherRewards=monster.rewards.filter(r=>r.origin!=='boss_chest' && !(r.origin==='direct'&&chestIds.has(r.itemId)));
 ---
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>{monster.name} | evonymasters</title>
+<html lang="en"><head><SeoMetadata title={monster.name+' | EvonyMasters'} description={'Evony monster '+monster.name+': known rewards, chests and verified statistics.'}/><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>{monster.name} | evonymasters</title>
 <style>:root{font-family:system-ui;color:#eaf0f8;background:#0c1726}body{margin:0}header,main,footer{padding:24px max(24px,calc((100vw - 1000px)/2))}header,footer{background:#11243a}a{color:#e6bc73}h1{font-size:clamp(2rem,5vw,3.5rem)}.panel{background:#152b43;border:1px solid #35516d;border-radius:16px;padding:22px;margin:20px 0}.boss-image{width:min(100%,440px);height:260px;object-fit:contain;display:block;background:#213d57;border:1px solid #35516d;border-radius:16px;margin:20px 0}.stats{display:flex;flex-wrap:wrap;gap:15px}.reward{padding:10px 0;border-bottom:1px solid #35516d}.muted{color:#b6c8d9}.live-state{font-weight:800;color:#bfd2e2}.live-state.live{color:#79e7a3}.chest{border:1px solid #466079;border-radius:12px;padding:16px;margin:14px 0}.chest h3{margin:0 0 10px;color:#f2ce88}.chest ul{margin:0;padding-left:23px;line-height:1.7}</style></head>
 <body><header><a href="/resources/">← Resource Finder</a> · <a href="/">evonymasters Home</a></header>
 <main><h1>{monster.name}</h1><p class="live-state" id="monster-availability" data-name={monster.name.replace(/\s*-\s*Level\s*\d+$/i,"")} data-level={monster.level||""} data-kind={monster.type==="Event"?"Event Boss":monster.type==="Regular"?"Regular Monster":"Boss"}>Checking UTC availability…</p><p><a href="/calendar/">See event &amp; monster calendar →</a></p>{monster.image&&<img class="boss-image" src={monster.image} alt={monster.name+" boss artwork"} loading="lazy"/>}

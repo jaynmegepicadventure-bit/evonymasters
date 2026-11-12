@@ -1,4 +1,5 @@
 ---
+import SeoMetadata from '../components/SeoMetadata.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import monsters from '../data/monsters.json';
 const monsterCount=monsters.length;
@@ -22,7 +23,7 @@ const shortcuts=[
 ---
 <!doctype html>
 <html lang="en">
-<head>
+<head><SeoMetadata title="EvonyMasters | Rewards, Chests, Events & Generals" description="EvonyMasters player tools: find item rewards, explore chest contents, compare monster drops, browse events and research generals." structured={true}/>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <meta name="description" content="EvonyMasters player tools: find item rewards, explore chest contents, compare monster drops, browse events and research generals."/>
 <link rel="icon" href="/favicon.svg"/>

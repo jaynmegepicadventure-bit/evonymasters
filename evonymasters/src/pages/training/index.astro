@@ -1,11 +1,12 @@
 ---
+import SeoMetadata from '../../components/SeoMetadata.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import { TROOP_TRAINING_COSTS } from '../../data/troop-training-costs.mjs';
 const format = n => n.toLocaleString('en-US',{maximumFractionDigits:2});
 ---
 <!doctype html>
 <html lang="en">
-<head>
+<head><SeoMetadata title="Troop Training Costs | EvonyMasters" description="Calculate the Evony Food, Wood, Stone, Ore and Gold needed to train troops from T1 through T16."/>
 <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <meta name="description" content="Calculate the Evony Food, Wood, Stone, Ore and Gold needed to train troops from T1 through T16."/>
 <link rel="icon" href="/favicon.svg"/>
