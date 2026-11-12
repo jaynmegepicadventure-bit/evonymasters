@@ -85,6 +85,13 @@ main.wrap{padding-bottom:120px}
 .chest.card-match-0{opacity:.92}
 @media(max-width:740px){.chest-list{grid-template-columns:1fr}.finder-tab{flex:1;padding:10px 8px}.comparison-dock{bottom:4px;padding:10px}.comparison-dock .selection{width:100%;justify-content:space-between}}
 
+.chest-guide{margin:36px 0 0;padding:24px;border:1px solid #405e79;background:#152b42;border-radius:14px}
+.chest-guide h2{font-size:1.45rem;margin:0 0 12px;color:#f3d18f}
+.chest-guide h3{font-size:1.1rem;margin:20px 0 8px;color:#f3d18f}
+.chest-guide p,.chest-guide li{color:#d0deeb;line-height:1.65}
+.chest-guide ol{padding-left:22px;display:grid;gap:8px}
+.chest-guide strong{color:#ffe0a9}
+.chest-guide a{color:#f4cf8f;text-underline-offset:3px}
 </style></head><body>
 <SiteHeader active="chests"/>
 <header class="hero banner-hero banner-chests"><div class="wrap"><div class="eyebrow">PLAYER TOOLS / CHEST FINDER</div><h1>Crack the chest code.</h1>
@@ -115,6 +122,18 @@ main.wrap{padding-bottom:120px}
 <div class="table-wrap"><table class="comparison"><thead id="compare-head"></thead><tbody id="compare-body"></tbody></table></div></section>
 <div class="comparison-dock" id="comparison-dock" hidden><span class="dock-title">Compare chests · <span id="selected-count">0 of 4 selected</span></span>
 <div class="selection"><button class="pill" id="compare" disabled>Compare selected</button><button class="pill secondary" id="reset" disabled>Clear selection</button></div></div>
+<section class="chest-guide" aria-labelledby="chest-guide-title">
+<h2 id="chest-guide-title">How to find and compare Evony chest rewards</h2>
+<p>Chest Finder helps you browse recorded Evony chests, review their item contents and compare possible rewards. Begin with <strong>All Chests</strong>, or switch to the Monsters or Events tab when you know the source you want to explore.</p>
+<ol>
+<li><strong>Search a chest or reward item.</strong> Enter a chest name or an item you hope to obtain.</li>
+<li><strong>Refine the results.</strong> Filter by source, monster level or drop type when those details are recorded.</li>
+<li><strong>Compare up to four chests.</strong> Select chests to review their recorded contents side by side before deciding what to pursue.</li>
+</ol>
+<p><strong>Important:</strong> A listed possible drop is not a guaranteed reward. Contents and availability may change in-game or be incomplete in the source records.</p>
+<h3>Related EvonyMasters tools</h3>
+<p>Use <a href="/resources/">Item Finder</a> to locate an item across reward sources, <a href="/calendar/">Event Calendar</a> to check recorded schedules, or <a href="/loot-compass/">Loot Compass</a> to plan reward opportunities with a stamina budget.</p>
+</section>
 </main>
 <script is:inline>
 (()=>{
