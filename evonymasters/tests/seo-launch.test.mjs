@@ -50,3 +50,9 @@ test('configured production base matches confirmed Cloudflare Workers hostname',
  assert.ok(metadata.includes(production));
  assert.ok(!metadata.includes('https://evonymasters.pages.dev'));
 });
+
+test('Google Search Console verification is shared across site pages',()=>{
+ const seo=read('../src/components/SeoMetadata.astro');
+ assert.match(seo,/<meta name="google-site-verification" content="R4xVRIFk5hir7AyMRb6D4r7x6oFy9zWsSlzzgH6koTA"\s*\/>/);
+ assert.equal((seo.match(/name="google-site-verification"/g)||[]).length,1);
+});
