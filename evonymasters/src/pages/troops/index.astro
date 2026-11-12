@@ -49,6 +49,13 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 @media(max-width:700px){main{padding:24px 12px 55px}.cols{min-width:0;grid-template-columns:1fr}.scroller{overflow:visible}.card{padding:17px} .tiers{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(min-width:701px) and (max-width:1250px){.cols{min-width:1210px;grid-template-columns:repeat(6,1fr)} .tiers{grid-template-columns:repeat(3,minmax(0,1fr))}.tier{flex-direction:row;justify-content:center;gap:5px}}
 @media print{.site-header,.toolbar,.tiers-head button{display:none!important}body{background:white;color:black}.scroller{overflow:visible}.cols{display:grid;grid-template-columns:repeat(3,1fr);min-width:0}.card{break-inside:avoid;color:black;background:white}:global(.result-row .value){color:black}}
+.march-guide{margin-top:36px;padding:24px;background:#132c42;border:1px solid #405c73;border-radius:14px}
+.march-guide h2{font-size:1.45rem;color:#f3ce8d;margin:0 0 12px}
+.march-guide h3{font-size:1.1rem;color:#f3ce8d;margin:20px 0 8px}
+.march-guide p,.march-guide li{color:#d0dfeb;line-height:1.65}
+.march-guide ol{padding-left:22px;display:grid;gap:8px}
+.march-guide strong{color:#f5d5a0}
+.march-guide a{color:#f2cc89;text-underline-offset:3px}
 </style></head>
 <body><SiteHeader active="troops"/><main>
 <div class="top banner-hero banner-march-preset"><h1>Build the march. Own the battle.</h1><p>Put your march capacity to work. Enter your march size, tick any upper tiers you've unlocked and see a ready-to-use troop layer breakdown. Lower tiers are built into the plan automatically.</p></div>
@@ -64,6 +71,19 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 <div class="summary"><span>Total march</span><output class="total">0</output></div></div>
 </section>)}</div></div>
 
+<section class="march-guide" aria-labelledby="march-guide-title">
+<h2 id="march-guide-title">How to calculate Evony march presets and troop layers</h2>
+<p>Use the Evony March Preset calculator to plan troop-layer distributions for ranged, cavalry, ground and siege formations. Each formation has its own march-size field and calculated troop allocation, so you can compare several setups before using them in-game.</p>
+<ol>
+<li><strong>Choose a formation.</strong> Review the ranged, cavalry, ground, BIG Siege, Small Siege or Solo Siege preset.</li>
+<li><strong>Enter your march capacity.</strong> Type the total number of troops your march can carry for that formation.</li>
+<li><strong>Select unlocked upper tiers.</strong> Tick T14, T15 and T16 only when those troops are available to you. The calculator also includes its built-in lower-tier layers.</li>
+<li><strong>Review the allocation.</strong> Check the calculated layers, reserved troops and total march before copying the composition into the game.</li>
+</ol>
+<p>Presets are planning aids rather than guaranteed combat outcomes. Check your available troops, march capacity, buffs and current game mechanics before applying a formation.</p>
+<h3>Calculate the resources to train those troops</h3>
+<p>Open the <a href="/training/">Evony Troop Training Calculator</a> to estimate training resources for T1–T16 units, or use <a href="/resources/">Item Finder</a> to locate recorded resource rewards.</p>
+</section>
 </main>
 <script>
 import {calculateFormation, displayFormationLayers} from '../../lib/troop-layers.mjs';
