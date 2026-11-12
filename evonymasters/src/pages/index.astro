@@ -3,10 +3,10 @@ import SiteHeader from '../components/SiteHeader.astro';
 import monsters from '../data/monsters.json';
 const monsterCount=monsters.length;
 const features=[
- {href:'/loot-compass/',image:'/images/item-finder/box.svg',eyebrow:'Guaranteed LIVE rewards',title:'Loot Compass (Beta)',text:'Find confirmed LIVE events and monsters with quantified guaranteed rewards. Set an optional goal, stamina budget or days, and plan your farming.',action:'Find your loot'},
+ {href:'/loot-compass/',image:'/images/item-finder/box.svg',eyebrow:'Guaranteed reward planning',title:'Loot Compass (Beta)',text:'Enter an item, total stamina and number of days to compare recorded guaranteed event rewards and the top 10 monster farming returns.',action:'Find your loot'},
  {href:'/resources/',image:'/images/item-finder/ymir.svg',eyebrow:'Find the best source',title:'Item Finder',text:'Search recorded rewards, compare monster drops and see where the items you need can be earned.',action:'Find a reward'},
  {href:'/chests/',image:'/images/item-finder/box.svg',eyebrow:'Open the possibilities',title:'Chest Finder',text:'Explore complete chest contents, ranking variants and known event or boss sources.',action:'Explore chests'},
- {href:'/loot-compass/',image:'/images/item-finder/box.svg',eyebrow:'Guaranteed LIVE rewards',title:'Loot Compass (Beta)',text:'Find confirmed LIVE events and monsters with quantified guaranteed rewards. Set an optional goal, stamina budget or days, and plan your farming.',action:'Find your loot'},
+
  {href:'/calendar/',image:'/images/item-finder/feasting-revelry.svg',eyebrow:'Plan your next move',title:'Event Calendar',text:'Discover event activities, featured rewards and the details that matter when planning your next move.',action:'View calendar'}
 ];
 const shortcuts=[
@@ -84,10 +84,11 @@ h1 span{display:block;color:#f2c977}
 .category strong{display:block;font-size:.93rem;color:#f2e6d0}
 .category small{display:block;color:#afc3d4;margin-top:4px;line-height:1.45}
 footer{padding:27px 0;border-top:1px solid #314c62;font-size:.81rem;color:#aebfd0;line-height:1.65}
-@media(max-width:1050px){.tool-grid{grid-template-columns:1fr 1fr}.feature:last-child{grid-column:1/-1}.lower-grid{grid-template-columns:1fr 1fr}.small-panel:first-child{grid-column:1/-1}.category-grid{grid-template-columns:1fr 1fr}.hero:before{background:linear-gradient(90deg,#071321ee 0%,#071321cc 55%,#07132160 100%),url('/images/home/evonymasters-home-hero.webp') right center / auto 100% no-repeat}}
-@media(max-width:650px){.wrap{padding:0 16px}.hero{min-height:545px}.hero-inner{padding:67px 0 112px}.hero:before{background:linear-gradient(90deg,#071321f4 0%,#071321d9 68%,#07132199 100%),url('/images/home/evonymasters-home-hero-mobile.webp') right center / auto 100% no-repeat}h1{font-size:clamp(2.6rem,11vw,3.65rem)}.hero-intro{font-size:1rem}.actions .btn{width:100%}.main-content{margin-top:-65px}.tool-grid,.lower-grid,.category-grid{grid-template-columns:1fr}.feature:last-child,.small-panel:first-child{grid-column:auto}.feature{min-height:153px}.feature-image{width:88px;height:98px}.section-top{margin-top:30px}.small-panel{min-height:0}.categories{padding:18px}.hero-note{font-size:.75rem}}
+@media(max-width:1050px){.tool-grid{grid-template-columns:1fr 1fr}.lower-grid{grid-template-columns:1fr 1fr}.small-panel:first-child{grid-column:1/-1}.category-grid{grid-template-columns:1fr 1fr}.hero:before{background:linear-gradient(90deg,#071321ee 0%,#071321cc 55%,#07132160 100%),url('/images/home/evonymasters-home-hero.webp') right center / auto 100% no-repeat}}
+@media(max-width:650px){.wrap{padding:0 16px}.hero{min-height:545px}.hero-inner{padding:67px 0 112px}.hero:before{background:linear-gradient(90deg,#071321f4 0%,#071321d9 68%,#07132199 100%),url('/images/home/evonymasters-home-hero-mobile.webp') right center / auto 100% no-repeat}h1{font-size:clamp(2.6rem,11vw,3.65rem)}.hero-intro{font-size:1rem}.actions .btn{width:100%}.main-content{margin-top:-65px}.tool-grid,.lower-grid,.category-grid{grid-template-columns:1fr}.small-panel:first-child{grid-column:auto}.feature{min-height:153px}.feature-image{width:88px;height:98px}.section-top{margin-top:30px}.small-panel{min-height:0}.categories{padding:18px}.hero-note{font-size:.75rem}}
 @media(prefers-reduced-motion:reduce){.btn,.feature,.small-panel a{transition:none}.btn:hover,.feature:hover,.small-panel a:hover{transform:none}}
 .live-section{margin:35px 0 45px;border:1px solid #4b604f;background:linear-gradient(100deg,#102636,#142a35);border-radius:17px;padding:21px 24px}.live-section .section-top{margin-bottom:13px}.live-results{display:flex;flex-wrap:wrap;gap:10px}.live-item{display:inline-flex;align-items:center;gap:9px;padding:10px 13px;border:1px solid #567563;border-radius:9px;background:#1a3b32;color:#d6fce4;text-decoration:none;font-size:.9rem}.live-item:hover{border-color:#7ce6a2}.live-dot{color:#87efaf;font-size:.7rem}.live-kind{color:#aacdc2;font-size:.72rem}.live-link{color:#f3ca7a;font-weight:800;font-size:.9rem}.live-section h2{margin:6px 0}.live-section p{color:#b7ccc8;margin:5px 0}@media(max-width:600px){.live-section{padding:15px}}
+.site-trust-footer{padding:22px 0 34px;border-top:1px solid #36516d;background:#0b1829}.site-trust-links{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:10px}.site-trust-links a{color:#f0cb83;text-decoration:underline;text-underline-offset:3px}.site-trust-footer p{font-size:.83rem;max-width:980px;color:#b8cadb;line-height:1.6}
 </style></head>
 <body>
 <SiteHeader active="home"/>
@@ -119,6 +120,7 @@ footer{padding:27px 0;border-top:1px solid #314c62;font-size:.81rem;color:#aebfd
 <a class="category" href="/generals/"><img src="/images/item-finder/event.svg" alt="" loading="lazy"/><span><strong>Generals</strong><small>Skills, buffs &amp; attributes</small></span></a>
 </div></section>
 </div></main>
+<footer class="site-trust-footer"><div class="wrap"><div class="site-trust-links"><a href="/about/">About EvonyMasters</a><a href="/privacy/">Privacy Policy</a><a href="/contact/">Contact &amp; feedback</a></div><p>EvonyMasters is an independent fan-made website and is not affiliated with or endorsed by Evony: The King's Return or its publisher. Rewards and event availability can change; verify important details in-game.</p></div></footer>
 
 <script is:inline>
 (async()=>{
