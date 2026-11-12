@@ -76,6 +76,40 @@ export function calendarSourceIds(row) {
  const base=key(kind)+"|"+name;
  return [...(level?["monster:"+encodeURIComponent(base+"|"+level)]:[]),"family:"+encodeURIComponent(base)];
 }
+/**
+ * A monster may award a guaranteed chest whose confirmed contents include RSS.
+ * The search API stores chest contents as route [chest, item] and its own
+ * quantity; the separate direct chest entry gives the count of chests/hunt.
+ * Do not count an uncertain chest award, ambiguous deeper routes, or any
+ * Possible content. Do not infer one chest when its quantity is unknown.
+ */
+export function guaranteedMonsterResourceValue(row,target) {
+ const direct=(row.items||[]).filter(item=>item.classification==="Guaranteed"&&
+   Array.isArray(item.route)&&item.route.length===1);
+ const directResource=direct.reduce((highest,item)=>Math.max(highest,valueFor(item.item,item.quantity,target)),0);
+ const chestQuantities=new Map();
+ for(const item of direct){
+  if(valueFor(item.item,item.quantity,target)>0)continue; // already-valued resource chest
+  const count=parseAmount(item.quantity);
+  if(count===null||count<=0)continue;
+  chestQuantities.set(normalise(item.item),Math.max(chestQuantities.get(normalise(item.item))||0,count));
+ }
+ const contents=new Map();
+ for(const item of row.items||[]) {
+  if(item.classification!=="Guaranteed"||!Array.isArray(item.route)||item.route.length!==2)continue;
+  const parent=normalise(item.route[0]);
+  if(!chestQuantities.has(parent))continue;
+  const value=valueFor(item.item,item.quantity,target);
+  if(value<=0)continue;
+  const identity=[parent,normalise(item.item),normalise(item.quantity)].join("|");
+  if(!contents.has(parent))contents.set(parent,new Map());
+  contents.get(parent).set(identity,value);
+ }
+ let fromChests=0;
+ for(const [parent,children] of contents)
+  fromChests+=chestQuantities.get(parent)*[...children.values()].reduce((sum,value)=>sum+value,0);
+ return Math.max(directResource,fromChests);
+}
 export function eligibleRecord(row,target,index,day=dayUTC()) {
   const sourceKind=row.source==="events"?"Event":row.source==="event-bosses"?"Event Boss":row.source==="regular"?"Regular Monster":"Boss";
   const directLive=isLive(index,sourceKind,row.title,day);
@@ -100,16 +134,19 @@ export function eligibleRecord(row,target,index,day=dayUTC()) {
   const catalogLive=Boolean(index?.occurrences?.some(event=>
     event.date===day&&event.kind===sourceKind&&ids.has(event.sourceId)
   ));
-  if(!directLive && !familyLive && !calendarLevelMatch && !catalogLive)return null;
+  // Ordinary bosses and regular monsters are persistent; only event bosses
+  // depend on a confirmed Calendar occurrence. Calendar remains authoritative
+  // for limited-time events and event bosses.
+  const persistentMonster=row.source==="bosses"||row.source==="regular";
+  if(!persistentMonster && !directLive && !familyLive && !calendarLevelMatch && !catalogLive)return null;
   // Direct quantified rewards only. Nested chest items are not a guaranteed payout.
   const rewards=(row.items||[])
     .filter(item=>Array.isArray(item.route) && item.route.length===1 && item.classification==="Guaranteed")
     .map(item=>({...item,value:valueFor(item.item,item.quantity,target)}))
     .filter(item=>item.value>0);
-  if(!rewards.length)return null;
-  // Search details can contain alternatives or multiple milestones, so keep
-  // the highest recorded single reward, never sum them into an invented payout.
-  const guaranteed=Math.max(...rewards.map(x=>x.value));
+  const monsterValue=row.source!=="events"?guaranteedMonsterResourceValue(row,target):0;
+  const guaranteed=Math.max(monsterValue,...rewards.map(x=>x.value),0);
+  if(guaranteed<=0)return null;
   const stamina=parseAmount(row.context?.stamina);
   return {id:row.source+"|"+row.title+"|"+JSON.stringify(row.context||{}),
     name:row.title,source:row.source,level:row.context?.level||"",context:row.context||{},calendarIds:calendarSourceIds(row),frequency:row.context?.frequency||"",

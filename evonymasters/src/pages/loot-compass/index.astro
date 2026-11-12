@@ -166,6 +166,24 @@ async function fetchAllRewards(target,signal){
   }
  }
  if(!searches.length)throw Error("Reward Worker could not be reached for any item. "+failures.slice(0,3).join(" | ")+". Open "+SHEET+"/health to test the Worker. If health responds but search fails, check its deployment, CORS allowance for this Pages domain, and DATA binding.");
+ // Food inside a monster chest is returned as a nested route, with the food
+ // amount PER CHEST. Look up the direct guaranteed parent chest entry to
+ // verify how many chests the monster awards per hunt. Never assume one.
+ const parents=[...new Set(searches.flatMap(result=>result.groups).filter(row=>row.source!=="events"&&row.source!=="boxes")
+  .flatMap(row=>(row.items||[]).filter(item=>item.classification==="Guaranteed"&&
+    item.route?.length===2&&item.route[0]&&item.route[0].length>=2&&item.route[0].length<=100)
+    .map(item=>item.route[0])))];
+ const limit=30;
+ for(let i=0;i<Math.min(limit,parents.length);i+=2){
+  const batch=await Promise.allSettled(parents.slice(i,i+2).map(name=>fetchSearch(name,signal)));
+  for(let j=0;j<batch.length;j++){
+   const outcome=batch[j];
+   if(outcome.status==="fulfilled")searches.push(outcome.value);
+   else if(outcome.reason?.name==="AbortError")throw outcome.reason;
+   else failures.push("Chest "+parents[i+j]+": "+(outcome.reason?.message||"connection failed"));
+  }
+ }
+ if(parents.length>limit)failures.push("Chest verification limited to "+limit+" of "+parents.length+" distinct chest types.");
  return {searches,failures};
 }
 function mergeGroups(groups) {
@@ -191,7 +209,7 @@ function show(rows,target,stamina,days,index,today,calendar,diagnostics,partialR
  const summary=$("summary");summary.replaceChildren();
  for(const [label,value] of [
   ["Event total (assuming completion)",fmt(forecast.eventTotal)+" "+target],
-  ["Best monster with full stamina",forecast.topMonster?fmt(forecast.topMonster.total)+" "+target:"No LIVE monster"],
+  ["Best monster with full stamina",forecast.topMonster?fmt(forecast.topMonster.total)+" "+target:"No qualifying monster return"],
   ["Confirmed Calendar days",fmt(forecast.checkedDays)+" / "+fmt(forecast.days)]
  ]) {
   const card=document.createElement("div");card.className="stat";
@@ -227,7 +245,7 @@ function show(rows,target,stamina,days,index,today,calendar,diagnostics,partialR
   mb.append(tr);
  }
  $("monster-empty").hidden=forecast.monsters.length>0;
- $("caveat").textContent="Only direct, quantified Guaranteed reward entries from confirmed Calendar sources are included. First-place rankings and highest documented tiers are assumptions, not guaranteed achievements. For each event activity, the largest qualifying entry is used rather than stacking mutually exclusive prize variants. The event subtotal adds all shown events and assumes their conditions can all be met. Each monster row is an alternative use of the SAME stamina budget: floor(total stamina ÷ stamina per kill) × recorded guaranteed item per kill. Possible drops, nested chests, unknown quantities and stamina regeneration are excluded. Food includes Safe Food and the Food portion of Super and Super Safe Resource Chests.";
+ $("caveat").textContent="Only quantified Guaranteed reward entries and verified guaranteed monster chest contents are included. Event rewards and event bosses require confirmed Calendar dates. First-place rankings and highest documented tiers are assumptions, not guaranteed achievements. For each event activity, the largest qualifying entry is used rather than stacking mutually exclusive prize variants. The event subtotal adds all shown events and assumes their conditions can all be met. Regular monsters and ordinary bosses are persistent, while event bosses require a confirmed LIVE Calendar schedule. Guaranteed monster chest contents count only when the chest award quantity and its guaranteed contents are both documented. Each monster row is an alternative use of the SAME stamina budget: floor(total stamina ÷ stamina per kill) × recorded guaranteed item per kill. Possible drops, nested chests, unknown quantities and stamina regeneration are excluded. Food includes Safe Food and the Food portion of Super and Super Safe Resource Chests.";
  const empty=$("no-results-explanation");
  empty.hidden=forecast.events.length>0||forecast.monsters.length>0;
  if(!empty.hidden)empty.textContent="No qualifying guaranteed "+target+" matches were found. Calendar supplied "+diagnostics.confirmed+" confirmed occurrences and reward search returned "+diagnostics.groups+" groups before LIVE and ranking checks.";
