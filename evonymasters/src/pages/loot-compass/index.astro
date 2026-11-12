@@ -18,6 +18,13 @@ table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 10p
 #suggestions{max-width:490px}section[hidden]{display:none!important}@media(max-width:750px){.inputs{grid-template-columns:repeat(2,1fr)}.summary{grid-template-columns:1fr}}@media(max-width:460px){.inputs{grid-template-columns:1fr}}
 .spotlight{background:linear-gradient(115deg,#233b50,#162a40);border-color:#b9965b}.recommend-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.recommend-grid .panel{margin-top:19px}.rec-number{font-weight:800;color:#ffe0a2;font-size:1.5rem;margin:8px 0}.opportunities{display:grid;gap:9px}.opportunity{padding:12px 14px;border:1px solid #395873;border-radius:10px;display:flex;justify-content:space-between;gap:18px}.opportunity strong{color:#f6d18c}.opportunity small{display:block;color:#a8bed1;margin-top:4px}.spotlight h2{font-size:1.7rem;color:#f6d18c}@media(max-width:760px){.recommend-grid{grid-template-columns:1fr}} 
 .loot-hero{height:clamp(210px,28vw,330px);border-radius:17px;border:1px solid #655640;overflow:hidden;position:relative;background:#101d29 url('/images/loot-compass-banner.svg') center center/cover no-repeat;box-shadow:0 14px 34px #0005;margin-bottom:20px}.loot-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,18,29,.87),rgba(6,18,29,.3) 55%,transparent 90%);pointer-events:none}.loot-hero-content{position:absolute;z-index:1;bottom:22px;left:clamp(20px,4vw,48px);max-width:78%}.loot-hero h1{color:#fff4dc;text-shadow:0 3px 12px #000b;margin:10px 0 0}.beta-mark{color:#e6bc73;font-size:.48em;vertical-align:middle}@media(max-width:460px){.loot-hero{height:205px;background-position:60% center}.loot-hero-content{left:18px;bottom:17px;max-width:92%}.loot-hero h1{font-size:2rem}}
+.loot-guide{margin-top:32px}
+.loot-guide h2{color:#f4d08c;font-size:1.45rem}
+.loot-guide h3{color:#f4d08c;font-size:1.1rem;margin:22px 0 8px}
+.loot-guide ol{padding-left:22px;display:grid;gap:10px}
+.loot-guide li{color:#d4e1ed;line-height:1.65}
+.loot-guide strong{color:#f4d08c}
+.loot-guide a{color:#f4d08c;text-underline-offset:3px}
 </style></head><body><SiteHeader/><main class="wrap">
 <div class="loot-hero" role="img" aria-label="Golden compass on a parchment map in a fantasy kingdom war room"><div class="loot-hero-content"><div class="eyebrow">Player tools · Your next haul, mapped</div><h1>Loot Compass <span class="beta-mark">BETA</span></h1></div></div>
 <p>Pick an item, enter your total stamina and how many days you have. Loot Compass estimates the rewards you could earn from confirmed Calendar events and monster farming.</p>
@@ -56,6 +63,18 @@ table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 10p
 <div class="scroll"><table><thead><tr><th>Monster</th><th>Stamina / kill</th><th>Item / kill</th><th>Number to kill</th><th>Return</th></tr></thead><tbody id="monster-breakdown"></tbody></table></div>
 <p id="monster-empty" class="note" hidden>No live monsters provide this item.</p>
 </div>
+</section>
+<section class="loot-guide panel" aria-labelledby="loot-guide-title">
+<h2 id="loot-guide-title">How to plan Evony rewards with Loot Compass</h2>
+<p>Loot Compass is a planning calculator for comparing recorded Evony reward opportunities, not a guarantee of what you will earn. Use it to explore an item you need and assess activities that fit your stamina and time budget.</p>
+<ol>
+<li><strong>Choose an item.</strong> Search for a recorded reward such as Refining Stone, Gems or Ore.</li>
+<li><strong>Enter your total stamina and time period.</strong> The stamina budget covers the entire period, while the number of days sets the calendar window.</li>
+<li><strong>Review event and monster estimates separately.</strong> Event rewards depend on meeting the documented conditions. Each monster-farming row uses the full stamina budget as an alternative strategy, so the rows must not be added together.</li>
+</ol>
+<p>Loot Compass is in beta. Event availability, reward rules and source records may be incomplete or change. Check current in-game information before acting on an estimate.</p>
+<h3>Explore the reward sources</h3>
+<p>Try <a href="/resources/">Item Finder</a> to locate other reward sources, <a href="/chests/">Chest Finder</a> to compare chest contents or <a href="/calendar/">Event Calendar</a> to review recorded schedules.</p>
 </section>
 </main>
 <script>
