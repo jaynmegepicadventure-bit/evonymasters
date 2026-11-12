@@ -1,7 +1,7 @@
 ---
 const {title='EvonyMasters | Evony Player Tools', description='Find Evony rewards, monsters, event schedules, chest contents and troop planning tools.', kind='WebPage', structured=false}=Astro.props;
-const canonical=new URL(Astro.url.pathname, Astro.site??'https://evonymasters.jaynmegepicadventure.workers.dev').toString();
-const siteBase=new URL('/', Astro.site??'https://evonymasters.jaynmegepicadventure.workers.dev').toString();
+const canonical=new URL(Astro.url.pathname, Astro.site??'https://evonymasters.com').toString();
+const siteBase=new URL('/', Astro.site??'https://evonymasters.com').toString();
 const schema=structured?{
  '@context':'https://schema.org', '@type':'WebSite',name:'EvonyMasters',
  url:siteBase,description:'Independent Evony player tools for reward, event and troop planning',
