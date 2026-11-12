@@ -1,4 +1,5 @@
 ---
+import SeoMetadata from '../../components/SeoMetadata.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 const types=[
  {id:'ranged',label:'Ranged',icon:'🏹',defaultSize:7393200,base:10000},
@@ -12,7 +13,7 @@ const tiers=[14,15,16];
 ---
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<head><SeoMetadata title="March Preset | EvonyMasters" description="Plan Evony troop march presets, compositions and layers for different troop types."/><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <meta name="description" content="Calculate Evony troop layers with the formulas and allocations from the Troop Layers 2024 workbook."/>
 <link rel="icon" href="/favicon.svg"/><title>March Preset | EvonyMasters</title>
 <style>
