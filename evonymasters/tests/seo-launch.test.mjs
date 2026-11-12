@@ -27,3 +27,14 @@ test('metadata uses configured Astro site and homepage has website structured da
  assert.match(seo,/application\/ld\+json/);
  assert.match(read('../src/pages/index.astro'),/structured=\{true\}/);
 });
+
+test('Cloudflare Web Analytics is installed once in the shared metadata component',()=>{
+ const shared=read('../src/components/SeoMetadata.astro');
+ assert.match(shared,/static\.cloudflareinsights\.com\/beacon\.min\.js/);
+ assert.match(shared,/a80e9722b6d4407ebe2990b4ce8c1ced/);
+ assert.equal((shared.match(/data-cf-beacon/g)||[]).length,1);
+ assert.match(shared,/is:inline/);
+ const privacy=read('../src/pages/privacy/index.astro');
+ assert.match(privacy,/Cloudflare Web Analytics is enabled/);
+ assert.match(privacy,/Advertising is planned/);
+});
