@@ -54,6 +54,13 @@ tfoot th{text-align:left;color:#f2cd89}tfoot tr+tr th,tfoot tr+tr td{background:
 .note strong{color:#f0c780}.visible-count{margin-left:auto;color:#a9ccdf;font-size:.84rem;font-weight:750;padding-bottom:10px}
 @media(max-width:800px){main{padding:23px 12px 50px}.summary{grid-template-columns:repeat(2,minmax(0,1fr))}.controls{gap:10px}.visible-count{margin-left:0;width:100%}}
 @media(max-width:450px){.summary{grid-template-columns:1fr 1fr}.summary-item{padding:12px 10px}.control{flex:1;min-width:125px}.controls{padding:12px}}
+.training-guide{margin-top:34px;padding:24px;border:1px solid #405b72;border-radius:14px;background:#132b41}
+.training-guide h2{color:#f2d08f;font-size:1.45rem;margin:0 0 12px}
+.training-guide h3{color:#f2d08f;font-size:1.1rem;margin:20px 0 8px}
+.training-guide p,.training-guide li{color:#d1dfeb;line-height:1.65}
+.training-guide ol{padding-left:22px;display:grid;gap:8px}
+.training-guide strong{color:#f4d7a2}
+.training-guide a{color:#f2ce8b;text-underline-offset:3px}
 </style></head>
 <body><SiteHeader active="training" /><main>
 <div class="banner-hero banner-troop-training"><h1>Train an army. Count every resource.</h1>
@@ -96,6 +103,18 @@ tfoot th{text-align:left;color:#f2cd89}tfoot tr+tr th,tfoot tr+tr td{background:
 </table>
 </div>
 
+<section class="training-guide" aria-labelledby="training-guide-title">
+<h2 id="training-guide-title">How to calculate Evony troop training costs</h2>
+<p>Use this calculator to estimate the resources and Gold needed to train Evony ground, ranged, cavalry and siege troops from T1 through T16. Enter the number of troops you plan to train, and the totals update automatically.</p>
+<ol>
+<li><strong>Choose troop types and tiers.</strong> Use the filters to focus on the units you want to train, or leave all troop types and levels visible.</li>
+<li><strong>Enter your target troop counts.</strong> Fill in the Troops Required field for each selected type and tier.</li>
+<li><strong>Review the totals.</strong> Compare Food, Wood, Stone, Ore, Gold, total resources and Power. The filtered subtotal reflects visible rows; the grand total includes all entered rows, even when filtered out.</li>
+</ol>
+<p>These are planning estimates based on the calculator's recorded troop costs. Confirm any in-game discounts, buffs or changing training mechanics before committing resources.</p>
+<h3>Plan your troop layers and rewards</h3>
+<p>Use the <a href="/troops/">Evony March Preset calculator</a> to plan troop layers for a march, or visit <a href="/resources/">Item Finder</a> to locate recorded resource rewards.</p>
+</section>
 </main>
 <script>
 import { TROOP_TRAINING_COSTS, calculateTrainingRow, calculateTrainingTotals } from '../../data/troop-training-costs.mjs';
