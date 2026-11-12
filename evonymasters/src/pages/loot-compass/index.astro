@@ -88,14 +88,13 @@ function terms(target) {
 function stableRecordKey(row){
  return [row.source,row.title,row.context?.subEvent,row.context?.detail,row.context?.level,row.context?.activity].map(normalise).join("|");
 }
-async function fetchSearch(term,signal) {
+async function fetchSearch(term,signal,type="all") {
  const groups=[];let truncated=false,compatibility=false;
- for(let page=0;page<20;page++){
-  let data=null,failures=[];
-  // Prefer guaranteed-only results to avoid a 12-detail cap. Older Worker
-  // deployments may only accept the Item Finder search parameters.
+ const maxPages=10;
+ for(let page=0;page<maxPages;page++){
+  let data=null;const failures=[];
   for(const guaranteed of [true,false]){
-   const args=new URLSearchParams({q:term,type:"all",page:String(page),sort:"suggested"});
+   const args=new URLSearchParams({q:term,type,page:String(page),sort:"suggested"});
    if(guaranteed)args.set("drop","Guaranteed");
    try{
     const response=await fetch(SHEET+"/v3/search?"+args,{signal,mode:"cors"});
@@ -105,13 +104,17 @@ async function fetchSearch(term,signal) {
     data=next;compatibility ||= !guaranteed;break;
    }catch(error){
     if(error.name==="AbortError")throw error;
-    failures.push((guaranteed?"guaranteed":"standard")+" request: "+(error.message||"network failure"));
+    failures.push((guaranteed?"guaranteed":"standard")+": "+(error.message||"network error"));
    }
   }
-  if(!data)throw Error(term+": "+failures.join("; "));
+  if(!data){
+   // A later-page connection failure must not destroy earlier confirmed data.
+   if(groups.length){truncated=true;break}
+   throw Error(term+" ["+type+"] page "+page+": "+failures.join("; "));
+  }
   groups.push(...data.groups.filter(x=>x.source!=="boxes"));
   if(!data.hasMore)break;
-  if(page===19)truncated=true;
+  if(page===maxPages-1)truncated=true;
  }
  return {groups,truncated,compatibility};
 }
@@ -151,20 +154,27 @@ async function fetchCalendar(today,desiredDays,signal){
 }
 async function fetchAllRewards(target,signal){
  const requested=terms(target),searches=[],failures=[];
- // Limit simultaneous Worker requests to avoid overloading a busy search endpoint.
- for(let i=0;i<requested.length;i+=2){
-  const batch=await Promise.allSettled(requested.slice(i,i+2).map(q=>fetchSearch(q,signal)));
-  for(let j=0;j<batch.length;j++){
-   const x=batch[j];
-   if(x.status==="fulfilled")searches.push(x.value);
-   else if(x.reason?.name==="AbortError")throw x.reason;
-   else failures.push(requested[i+j]+": "+(x.reason?.message||"connection failed"));
+ // The broad query can be large for common items such as Refining Stone.
+ // On failure split by source type, allowing smaller server-side workloads.
+ for(const q of requested){
+  try{
+   searches.push(await fetchSearch(q,signal));
+  }catch(error){
+   if(error.name==="AbortError")throw error;
+   failures.push("Broad "+q+": "+error.message);
+   const types=["events","bosses","regular","event-bosses"];
+   for(const type of types){
+    try{searches.push(await fetchSearch(q,signal,type))}
+    catch(e){
+     if(e.name==="AbortError")throw e;
+     failures.push(q+" "+type+": "+e.message);
+    }
+   }
   }
  }
- if(!searches.length)throw Error("Reward Worker could not be reached for any item. "+failures.slice(0,3).join(" | ")+". Open "+SHEET+"/health to test the Worker. If health responds but search fails, check its deployment, CORS allowance for this Pages domain, and DATA binding.");
- // Food inside a monster chest is returned as a nested route, with the food
- // amount PER CHEST. Look up the direct guaranteed parent chest entry to
- // verify how many chests the monster awards per hunt. Never assume one.
+ if(!searches.length)throw Error("Reward service failed for every query, including source-specific retries. "+failures.slice(0,4).join(" | ")+". The service may be unavailable or exceeding Cloudflare request limits.");
+ // Verify the count of guaranteed parent chests so documented contents
+ // can contribute to monster rewards without inventing chest drop rates.
  const parents=[...new Set(searches.flatMap(result=>result.groups).filter(row=>row.source!=="events"&&row.source!=="boxes")
   .flatMap(row=>(row.items||[]).filter(item=>item.classification==="Guaranteed"&&
     item.route?.length===2&&item.route[0]&&item.route[0].length>=2&&item.route[0].length<=100)
@@ -204,7 +214,7 @@ function show(rows,target,stamina,days,index,today,calendar,diagnostics,partialR
  $("recommend-intro").textContent="Event qualifying rewards are separate from monster stamina. Monster rankings use "+fmt(forecast.stamina)+" TOTAL stamina, once, across the period.";
  const summary=$("summary");summary.replaceChildren();
  for(const [label,value] of [
-  ["Event total (assuming completion)",fmt(forecast.eventTotal)+" "+target],
+  ["Event total (assuming completion)"+(partialRewards?" · partial":""),fmt(forecast.eventTotal)+" "+target],
   ["Best monster with full stamina",forecast.topMonster?fmt(forecast.topMonster.total)+" "+target:"No qualifying monster return"],
   ["Confirmed Calendar days",fmt(forecast.checkedDays)+" / "+fmt(forecast.days)]
  ]) {
