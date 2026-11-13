@@ -24,6 +24,13 @@ import SiteHeader from '../../components/SiteHeader.astro';
 #feedback-form .attachment-label{gap:5px}.consent{display:flex;align-items:flex-start;gap:10px;line-height:1.55;color:#cfdeeb;font-size:.88rem}
 .consent input{margin-top:5px;flex:none;accent-color:#f4c97e}.form-submit{cursor:pointer;border:0;font:inherit;justify-self:start}
 .form-submit:disabled{opacity:.5;cursor:not-allowed}.honeypot{position:absolute;left:-99999px;height:1px;width:1px;overflow:hidden}
+.feedback-confirmation{margin-top:24px;padding:36px 24px;border:2px solid #dcb86f;border-radius:16px;background:linear-gradient(145deg,#204d42,#15364a);text-align:center;box-shadow:0 10px 32px rgba(0,0,0,.2)}
+.feedback-confirmation[hidden]{display:none}
+.confirmation-mark{display:grid;place-items:center;width:64px;height:64px;margin:0 auto 16px;border-radius:50%;background:#b6edc5;color:#173529;font-size:2.2rem;font-weight:900}
+.feedback-confirmation h3{font:700 clamp(1.6rem,4vw,2.2rem) Georgia,serif;color:#fff0b9;margin:0 0 12px}
+.feedback-confirmation p{line-height:1.6;color:#e4f2e9;margin:8px auto;max-width:580px}
+.feedback-confirmation .confirmation-detail{color:#cddedc;font-size:.9rem}
+.feedback-confirmation button{margin-top:20px;cursor:pointer;border:0;font:inherit}
 .turnstile-slot{min-height:2px}#feedback-status{margin:0}#feedback-status[data-error="true"]{color:#ffb9a9}#feedback-status[data-success="true"]{color:#b4f0cd}
 @media(max-width:620px){.feedback-form-section{padding:19px}.form-grid{grid-template-columns:1fr}}
 </style></head><body><SiteHeader active="contact"/>
@@ -35,6 +42,13 @@ import SiteHeader from '../../components/SiteHeader.astro';
 <div class="choice"><img src="/images/item-finder/feasting-revelry.svg" alt="" loading="lazy"/><h3>Have a tool idea?</h3><p>If it would make Evony easier to play or plan, we'd love to hear what you're imagining.</p></div>
 </div></section>
 <section class="feedback-form-section" aria-labelledby="feedback-form-heading"><div class="eyebrow">Share your thoughts</div><h2 id="feedback-form-heading">Tell us what would make EvonyMasters better</h2><p>Report missing rewards, flag a problem or suggest something new. You can add up to five screenshots or supporting files, and you don't need an account.</p>
+<div class="feedback-confirmation" id="feedback-confirmation" role="status" aria-live="polite" tabindex="-1" hidden>
+<div class="confirmation-mark" aria-hidden="true">✓</div>
+<h3>Thank you message sent</h3>
+<p>Your feedback has been received successfully. Thanks for helping improve EvonyMasters!</p>
+<p class="confirmation-detail" id="feedback-confirmation-detail"></p>
+<button class="button" type="button" id="feedback-again">Send another message</button>
+</div>
 <div class="feedback-form-shell" id="feedback-form-shell">
 <form id="feedback-form" enctype="multipart/form-data" novalidate>
 <div class="form-grid">
@@ -65,6 +79,8 @@ const API="https://evonymasters-feedback.jaynmegepicadventure.workers.dev";
 const form=document.getElementById("feedback-form"),button=document.getElementById("feedback-submit");
 const status=document.getElementById("feedback-status"),files=document.getElementById("feedback-files");
 const fileSummary=document.getElementById("file-summary"),slot=document.getElementById("feedback-turnstile");
+const confirmation=document.getElementById("feedback-confirmation"),confirmationDetail=document.getElementById("feedback-confirmation-detail"),formShell=document.getElementById("feedback-form-shell");
+document.getElementById("feedback-again").addEventListener("click",()=>window.location.reload());
 let captchaToken="",widgetId=null,enabled=false;
 const show=(message,error=false,success=false)=>{status.textContent=message;status.dataset.error=String(error);status.dataset.success=String(success)};
 const types=new Set(["image/png","image/jpeg","image/webp","application/pdf","text/plain"]);
@@ -112,9 +128,12 @@ form.addEventListener("submit",async e=>{
   const result=await response.json();
   if(!response.ok||!result.ok)throw Error(result.error||"Unable to submit feedback");
   form.reset();validateFiles();
-  show("Thank you! Your feedback has been saved to our private Google Sheet and Drive. Reference: "+result.id.slice(0,8)+(result.emailNotified?"":". Gmail notification could not be sent, but your feedback is saved."),false,true);
+  confirmationDetail.textContent="Reference: "+result.id.slice(0,8)+(result.emailNotified?"":". Your message was saved, but the email notification could not be sent.");
+  formShell.hidden=true;
+  confirmation.hidden=false;
+  confirmation.focus();
  }catch(err){show(err.message||"Submission failed. Try again or use email.",true)}
- finally{button.textContent="Send feedback";captchaToken="";if(widgetId!==null&&window.turnstile)window.turnstile.reset(widgetId);button.disabled=true}
+ finally{button.textContent="Send feedback";captchaToken="";if(!confirmation.hidden){if(widgetId!==null&&window.turnstile){window.turnstile.remove(widgetId);widgetId=null}}else if(widgetId!==null&&window.turnstile)window.turnstile.reset(widgetId);button.disabled=true}
 });
 initialize();
 })();
