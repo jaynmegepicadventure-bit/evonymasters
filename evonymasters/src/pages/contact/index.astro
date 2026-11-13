@@ -44,7 +44,7 @@ import SiteHeader from '../../components/SiteHeader.astro';
 <label>Email for a reply (optional)<input name="email" type="email" maxlength="200" autocomplete="email" placeholder="you@example.com"/></label>
 </div>
 <label>Your message <span aria-hidden="true">*</span><textarea name="message" maxlength="4000" minlength="15" rows="6" required placeholder="What happened, what were you trying to find, or what should we build next?"></textarea></label>
-<label class="attachment-label" for="feedback-files"><span>Attachments (optional)</span><span class="note">Up to 5 files, PNG / JPG / WebP / PDF / TXT, maximum 5 MB each and 20 MB combined.</span></label>
+<label class="attachment-label" for="feedback-files"><span>Attachments (optional)</span><span class="note">Up to 5 files, PNG / JPG / WebP / PDF / TXT, maximum 2 MB each and 8 MB combined.</span></label>
 <input id="feedback-files" name="files" type="file" accept=".png,.jpg,.jpeg,.webp,.pdf,.txt,image/png,image/jpeg,image/webp,application/pdf,text/plain" multiple/>
 <p id="file-summary" class="note" aria-live="polite">No files selected.</p>
 <div class="honeypot" aria-hidden="true"><label>Leave this field empty<input name="website" tabindex="-1" autocomplete="off"/></label></div>
@@ -70,9 +70,9 @@ const show=(message,error=false,success=false)=>{status.textContent=message;stat
 const types=new Set(["image/png","image/jpeg","image/webp","application/pdf","text/plain"]);
 function validateFiles(){
  const chosen=[...files.files],sum=chosen.reduce((total,f)=>total+f.size,0);
- const valid=chosen.length<=5&&sum<=20*1024*1024&&chosen.every(f=>f.size<=5*1024*1024&&types.has(f.type));
+ const valid=chosen.length<=5&&sum<=8*1024*1024&&chosen.every(f=>f.size<=2*1024*1024&&types.has(f.type));
  fileSummary.textContent=chosen.length?chosen.length+" attachment(s) selected, "+(sum/(1024*1024)).toFixed(2)+" MB total.":"No files selected.";
- if(!valid){fileSummary.textContent+=" Please select up to five PNG/JPG/WebP/PDF/TXT files, 5 MB maximum each and 20 MB total.";fileSummary.style.color="#ffb9a9"}
+ if(!valid){fileSummary.textContent+=" Please select up to five PNG/JPG/WebP/PDF/TXT files, 2 MB maximum each and 8 MB total.";fileSummary.style.color="#ffb9a9"}
  else fileSummary.style.color="";
  return valid;
 }
@@ -112,7 +112,7 @@ form.addEventListener("submit",async e=>{
   const result=await response.json();
   if(!response.ok||!result.ok)throw Error(result.error||"Unable to submit feedback");
   form.reset();validateFiles();
-  show("Thank you! Your feedback has been saved. Reference: "+result.id.slice(0,8)+(result.emailNotified?"":". Notification email is pending; the submission is still saved."),false,true);
+  show("Thank you! Your feedback has been saved to our private Google Sheet and Drive. Reference: "+result.id.slice(0,8)+(result.emailNotified?"":". Gmail notification could not be sent, but your feedback is saved."),false,true);
  }catch(err){show(err.message||"Submission failed. Try again or use email.",true)}
  finally{button.textContent="Send feedback";captchaToken="";if(widgetId!==null&&window.turnstile)window.turnstile.reset(widgetId);button.disabled=true}
 });
