@@ -1,0 +1,138 @@
+---
+import SeoMetadata from '../../components/SeoMetadata.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+---
+<!doctype html>
+<html lang="en">
+<head>
+<SeoMetadata title="Evony Questions & Answers | EvonyMasters Q&A" description="Explore answers to Evony gameplay questions, learn about rewards, monsters, events and troop planning, or send a question to EvonyMasters."/>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="icon" href="/favicon.svg"/>
+<style>
+:root{font:16px Inter,system-ui,sans-serif;color:#eef3f9;background:#091624}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 85% 12%,#1b354a,transparent 40%),#091624}
+a{color:#f0c77b}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+.hero{min-height:305px;display:flex;align-items:center;padding:52px 0 56px;background:linear-gradient(90deg,rgba(5,14,25,.96),rgba(6,20,35,.87) 53%,rgba(5,17,31,.2)),url('/images/banners/home.webp') center/cover no-repeat;border-bottom:1px solid #956f40}
+.eyebrow{font-size:.77rem;letter-spacing:.13em;text-transform:uppercase;font-weight:850;color:#efcb83}
+.hero h1{font:700 clamp(2.4rem,5vw,4.1rem)/1.13 Georgia,serif;color:#ffdf9e;max-width:780px;margin:12px 0 16px}
+.hero p{max-width:700px;color:#dbe7ef;line-height:1.7;font-size:1.1rem}
+.content{padding-top:45px;padding-bottom:78px}
+.intro h2{font:700 clamp(1.65rem,3vw,2.25rem) Georgia,serif;color:#ffdfa3;margin:8px 0}
+.intro p{color:#c8d8e7;line-height:1.7}
+.controls{margin:24px 0 15px;display:grid;grid-template-columns:1fr 250px;gap:12px}
+.controls label{display:grid;gap:7px;font-size:.86rem;color:#f5d696;font-weight:800}
+.controls input,.controls select{width:100%;padding:14px;font:inherit;border-radius:9px;background:#0d2539;border:1px solid #637c91;color:#f5f7fa}
+.controls input:focus-visible,.controls select:focus-visible{outline:2px solid #ecc880;outline-offset:2px}
+.results-count{color:#b6c8d7;margin:14px 0 20px;font-size:.91rem}
+.qa-list{display:grid;gap:14px}
+.qa-card{background:#132c42;border:1px solid #436078;border-radius:14px;overflow:hidden}
+.qa-card[hidden]{display:none}
+.qa-card summary{cursor:pointer;list-style:none;padding:21px 23px;display:flex;align-items:center;gap:18px}
+.qa-card summary::-webkit-details-marker{display:none}
+.qa-card summary:focus-visible{outline:2px solid #e9c17b;outline-offset:-4px}
+.qa-card .heading{flex:1;min-width:0}
+.qa-card .category{font-weight:800;color:#f4ce88;letter-spacing:.075em;text-transform:uppercase;font-size:.7rem}
+.qa-card h3{font-size:1.15rem;line-height:1.45;margin:7px 0 0;color:#f8e1b4}
+.qa-card .chevron{color:#eec981;font-size:1.35rem;transition:transform .15s}
+.qa-card[open] .chevron{transform:rotate(180deg)}
+.qa-answer{border-top:1px solid #3f5b70;padding:22px 23px;color:#d9e4ed;line-height:1.8;white-space:pre-line;overflow-wrap:anywhere}
+.qa-meta{display:flex;gap:9px 20px;flex-wrap:wrap;margin-top:20px;font-size:.81rem;color:#b4c9d9}
+.tool-link{display:inline-flex;margin-top:17px;padding:10px 15px;background:#eac37b;color:#12283b;text-decoration:none;font-weight:850;border-radius:9px}
+.state{padding:24px;background:#142d42;border:1px solid #46617a;border-radius:12px;color:#d9e5ef;line-height:1.6}
+.state[hidden]{display:none}
+.ask-panel{margin-top:43px;background:linear-gradient(115deg,#20425a,#142c41);border:1px solid #a07c49;border-radius:16px;padding:28px 31px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.ask-panel h2{font:700 1.65rem Georgia,serif;color:#ffdfa0;margin:8px 0}
+.ask-panel p{color:#d0dfe9;line-height:1.65;max-width:630px}
+.ask-panel a{padding:14px 18px;border-radius:9px;color:#13273b;background:#eac37b;font-weight:850;text-decoration:none;text-align:center;flex-shrink:0}
+footer{margin-top:42px;border-top:1px solid #39566d;padding:22px 0;color:#bdccd8;font-size:.87rem}
+@media(max-width:730px){.controls{grid-template-columns:1fr}.ask-panel{flex-direction:column;align-items:stretch}.qa-card summary{padding:18px}.qa-answer{padding:19px}}
+@media(max-width:520px){.wrap{padding:0 17px}.hero{min-height:280px;padding:41px 0}.ask-panel{padding:23px}}
+</style>
+</head>
+<body>
+<SiteHeader active="qa"/>
+<main>
+<section class="hero"><div class="wrap">
+<div class="eyebrow">EvonyMasters Knowledge Base</div>
+<h1>Evony questions, answered.</h1>
+<p>Clear answers to common player questions, reviewed before publication. Search the knowledge base, explore a topic, or ask us something new.</p>
+</div></section>
+<div class="wrap content">
+<section class="intro" aria-labelledby="browse-heading">
+<div class="eyebrow">Find what you need</div>
+<h2 id="browse-heading">Explore questions & answers</h2>
+<p>Answers come from our moderated Q&A collection. Only approved entries are shown here.</p>
+</section>
+<div class="controls">
+<label for="qa-search">Search questions or answers<input id="qa-search" type="search" autocomplete="off" placeholder="Try ‘monster rewards’, ‘troops’ or ‘events’"/></label>
+<label for="qa-category">Category<select id="qa-category"><option value="">All categories</option></select></label>
+</div>
+<p class="results-count" id="qa-count" aria-live="polite">Loading approved questions…</p>
+<div class="state" id="qa-state" role="status">Loading questions from EvonyMasters…</div>
+<div class="qa-list" id="qa-list"></div>
+<section class="ask-panel"><div><div class="eyebrow">Didn't find your answer?</div><h2>Ask the EvonyMasters team</h2><p>Submit a question using our secure feedback form. We review submissions, and helpful answers may be added here without your private details.</p></div><a href="/contact/">Ask a question</a></section>
+<footer><a href="/">Home</a> · <a href="/contact/">Feedback</a> · <a href="/privacy/">Privacy</a></footer>
+</div>
+</main>
+<script is:inline>
+(()=>{
+"use strict";
+const API="https://evonymasters-feedback.jaynmegepicadventure.workers.dev/api/qa";
+const list=document.getElementById("qa-list"),state=document.getElementById("qa-state"),counter=document.getElementById("qa-count"),
+ search=document.getElementById("qa-search"),category=document.getElementById("qa-category");
+let entries=[];
+function text(tag,value,className){const el=document.createElement(tag);el.textContent=value||"";if(className)el.className=className;return el}
+function render(){
+ const query=search.value.trim().toLocaleLowerCase();
+ const selected=category.value;
+ const matches=entries.filter(q=>(!selected||q.category===selected)&&(!query||[q.question,q.answer,q.category].some(v=>String(v||"").toLocaleLowerCase().includes(query))));
+ list.replaceChildren();
+ for(const q of matches){
+  const card=document.createElement("details");card.className="qa-card";card.id="question-"+q.id.replace(/[^a-zA-Z0-9_-]/g,"").slice(0,100);
+  const summary=document.createElement("summary");
+  const heading=document.createElement("div");heading.className="heading";
+  heading.append(text("span",q.category||"General","category"),text("h3",q.question));
+  summary.append(heading,text("span","⌄","chevron"));
+  card.append(summary);
+  const answer=text("div",q.answer,"qa-answer");
+  const meta=document.createElement("div");meta.className="qa-meta";
+  if(q.source)meta.append(text("span","Source: "+q.source));
+  if(q.lastUpdated)meta.append(text("span","Updated: "+q.lastUpdated));
+  answer.append(meta);
+  if(q.relatedTool&&/^\/(?!\/)[A-Za-z0-9/_-]*\/?(?:#[A-Za-z0-9_-]+)?$/.test(q.relatedTool)){
+   const link=document.createElement("a");link.className="tool-link";link.href=q.relatedTool;link.textContent="Explore related tool";
+   answer.append(link);
+  }
+  card.append(answer);list.append(card);
+ }
+ counter.textContent=matches.length+" approved "+(matches.length===1?"answer":"answers")+(query||selected?" found":" available");
+ if(entries.length===0){state.hidden=false;state.textContent="No published questions yet. Have a question? Send it through our feedback form."}
+ else if(matches.length===0){state.hidden=false;state.textContent="No matches found. Try another search, change the category, or ask us a question."}
+ else state.hidden=true;
+}
+search.addEventListener("input",render);category.addEventListener("change",render);
+async function init(){
+ try{
+  const response=await fetch(API,{cache:"no-store"});
+  if(!response.ok)throw Error("Could not connect to the approved Q&A feed.");
+  const data=await response.json();
+  if(!data.ok||!Array.isArray(data.questions))throw Error("Questions are temporarily unavailable.");
+  entries=data.questions.filter(q=>q&&typeof q==="object"&&typeof q.question==="string"&&typeof q.answer==="string");
+  const categories=[...new Set(entries.map(q=>q.category||"General"))].sort((a,b)=>a.localeCompare(b));
+  for(const value of categories){const option=document.createElement("option");option.value=value;option.textContent=value;category.append(option)}
+  render();
+  if(location.hash.startsWith("#question-")){
+    const item=document.getElementById(location.hash.slice(1));if(item){item.open=true;item.scrollIntoView({block:"center"})}
+  }
+ }catch{
+  counter.textContent="Answers are temporarily unavailable";
+  state.hidden=false;
+  state.textContent="We're having trouble loading approved questions right now. Please try again later or submit your question through the Feedback page.";
+ }
+}
+init();
+})();
+</script>
+</body></html>
