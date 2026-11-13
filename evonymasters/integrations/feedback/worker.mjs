@@ -62,6 +62,26 @@ async function forward(request,env){
   return respond({ok:true,id,emailNotified:answer.emailNotified===true},201);
  }catch{return respond({error:"Feedback service is unavailable. Please use email for now."},503)}
 }
+// Public, read-only Q&A proxy. Google Apps Script never receives the visitor's browser request.
+async function publicQA(env,headers){
+ if(!env.APPS_SCRIPT_URL||!/^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec$/.test(env.APPS_SCRIPT_URL))
+  return respond({ok:false,error:"Q&A is not configured."},503,headers);
+ try{
+  const r=await fetch(env.APPS_SCRIPT_URL+"?action=qa",{method:"GET",redirect:"follow"});
+  if(!r.ok)return respond({ok:false,error:"Q&A could not be loaded."},502,headers);
+  const raw=await r.text();
+  if(raw.length>1200000)return respond({ok:false,error:"Q&A response is too large."},502,headers);
+  const payload=JSON.parse(raw);
+  if(payload.ok!==true||!Array.isArray(payload.questions))return respond({ok:false,error:"Q&A is temporarily unavailable."},502,headers);
+  // Output allowlist: explicitly discard any unexpected private fields.
+  const questions=payload.questions.slice(0,500).filter(q=>q&&typeof q==="object"&&q.question&&q.answer).map(q=>({
+   id:clean(q.id,100),category:clean(q.category,100),question:clean(q.question,400),
+   answer:clean(q.answer,6000),source:clean(q.source,500),lastUpdated:clean(q.lastUpdated,100),
+   relatedTool:typeof q.relatedTool==="string"&&/^\/(?!\/)[A-Za-z0-9/_-]*\/?(?:#[A-Za-z0-9_-]+)?$/.test(q.relatedTool)?q.relatedTool:""
+  }));
+  return respond({ok:true,questions},200,{...headers,"cache-control":"public, max-age=300"});
+ }catch{return respond({ok:false,error:"Q&A is temporarily unavailable."},502,headers)}
+}
 export default {
  async fetch(request,env){
   const url=new URL(request.url),origin=request.headers.get("origin")||"";
@@ -69,6 +89,10 @@ export default {
   if(url.pathname==="/api/config"&&request.method==="GET"){
    if(origin&&origin!==WEBSITE)return respond({error:"Origin not permitted"},403);
    return respond({enabled:ready(env),siteKey:ready(env)?env.TURNSTILE_SITE_KEY:null},200,headers);
+  }
+  if(url.pathname==="/api/qa"&&request.method==="GET"){
+   if(origin&&origin!==WEBSITE)return respond({error:"Origin not permitted"},403);
+   return publicQA(env,headers);
   }
   if(origin!==WEBSITE)return respond({error:"Origin not permitted"},403);
   if(request.method==="OPTIONS")return new Response(null,{status:204,headers});
