@@ -124,7 +124,7 @@ async function submit(request, env) {
     for (let i = 0; i < files.length; i++) {
       const f = files[i], extension = TYPES.get(f.type);
       const key = "files/" + id + "/" + i + extension;
-      await env.SUBMISSIONS.put(key, f.stream(), {
+      await env.SUBMISSIONS.put(key, f, {
         httpMetadata: { contentType: f.type, contentDisposition: "attachment" },
         customMetadata: { submission: id }
       });
