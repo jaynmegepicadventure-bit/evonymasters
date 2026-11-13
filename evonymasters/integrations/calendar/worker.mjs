@@ -4,7 +4,7 @@
 // Bulk calendar schedules for the current Events and Monster catalog.
 // Keep admin routes behind Cloudflare Access and an explicit email allowlist.
 const KEY="evonymasters:schedules:v2", SITE="https://evonymasters.com";
-const ALLOWED_PUBLIC_ORIGINS=[SITE,"https://evonymasters.jaynmegepicadventure.workers.dev","https://evonymasters.pages.dev"];
+const ALLOWED_PUBLIC_ORIGINS=["https://www.evonymasters.com",SITE,"https://evonymasters.jaynmegepicadventure.workers.dev","https://evonymasters.pages.dev"];
 const CATALOG_URL="https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev/v4/calendar/catalog";
 const HEADERS={"content-type":"application/json; charset=utf-8","cache-control":"no-store","x-content-type-options":"nosniff"};
 const respond=(body,status=200,headers={})=>new Response(JSON.stringify(body),{status,headers:{...HEADERS,...headers}});
