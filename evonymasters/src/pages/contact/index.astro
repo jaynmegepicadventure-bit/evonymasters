@@ -13,6 +13,19 @@ import SiteHeader from '../../components/SiteHeader.astro';
 .contact-panel{margin:32px 0 0;background:linear-gradient(115deg,#183b51,#12283c);border:1px solid #9d7d4e;border-radius:17px;padding:32px;display:grid;grid-template-columns:1.2fr .8fr;gap:22px;align-items:center}.contact-panel h2{font:700 1.75rem Georgia,serif;color:#ffe0a2;margin:8px 0 12px}.contact-panel p{color:#d3e0eb;line-height:1.7}.button{display:inline-block;padding:14px 18px;background:#ecc57d;color:#17283b;border-radius:10px;text-decoration:none;font-weight:850;text-align:center}.contact-actions{text-align:center}.contact-actions .button{width:100%;max-width:310px}.note{font-size:.86rem;color:#bfd0dd}.tips{margin-top:42px}.tips h2{color:#f3d28e;font:700 1.5rem Georgia,serif}.tips p{line-height:1.75;color:#ccdaea}.tips a{color:#f5cf8b}footer{margin-top:42px;border-top:1px solid #375168;padding-top:22px;color:#b9cbd9;font-size:.87rem}
 @media(max-width:800px){.choices{grid-template-columns:1fr}.choice{display:grid;grid-template-columns:80px 1fr;gap:5px 16px;align-items:start}.choice img{grid-row:span 2;margin:0}.contact-panel{grid-template-columns:1fr}}
 @media(max-width:520px){.wrap{padding:0 18px}.feedback-hero{padding:44px 0 52px;min-height:300px}.choice{display:block}.choice img{margin-bottom:16px}.contact-panel{padding:24px}}
+.feedback-form-section{margin-top:34px;padding:28px;border:1px solid #9c7b4e;border-radius:17px;background:linear-gradient(125deg,#17384d,#12283e)}
+.feedback-form-section h2{font:700 1.9rem Georgia,serif;color:#ffe0a2;margin:11px 0}
+.feedback-form-section>p{color:#d1dfeb;line-height:1.7}
+.feedback-form-shell{margin-top:22px}
+#feedback-form{display:grid;gap:17px}#feedback-form label:not(.consent){display:grid;gap:7px;font-weight:750;color:#f6dcae}
+#feedback-form input:not([type="checkbox"]),#feedback-form select,#feedback-form textarea{font:inherit;color:#f5f7fa;background:#0b2033;border:1px solid #68829b;border-radius:9px;padding:12px;min-width:0;width:100%}
+#feedback-form input:focus-visible,#feedback-form select:focus-visible,#feedback-form textarea:focus-visible{outline:2px solid #f3ce89;outline-offset:2px}
+#feedback-form textarea{resize:vertical}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
+#feedback-form .attachment-label{gap:5px}.consent{display:flex;align-items:flex-start;gap:10px;line-height:1.55;color:#cfdeeb;font-size:.88rem}
+.consent input{margin-top:5px;flex:none;accent-color:#f4c97e}.form-submit{cursor:pointer;border:0;font:inherit;justify-self:start}
+.form-submit:disabled{opacity:.5;cursor:not-allowed}.honeypot{position:absolute;left:-99999px;height:1px;width:1px;overflow:hidden}
+.turnstile-slot{min-height:2px}#feedback-status{margin:0}#feedback-status[data-error="true"]{color:#ffb9a9}#feedback-status[data-success="true"]{color:#b4f0cd}
+@media(max-width:620px){.feedback-form-section{padding:19px}.form-grid{grid-template-columns:1fr}}
 </style></head><body><SiteHeader active="contact"/>
 <main><section class="feedback-hero"><div class="wrap"><div class="eyebrow">Help shape EvonyMasters</div><h1>Got an idea? Found something we missed?</h1><p>Your feedback helps turn EvonyMasters into the place players can trust when they need a reward, a plan or a quick answer. Tell us what would make your next visit better.</p></div></section>
 <div class="wrap content"><section aria-labelledby="feedback-heading"><div class="lead"><div class="eyebrow">Your voice counts</div><h2 id="feedback-heading">Three great reasons to get in touch</h2><p>Every useful correction and suggestion helps make the tools better for the next player.</p></div>
@@ -21,7 +34,88 @@ import SiteHeader from '../../components/SiteHeader.astro';
 <div class="choice"><img src="/images/item-finder/box.svg" alt="" loading="lazy"/><h3>Something not working?</h3><p>Broken search, odd calculation or a display problem? Point us to the page and what happened.</p></div>
 <div class="choice"><img src="/images/item-finder/feasting-revelry.svg" alt="" loading="lazy"/><h3>Have a tool idea?</h3><p>If it would make Evony easier to play or plan, we'd love to hear what you're imagining.</p></div>
 </div></section>
-<section class="contact-panel"><div><div class="eyebrow">Send a message</div><h2>Help us build a better toolkit</h2><p>Send a correction, suggestion or question to the EvonyMasters team. A few details make it easier for us to investigate.</p><p class="note">Please don't include passwords, account credentials or other sensitive information.</p></div><div class="contact-actions"><a class="button" href="mailto:contact@evonymasters.com?subject=EvonyMasters%20Feedback">Email the EvonyMasters team →</a><p><a href="mailto:contact@evonymasters.com">contact@evonymasters.com</a></p></div></section>
+<section class="feedback-form-section" aria-labelledby="feedback-form-heading"><div class="eyebrow">Share your thoughts</div><h2 id="feedback-form-heading">Tell us what would make EvonyMasters better</h2><p>Report missing rewards, flag a problem or suggest something new. You can add up to five screenshots or supporting files, and you don't need an account.</p>
+<div class="feedback-form-shell" id="feedback-form-shell">
+<form id="feedback-form" enctype="multipart/form-data" novalidate>
+<div class="form-grid">
+<label>What is this about? <span aria-hidden="true">*</span><select name="category" required><option value="">Choose a category</option><option value="data">Missing or incorrect game data</option><option value="bug">Website issue or bug</option><option value="idea">Feature suggestion</option><option value="question">Evony question</option><option value="other">Something else</option></select></label>
+<label>Page or tool (optional)<input name="page" type="text" maxlength="300" placeholder="e.g. Chest Finder or /resources/"/></label>
+<label>Player name (optional)<input name="name" type="text" maxlength="100" autocomplete="nickname" placeholder="How should we address you?"/></label>
+<label>Email for a reply (optional)<input name="email" type="email" maxlength="200" autocomplete="email" placeholder="you@example.com"/></label>
+</div>
+<label>Your message <span aria-hidden="true">*</span><textarea name="message" maxlength="4000" minlength="15" rows="6" required placeholder="What happened, what were you trying to find, or what should we build next?"></textarea></label>
+<label class="attachment-label" for="feedback-files"><span>Attachments (optional)</span><span class="note">Up to 5 files, PNG / JPG / WebP / PDF / TXT, maximum 5 MB each and 20 MB combined.</span></label>
+<input id="feedback-files" name="files" type="file" accept=".png,.jpg,.jpeg,.webp,.pdf,.txt,image/png,image/jpeg,image/webp,application/pdf,text/plain" multiple/>
+<p id="file-summary" class="note" aria-live="polite">No files selected.</p>
+<div class="honeypot" aria-hidden="true"><label>Leave this field empty<input name="website" tabindex="-1" autocomplete="off"/></label></div>
+<div class="turnstile-slot" id="feedback-turnstile"></div>
+<label class="consent"><input id="feedback-consent" type="checkbox" required/><span>I understand this message and any attachments will be stored to review my feedback, and my email (if supplied) may be used to reply. Please don't share passwords or sensitive personal details. See our <a href="/privacy/">Privacy Policy</a>.</span></label>
+<button type="submit" class="button form-submit" id="feedback-submit" disabled>Send feedback</button>
+<p id="feedback-status" role="status" aria-live="polite" class="note">Checking whether the secure feedback form is available…</p>
+</form></div>
+<p class="note">Prefer email? You can still write directly to <a href="mailto:contact@evonymasters.com?subject=EvonyMasters%20Feedback">contact@evonymasters.com</a>.</p>
+</section>
+
 <section class="tips"><h2>How to send a helpful report</h2><p>Include the tool or page, the item or monster you searched for, what you expected and what happened instead. For reward corrections, an in-game source and date are especially helpful. Sharing the site with your alliance and suggesting missing data are other great ways to help.</p><p>Want to see what we're building? <a href="/about/">Explore what EvonyMasters is all about</a>, or <a href="/resources/">jump into Item Finder</a>.</p></section>
 <footer><a href="/">Home</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></footer></div>
-</main></body></html>
+<script is:inline>
+(()=>{
+"use strict";
+const API="https://evonymasters-feedback.jaynmegepicadventure.workers.dev";
+const form=document.getElementById("feedback-form"),button=document.getElementById("feedback-submit");
+const status=document.getElementById("feedback-status"),files=document.getElementById("feedback-files");
+const fileSummary=document.getElementById("file-summary"),slot=document.getElementById("feedback-turnstile");
+let captchaToken="",widgetId=null,enabled=false;
+const show=(message,error=false,success=false)=>{status.textContent=message;status.dataset.error=String(error);status.dataset.success=String(success)};
+const types=new Set(["image/png","image/jpeg","image/webp","application/pdf","text/plain"]);
+function validateFiles(){
+ const chosen=[...files.files],sum=chosen.reduce((total,f)=>total+f.size,0);
+ const valid=chosen.length<=5&&sum<=20*1024*1024&&chosen.every(f=>f.size<=5*1024*1024&&types.has(f.type));
+ fileSummary.textContent=chosen.length?chosen.length+" attachment(s) selected, "+(sum/(1024*1024)).toFixed(2)+" MB total.":"No files selected.";
+ if(!valid){fileSummary.textContent+=" Please select up to five PNG/JPG/WebP/PDF/TXT files, 5 MB maximum each and 20 MB total.";fileSummary.style.color="#ffb9a9"}
+ else fileSummary.style.color="";
+ return valid;
+}
+files.addEventListener("change",validateFiles);
+async function initialize(){
+ try{
+  const response=await fetch(API+"/api/config",{cache:"no-store"});
+  if(!response.ok)throw Error("Configuration unavailable");
+  const config=await response.json();
+  if(!config.enabled||!config.siteKey)throw Error("Setup incomplete");
+  const script=document.createElement("script");
+  script.src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+  script.async=true;script.defer=true;
+  script.onload=()=>{
+   if(!window.turnstile){show("Security verification could not load. You can email us instead.",true);return}
+   widgetId=window.turnstile.render(slot,{
+    sitekey:config.siteKey,
+    callback:token=>{captchaToken=token;button.disabled=false;show("Ready to send securely.")},
+    "expired-callback":()=>{captchaToken="";button.disabled=true;show("Security check expired. Please complete it again.",true)},
+    "error-callback":()=>{captchaToken="";button.disabled=true;show("Security check failed. Please retry or use email.",true)}
+   });
+  };
+  script.onerror=()=>show("Security verification could not load. Please use email instead.",true);
+  document.head.append(script);
+  enabled=true;show("Complete the security check to enable sending.");
+ }catch{enabled=false;button.disabled=true;show("The secure form is not live yet. Please email contact@evonymasters.com for now.",true)}
+}
+form.addEventListener("submit",async e=>{
+ e.preventDefault();
+ if(!enabled||!captchaToken)return show("Complete the security check first.",true);
+ if(!form.reportValidity()||!validateFiles())return show("Please correct the fields and attachments before sending.",true);
+ button.disabled=true;button.textContent="Sending…";show("Saving your feedback securely…");
+ try{
+  const data=new FormData(form);
+  data.set("cf-turnstile-response",captchaToken);
+  const response=await fetch(API+"/api/feedback",{method:"POST",body:data});
+  const result=await response.json();
+  if(!response.ok||!result.ok)throw Error(result.error||"Unable to submit feedback");
+  form.reset();validateFiles();
+  show("Thank you! Your feedback has been saved. Reference: "+result.id.slice(0,8)+(result.emailNotified?"":". Notification email is pending; the submission is still saved."),false,true);
+ }catch(err){show(err.message||"Submission failed. Try again or use email.",true)}
+ finally{button.textContent="Send feedback";captchaToken="";if(widgetId!==null&&window.turnstile)window.turnstile.reset(widgetId);button.disabled=true}
+});
+initialize();
+})();
+</script></main></body></html>
