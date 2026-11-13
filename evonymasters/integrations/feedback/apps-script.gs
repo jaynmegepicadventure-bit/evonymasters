@@ -122,3 +122,41 @@ function initializeFeedbackSheet() {
   if (sheet.getLastRow() === 0) sheet.appendRow(HEADERS);
   sheet.setFrozenRows(1);
 }
+
+/**
+ * Install one daily cleanup trigger. Run once as the script owner.
+ * Deletes feedback rows older than 90 days and trashes their uploaded attachments.
+ */
+function installFeedbackRetention() {
+  const fn = "purgeExpiredFeedback";
+  ScriptApp.getProjectTriggers().filter(t => t.getHandlerFunction() === fn).forEach(t => ScriptApp.deleteTrigger(t));
+  ScriptApp.newTrigger(fn).timeBased().everyDays(1).atHour(3).create();
+}
+function purgeExpiredFeedback() {
+  const props = PropertiesService.getScriptProperties();
+  const sheetId = props.getProperty("FEEDBACK_SHEET_ID");
+  if (!sheetId) throw Error("Missing FEEDBACK_SHEET_ID");
+  const spreadsheet = SpreadsheetApp.openById(sheetId);
+  const sheet = spreadsheet.getSheetByName("Feedback");
+  if (!sheet || sheet.getLastRow() < 2) return;
+  const cutoff = Date.now() - 90 * 24 * 60 * 60 * 1000;
+  const rows = sheet.getRange(2,1,sheet.getLastRow()-1,9).getValues();
+  for(let i=rows.length-1;i>=0;i--){
+    const received = new Date(rows[i][1]).getTime();
+    if (!Number.isFinite(received) || received > cutoff) continue;
+    const links=String(rows[i][8]||"").split("\n").filter(Boolean);
+    // Only delete files inside the configured private feedback folder.
+    const folderId=props.getProperty("FEEDBACK_FOLDER_ID");
+    for(const link of links){
+      const match=link.match(/\/d\/([-\w]{20,})/);
+      if(!match)continue;
+      try{
+        const file=DriveApp.getFileById(match[1]);
+        const parents=file.getParents();
+        let ours=false;while(parents.hasNext())if(parents.next().getId()===folderId)ours=true;
+        if(ours)file.setTrashed(true);
+      }catch(_){}
+    }
+    sheet.deleteRow(i+2);
+  }
+}
