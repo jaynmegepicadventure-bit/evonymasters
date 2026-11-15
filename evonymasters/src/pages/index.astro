@@ -10,7 +10,6 @@ const features=[
  {href:'/troops/',image:'/images/banners/march-preset.webp',eyebrow:'Ready for battle',title:'March Preset',text:'Build and fine-tune your troop layers with confidence.',action:'Build a march',icon:'⚔'},
  {href:'/training/',image:'/images/banners/troop-training.webp',eyebrow:'Know the cost',title:'Troop Training',text:'Calculate resources, gold and power before training.',action:'Calculate troops',icon:'♜'},
  {href:'/chests/',image:'/images/banners/chests.webp',eyebrow:'See what is inside',title:'Chest Finder',text:'Explore chest contents, rankings and sources.',action:'Explore chests',icon:'▣'},
- {href:'/generals/',image:'/images/banners/generals.webp',eyebrow:'Master the buffs',title:'General Buff Finder',text:'Explore general attributes, bonuses and debuffs.',action:'Compare generals',icon:'♛'},
  {href:'/qa/',image:'/images/banners/events.webp',eyebrow:'Answers from players',title:'Evony Q&A',text:'Find verified answers and ask the community a question.',action:'Browse answers',icon:'?'}
 ];
 const shortcuts=[
@@ -152,14 +151,14 @@ body{background:radial-gradient(ellipse at 50% 18%,#1c3047 0,transparent 49%),#0
 <div class="lower-grid">
 <article class="small-panel"><h3>⌕ &nbsp; Popular searches</h3><p>Take the shortcut to the loot you're chasing.</p><div class="quick-list">{shortcuts.map(link=><a class="quick-link" href={link.href}>{link.label} ↗</a>)}</div></article>
 <article class="small-panel"><h3>⚔ &nbsp; Monster rewards</h3><p>Pick your targets, compare their loot and make every stamina point work harder.</p><div class="panel-links"><a href="/resources/?q=Monarch%20EXP"><img src="/images/item-finder/zombie.svg" alt="" loading="lazy"/>Explore monster drops<span aria-hidden="true">›</span></a><a href="/chests/?source=bosses"><img src="/images/item-finder/box.svg" alt="" loading="lazy"/>Browse boss chests<span aria-hidden="true">›</span></a></div></article>
-<article class="small-panel"><h3>✦ &nbsp; Events &amp; generals</h3><p>Scout the calendar, chase event prizes and prepare for your next power play.</p><div class="panel-links"><a href="/calendar/"><img src="/images/item-finder/feasting-revelry.svg" alt="" loading="lazy"/>Event details<span aria-hidden="true">›</span></a><a href="/calendar/"><img src="/images/item-finder/event.svg" alt="" loading="lazy"/>Events calendar<span aria-hidden="true">›</span></a><a href="/generals/"><img src="/images/item-finder/event.svg" alt="" loading="lazy"/>General reference<span aria-hidden="true">›</span></a></div></article>
+<article class="small-panel"><h3>✦ &nbsp; Event planning</h3><p>Scout the calendar, chase event prizes and prepare for your next power play.</p><div class="panel-links"><a href="/calendar/"><img src="/images/item-finder/feasting-revelry.svg" alt="" loading="lazy"/>Event details<span aria-hidden="true">›</span></a><a href="/calendar/"><img src="/images/item-finder/event.svg" alt="" loading="lazy"/>Events calendar<span aria-hidden="true">›</span></a></div></article>
 </div>
 </section>
 <section class="categories" aria-labelledby="categories-title"><h2 id="categories-title">Explore the library</h2><div class="category-grid">
 <a class="category" href="/resources/"><img src="/images/item-finder/ymir.svg" alt="" loading="lazy"/><span><strong>Monster &amp; item rewards</strong><small>{monsterCount} catalog records · Reward sources</small></span></a>
 <a class="category" href="/calendar/"><img src="/images/item-finder/feasting-revelry.svg" alt="" loading="lazy"/><span><strong>Events</strong><small>Activities &amp; event rewards</small></span></a>
 <a class="category" href="/chests/"><img src="/images/item-finder/box.svg" alt="" loading="lazy"/><span><strong>Chests</strong><small>Contents, ranking tiers &amp; sources</small></span></a>
-<a class="category" href="/generals/"><img src="/images/item-finder/event.svg" alt="" loading="lazy"/><span><strong>Generals</strong><small>Skills, buffs &amp; attributes</small></span></a>
+
 </div></section>
 </div></main>
 <footer class="site-trust-footer"><div class="wrap"><div class="site-trust-links"><a href="/about/">About EvonyMasters</a><a href="/privacy/">Privacy Policy</a><a href="/contact/">Contact &amp; feedback</a></div><p>EvonyMasters is an independent fan-made website and is not affiliated with or endorsed by Evony: The King's Return or its publisher. Rewards and event availability can change; verify important details in-game.</p></div></footer>
