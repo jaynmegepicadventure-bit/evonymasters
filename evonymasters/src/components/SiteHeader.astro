@@ -18,12 +18,11 @@ const links=[
   <a class="site-brand" href="/" aria-label="EvonyMasters home"><img class="site-brand-icon" src="/favicon.svg" alt="" width="40" height="40" decoding="async"/><span class="brand-wordmark">Evony<span>Masters</span><small>Player strategy tools</small></span></a>
   <nav class="site-desktop-nav" aria-label="Main navigation">
    {links.map(link=><a href={link.href} aria-current={active===link.key?'page':undefined} title={link.label}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={link.icon}/></svg><span>{link.label}</span></a>)}
-   <a href="/generals/" class="site-secondary-nav" aria-current={active==='generals'?'page':undefined}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 2 5 5v7c0 5 3 8 7 10 4-2 7-5 7-10V5zM8 11h8"/></svg><span>Generals</span></a>
    <span class="site-planned" title="Coming soon">Upgrades <small>Soon</small></span>
   </nav>
   <details class="site-mobile-menu"><summary aria-label="Open navigation menu"><span aria-hidden="true">☰</span> Menu</summary><nav aria-label="Mobile navigation">
    {links.map(link=><a href={link.href} aria-current={active===link.key?'page':undefined}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={link.icon}/></svg>{link.label}</a>)}
-   <a href="/generals/">Generals</a><span class="site-planned">Upgrades · Coming soon</span><a href="/privacy/">Privacy Policy</a>
+<span class="site-planned">Upgrades · Coming soon</span><a href="/privacy/">Privacy Policy</a>
   </nav></details>
  </div>
 </header>
