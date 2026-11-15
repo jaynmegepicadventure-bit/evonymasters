@@ -55,3 +55,8 @@ test('draft page is not linked from public navigation or sitemap',()=>{
  assert.ok(!read('../src/components/SiteHeader.astro').includes("href:'/building-upgrades/'"));
  assert.ok(!read('../src/pages/sitemap.xml.ts').includes("'/building-upgrades/'"));
 });
+
+test('required-level labels render alongside prerequisite inputs',()=>{
+ const page=readFileSync(new URL('../src/pages/building-upgrades/index.astro',import.meta.url),'utf8');
+ assert.ok(page.includes("hint=el('small','', 'Required level '+level)"));
+});
