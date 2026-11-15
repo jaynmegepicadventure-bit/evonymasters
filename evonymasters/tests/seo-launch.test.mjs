@@ -28,21 +28,18 @@ test('metadata uses configured Astro site and homepage has website structured da
  assert.match(read('../src/pages/index.astro'),/structured=\{true\}/);
 });
 
-test('Cloudflare Web Analytics is installed once in the shared metadata component',()=>{
+test('Cloudflare Web Analytics uses automatic setup without a manually embedded beacon',()=>{
  const shared=read('../src/components/SeoMetadata.astro');
- assert.match(shared,/static\.cloudflareinsights\.com\/beacon\.min\.js/);
- assert.match(shared,/d3a0bf3b3b4e4de892ca828adfc24292/);
- assert.equal((shared.match(/data-cf-beacon/g)||[]).length,1);
- assert.doesNotMatch(shared,/a80e9722b6d4407ebe2990b4ce8c1ced/);
- assert.match(shared,/is:inline/);
+ assert.doesNotMatch(shared,/static\\.cloudflareinsights\\.com\\/beacon\\.min\\.js/);
+ assert.doesNotMatch(shared,/data-cf-beacon/);
  const privacy=read('../src/pages/privacy/index.astro');
  assert.match(privacy,/Cloudflare Web Analytics is enabled/);
  assert.match(privacy,/Advertising is planned/);
 });
 
-test('configured production base matches confirmed Cloudflare Workers hostname',()=>{
+test('production canonical and sitemap use the verified custom domain',()=>{
  const config=read('../astro.config.mjs');
- const production='https://evonymasters.jaynmegepicadventure.workers.dev';
+ const production='https://www.evonymasters.com';
  assert.ok(config.includes(production));
  const sitemap=read('../src/pages/sitemap.xml.ts');
  assert.ok(sitemap.includes(production));
