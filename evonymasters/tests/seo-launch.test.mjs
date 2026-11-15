@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 const read=p=>readFileSync(new URL(p,import.meta.url),'utf8');
-const routes=['index.astro','resources/index.astro','chests/index.astro','calendar/index.astro','loot-compass/index.astro','troops/index.astro','training/index.astro','generals/index.astro','about/index.astro','privacy/index.astro','contact/index.astro','bosses/[id].astro','items/[id].astro','generals/[slug].astro'];
+const routes=['index.astro','resources/index.astro','chests/index.astro','calendar/index.astro','loot-compass/index.astro','troops/index.astro','training/index.astro','about/index.astro','privacy/index.astro','contact/index.astro','bosses/[id].astro','items/[id].astro'];
 
 test('all indexable pages include centralized canonical metadata',()=>{
  for(const route of routes){
@@ -14,10 +14,11 @@ test('all indexable pages include centralized canonical metadata',()=>{
 
 test('sitemap includes real routes and the verified custom domain',()=>{
  const code=read('../src/pages/sitemap.xml.ts');
- for(const route of ['resources','chests','calendar','loot-compass','troops','training','generals','about','privacy','contact'])assert.ok(code.includes('/'+route+'/'),route);
- for(const item of ['monsters','items','buffs'])assert.ok(code.includes(item),item);
+ for(const route of ['resources','chests','calendar','loot-compass','troops','training','about','privacy','contact'])assert.ok(code.includes('/'+route+'/'),route);
+ for(const item of ['monsters','items'])assert.ok(code.includes(item),item);
  assert.ok(!code.includes("'/reward-planner/'"));
  assert.ok(!code.includes("'/events/'"));
+ assert.ok(!code.includes("'/generals/'"));
  assert.ok(read('../public/robots.txt').includes('Sitemap: https://www.evonymasters.com/sitemap.xml'));
 });
 
