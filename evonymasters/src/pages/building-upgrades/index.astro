@@ -103,7 +103,7 @@ const byId=id=>document.getElementById(id);
 const names=source.buildings;
 const catalog=buildIndex(source);
 const selected=byId('building'),current=byId('current'),target=byId('target'),requirements=byId('requirements-inputs');
-const changedLevels={},confirmed=new Set();
+const changedLevels={},confirmed=new Set(),shownRequirements=new Map();
 let latest=null,showAll=false;
 const fmt=new Intl.NumberFormat('en-US');
 const compact=new Intl.NumberFormat('en-US',{notation:'compact',maximumFractionDigits:2});
@@ -134,14 +134,27 @@ function render(){
  byId('grand-total').textContent=compact.format(grand);
  const selectedCost=plan.selectedTotals.reduce((a,b)=>a+b,0),reqCost=plan.prerequisiteTotals.reduce((a,b)=>a+b,0);
  byId('cost-split').textContent='Selected building: '+fmt.format(selectedCost)+' · Prerequisite buildings: '+fmt.format(reqCost)+' · Combined exact: '+fmt.format(grand)+'.';
- const deps=[...Object.entries(plan.requiredLevels)].filter(([name])=>name!==building).sort(([a],[b])=>a.localeCompare(b));
+ // Preserve previously displayed prerequisite fields even after their levels are satisfied.
+ // Otherwise users cannot correct an accidental entry that removed the dependency.
+ for(const [name,level] of Object.entries(plan.requiredLevels)){
+  if(name!==building)shownRequirements.set(name,Math.max(level,shownRequirements.get(name)||0));
+ }
+ const deps=[...shownRequirements.entries()].filter(([name])=>name!==building).sort(([a],[b])=>a.localeCompare(b));
  requirements.replaceChildren();
  if(!deps.length)requirements.append(el('p','muted','No extra building levels are required beyond your selected building.'));
  for(const [name,level] of deps){
-  const wrap=el('div','required-item'),copy=el('div'),title=el('strong','',name),hint=el('small','', 'Required level '+level);
+  const existing=changedLevels[name]||0;
+  const wrap=el('div','required-item'),copy=el('div'),title=el('strong','',name);
+  const isMet=existing>=level;
+  const hint=el('small','',isMet?'✓ Level '+level+' met · editable':'Required level '+level);
   copy.append(title,hint);
-  const input=el('input');input.type='number';input.min='0';input.max=String(catalog.index.get(name).size);input.value=String(changedLevels[name]||0);input.setAttribute('aria-label',name+' existing level');
-  input.addEventListener('change',()=>{changedLevels[name]=Math.max(0,Math.min(Number(input.max),Number(input.value)||0));render()});
+  const input=el('input');
+  input.type='number';input.min='0';input.max=String(Math.max(...catalog.index.get(name).keys()));
+  input.value=String(existing);input.setAttribute('aria-label',name+' existing level');
+  input.addEventListener('change',()=>{
+   changedLevels[name]=Math.max(0,Math.min(Number(input.max),Number(input.value)||0));
+   render();
+  });
   wrap.append(copy,input);requirements.append(wrap);
  }
  const specialList=byId('special-list');specialList.replaceChildren();
@@ -176,7 +189,7 @@ function refreshReadiness(){
  e.className=ready?'notice clear':'notice';
  e.textContent=ready?'All listed prerequisites are accounted for. Confirm current game requirements before building.':(!latest.complete?'Incomplete estimate: source data or dependency issues must be reviewed. ':'Conditional estimate: ')+unconfirmed+' non-building requirement(s) not yet confirmed. Costs for these conditions are excluded.';
 }
-selected.addEventListener('change',()=>{current.value='0';Object.keys(changedLevels).forEach(k=>delete changedLevels[k]);confirmed.clear();showAll=false;resetTargets();render()});
+selected.addEventListener('change',()=>{current.value='0';Object.keys(changedLevels).forEach(k=>delete changedLevels[k]);shownRequirements.clear();confirmed.clear();showAll=false;resetTargets();render()});
 current.addEventListener('change',()=>{current.value=String(Math.min(Number(current.max),Math.max(0,Number(current.value)||0)));if(Number(target.value)<Number(current.value))target.value=current.value;render()});
 target.addEventListener('change',()=>{showAll=false;render()});
 byId('show-steps').addEventListener('click',()=>{showAll=!showAll;render()});
