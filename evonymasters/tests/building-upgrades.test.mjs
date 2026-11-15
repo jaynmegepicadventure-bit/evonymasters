@@ -58,7 +58,8 @@ test('draft page is not linked from public navigation or sitemap',()=>{
 
 test('required-level labels render alongside prerequisite inputs',()=>{
  const page=readFileSync(new URL('../src/pages/building-upgrades/index.astro',import.meta.url),'utf8');
- assert.ok(page.includes("hint=el('small','', 'Required level '+level)"));
+ assert.ok(page.includes("'Required level '+level"));
+ assert.ok(page.includes("met · editable"));
 });
 
 test('prerequisite input remains editable after user meets the required level',()=>{
