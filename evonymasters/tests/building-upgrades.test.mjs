@@ -75,3 +75,12 @@ test('prerequisite input remains editable after user meets the required level',(
  assert.ok(previous.requiredLevels.Walls>=39);
  assert.ok(previous.prerequisite.length>=planned.prerequisite.length);
 });
+
+test('sequence table footer reports all four complete-plan resource totals',()=>{
+ const page=readFileSync(new URL('../src/pages/building-upgrades/index.astro',import.meta.url),'utf8');
+ assert.match(page,/<tfoot><tr class="sequence-totals">/);
+ assert.match(page,/TOTAL · All required upgrades/);
+ for(const key of ['food','lumber','stone','ore'])assert.ok(page.includes('id="sequence-'+key+'"'));
+ assert.ok(page.includes("byId('sequence-'+key).textContent=fmt.format(plan.totals[i])"));
+ assert.ok(page.includes('plan.tasks.slice(0,150)'));
+});
