@@ -60,3 +60,17 @@ test('required-level labels render alongside prerequisite inputs',()=>{
  const page=readFileSync(new URL('../src/pages/building-upgrades/index.astro',import.meta.url),'utf8');
  assert.ok(page.includes("hint=el('small','', 'Required level '+level)"));
 });
+
+test('prerequisite input remains editable after user meets the required level',()=>{
+ const page=readFileSync(new URL('../src/pages/building-upgrades/index.astro',import.meta.url),'utf8');
+ assert.match(page,/shownRequirements=new Map\(\)/);
+ assert.match(page,/shownRequirements\.set\(name,Math\.max\(level,shownRequirements\.get\(name\)\|\|0\)\)/);
+ assert.match(page,/\[\.\.\.shownRequirements\.entries\(\)\]/);
+ assert.match(page,/met · editable/);
+ assert.match(page,/shownRequirements\.clear\(\)/);
+ const planned=calculateUpgradePlan(source,{building:'Keep',currentLevel:39,targetLevel:40,currentLevels:{Walls:39,'Military Academy':4}});
+ assert.ok(planned.selected.some(step=>step.building==='Keep'));
+ const previous=calculateUpgradePlan(source,{building:'Keep',currentLevel:39,targetLevel:40,currentLevels:{Walls:38,'Military Academy':3}});
+ assert.ok(previous.requiredLevels.Walls>=39);
+ assert.ok(previous.prerequisite.length>=planned.prerequisite.length);
+});
