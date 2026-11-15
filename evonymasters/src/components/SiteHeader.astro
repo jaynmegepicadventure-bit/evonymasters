@@ -1,11 +1,56 @@
 ---
 const {active=''}=Astro.props;
-const links=[{href:'/',label:'Home',key:'home'},{href:'/resources/',label:'Item Finder',key:'resources'},{href:'/chests/',label:'Chest Finder',key:'chests'},{href:'/loot-compass/',label:'Loot Compass',key:'loot-compass'},{href:'/calendar/',label:'Calendar',key:'calendar'},{href:'/troops/',label:'March Preset',key:'troops'},{href:'/training/',label:'Troop Training',key:'training'},{href:'/qa/',label:'Q&A',key:'qa'},{href:'/about/',label:'About',key:'about'},{href:'/contact/',label:'Feedback',key:'contact'}];
+const links=[
+ {href:'/',label:'Home',key:'home',icon:'M3 10.5 12 3l9 7.5M5 9v12h14V9M9 21v-7h6v7'},
+ {href:'/resources/',label:'Item Finder',key:'resources',icon:'M11 11m-7 0a7 7 0 1 0 14 0a7 7 0 1 0-14 0M16 16l5 5'},
+ {href:'/chests/',label:'Chest Finder',key:'chests',icon:'M3 10h18v11H3zM3 10l3-6h12l3 6M12 10v11M10 14h4'},
+ {href:'/loot-compass/',label:'Loot Compass',key:'loot-compass',icon:'M12 2a10 10 0 1 0 0 20a10 10 0 1 0 0-20M16 8l-3 6-5 2 3-6z'},
+ {href:'/calendar/',label:'Calendar',key:'calendar',icon:'M4 5h16v16H4zM4 10h16M8 3v4M16 3v4M8 14h3M13 14h3M8 18h3'},
+ {href:'/troops/',label:'March Preset',key:'troops',icon:'M4 20 20 4M3 13l8 8M13 3l8 8M4 4l16 16'},
+ {href:'/training/',label:'Troop Training',key:'training',icon:'M12 3 4 7v6c0 5 3 7 8 9 5-2 8-4 8-9V7zM9 11l3 3 4-5'},
+ {href:'/qa/',label:'Q&A',key:'qa',icon:'M4 4h16v13H9l-5 4zM8 9h8M8 13h5'},
+ {href:'/about/',label:'About',key:'about',icon:'M12 2a10 10 0 1 0 0 20a10 10 0 1 0 0-20M12 11v6M12 7h.01'},
+ {href:'/contact/',label:'Feedback',key:'contact',icon:'M3 6h18v12H3zM3 7l9 7 9-7'}
+];
 ---
-<header class="site-header"><div class="site-nav-wrap"><a class="site-brand" href="/" aria-label="EvonyMasters home"><img class="site-brand-icon" src="/favicon.svg" alt="" width="34" height="34" decoding="async"/>evony<span>masters</span></a><nav class="site-desktop-nav" aria-label="Main navigation">{links.map(link=><a href={link.href} aria-current={active===link.key?'page':undefined}>{link.label}</a>)}<span class="site-planned" title="Coming soon">Generals <small>Soon</small></span><span class="site-planned" title="Coming soon">Upgrades <small>Soon</small></span></nav><details class="site-mobile-menu"><summary aria-label="Open navigation menu">☰ <span>Menu</span></summary><nav aria-label="Mobile navigation">{links.map(link=><a href={link.href} aria-current={active===link.key?'page':undefined}>{link.label}</a>)}<span class="site-planned">Generals · Coming soon</span><span class="site-planned">Upgrades · Coming soon</span><a href="/privacy/">Privacy Policy</a></nav></details></div></header>
+<header class="site-header">
+ <div class="site-nav-wrap">
+  <a class="site-brand" href="/" aria-label="EvonyMasters home"><img class="site-brand-icon" src="/favicon.svg" alt="" width="40" height="40" decoding="async"/><span class="brand-wordmark">Evony<span>Masters</span><small>Player strategy tools</small></span></a>
+  <nav class="site-desktop-nav" aria-label="Main navigation">
+   {links.map(link=><a href={link.href} aria-current={active===link.key?'page':undefined} title={link.label}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={link.icon}/></svg><span>{link.label}</span></a>)}
+   <a href="/generals/" class="site-secondary-nav" aria-current={active==='generals'?'page':undefined}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 2 5 5v7c0 5 3 8 7 10 4-2 7-5 7-10V5zM8 11h8"/></svg><span>Generals</span></a>
+   <span class="site-planned" title="Coming soon">Upgrades <small>Soon</small></span>
+  </nav>
+  <details class="site-mobile-menu"><summary aria-label="Open navigation menu"><span aria-hidden="true">☰</span> Menu</summary><nav aria-label="Mobile navigation">
+   {links.map(link=><a href={link.href} aria-current={active===link.key?'page':undefined}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={link.icon}/></svg>{link.label}</a>)}
+   <a href="/generals/">Generals</a><span class="site-planned">Upgrades · Coming soon</span><a href="/privacy/">Privacy Policy</a>
+  </nav></details>
+ </div>
+</header>
 <style is:global>
-.site-header{background:#11243a;border-bottom:1px solid #30445c;position:relative;z-index:20}.site-nav-wrap{max-width:1440px;min-height:76px;margin:auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between;gap:20px}.site-brand{font-size:1.45rem;font-weight:850;letter-spacing:-.04em;text-decoration:none;color:#eaf0f8;white-space:nowrap}.site-brand{display:inline-flex;align-items:center;gap:9px}.site-brand-icon{width:34px;height:34px;flex:0 0 34px;border-radius:8px}.site-brand span{color:#e6bc73}.site-desktop-nav{display:flex;align-items:center;gap:15px}.site-desktop-nav a{color:#eaf0f8;text-decoration:none;font-size:.93rem;font-weight:700;white-space:nowrap}.site-desktop-nav a:hover,.site-desktop-nav a[aria-current=page]{color:#e6bc73}.site-planned{color:#a9bcd0;font-size:.88rem;white-space:nowrap}.site-planned small{font-size:.68rem;color:#e6bc73}.site-mobile-menu{display:none;position:relative}.site-mobile-menu summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:9px;border:1px solid #58708a;border-radius:9px;padding:9px 12px;color:#eaf0f8;font-weight:750}.site-mobile-menu summary::-webkit-details-marker{display:none}.site-mobile-menu nav{position:absolute;right:0;top:calc(100% + 10px);min-width:225px;display:flex;flex-direction:column;background:#11243a;border:1px solid #58708a;border-radius:12px;box-shadow:0 12px 25px #0008;padding:8px}.site-mobile-menu nav a,.site-mobile-menu nav .site-planned{padding:12px;border-radius:7px;text-decoration:none;color:#eaf0f8;font-size:.95rem}.site-mobile-menu nav a:hover,.site-mobile-menu nav a[aria-current=page]{background:#203a52;color:#e6bc73}.site-mobile-menu nav .site-planned{color:#a9bcd0}@media(max-width:1240px){.site-desktop-nav{display:none}.site-mobile-menu{display:block}}
-
+.site-header{position:relative;z-index:30;background:linear-gradient(180deg,#071322,#0b1b30);border-bottom:1px solid #c39951;box-shadow:0 3px 20px #0007}
+.site-nav-wrap{max-width:1560px;min-height:86px;padding:9px 24px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:22px}
+.site-brand{display:inline-flex;align-items:center;gap:11px;text-decoration:none;color:#f6f0e6;white-space:nowrap;flex-shrink:0}
+.site-brand-icon{width:40px;height:40px;border-radius:10px;box-shadow:0 0 18px #d4a85725}
+.brand-wordmark{font-size:1.5rem;font-weight:900;letter-spacing:-.045em;line-height:1.05}.brand-wordmark>span{color:#f2c572}.brand-wordmark small{display:block;font-size:.57rem;color:#afc2d4;letter-spacing:.19em;text-transform:uppercase;margin-top:6px;font-weight:750}
+.site-desktop-nav{display:flex;align-items:center;gap:clamp(5px,.65vw,12px);flex-wrap:nowrap}
+.site-desktop-nav a{min-width:63px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-decoration:none;color:#e5edf7;padding:9px 5px 7px;border-radius:10px;font-weight:750;font-size:.73rem;white-space:nowrap;transition:background .2s,color .2s,transform .2s}
+.site-desktop-nav a svg{width:22px;height:22px;color:#f0bb62;transition:transform .2s}
+.site-desktop-nav a:hover,.site-desktop-nav a[aria-current=page]{background:#d9a95c16;color:#ffe1a2}
+.site-desktop-nav a:hover svg{transform:translateY(-2px)}
+.site-desktop-nav a[aria-current=page]{box-shadow:inset 0 -2px #e7b45b}
+.site-planned{font-size:.72rem;color:#9cadbe;white-space:nowrap}.site-planned small{color:#d9ad62;font-size:.64rem}
+.site-mobile-menu{display:none;position:relative}
+.site-mobile-menu summary{cursor:pointer;display:flex;gap:10px;align-items:center;list-style:none;border:1px solid #b48952;border-radius:9px;padding:10px 14px;color:#f6d495;font-weight:850}
+.site-mobile-menu summary::-webkit-details-marker{display:none}
+.site-mobile-menu nav{position:absolute;right:0;top:calc(100% + 12px);width:min(330px,calc(100vw - 28px));max-height:75vh;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:12px;background:#0b1c30;border:1px solid #a47d45;border-radius:14px;box-shadow:0 22px 45px #000c}
+.site-mobile-menu nav a,.site-mobile-menu nav .site-planned{display:flex;align-items:center;gap:10px;padding:12px 9px;border-radius:8px;text-decoration:none;font-size:.85rem;color:#e6edf5}
+.site-mobile-menu nav a svg{width:19px;height:19px;flex-shrink:0;color:#e4b45f}
+.site-mobile-menu nav a:hover,.site-mobile-menu nav a[aria-current=page]{background:#253b52;color:#ffdfa1}
+.site-mobile-menu nav .site-planned{color:#aebed0}
+.site-header a:focus-visible,.site-mobile-menu summary:focus-visible{outline:2px solid #f6d087;outline-offset:3px}
+@media(max-width:1350px){.site-desktop-nav{display:none}.site-mobile-menu{display:block}}
+@media(max-width:600px){.site-nav-wrap{min-height:66px;padding:8px 16px}.site-brand-icon{width:34px;height:34px}.brand-wordmark{font-size:1.2rem}.brand-wordmark small{font-size:.46rem}.site-mobile-menu nav{grid-template-columns:1fr 1fr}}
 /* EvonyMasters illustrated page banners. When a page-specific image is absent,
    use the navy background instead of repeating the homepage illustration. */
 .banner-hero{--hero-art:none;position:relative;isolation:isolate;overflow:hidden;
