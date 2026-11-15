@@ -1,0 +1,9 @@
+{
+  "name": "evonymasters",
+  "compatibility_date": "2026-11-15",
+  "preview_urls": true,
+  "assets": {
+    "directory": "./dist"
+  },
+  "previews": {}
+}
