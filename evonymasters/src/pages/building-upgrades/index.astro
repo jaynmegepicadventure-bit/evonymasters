@@ -138,7 +138,7 @@ function render(){
  requirements.replaceChildren();
  if(!deps.length)requirements.append(el('p','muted','No extra building levels are required beyond your selected building.'));
  for(const [name,level] of deps){
-  const wrap=el('div','required-item'),copy=el('div'),title=el('strong','',name),hint=el('small','','Required level '+level);
+  const wrap=el('div','required-item'),copy=el('div'),title=el('strong','',name),hint=el('small','', 'Required level '+level);
   copy.append(title,hint);
   const input=el('input');input.type='number';input.min='0';input.max=String(catalog.index.get(name).size);input.value=String(changedLevels[name]||0);input.setAttribute('aria-label',name+' existing level');
   input.addEventListener('change',()=>{changedLevels[name]=Math.max(0,Math.min(Number(input.max),Number(input.value)||0));render()});
