@@ -163,6 +163,11 @@ function render(){
  const directNames=new Set(directParsed.buildings.map(item=>item.building));
  byId('direct-heading').textContent='Required before '+building+' Lv'+plan.targetLevel;
  // Preserve fields even after they have been met, so mistaken entries can be corrected.
+ // Remove stale assumed-level dependencies when a player supplies current building levels.
+ // Keep inputs they explicitly entered so a mistaken value can still be corrected.
+ const savedLevels=[...shownRequirements].filter(([name])=>enteredLevels.has(name)&&name!==building);
+ shownRequirements.clear();
+ for(const [name,level] of savedLevels)shownRequirements.set(name,level);
  for(const [name,level] of Object.entries(plan.requiredLevels)){
   if(name!==building)shownRequirements.set(name,Math.max(level,shownRequirements.get(name)||0));
  }
@@ -246,7 +251,7 @@ function refreshReadiness(){
 }
 selected.addEventListener('change',()=>{current.value='0';Object.keys(changedLevels).forEach(k=>delete changedLevels[k]);enteredLevels.clear();shownRequirements.clear();confirmed.clear();showAll=false;resetTargets();render()});
 current.addEventListener('change',()=>{current.value=String(Math.min(Number(current.max),Math.max(0,Number(current.value)||0)));if(Number(target.value)<Number(current.value))target.value=current.value;render()});
-target.addEventListener('change',()=>{showAll=false;render()});
+target.addEventListener('change',()=>{shownRequirements.clear();showAll=false;render()});
 byId('show-steps').addEventListener('click',()=>{showAll=!showAll;render()});
 byId('reset-levels').addEventListener('click',()=>{Object.keys(changedLevels).forEach(k=>delete changedLevels[k]);enteredLevels.clear();confirmed.clear();render()});
 byId('copy-summary').addEventListener('click',async()=>{
