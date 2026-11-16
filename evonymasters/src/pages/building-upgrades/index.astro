@@ -149,7 +149,7 @@ import SiteHeader from '../../components/SiteHeader.astro';
 import source from '../../data/building-upgrades.json';
 import {calculateUpgradePlan,buildIndex,parseRequirements} from '../../lib/building-upgrades.mjs';
 const byId=id=>document.getElementById(id);
-const names=source.buildings;
+const names=[...source.buildings].sort((a,b)=>a.localeCompare(b,'en',{sensitivity:'base'}));
 const catalog=buildIndex(source);
 const selected=byId('building'),current=byId('current'),target=byId('target'),requirements=byId('requirements-inputs'),directRequirements=byId('direct-requirements-inputs');
 const changedLevels={},confirmed=new Set(),shownRequirements=new Map(),enteredLevels=new Set();
