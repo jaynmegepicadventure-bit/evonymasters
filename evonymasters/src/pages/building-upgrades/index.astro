@@ -1,0 +1,289 @@
+---
+import SeoMetadata from '../../components/SeoMetadata.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+---
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+ <SeoMetadata title="Building Upgrade Calculator | EvonyMasters" description="Calculate Evony building upgrade resources and prerequisites across recorded building levels."/>
+ <link rel="icon" href="/favicon.svg"/><title>Building Upgrade Calculator | EvonyMasters</title>
+ <style is:global>
+ :root{font-family:Inter,system-ui,sans-serif;background:#081523;color:#eaf1f7}
+ *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% 0%,#1c3854 0,transparent 50%),#081523}
+ a{color:#f7ce82}.wrap{max-width:1250px;margin:auto;padding:0 22px}
+ .hero{position:relative;min-height:275px;padding:58px 0;background:linear-gradient(90deg,#06121fe8,#061321a8),url('/images/banners/march-preset.webp') center/cover no-repeat;border-bottom:1px solid #b18d57}
+ .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.77rem;font-weight:850;color:#eac47c}
+ h1,h2,h3{font-family:Georgia,serif}h1{font-size:clamp(2.2rem,5vw,3.8rem);color:#f9db9f;margin:10px 0 15px}.hero p{max-width:710px;line-height:1.7;color:#d3e1ef}
+ main{padding-bottom:70px}.draft-label{font-size:.83rem;color:#f5dbac;margin-top:12px}
+ .builder{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;margin-top:30px;align-items:start}
+ .panel{border:1px solid #8f714c;background:linear-gradient(145deg,#162e44,#0e2033);border-radius:15px;padding:23px;box-shadow:0 12px 30px #01081070}
+ .panel h2{color:#f8d38e;font-size:1.45rem;margin:0 0 9px}
+ .panel p{color:#bed0df;font-size:.92rem;line-height:1.6}
+ .fields{display:grid;gap:14px;margin-top:20px}.fields label,.level-label{display:block;font-size:.83rem;font-weight:850;color:#f6d79b;margin:0 0 6px}
+ select,input[type=number]{width:100%;padding:12px 13px;border-radius:9px;border:1px solid #7290a5;background:#081c2f;color:#f3f6f9;font:inherit;min-width:0}
+ select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid #ffd78a;outline-offset:3px}
+ .two-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}.notice{margin-top:14px;border:1px solid #8e744e;background:#3c312c55;padding:11px 13px;border-radius:10px;color:#f7d9a2;font-size:.85rem;line-height:1.5}
+ .button{display:inline-flex;justify-content:center;align-items:center;border:1px solid #f4d99f;border-radius:9px;background:linear-gradient(#f9df9c,#dca94f);color:#112338;font-weight:850;padding:12px 16px;cursor:pointer;font:inherit;font-weight:850}
+ .button:hover{filter:brightness(1.08)}.subtle{background:#16334b;color:#f5d195;border-color:#9b794a}
+ .required-list{display:grid;gap:10px;margin-top:14px;max-height:580px;overflow-y:auto;padding-right:4px}
+ .required-item{display:grid;grid-template-columns:minmax(0,1fr) 115px;align-items:center;gap:10px;border:1px solid #385771;padding:10px 12px;background:#10263b;border-radius:10px}
+ .required-item strong{display:block;color:#f0d39c;font-size:.87rem}.required-item small{display:block;color:#b7c8d8;font-size:.76rem;margin-top:3px}
+ .required-item input{padding:9px}
+ .summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:15px}
+ .stat{background:#0a2236;border:1px solid #4c6c85;padding:15px;border-radius:11px}
+ .stat span{display:block;font-size:.77rem;color:#c1d2df}.stat strong{display:block;color:#f7d594;font-size:clamp(1.15rem,2.4vw,1.65rem);margin:6px 0 2px;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+ .stat small{display:block;color:#a9c6d6;font-size:.73rem}
+ .total-line{margin-top:14px;padding:16px;border:1px solid #c6a16b;border-radius:11px;display:flex;justify-content:space-between;gap:12px;align-items:center;background:#21384a}
+ .total-line strong{font-size:1.5rem;color:#ffdb93;font-variant-numeric:tabular-nums}
+ .counts{color:#bed6e7;font-size:.88rem;line-height:1.7}
+ .result-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+ .section{margin-top:22px}.section h2{font-size:1.3rem;color:#f6d38f}.muted{color:#bfd1e1;line-height:1.65}
+ .warning{margin:9px 0;padding:11px 13px;border:1px solid #bc8c4c;border-radius:10px;background:#49331c62;color:#fee6b5;line-height:1.55}
+ .clear{border-color:#4a8b6b;background:#153a2e;color:#c8f4dd}
+ .checklist{display:grid;gap:9px}.checkrow{display:flex;align-items:flex-start;gap:11px;border:1px solid #4d6980;padding:12px;border-radius:9px;background:#102a3d;line-height:1.5}
+ .checkrow input{margin-top:4px;accent-color:#ddae64;flex-shrink:0}.checkrow span{font-size:.88rem}.checkrow small{display:block;color:#a7becf;margin-top:3px}
+ .step-table{width:100%;border-collapse:collapse;font-size:.87rem}.table-scroller{overflow-x:auto;border:1px solid #46637c;border-radius:10px}
+ .step-table th{color:#ffd890;background:#17334a;text-align:left;padding:11px;white-space:nowrap}.step-table td{padding:10px 11px;border-top:1px solid #29485f;white-space:nowrap}
+ .step-table tr:nth-child(even){background:#132b40}.step-table tr.selected{background:#253a46}
+ .step-table td:last-child{color:#bdd2de}.step-table .number{font-variant-numeric:tabular-nums;text-align:right}
+ .step-table .sequence-totals{background:#21394c;border-top:2px solid #dcb374}.step-table .sequence-totals th{padding:14px 11px;color:#ffdd96;text-align:left;white-space:nowrap}.step-table .sequence-totals td{padding:14px 11px;color:#ffdd96;font-weight:850;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+ .primary-requirements{padding:15px;border:1px solid #6aa7ad;background:#123640;border-radius:12px}
+ .primary-requirements h2{margin-top:0}.primary-requirements .required-item{border-color:#619ca7}
+ .required-item.met{border-color:#427e64;background:#12342b}
+ .target-cost{margin-top:16px;background:#102537;border:1px solid #c9a366;padding:15px;border-radius:12px}
+ .target-cost>strong{display:block;color:#ffe1a6;font-family:Georgia,serif;font-size:1.2rem}
+ .target-cost-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px}
+ .target-cost-cell{border:1px solid #415e77;border-radius:8px;padding:10px;background:#071b2c}
+ .target-cost-cell span{display:block;color:#c2d5e1;font-size:.75rem}
+ .target-cost-cell strong{display:block;color:#ffdfa0;font-variant-numeric:tabular-nums;font-size:1.02rem;overflow-wrap:anywhere;margin-top:5px}
+ .assumption{margin-top:12px}.summary-heading{color:#f6d28c;font-size:1.15rem;margin:22px 0 3px}
+
+ /* Complementary teal input workspace sits above the unchanged gold results. */
+ .input-panel{background:linear-gradient(125deg,#173e4b 0%,#102c3b 55%,#0d2635 100%);border-color:#66aeb4;box-shadow:0 16px 38px #010b15aa,inset 0 1px #d1ffff15}
+ .input-kicker{font-size:.76rem;letter-spacing:.15em;font-weight:900;color:#95e2de;margin-bottom:10px}
+ .input-panel h2{color:#c2f0e6}
+ .input-panel>p{max-width:840px}
+ .input-panel .fields{display:grid;grid-template-columns:minmax(220px,1.1fr) minmax(250px,1fr);gap:16px;max-width:850px}
+ .input-panel .fields label{color:#a9e7e0}
+ .input-panel select,.input-panel input[type=number]{border-color:#5d9b9f;background:#0c2938}
+ .input-panel .notice{border-color:#4e9c9b;background:#123941a9;color:#c2eeea}
+ .prerequisite-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:16px;margin-top:20px}
+ .prerequisite-grid>.section{margin:0;border:1px solid #426f7e;border-radius:12px;padding:15px;background:#0d2c3ab8;min-width:0}
+ .prerequisite-grid>.section h2{font-size:1.2rem;color:#c1eae5}
+ .prerequisite-grid>.section p{margin:6px 0 0;font-size:.84rem}
+ .prerequisite-grid .required-list{max-height:345px;min-height:74px}
+ .prerequisite-grid .required-item{border-color:#457687;background:#102f41}
+ .prerequisite-grid .required-item strong{color:#dbf5eb}
+ .prerequisite-grid .required-item small{color:#b2d3d9}
+ .prerequisite-grid .special-requirements-input{border-color:#569fa6;background:#143b44a8}
+ .prerequisite-grid .special-requirements-input .checklist{display:grid;gap:8px;max-height:345px;overflow-y:auto;margin-top:12px}
+ .prerequisite-grid .special-requirements-input .checkrow{border-color:#497e89;background:#102f41;font-size:.85rem}
+ .prerequisite-grid .special-requirements-input .checkrow input{accent-color:#88d7c9}
+ .prerequisite-grid .special-requirements-input .notice{margin-top:12px;font-size:.8rem}
+ @media(max-width:1100px){.prerequisite-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.prerequisite-grid .special-requirements-input{grid-column:1/-1}}
+ .calculation-results{min-width:0}
+ @media(max-width:760px){.prerequisite-grid{grid-template-columns:1fr}.prerequisite-grid .special-requirements-input{grid-column:auto}.prerequisite-grid .required-list{max-height:310px}.input-panel .fields{grid-template-columns:1fr}}
+ .hidden{display:none!important}.footer{padding:26px 0;border-top:1px solid #395874;color:#b6c7d4;font-size:.83rem;line-height:1.6}
+ @media(max-width:900px){.builder{grid-template-columns:1fr}.required-list{max-height:370px}}
+ @media(max-width:560px){.wrap{padding:0 15px}.hero{min-height:250px;padding:35px 0}.panel{padding:16px}.summary{gap:8px}.stat{padding:10px}.total-line{align-items:flex-start;flex-direction:column}.two-cols{gap:9px}.required-item{grid-template-columns:minmax(0,1fr) 94px}.step-table{min-width:650px}}
+ </style>
+</head>
+<body><SiteHeader active="building-upgrades"/>
+<main>
+<section class="hero"><div class="wrap"><div class="eyebrow">EvonyMasters · Building planner</div><h1>Build stronger. Plan smarter.</h1><p>Calculate building upgrade costs, include missing building prerequisites, and see what still needs to be unlocked before your next big upgrade.</p></div></section>
+<div class="wrap builder">
+ <section class="panel input-panel" aria-label="Building levels to enter">
+  <div class="input-kicker">STEP 1 · ENTER YOUR BUILDING LEVELS</div><h2>What levels do you have?</h2><p>Choose your upgrade goal, then enter the <strong>current</strong> levels of the required buildings below. This section is for your inputs; the gold-accented resource totals are shown underneath.</p>
+  <div class="fields">
+   <div><label for="building">Building</label><select id="building"></select></div>
+   <div class="two-cols"><div><label for="current">Current level</label><input id="current" type="number" min="0" value="35"/></div><div><label for="target">Target level</label><select id="target"></select></div></div>
+  </div>
+  <div class="notice">Your current levels stay in this browser tab only. They are not sent to the website or saved to an account.</div>
+  <div class="prerequisite-grid"><div class="section primary-requirements">
+   <h2 id="direct-heading">Primary building requirements</h2>
+   <p class="muted">Enter your CURRENT level for each building needed directly for the target upgrade. Use the level you already have, not the level you want. These values change the total resources.</p>
+   <div id="direct-requirements-inputs" class="required-list"></div>
+  </div>
+  <div class="section">
+   <h2>Other prerequisite buildings</h2>
+   <p class="muted">Additional buildings needed along the upgrade chain. Any current level you haven't entered is estimated as level 0 until you correct it.</p>
+   <div id="requirements-inputs" class="required-list"></div>
+  </div>
+  <div class="section special-requirements-input">
+   <h2>Other requirements to confirm</h2>
+   <p class="muted">Confirm research, formations, achievements and other non-building conditions needed for this plan. Checking them updates readiness, but does not alter Food, Lumber, Stone or Ore totals.</p>
+   <p id="confirmation-progress" class="notice" aria-live="polite"></p>
+   <div id="special-list" class="checklist"></div>
+  </div></div>
+ </section>
+ <div class="calculation-results" aria-label="Calculated resources and upgrade sequence">
+  <section class="panel" aria-live="polite">
+   <h2>Resource estimate</h2>
+   <p id="plan-label">Calculated from the recorded base upgrade costs, with no discounts applied.</p>
+   <div class="target-cost" id="target-cost" aria-label="Selected building upgrade only">
+    <strong id="target-cost-heading">Selected building upgrade only</strong>
+    <div id="target-cost-resources" class="target-cost-grid"></div>
+   </div>
+   <div class="notice assumption" id="level-assumptions"></div>
+   <h3 class="summary-heading">Full plan including missing building prerequisites</h3>
+   <div class="summary" id="resource-summary"></div>
+   <div class="total-line"><span>Combined resources</span><strong id="grand-total">0</strong></div>
+   <p id="cost-split" class="counts"></p>
+   <p id="readiness" class="notice"></p>
+   <div id="warnings"></div>
+   <div class="result-actions"><button class="button subtle" type="button" id="copy-summary">Copy resource summary</button><button class="button subtle" type="button" id="reset-levels">Reset prerequisite levels</button></div>
+  </section>
+  <section class="panel section">
+   <h2>Required upgrade sequence</h2>
+   <p id="task-summary" class="muted"></p>
+   <div class="table-scroller"><table class="step-table"><thead><tr><th>#</th><th>Building</th><th>Level</th><th>Food</th><th>Lumber</th><th>Stone</th><th>Ore</th></tr></thead><tbody id="upgrade-steps"></tbody><tfoot><tr class="sequence-totals"><th colspan="3" scope="row">TOTAL · All required upgrades</th><td id="sequence-food" class="number"></td><td id="sequence-lumber" class="number"></td><td id="sequence-stone" class="number"></td><td id="sequence-ore" class="number"></td></tr></tfoot></table></div>
+   <div class="result-actions"><button class="button subtle" id="show-steps" type="button">Show all upgrade steps</button></div>
+  </section>
+  <p class="muted">Source: <a href="https://docs.google.com/spreadsheets/d/1U1pcFQjtbqUPjT_JCjohe62Q0blB--JB477klP8Qgaw/edit" target="_blank" rel="noopener noreferrer">EvonyMasters Building Upgrade Master</a>. Costs and prerequisite rules may change in-game. Treat unknown requirements as unconfirmed, not as completed. Resource totals are estimates based on the source sheet, not proof that an upgrade can be started.</p>
+ </div>
+</div>
+</main><footer class="footer"><div class="wrap">EvonyMasters is an unofficial fan-made strategy site, not affiliated with or endorsed by the game publisher. · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></div></footer>
+<script>
+import source from '../../data/building-upgrades.json';
+import {calculateUpgradePlan,buildIndex,parseRequirements} from '../../lib/building-upgrades.mjs';
+const byId=id=>document.getElementById(id);
+const names=[...source.buildings].sort((a,b)=>a.localeCompare(b,'en',{sensitivity:'base'}));
+const catalog=buildIndex(source);
+const selected=byId('building'),current=byId('current'),target=byId('target'),requirements=byId('requirements-inputs'),directRequirements=byId('direct-requirements-inputs');
+const changedLevels={},confirmed=new Set(),shownRequirements=new Map(),enteredLevels=new Set();
+let latest=null,showAll=false;
+const fmt=new Intl.NumberFormat('en-US');
+const compact=new Intl.NumberFormat('en-US',{notation:'compact',maximumFractionDigits:2});
+const el=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=String(text);return e};
+for(const name of names){const o=el('option','',name);o.value=name;selected.append(o)}
+selected.value='Keep';
+function resetTargets(){
+ const max=catalog.index.get(selected.value).size;
+ current.max=String(max);current.value=String(Math.min(Number(current.value)||0,max));
+ target.replaceChildren();
+ for(let n=0;n<=max;n++){const o=el('option','',String(n));o.value=String(n);target.append(o)}
+ target.value=String(Math.min(max,Math.max(Number(current.value)||0,40)));
+}
+function render(){
+ try{
+ const building=selected.value,from=Number(current.value),to=Number(target.value);
+ if(from>to){target.value=String(from);return render()}
+ const plan=calculateUpgradePlan(source,{building,currentLevel:from,targetLevel:Number(target.value),currentLevels:changedLevels});
+ latest=plan;
+ byId('plan-label').textContent=building+' level '+from+' → '+plan.targetLevel+' · base costs · no discounts';
+ const names=['Food','Lumber','Stone','Ore'];
+ byId('resource-summary').replaceChildren();
+ for(let i=0;i<4;i++){
+  const box=el('div','stat'),label=el('span','',names[i]),big=el('strong','',compact.format(plan.totals[i])),exact=el('small','',fmt.format(plan.totals[i])+' exact');
+  box.append(label,big,exact);byId('resource-summary').append(box);
+ }
+ const grand=plan.totals.reduce((a,b)=>a+b,0);
+ byId('grand-total').textContent=compact.format(grand);
+ const selectedCost=plan.selectedTotals.reduce((a,b)=>a+b,0),reqCost=plan.prerequisiteTotals.reduce((a,b)=>a+b,0);
+ byId('cost-split').textContent='Selected building: '+fmt.format(selectedCost)+' · Prerequisite buildings: '+fmt.format(reqCost)+' · Combined exact: '+fmt.format(grand)+'.';
+ // Show requirements written on the target-level row first, before indirect dependencies.
+ const targetRow=catalog.index.get(building)?.get(plan.targetLevel);
+ const directParsed=targetRow?parseRequirements(targetRow.requirements,catalog):{buildings:[],special:[]};
+ const directNames=new Set(directParsed.buildings.map(item=>item.building));
+ byId('direct-heading').textContent='Required before '+building+' Lv'+plan.targetLevel;
+ // Preserve fields even after they have been met, so mistaken entries can be corrected.
+ // Remove stale assumed-level dependencies when a player supplies current building levels.
+ // Keep inputs they explicitly entered so a mistaken value can still be corrected.
+ const savedLevels=[...shownRequirements].filter(([name])=>enteredLevels.has(name)&&name!==building);
+ shownRequirements.clear();
+ for(const [name,level] of savedLevels)shownRequirements.set(name,level);
+ for(const [name,level] of Object.entries(plan.requiredLevels)){
+  if(name!==building)shownRequirements.set(name,Math.max(level,shownRequirements.get(name)||0));
+ }
+ for(const dep of directParsed.buildings)shownRequirements.set(dep.building,Math.max(dep.level,shownRequirements.get(dep.building)||0));
+ const deps=[...shownRequirements.entries()].filter(([name])=>name!==building).sort(([a],[b])=>a.localeCompare(b));
+ requirements.replaceChildren();directRequirements.replaceChildren();
+ const direct=deps.filter(([name])=>directNames.has(name)).sort((a,b)=>directParsed.buildings.findIndex(d=>d.building===a[0])-directParsed.buildings.findIndex(d=>d.building===b[0]));
+ const indirect=deps.filter(([name])=>!directNames.has(name));
+ function drawInput(name,level,container){
+  const existing=changedLevels[name]||0;
+  const wrap=el('div','required-item'+(enteredLevels.has(name)&&existing>=level?' met':''));
+  const copy=el('div'),title=el('strong','',name);
+  const hint=el('small','',enteredLevels.has(name)?(existing>=level?'✓ Level '+level+' met · editable':'Required Lv'+level+' · current Lv'+existing):'Required Lv'+level+' · current level not entered');
+  copy.append(title,hint);
+  const input=el('input');input.type='number';input.min='0';input.max=String(Math.max(...catalog.index.get(name).keys()));
+  input.placeholder='Your level';input.value=enteredLevels.has(name)?String(existing):'';
+  input.setAttribute('aria-label',name+' current level; required level '+level);
+  input.addEventListener('change',()=>{
+   if(input.value.trim()===''){enteredLevels.delete(name);delete changedLevels[name]}
+   else{
+    const parsed=Number(input.value);
+    if(!Number.isInteger(parsed)||parsed<0||parsed>Number(input.max)){input.setCustomValidity('Enter a whole level between 0 and '+input.max);input.reportValidity();return}
+    input.setCustomValidity('');enteredLevels.add(name);changedLevels[name]=parsed;
+   }
+   render();
+  });
+  wrap.append(copy,input);container.append(wrap);
+ }
+ if(!direct.length)directRequirements.append(el('p','muted','No direct building requirements are recorded for this target level.'));
+ if(!indirect.length)requirements.append(el('p','muted','No other prerequisite buildings recorded.'));
+ for(const [name,level] of direct)drawInput(name,level,directRequirements);
+ for(const [name,level] of indirect)drawInput(name,level,requirements);
+ const unentered=deps.filter(([name])=>!enteredLevels.has(name)).length;
+ byId('level-assumptions').textContent=unentered?unentered+' prerequisite current level(s) not entered. The full-plan resource totals assume level 0 for those buildings and may be too high. Enter your levels above for an accurate estimate.':'All listed building current levels entered. Full-plan costs reflect those levels.';
+ // Distinguish selected-building costs from prerequisite costs in every resource column.
+ const selectedSummary=byId('target-cost-resources');
+ selectedSummary.replaceChildren();
+ byId('target-cost-heading').textContent=building+' Lv'+from+' → Lv'+plan.targetLevel+' · selected building costs only';
+ for(const [i,name] of ['Food','Lumber','Stone','Ore'].entries()){
+  const cell=el('div','target-cost-cell');
+  cell.append(el('span','',name),el('strong','',fmt.format(plan.selectedTotals[i])));
+  selectedSummary.append(cell);
+ }
+ const specialList=byId('special-list');specialList.replaceChildren();
+ if(!plan.specials.length)specialList.append(el('p','muted','No additional non-building requirements recorded for this plan.'));
+ for(const item of plan.specials){
+  const wrap=el('label','checkrow'),box=el('input');box.type='checkbox';box.checked=confirmed.has(item.requirement);
+  box.addEventListener('change',()=>{if(box.checked)confirmed.add(item.requirement);else confirmed.delete(item.requirement);refreshReadiness()});
+  const content=el('span','',item.requirement);content.append(el('small','',item.usedIn.slice(0,5).join(', ')+(item.usedIn.length>5?' and more':'')));
+  wrap.append(box,content);specialList.append(wrap);
+ }
+ const w=byId('warnings');w.replaceChildren();
+ for(const message of plan.warnings)w.append(el('div', 'warning',message));
+ for(const message of plan.missing)w.append(el('div','warning','Missing source record: '+message));
+ for(const message of plan.cycles)w.append(el('div','warning','Dependency loop: '+message));
+ const rows=showAll?plan.tasks:plan.tasks.slice(0,150),body=byId('upgrade-steps');body.replaceChildren();
+ for(let i=0;i<rows.length;i++){
+  const task=rows[i],tr=el('tr',task.selected?'selected':'');
+  for(const text of [i+1,task.building,task.level,...task.cost.map(v=>v==null?'?':fmt.format(v))])tr.append(el('td',typeof text==='number'?'number':'',text));
+  body.append(tr);
+ }
+ // The footer always uses the full calculated plan, not just the visible 150-row subset.
+ for(const [i,key] of ['food','lumber','stone','ore'].entries())byId('sequence-'+key).textContent=fmt.format(plan.totals[i]);
+ byId('task-summary').textContent=plan.tasks.length+' total upgrades ('+plan.selected.length+' selected building, '+plan.prerequisite.length+' prerequisite). '+(plan.tasks.length>rows.length?'First 150 shown.':'');
+ byId('show-steps').classList.toggle('hidden',plan.tasks.length<=150);
+ byId('show-steps').textContent=showAll?'Show first 150 steps':'Show all '+plan.tasks.length+' steps';
+ refreshReadiness();
+ }catch(error){byId('readiness').textContent='Unable to calculate: '+error.message}
+}
+function refreshReadiness(){
+ if(!latest)return;
+ const unconfirmed=latest.specials.filter(x=>!confirmed.has(x.requirement)).length;
+ const confirmedCount=latest.specials.length-unconfirmed;
+ const unentered=[...shownRequirements.keys()].filter(name=>name!==latest.building&&!enteredLevels.has(name)).length;
+ const ready=latest.complete&&unconfirmed===0&&unentered===0;
+ const e=byId('readiness');e.className=ready?'notice clear':'notice';
+ e.textContent=ready?'All listed building levels and special requirements accounted for. Confirm in-game eligibility before building.':(!latest.complete?'Incomplete estimate: source data or dependency issues require review. ':'Conditional estimate: ')+unentered+' prerequisite building level(s) unentered; '+unconfirmed+' special requirement(s) unconfirmed.';
+ const progress=byId('confirmation-progress');
+ progress.className=unconfirmed===0?'notice clear':'notice';
+ progress.textContent=confirmedCount+' of '+latest.specials.length+' special requirements marked complete. '+(unconfirmed?'Mark remaining items as complete when you meet them.':'All special requirements checked.')+' Checking items changes readiness only, not the resource totals.';
+}
+selected.addEventListener('change',()=>{current.value='0';Object.keys(changedLevels).forEach(k=>delete changedLevels[k]);enteredLevels.clear();shownRequirements.clear();confirmed.clear();showAll=false;resetTargets();render()});
+current.addEventListener('change',()=>{current.value=String(Math.min(Number(current.max),Math.max(0,Number(current.value)||0)));if(Number(target.value)<Number(current.value))target.value=current.value;render()});
+target.addEventListener('change',()=>{shownRequirements.clear();showAll=false;render()});
+byId('show-steps').addEventListener('click',()=>{showAll=!showAll;render()});
+byId('reset-levels').addEventListener('click',()=>{Object.keys(changedLevels).forEach(k=>delete changedLevels[k]);enteredLevels.clear();confirmed.clear();render()});
+byId('copy-summary').addEventListener('click',async()=>{
+ if(!latest)return;
+ const lines=[latest.building+' '+latest.currentLevel+' → '+latest.targetLevel,...latest.resourceLabels.map((x,i)=>x+': '+fmt.format(latest.totals[i])),'Combined resources: '+fmt.format(latest.totals.reduce((a,b)=>a+b,0)),'Prerequisite upgrades: '+latest.prerequisite.length,'Special requirements: '+latest.specials.map(x=>x.requirement).join('; ')];
+ try{await navigator.clipboard.writeText(lines.join('\n'));byId('copy-summary').textContent='Copied summary'}catch{byId('copy-summary').textContent='Clipboard unavailable'}
+});
+resetTargets();current.value='35';target.value='40';render();
+</script>
+</body></html>
