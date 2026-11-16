@@ -125,3 +125,14 @@ test('obsolete implied prerequisite inputs are cleared when player enters existi
  assert.ok(page.includes("target.addEventListener('change',()=>{shownRequirements.clear()"));
  assert.ok(page.includes('enteredLevels.has(name)&&name!==building'));
 });
+
+test('input workspace is above unchanged calculation results',()=>{
+ const page=readFileSync(new URL('../src/pages/building-upgrades/index.astro',import.meta.url),'utf8');
+ assert.ok(page.includes('class="panel input-panel"'));
+ assert.ok(page.includes('class="prerequisite-grid"'));
+ assert.ok(page.includes('class="calculation-results"'));
+ assert.ok(page.indexOf('id="direct-requirements-inputs"')<page.indexOf('id="requirements-inputs"'));
+ assert.ok(page.indexOf('id="requirements-inputs"')<page.indexOf('id="resource-summary"'));
+ assert.ok(page.includes('class="sequence-totals"'));
+ assert.ok(page.includes('max-height:345px'));
+});
