@@ -156,3 +156,16 @@ test('building selector is alphabetically sorted',()=>{
  assert.ok(page.includes("[...source.buildings].sort((a,b)=>a.localeCompare(b,'en',{sensitivity:'base'}))"));
  assert.ok(page.includes('for(const name of names)'));
 });
+
+test('published calculator SEO and usage guide',()=>{
+ const page=readFileSync(new URL('../src/pages/building-upgrades/index.astro',import.meta.url),'utf8');
+ const heading='Evony Building Upgrade Calculator';
+ const description='Calculate Evony building upgrade costs for Keep, Barracks and more. Check prerequisites, Food, Lumber, Stone and Ore totals, and upgrade sequences.';
+ assert.ok(page.includes('<title>'+heading+': Costs &amp; Requirements</title>') || page.includes('<title>'+heading+': Costs & Requirements</title>'));
+ assert.ok(page.includes('<meta name="description" content="'+description+'"/>'));
+ assert.ok(page.includes('<h1>'+heading+'</h1>'));
+ assert.ok(page.includes('Build stronger. Plan smarter.'));
+ for(const phrase of ['Enter your current prerequisite levels','Read the resource totals and upgrade sequence','Confirm special requirements separately']) assert.ok(page.includes(phrase));
+ assert.ok(page.includes('id="direct-requirements-inputs"'));
+ assert.ok(page.includes('id="upgrade-steps"'));
+});
