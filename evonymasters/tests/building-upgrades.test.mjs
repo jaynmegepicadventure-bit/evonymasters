@@ -84,3 +84,36 @@ test('sequence table footer reports all four complete-plan resource totals',()=>
  assert.ok(page.includes("byId('sequence-'+key).textContent=fmt.format(plan.totals[i])"));
  assert.ok(page.includes('plan.tasks.slice(0,150)'));
 });
+
+test('Barracks 40 to 41 costs match the source and identifies the direct building prerequisites',()=>{
+ const row=source.rows.find(x=>x.building==='Barracks'&&x.level===41);
+ assert.deepEqual(row.cost,[58410052590,74150382110,76396003198,74129115270]);
+ const direct=parseRequirements(row.requirements,catalog);
+ assert.deepEqual(direct.buildings,[{building:'Keep',level:41},{building:'Triumphal Arch',level:2}]);
+ const plan=calculateUpgradePlan(source,{building:'Barracks',currentLevel:40,targetLevel:41,currentLevels:{Keep:40,'Triumphal Arch':2}});
+ assert.deepEqual(plan.selectedTotals,row.cost);
+ assert.ok(plan.requiredLevels.Keep>=41);
+ assert.ok(plan.tasks.some(x=>x.building==='Keep'&&x.level===41));
+ assert.equal(new Set(plan.tasks.map(x=>x.building+' '+x.level)).size,plan.tasks.length);
+});
+
+test('primary prerequisites and selected upgrade resource amounts display above derived dependencies',()=>{
+ const page=readFileSync(new URL('../src/pages/building-upgrades/index.astro',import.meta.url),'utf8');
+ assert.match(page,/Primary building requirements/);
+ assert.match(page,/id="direct-requirements-inputs"/);
+ assert.match(page,/id="target-cost-resources"/);
+ assert.ok(page.includes('parseRequirements(targetRow.requirements,catalog)'));
+ assert.ok(page.includes('directRequirements.append(wrap)')===false);
+ assert.ok(page.includes("drawInput(name,level,directRequirements)"));
+ assert.ok(page.includes("fmt.format(plan.selectedTotals[i])"));
+ assert.ok(page.indexOf('id="direct-requirements-inputs"')<page.indexOf('id="requirements-inputs"'));
+});
+
+test('unchecked special requirements change eligibility status but not resources',()=>{
+ const page=readFileSync(new URL('../src/pages/building-upgrades/index.astro',import.meta.url),'utf8');
+ assert.ok(page.includes('confirmation-progress'));
+ assert.ok(page.includes('Checking items changes readiness only, not the resource totals'));
+ assert.ok(page.includes("enteredLevels.add(name)"));
+ assert.ok(page.includes("enteredLevels.delete(name)"));
+ assert.ok(page.includes("current level not entered"));
+});
