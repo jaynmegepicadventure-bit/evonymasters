@@ -8,6 +8,7 @@ const links=[
  {href:'/calendar/',label:'Calendar',key:'calendar',icon:'M4 5h16v16H4zM4 10h16M8 3v4M16 3v4M8 14h3M13 14h3M8 18h3'},
  {href:'/troops/',label:'March Preset',key:'troops',icon:'M4 20 20 4M3 13l8 8M13 3l8 8M4 4l16 16'},
  {href:'/training/',label:'Troop Training',key:'training',icon:'M12 3 4 7v6c0 5 3 7 8 9 5-2 8-4 8-9V7zM9 11l3 3 4-5'},
+ {href:'/building-upgrades/',label:'Building Upgrades',key:'building-upgrades',icon:'M3 21h18M5 21V8l7-5 7 5v13M9 21v-7h6v7M9 10h.01M15 10h.01'},
  {href:'/qa/',label:'Q&A',key:'qa',icon:'M4 4h16v13H9l-5 4zM8 9h8M8 13h5'},
  {href:'/about/',label:'About',key:'about',icon:'M12 2a10 10 0 1 0 0 20a10 10 0 1 0 0-20M12 11v6M12 7h.01'},
  {href:'/contact/',label:'Feedback',key:'contact',icon:'M3 6h18v12H3zM3 7l9 7 9-7'}
@@ -18,11 +19,10 @@ const links=[
   <a class="site-brand" href="/" aria-label="EvonyMasters home"><img class="site-brand-icon" src="/favicon.svg" alt="" width="40" height="40" decoding="async"/><span class="brand-wordmark">Evony<span>Masters</span><small>Player strategy tools</small></span></a>
   <nav class="site-desktop-nav" aria-label="Main navigation">
    {links.map(link=><a href={link.href} aria-current={active===link.key?'page':undefined} title={link.label}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={link.icon}/></svg><span>{link.label}</span></a>)}
-   <span class="site-planned" title="Coming soon">Upgrades <small>Soon</small></span>
   </nav>
   <details class="site-mobile-menu"><summary aria-label="Open navigation menu"><span aria-hidden="true">☰</span> Menu</summary><nav aria-label="Mobile navigation">
    {links.map(link=><a href={link.href} aria-current={active===link.key?'page':undefined}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={link.icon}/></svg>{link.label}</a>)}
-<span class="site-planned">Upgrades · Coming soon</span><a href="/privacy/">Privacy Policy</a>
+<a href="/privacy/">Privacy Policy</a>
   </nav></details>
  </div>
 </header>
