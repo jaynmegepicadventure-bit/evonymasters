@@ -69,7 +69,7 @@ import SiteHeader from '../../components/SiteHeader.astro';
  .input-panel .fields label{color:#a9e7e0}
  .input-panel select,.input-panel input[type=number]{border-color:#5d9b9f;background:#0c2938}
  .input-panel .notice{border-color:#4e9c9b;background:#123941a9;color:#c2eeea}
- .prerequisite-grid{display:grid;grid-template-columns:1fr 1fr;align-items:start;gap:18px;margin-top:20px}
+ .prerequisite-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:16px;margin-top:20px}
  .prerequisite-grid>.section{margin:0;border:1px solid #426f7e;border-radius:12px;padding:15px;background:#0d2c3ab8;min-width:0}
  .prerequisite-grid>.section h2{font-size:1.2rem;color:#c1eae5}
  .prerequisite-grid>.section p{margin:6px 0 0;font-size:.84rem}
@@ -77,8 +77,14 @@ import SiteHeader from '../../components/SiteHeader.astro';
  .prerequisite-grid .required-item{border-color:#457687;background:#102f41}
  .prerequisite-grid .required-item strong{color:#dbf5eb}
  .prerequisite-grid .required-item small{color:#b2d3d9}
+ .prerequisite-grid .special-requirements-input{border-color:#569fa6;background:#143b44a8}
+ .prerequisite-grid .special-requirements-input .checklist{display:grid;gap:8px;max-height:345px;overflow-y:auto;margin-top:12px}
+ .prerequisite-grid .special-requirements-input .checkrow{border-color:#497e89;background:#102f41;font-size:.85rem}
+ .prerequisite-grid .special-requirements-input .checkrow input{accent-color:#88d7c9}
+ .prerequisite-grid .special-requirements-input .notice{margin-top:12px;font-size:.8rem}
+ @media(max-width:1100px){.prerequisite-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.prerequisite-grid .special-requirements-input{grid-column:1/-1}}
  .calculation-results{min-width:0}
- @media(max-width:760px){.prerequisite-grid{grid-template-columns:1fr}.prerequisite-grid .required-list{max-height:310px}.input-panel .fields{grid-template-columns:1fr}}
+ @media(max-width:760px){.prerequisite-grid{grid-template-columns:1fr}.prerequisite-grid .special-requirements-input{grid-column:auto}.prerequisite-grid .required-list{max-height:310px}.input-panel .fields{grid-template-columns:1fr}}
  .hidden{display:none!important}.footer{padding:26px 0;border-top:1px solid #395874;color:#b6c7d4;font-size:.83rem;line-height:1.6}
  @media(max-width:900px){.builder{grid-template-columns:1fr}.required-list{max-height:370px}}
  @media(max-width:560px){.wrap{padding:0 15px}.hero{min-height:250px;padding:35px 0}.panel{padding:16px}.summary{gap:8px}.stat{padding:10px}.total-line{align-items:flex-start;flex-direction:column}.two-cols{gap:9px}.required-item{grid-template-columns:minmax(0,1fr) 94px}.step-table{min-width:650px}}
@@ -104,6 +110,12 @@ import SiteHeader from '../../components/SiteHeader.astro';
    <h2>Other prerequisite buildings</h2>
    <p class="muted">Additional buildings needed along the upgrade chain. Any current level you haven't entered is estimated as level 0 until you correct it.</p>
    <div id="requirements-inputs" class="required-list"></div>
+  </div>
+  <div class="section special-requirements-input">
+   <h2>Other requirements to confirm</h2>
+   <p class="muted">Confirm research, formations, achievements and other non-building conditions needed for this plan. Checking them updates readiness, but does not alter Food, Lumber, Stone or Ore totals.</p>
+   <p id="confirmation-progress" class="notice" aria-live="polite"></p>
+   <div id="special-list" class="checklist"></div>
   </div></div>
  </section>
  <div class="calculation-results" aria-label="Calculated resources and upgrade sequence">
@@ -122,12 +134,6 @@ import SiteHeader from '../../components/SiteHeader.astro';
    <p id="readiness" class="notice"></p>
    <div id="warnings"></div>
    <div class="result-actions"><button class="button subtle" type="button" id="copy-summary">Copy resource summary</button><button class="button subtle" type="button" id="reset-levels">Reset prerequisite levels</button></div>
-  </section>
-  <section class="panel section">
-   <h2>Other requirements to confirm</h2>
-   <p class="muted">These may include research, general achievements, formations, badges or event milestones. Checking them marks them as confirmed and updates readiness below. <strong>These checkboxes do not change Food, Lumber, Stone or Ore</strong> because the sheet provides no resource prices for these conditions.</p>
-   <p id="confirmation-progress" class="notice" aria-live="polite"></p>
-   <div id="special-list" class="checklist"></div>
   </section>
   <section class="panel section">
    <h2>Required upgrade sequence</h2>
