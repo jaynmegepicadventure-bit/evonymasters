@@ -136,3 +136,16 @@ test('input workspace is above unchanged calculation results',()=>{
  assert.ok(page.includes('class="sequence-totals"'));
  assert.ok(page.includes('max-height:345px'));
 });
+
+test('non-building requirement confirmations appear beside building inputs before outputs',()=>{
+ const page=readFileSync(new URL('../src/pages/building-upgrades/index.astro',import.meta.url),'utf8');
+ const direct=page.indexOf('id="direct-requirements-inputs"');
+ const other=page.indexOf('id="requirements-inputs"');
+ const special=page.indexOf('id="special-list"');
+ const output=page.indexOf('class="calculation-results"');
+ assert.ok(direct>=0&&other>direct&&special>other&&output>special);
+ assert.equal(page.split('id="special-list"').length-1,1);
+ assert.equal(page.split('id="confirmation-progress"').length-1,1);
+ assert.match(page,/class="section special-requirements-input"/);
+ assert.match(page,/grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/);
+});
