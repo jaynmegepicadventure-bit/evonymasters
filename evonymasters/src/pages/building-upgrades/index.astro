@@ -17,7 +17,7 @@ import SiteHeader from '../../components/SiteHeader.astro';
  .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.77rem;font-weight:850;color:#eac47c}
  h1,h2,h3{font-family:Georgia,serif}h1{font-size:clamp(2.2rem,5vw,3.8rem);color:#f9db9f;margin:10px 0 15px}.hero p{max-width:710px;line-height:1.7;color:#d3e1ef}
  main{padding-bottom:70px}.draft-label{font-size:.83rem;color:#f5dbac;margin-top:12px}
- .builder{display:grid;grid-template-columns:390px minmax(0,1fr);gap:20px;margin-top:30px;align-items:start}
+ .builder{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;margin-top:30px;align-items:start}
  .panel{border:1px solid #8f714c;background:linear-gradient(145deg,#162e44,#0e2033);border-radius:15px;padding:23px;box-shadow:0 12px 30px #01081070}
  .panel h2{color:#f8d38e;font-size:1.45rem;margin:0 0 9px}
  .panel p{color:#bed0df;font-size:.92rem;line-height:1.6}
@@ -49,8 +49,8 @@ import SiteHeader from '../../components/SiteHeader.astro';
  .step-table tr:nth-child(even){background:#132b40}.step-table tr.selected{background:#253a46}
  .step-table td:last-child{color:#bdd2de}.step-table .number{font-variant-numeric:tabular-nums;text-align:right}
  .step-table .sequence-totals{background:#21394c;border-top:2px solid #dcb374}.step-table .sequence-totals th{padding:14px 11px;color:#ffdd96;text-align:left;white-space:nowrap}.step-table .sequence-totals td{padding:14px 11px;color:#ffdd96;font-weight:850;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
- .primary-requirements{padding:15px;border:1px solid #bd955b;background:#3d321e57;border-radius:12px}
- .primary-requirements h2{margin-top:0}.primary-requirements .required-item{border-color:#ba955e}
+ .primary-requirements{padding:15px;border:1px solid #6aa7ad;background:#123640;border-radius:12px}
+ .primary-requirements h2{margin-top:0}.primary-requirements .required-item{border-color:#619ca7}
  .required-item.met{border-color:#427e64;background:#12342b}
  .target-cost{margin-top:16px;background:#102537;border:1px solid #c9a366;padding:15px;border-radius:12px}
  .target-cost>strong{display:block;color:#ffe1a6;font-family:Georgia,serif;font-size:1.2rem}
@@ -59,6 +59,26 @@ import SiteHeader from '../../components/SiteHeader.astro';
  .target-cost-cell span{display:block;color:#c2d5e1;font-size:.75rem}
  .target-cost-cell strong{display:block;color:#ffdfa0;font-variant-numeric:tabular-nums;font-size:1.02rem;overflow-wrap:anywhere;margin-top:5px}
  .assumption{margin-top:12px}.summary-heading{color:#f6d28c;font-size:1.15rem;margin:22px 0 3px}
+
+ /* Complementary teal input workspace sits above the unchanged gold results. */
+ .input-panel{background:linear-gradient(125deg,#173e4b 0%,#102c3b 55%,#0d2635 100%);border-color:#66aeb4;box-shadow:0 16px 38px #010b15aa,inset 0 1px #d1ffff15}
+ .input-kicker{font-size:.76rem;letter-spacing:.15em;font-weight:900;color:#95e2de;margin-bottom:10px}
+ .input-panel h2{color:#c2f0e6}
+ .input-panel>p{max-width:840px}
+ .input-panel .fields{display:grid;grid-template-columns:minmax(220px,1.1fr) minmax(250px,1fr);gap:16px;max-width:850px}
+ .input-panel .fields label{color:#a9e7e0}
+ .input-panel select,.input-panel input[type=number]{border-color:#5d9b9f;background:#0c2938}
+ .input-panel .notice{border-color:#4e9c9b;background:#123941a9;color:#c2eeea}
+ .prerequisite-grid{display:grid;grid-template-columns:1fr 1fr;align-items:start;gap:18px;margin-top:20px}
+ .prerequisite-grid>.section{margin:0;border:1px solid #426f7e;border-radius:12px;padding:15px;background:#0d2c3ab8;min-width:0}
+ .prerequisite-grid>.section h2{font-size:1.2rem;color:#c1eae5}
+ .prerequisite-grid>.section p{margin:6px 0 0;font-size:.84rem}
+ .prerequisite-grid .required-list{max-height:345px;min-height:74px}
+ .prerequisite-grid .required-item{border-color:#457687;background:#102f41}
+ .prerequisite-grid .required-item strong{color:#dbf5eb}
+ .prerequisite-grid .required-item small{color:#b2d3d9}
+ .calculation-results{min-width:0}
+ @media(max-width:760px){.prerequisite-grid{grid-template-columns:1fr}.prerequisite-grid .required-list{max-height:310px}.input-panel .fields{grid-template-columns:1fr}}
  .hidden{display:none!important}.footer{padding:26px 0;border-top:1px solid #395874;color:#b6c7d4;font-size:.83rem;line-height:1.6}
  @media(max-width:900px){.builder{grid-template-columns:1fr}.required-list{max-height:370px}}
  @media(max-width:560px){.wrap{padding:0 15px}.hero{min-height:250px;padding:35px 0}.panel{padding:16px}.summary{gap:8px}.stat{padding:10px}.total-line{align-items:flex-start;flex-direction:column}.two-cols{gap:9px}.required-item{grid-template-columns:minmax(0,1fr) 94px}.step-table{min-width:650px}}
@@ -68,14 +88,14 @@ import SiteHeader from '../../components/SiteHeader.astro';
 <main>
 <section class="hero"><div class="wrap"><div class="eyebrow">EvonyMasters · Building planner</div><h1>Build stronger. Plan smarter.</h1><p>Calculate building upgrade costs, include missing building prerequisites, and see what still needs to be unlocked before your next big upgrade.</p><div class="draft-label">DRAFT · Under review · Not a public release</div></div></section>
 <div class="wrap builder">
- <aside class="panel" aria-label="Upgrade planning inputs">
-  <h2>Set your upgrade goal</h2><p>Select a building and your existing progress. Missing prerequisite buildings are added automatically.</p>
+ <section class="panel input-panel" aria-label="Building levels to enter">
+  <div class="input-kicker">STEP 1 · ENTER YOUR BUILDING LEVELS</div><h2>What levels do you have?</h2><p>Choose your upgrade goal, then enter the <strong>current</strong> levels of the required buildings below. This section is for your inputs; the gold-accented resource totals are shown underneath.</p>
   <div class="fields">
    <div><label for="building">Building</label><select id="building"></select></div>
    <div class="two-cols"><div><label for="current">Current level</label><input id="current" type="number" min="0" value="35"/></div><div><label for="target">Target level</label><select id="target"></select></div></div>
   </div>
   <div class="notice">Your current levels stay in this browser tab only. They are not sent to the website or saved to an account.</div>
-  <div class="section primary-requirements">
+  <div class="prerequisite-grid"><div class="section primary-requirements">
    <h2 id="direct-heading">Primary building requirements</h2>
    <p class="muted">Enter your CURRENT level for each building needed directly for the target upgrade. Use the level you already have, not the level you want. These values change the total resources.</p>
    <div id="direct-requirements-inputs" class="required-list"></div>
@@ -84,9 +104,9 @@ import SiteHeader from '../../components/SiteHeader.astro';
    <h2>Other prerequisite buildings</h2>
    <p class="muted">Additional buildings needed along the upgrade chain. Any current level you haven't entered is estimated as level 0 until you correct it.</p>
    <div id="requirements-inputs" class="required-list"></div>
-  </div>
- </aside>
- <div>
+  </div></div>
+ </section>
+ <div class="calculation-results" aria-label="Calculated resources and upgrade sequence">
   <section class="panel" aria-live="polite">
    <h2>Resource estimate</h2>
    <p id="plan-label">Calculated from the recorded base upgrade costs, with no discounts applied.</p>
