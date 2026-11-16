@@ -149,3 +149,9 @@ test('non-building requirement confirmations appear beside building inputs befor
  assert.match(page,/class="section special-requirements-input"/);
  assert.match(page,/grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/);
 });
+
+test('building selector is alphabetically sorted',()=>{
+ const page=readFileSync(new URL('../src/pages/building-upgrades/index.astro',import.meta.url),'utf8');
+ assert.ok(page.includes("[...source.buildings].sort((a,b)=>a.localeCompare(b,'en',{sensitivity:'base'}))"));
+ assert.ok(page.includes('for(const name of names)'));
+});
