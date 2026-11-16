@@ -117,3 +117,11 @@ test('unchecked special requirements change eligibility status but not resources
  assert.ok(page.includes("enteredLevels.delete(name)"));
  assert.ok(page.includes("current level not entered"));
 });
+
+test('obsolete implied prerequisite inputs are cleared when player enters existing levels',()=>{
+ const page=readFileSync(new URL('../src/pages/building-upgrades/index.astro',import.meta.url),'utf8');
+ assert.ok(page.includes('const savedLevels=[...shownRequirements].filter'));
+ assert.ok(page.includes('shownRequirements.clear();'));
+ assert.ok(page.includes("target.addEventListener('change',()=>{shownRequirements.clear()"));
+ assert.ok(page.includes('enteredLevels.has(name)&&name!==building'));
+});
