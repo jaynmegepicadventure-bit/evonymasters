@@ -47,13 +47,14 @@ test('source validation catches duplicate level entries',()=>{
  const repeated={buildings:['Keep'],rows:[{building:'Keep',level:1,cost:[0,0,0,0]},{building:'Keep',level:1,cost:[0,0,0,0]}]};
  assert.throws(()=>buildIndex(repeated),/Duplicate/);
 });
-test('draft page is not linked from public navigation or sitemap',()=>{
+test('published building calculator appears in navigation, home and sitemap',()=>{
  const read=p=>readFileSync(new URL(p,import.meta.url),'utf8');
  const page=read('../src/pages/building-upgrades/index.astro');
- assert.match(page,/noindex,nofollow/);
- assert.match(page,/DRAFT/);
- assert.ok(!read('../src/components/SiteHeader.astro').includes("href:'/building-upgrades/'"));
- assert.ok(!read('../src/pages/sitemap.xml.ts').includes("'/building-upgrades/'"));
+ assert.ok(!page.includes('noindex,nofollow'));
+ assert.ok(!page.includes('DRAFT · Under review'));
+ assert.ok(read('../src/components/SiteHeader.astro').includes("href:'/building-upgrades/'"));
+ assert.ok(read('../src/pages/sitemap.xml.ts').includes("'/building-upgrades/'"));
+ assert.ok(read('../src/pages/index.astro').includes("href:'/building-upgrades/'"));
 });
 
 test('required-level labels render alongside prerequisite inputs',()=>{
