@@ -49,6 +49,16 @@ import SiteHeader from '../../components/SiteHeader.astro';
  .step-table tr:nth-child(even){background:#132b40}.step-table tr.selected{background:#253a46}
  .step-table td:last-child{color:#bdd2de}.step-table .number{font-variant-numeric:tabular-nums;text-align:right}
  .step-table .sequence-totals{background:#21394c;border-top:2px solid #dcb374}.step-table .sequence-totals th{padding:14px 11px;color:#ffdd96;text-align:left;white-space:nowrap}.step-table .sequence-totals td{padding:14px 11px;color:#ffdd96;font-weight:850;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+ .primary-requirements{padding:15px;border:1px solid #bd955b;background:#3d321e57;border-radius:12px}
+ .primary-requirements h2{margin-top:0}.primary-requirements .required-item{border-color:#ba955e}
+ .required-item.met{border-color:#427e64;background:#12342b}
+ .target-cost{margin-top:16px;background:#102537;border:1px solid #c9a366;padding:15px;border-radius:12px}
+ .target-cost>strong{display:block;color:#ffe1a6;font-family:Georgia,serif;font-size:1.2rem}
+ .target-cost-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px}
+ .target-cost-cell{border:1px solid #415e77;border-radius:8px;padding:10px;background:#071b2c}
+ .target-cost-cell span{display:block;color:#c2d5e1;font-size:.75rem}
+ .target-cost-cell strong{display:block;color:#ffdfa0;font-variant-numeric:tabular-nums;font-size:1.02rem;overflow-wrap:anywhere;margin-top:5px}
+ .assumption{margin-top:12px}.summary-heading{color:#f6d28c;font-size:1.15rem;margin:22px 0 3px}
  .hidden{display:none!important}.footer{padding:26px 0;border-top:1px solid #395874;color:#b6c7d4;font-size:.83rem;line-height:1.6}
  @media(max-width:900px){.builder{grid-template-columns:1fr}.required-list{max-height:370px}}
  @media(max-width:560px){.wrap{padding:0 15px}.hero{min-height:250px;padding:35px 0}.panel{padding:16px}.summary{gap:8px}.stat{padding:10px}.total-line{align-items:flex-start;flex-direction:column}.two-cols{gap:9px}.required-item{grid-template-columns:minmax(0,1fr) 94px}.step-table{min-width:650px}}
@@ -65,9 +75,14 @@ import SiteHeader from '../../components/SiteHeader.astro';
    <div class="two-cols"><div><label for="current">Current level</label><input id="current" type="number" min="0" value="35"/></div><div><label for="target">Target level</label><select id="target"></select></div></div>
   </div>
   <div class="notice">Your current levels stay in this browser tab only. They are not sent to the website or saved to an account.</div>
+  <div class="section primary-requirements">
+   <h2 id="direct-heading">Primary building requirements</h2>
+   <p class="muted">Enter your CURRENT level for each building needed directly for the target upgrade. Use the level you already have, not the level you want. These values change the total resources.</p>
+   <div id="direct-requirements-inputs" class="required-list"></div>
+  </div>
   <div class="section">
-   <h2>Current prerequisite levels</h2>
-   <p class="muted">Set each building to the level you already have. The planner only charges for missing upgrades.</p>
+   <h2>Other prerequisite buildings</h2>
+   <p class="muted">Additional buildings needed along the upgrade chain. Any current level you haven't entered is estimated as level 0 until you correct it.</p>
    <div id="requirements-inputs" class="required-list"></div>
   </div>
  </aside>
@@ -75,6 +90,12 @@ import SiteHeader from '../../components/SiteHeader.astro';
   <section class="panel" aria-live="polite">
    <h2>Resource estimate</h2>
    <p id="plan-label">Calculated from the recorded base upgrade costs, with no discounts applied.</p>
+   <div class="target-cost" id="target-cost" aria-label="Selected building upgrade only">
+    <strong id="target-cost-heading">Selected building upgrade only</strong>
+    <div id="target-cost-resources" class="target-cost-grid"></div>
+   </div>
+   <div class="notice assumption" id="level-assumptions"></div>
+   <h3 class="summary-heading">Full plan including missing building prerequisites</h3>
    <div class="summary" id="resource-summary"></div>
    <div class="total-line"><span>Combined resources</span><strong id="grand-total">0</strong></div>
    <p id="cost-split" class="counts"></p>
@@ -84,7 +105,8 @@ import SiteHeader from '../../components/SiteHeader.astro';
   </section>
   <section class="panel section">
    <h2>Other requirements to confirm</h2>
-   <p class="muted">These may include research, general achievements, formations, badges or event milestones. Their non-building costs are <strong>not</strong> included in the resource estimate.</p>
+   <p class="muted">These may include research, general achievements, formations, badges or event milestones. Checking them marks them as confirmed and updates readiness below. <strong>These checkboxes do not change Food, Lumber, Stone or Ore</strong> because the sheet provides no resource prices for these conditions.</p>
+   <p id="confirmation-progress" class="notice" aria-live="polite"></p>
    <div id="special-list" class="checklist"></div>
   </section>
   <section class="panel section">
@@ -99,12 +121,12 @@ import SiteHeader from '../../components/SiteHeader.astro';
 </main><footer class="footer"><div class="wrap">EvonyMasters is an unofficial fan-made strategy site, not affiliated with or endorsed by the game publisher. · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></div></footer>
 <script>
 import source from '../../data/building-upgrades.json';
-import {calculateUpgradePlan,buildIndex} from '../../lib/building-upgrades.mjs';
+import {calculateUpgradePlan,buildIndex,parseRequirements} from '../../lib/building-upgrades.mjs';
 const byId=id=>document.getElementById(id);
 const names=source.buildings;
 const catalog=buildIndex(source);
-const selected=byId('building'),current=byId('current'),target=byId('target'),requirements=byId('requirements-inputs');
-const changedLevels={},confirmed=new Set(),shownRequirements=new Map();
+const selected=byId('building'),current=byId('current'),target=byId('target'),requirements=byId('requirements-inputs'),directRequirements=byId('direct-requirements-inputs');
+const changedLevels={},confirmed=new Set(),shownRequirements=new Map(),enteredLevels=new Set();
 let latest=null,showAll=false;
 const fmt=new Intl.NumberFormat('en-US');
 const compact=new Intl.NumberFormat('en-US',{notation:'compact',maximumFractionDigits:2});
@@ -135,28 +157,54 @@ function render(){
  byId('grand-total').textContent=compact.format(grand);
  const selectedCost=plan.selectedTotals.reduce((a,b)=>a+b,0),reqCost=plan.prerequisiteTotals.reduce((a,b)=>a+b,0);
  byId('cost-split').textContent='Selected building: '+fmt.format(selectedCost)+' · Prerequisite buildings: '+fmt.format(reqCost)+' · Combined exact: '+fmt.format(grand)+'.';
- // Preserve previously displayed prerequisite fields even after their levels are satisfied.
- // Otherwise users cannot correct an accidental entry that removed the dependency.
+ // Show requirements written on the target-level row first, before indirect dependencies.
+ const targetRow=catalog.index.get(building)?.get(plan.targetLevel);
+ const directParsed=targetRow?parseRequirements(targetRow.requirements,catalog):{buildings:[],special:[]};
+ const directNames=new Set(directParsed.buildings.map(item=>item.building));
+ byId('direct-heading').textContent='Required before '+building+' Lv'+plan.targetLevel;
+ // Preserve fields even after they have been met, so mistaken entries can be corrected.
  for(const [name,level] of Object.entries(plan.requiredLevels)){
   if(name!==building)shownRequirements.set(name,Math.max(level,shownRequirements.get(name)||0));
  }
+ for(const dep of directParsed.buildings)shownRequirements.set(dep.building,Math.max(dep.level,shownRequirements.get(dep.building)||0));
  const deps=[...shownRequirements.entries()].filter(([name])=>name!==building).sort(([a],[b])=>a.localeCompare(b));
- requirements.replaceChildren();
- if(!deps.length)requirements.append(el('p','muted','No extra building levels are required beyond your selected building.'));
- for(const [name,level] of deps){
+ requirements.replaceChildren();directRequirements.replaceChildren();
+ const direct=deps.filter(([name])=>directNames.has(name)).sort((a,b)=>directParsed.buildings.findIndex(d=>d.building===a[0])-directParsed.buildings.findIndex(d=>d.building===b[0]));
+ const indirect=deps.filter(([name])=>!directNames.has(name));
+ function drawInput(name,level,container){
   const existing=changedLevels[name]||0;
-  const wrap=el('div','required-item'),copy=el('div'),title=el('strong','',name);
-  const isMet=existing>=level;
-  const hint=el('small','',isMet?'✓ Level '+level+' met · editable':'Required level '+level);
+  const wrap=el('div','required-item'+(enteredLevels.has(name)&&existing>=level?' met':''));
+  const copy=el('div'),title=el('strong','',name);
+  const hint=el('small','',enteredLevels.has(name)?(existing>=level?'✓ Level '+level+' met · editable':'Required Lv'+level+' · current Lv'+existing):'Required Lv'+level+' · current level not entered');
   copy.append(title,hint);
-  const input=el('input');
-  input.type='number';input.min='0';input.max=String(Math.max(...catalog.index.get(name).keys()));
-  input.value=String(existing);input.setAttribute('aria-label',name+' existing level');
+  const input=el('input');input.type='number';input.min='0';input.max=String(Math.max(...catalog.index.get(name).keys()));
+  input.placeholder='Your level';input.value=enteredLevels.has(name)?String(existing):'';
+  input.setAttribute('aria-label',name+' current level; required level '+level);
   input.addEventListener('change',()=>{
-   changedLevels[name]=Math.max(0,Math.min(Number(input.max),Number(input.value)||0));
+   if(input.value.trim()===''){enteredLevels.delete(name);delete changedLevels[name]}
+   else{
+    const parsed=Number(input.value);
+    if(!Number.isInteger(parsed)||parsed<0||parsed>Number(input.max)){input.setCustomValidity('Enter a whole level between 0 and '+input.max);input.reportValidity();return}
+    input.setCustomValidity('');enteredLevels.add(name);changedLevels[name]=parsed;
+   }
    render();
   });
-  wrap.append(copy,input);requirements.append(wrap);
+  wrap.append(copy,input);container.append(wrap);
+ }
+ if(!direct.length)directRequirements.append(el('p','muted','No direct building requirements are recorded for this target level.'));
+ if(!indirect.length)requirements.append(el('p','muted','No other prerequisite buildings recorded.'));
+ for(const [name,level] of direct)drawInput(name,level,directRequirements);
+ for(const [name,level] of indirect)drawInput(name,level,requirements);
+ const unentered=deps.filter(([name])=>!enteredLevels.has(name)).length;
+ byId('level-assumptions').textContent=unentered?unentered+' prerequisite current level(s) not entered. The full-plan resource totals assume level 0 for those buildings and may be too high. Enter your levels above for an accurate estimate.':'All listed building current levels entered. Full-plan costs reflect those levels.';
+ // Distinguish selected-building costs from prerequisite costs in every resource column.
+ const selectedSummary=byId('target-cost-resources');
+ selectedSummary.replaceChildren();
+ byId('target-cost-heading').textContent=building+' Lv'+from+' → Lv'+plan.targetLevel+' · selected building costs only';
+ for(const [i,name] of ['Food','Lumber','Stone','Ore'].entries()){
+  const cell=el('div','target-cost-cell');
+  cell.append(el('span','',name),el('strong','',fmt.format(plan.selectedTotals[i])));
+  selectedSummary.append(cell);
  }
  const specialList=byId('special-list');specialList.replaceChildren();
  if(!plan.specials.length)specialList.append(el('p','muted','No additional non-building requirements recorded for this plan.'));
@@ -187,16 +235,20 @@ function render(){
 function refreshReadiness(){
  if(!latest)return;
  const unconfirmed=latest.specials.filter(x=>!confirmed.has(x.requirement)).length;
- const ready=latest.complete&&unconfirmed===0;
- const e=byId('readiness');
- e.className=ready?'notice clear':'notice';
- e.textContent=ready?'All listed prerequisites are accounted for. Confirm current game requirements before building.':(!latest.complete?'Incomplete estimate: source data or dependency issues must be reviewed. ':'Conditional estimate: ')+unconfirmed+' non-building requirement(s) not yet confirmed. Costs for these conditions are excluded.';
+ const confirmedCount=latest.specials.length-unconfirmed;
+ const unentered=[...shownRequirements.keys()].filter(name=>name!==latest.building&&!enteredLevels.has(name)).length;
+ const ready=latest.complete&&unconfirmed===0&&unentered===0;
+ const e=byId('readiness');e.className=ready?'notice clear':'notice';
+ e.textContent=ready?'All listed building levels and special requirements accounted for. Confirm in-game eligibility before building.':(!latest.complete?'Incomplete estimate: source data or dependency issues require review. ':'Conditional estimate: ')+unentered+' prerequisite building level(s) unentered; '+unconfirmed+' special requirement(s) unconfirmed.';
+ const progress=byId('confirmation-progress');
+ progress.className=unconfirmed===0?'notice clear':'notice';
+ progress.textContent=confirmedCount+' of '+latest.specials.length+' special requirements marked complete. '+(unconfirmed?'Mark remaining items as complete when you meet them.':'All special requirements checked.')+' Checking items changes readiness only, not the resource totals.';
 }
-selected.addEventListener('change',()=>{current.value='0';Object.keys(changedLevels).forEach(k=>delete changedLevels[k]);shownRequirements.clear();confirmed.clear();showAll=false;resetTargets();render()});
+selected.addEventListener('change',()=>{current.value='0';Object.keys(changedLevels).forEach(k=>delete changedLevels[k]);enteredLevels.clear();shownRequirements.clear();confirmed.clear();showAll=false;resetTargets();render()});
 current.addEventListener('change',()=>{current.value=String(Math.min(Number(current.max),Math.max(0,Number(current.value)||0)));if(Number(target.value)<Number(current.value))target.value=current.value;render()});
 target.addEventListener('change',()=>{showAll=false;render()});
 byId('show-steps').addEventListener('click',()=>{showAll=!showAll;render()});
-byId('reset-levels').addEventListener('click',()=>{Object.keys(changedLevels).forEach(k=>delete changedLevels[k]);confirmed.clear();render()});
+byId('reset-levels').addEventListener('click',()=>{Object.keys(changedLevels).forEach(k=>delete changedLevels[k]);enteredLevels.clear();confirmed.clear();render()});
 byId('copy-summary').addEventListener('click',async()=>{
  if(!latest)return;
  const lines=[latest.building+' '+latest.currentLevel+' → '+latest.targetLevel,...latest.resourceLabels.map((x,i)=>x+': '+fmt.format(latest.totals[i])),'Combined resources: '+fmt.format(latest.totals.reduce((a,b)=>a+b,0)),'Prerequisite upgrades: '+latest.prerequisite.length,'Special requirements: '+latest.specials.map(x=>x.requirement).join('; ')];
