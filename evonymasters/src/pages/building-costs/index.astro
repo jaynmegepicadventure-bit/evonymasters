@@ -1,0 +1,59 @@
+---
+import SeoMetadata from '../../components/SeoMetadata.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import data from '../../data/building-upgrades.json';
+const fmt=n=>n==null?'Not recorded':new Intl.NumberFormat('en-US').format(n);
+const slugs=new Set();
+const groups=data.buildings.map(building=>{
+ const rows=data.rows.filter(row=>row.building===building).sort((a,b)=>a.level-b.level);
+ const slug=building.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+ if(slugs.has(slug))throw Error('Duplicate building slug '+slug);slugs.add(slug);
+ return {building,rows,slug};
+}).filter(group=>group.rows.length);
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<SeoMetadata title="Evony Building Upgrade Costs: Wood, Food, Stone & Ore by Level | EvonyMasters" description="Find wood (lumber), food, stone and ore costs for Evony building upgrades by level. Browse recorded costs for Keep, Walls, Barracks and more, then calculate prerequisites."/>
+<meta name="description" content="Find wood (lumber), food, stone and ore costs for Evony building upgrades by level. Browse recorded costs for Keep, Walls, Barracks and more, then calculate prerequisites."/>
+<link rel="icon" href="/favicon.svg"/>
+<title>Evony Building Upgrade Costs: Wood, Food, Stone & Ore by Level | EvonyMasters</title>
+<style is:global>
+:root{font-family:Inter,system-ui,sans-serif;background:#081523;color:#eaf1f7}
+*{box-sizing:border-box}body{margin:0;background:#081523}
+a{color:#f3d08e}.wrap{max-width:1240px;margin:auto;padding:0 22px}
+.hero{background:linear-gradient(130deg,#142f47,#0b1d30);border-bottom:1px solid #785e39;padding:40px 0}
+h1{color:#f5d28c;font-size:clamp(2rem,4vw,3.2rem);line-height:1.2}h2{color:#f5d28c}
+p,li{line-height:1.7;color:#cedce9}.lead{max-width:920px}
+main{padding:30px 0 80px}.panel{background:#11273c;border:1px solid #3d5971;border-radius:14px;padding:20px;margin:20px 0}
+.nav-list{display:flex;gap:9px;flex-wrap:wrap;list-style:none;padding:0}.nav-list a{display:inline-block;padding:8px 12px;background:#18354d;border:1px solid #526b80;border-radius:8px}
+.section-head{display:flex;gap:14px;align-items:baseline;justify-content:space-between;flex-wrap:wrap}
+.section-head h2{margin:0}.count{font-size:.87rem;color:#b8cada}
+.table-wrap{overflow-x:auto;margin-top:15px}.costs{width:100%;border-collapse:collapse;min-width:800px;font-size:.89rem}
+.costs th{background:#26445b;color:#ffe0a4;text-align:left}.costs td,.costs th{padding:10px 12px;border-bottom:1px solid #344e62}
+.costs td:not(:first-child){font-variant-numeric:tabular-nums;text-align:right}.costs th:not(:first-child){text-align:right}
+.costs tr:nth-child(even){background:#183249}.missing{font-size:.86rem;color:#d5c1a6}
+.guide-links{display:flex;gap:14px;flex-wrap:wrap;margin-top:18px}
+@media(max-width:600px){.wrap{padding:0 14px}.panel{padding:14px}}
+</style></head>
+<body><SiteHeader active="building-upgrades"/>
+<header class="hero"><div class="wrap"><h1>Evony Building Upgrade Costs: How Much Wood, Food, Stone and Ore?</h1>
+<p class="lead">Wondering how much wood it takes to upgrade buildings in Evony? Wood is also called <strong>lumber</strong>. The cost depends on the building and the level you are upgrading to. Find the recorded food, lumber, stone and ore requirements below, or use the calculator for an entire upgrade path.</p>
+<div class="guide-links"><a href="/building-upgrades/">Calculate my full building upgrade cost</a><a href="/training/">Compare troop training costs</a><a href="/troops/">Plan a march preset</a></div></div></header>
+<main class="wrap">
+<section class="panel" aria-labelledby="how-to"><h2 id="how-to">How to read Evony building resource costs</h2>
+<p>Each row lists the resources for upgrading <strong>from the previous level to the displayed level</strong>. For example, a Barracks level 41 row is the cost of upgrading Barracks from level 40 to 41, not the total cost of building Barracks from level 1.</p>
+<p><strong>Wood and lumber are the same resource.</strong> If you want the wood cost for several upgrades, add each relevant row. For a full plan that also includes missing prerequisite buildings, use the <a href="/building-upgrades/">Building Upgrade Calculator</a>.</p>
+<p>These are recorded source-sheet costs, not live in-game prices. Costs or requirements can change, and any missing source figure is displayed as “Not recorded” instead of zero.</p>
+<h2>Browse costs by building</h2><ul class="nav-list">{groups.map(g=><li><a href={'#'+g.slug}>{g.building}</a></li>)}</ul></section>
+{groups.map(g=><section class="panel" id={g.slug} aria-labelledby={g.slug+'-title'}>
+<div class="section-head"><h2 id={g.slug+'-title'}>{g.building} upgrade resource costs by level</h2><span class="count">{g.rows.length} recorded levels</span></div>
+<p>For {g.building}, the table gives the food, wood/lumber, stone and ore needed for each target level. Additional building prerequisites may also apply.</p>
+<div class="table-wrap"><table class="costs"><thead><tr><th scope="col">Target level</th><th scope="col">Food</th><th scope="col">Wood / Lumber</th><th scope="col">Stone</th><th scope="col">Ore</th></tr></thead>
+<tbody>{g.rows.map(row=><tr><th scope="row">{row.level}</th>{row.cost.map(n=><td>{fmt(n)}</td>)}</tr>)}</tbody></table></div>
+<p class="missing">Need requirements too? <a href="/building-upgrades/">Calculate {g.building} upgrades and prerequisites</a>.</p></section>)}
+<section class="panel"><h2>What if I need the total wood for a building upgrade plan?</h2>
+<p>Totals across multiple levels and prerequisite buildings are different from the cost of one upgrade. Open the <a href="/building-upgrades/">Evony Building Upgrade Calculator</a>, select your building, enter your current and target levels, and add the levels of the prerequisite buildings you already own. It will calculate food, lumber, stone and ore totals together with the required sequence.</p>
+<p><a href="/resources/">Find resource rewards</a> if you need more food, wood, stone or ore for your next upgrade.</p></section>
+</main></body></html>
