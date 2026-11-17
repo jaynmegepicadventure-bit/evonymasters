@@ -4,7 +4,7 @@ import items from '../data/items.json';
 
 // Keep this in sync with static routes. Do not index legacy redirects,
 // filtered search URLs, or dynamically generated query variants.
-const pages=['/','/resources/','/chests/','/calendar/','/loot-compass/','/troops/','/training/','/building-upgrades/','/about/','/privacy/','/contact/'];
+const pages=['/','/resources/','/chests/','/calendar/','/loot-compass/','/troops/','/training/','/building-upgrades/','/building-costs/','/about/','/privacy/','/contact/'];
 const escapeXml=(value:string)=>value.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 export const GET:APIRoute=({site})=>{
  const base=site||new URL('https://www.evonymasters.com');
