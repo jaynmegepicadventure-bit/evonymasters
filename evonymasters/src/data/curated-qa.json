@@ -1,0 +1,142 @@
+[
+  {
+    "id": "building-wood",
+    "category": "Building upgrades",
+    "question": "How much wood does it take to upgrade buildings in Evony?",
+    "answer": "The amount of wood, also called lumber, depends on the building and the level you are upgrading to. Compare the wood/lumber column for the specific target level in our building cost tables. To estimate multiple upgrades and any missing prerequisite buildings, use the Building Upgrade Calculator.",
+    "relatedTool": "/building-costs/"
+  },
+  {
+    "id": "building-wood-same",
+    "category": "Building upgrades",
+    "question": "Are wood and lumber the same resource in Evony?",
+    "answer": "Yes. Evony players commonly use wood and lumber to describe the same resource. Our building cost tables label that column Wood / Lumber so you can find the amount required alongside food, stone and ore.",
+    "relatedTool": "/building-costs/"
+  },
+  {
+    "id": "building-level-rows",
+    "category": "Building upgrades",
+    "question": "Does an Evony building cost table show the cost of one level or the whole upgrade?",
+    "answer": "Each building cost table row is the recorded cost to upgrade to that target level from the previous level. For example, level 41 represents the level 40 to 41 upgrade only. A full plan may include several levels and prerequisite buildings, so the total can be much higher.",
+    "relatedTool": "/building-costs/"
+  },
+  {
+    "id": "barracks-41",
+    "category": "Building upgrades",
+    "question": "How much lumber is needed to upgrade Barracks from level 40 to level 41 in Evony?",
+    "answer": "Our recorded building data lists 74,150,382,110 lumber for Barracks level 40 to 41. That is the Barracks upgrade alone, not the cost of upgrading other prerequisite buildings. The same row records 58,410,052,590 food, 76,396,003,198 stone and 74,129,115,270 ore. Check the calculator for the complete plan.",
+    "relatedTool": "/building-upgrades/"
+  },
+  {
+    "id": "building-prereqs",
+    "category": "Building upgrades",
+    "question": "How do I calculate Evony building upgrades with prerequisites?",
+    "answer": "Choose the building and current and target levels in the Building Upgrade Calculator. Enter the current levels of prerequisite buildings, and review the full upgrade sequence and resource totals. Requirements such as research or achievements are shown separately when recorded.",
+    "relatedTool": "/building-upgrades/"
+  },
+  {
+    "id": "building-keep",
+    "category": "Building upgrades",
+    "question": "Where can I find Evony Keep upgrade resource costs by level?",
+    "answer": "Open the Building Upgrade Costs guide and expand Keep. Each recorded target level lists food, wood/lumber, stone and ore. For a complete Keep plan that includes required building upgrades, use the Building Upgrade Calculator.",
+    "relatedTool": "/building-costs/"
+  },
+  {
+    "id": "training-costs",
+    "category": "Troop training",
+    "question": "How much does it cost to train troops in Evony?",
+    "answer": "Troop training cost depends on troop type, tier and the number you train. Our Troop Training Calculator covers T1 through T16 ground, ranged, cavalry and siege troops, with food, wood, stone, ore and gold shown separately. Enter your planned troop counts to calculate totals.",
+    "relatedTool": "/training/"
+  },
+  {
+    "id": "training-t15",
+    "category": "Troop training",
+    "question": "How much does it cost to train 1,000 T15 ranged troops in Evony?",
+    "answer": "In the recorded training dataset, each T15 ranged troop costs 7,500 food, 22,500 wood and 7,500 stone, with no ore cost, plus 800 gold. For 1,000 troops this is 7,500,000 food, 22,500,000 wood, 7,500,000 stone, zero ore and 800,000 gold before any in-game adjustments.",
+    "relatedTool": "/training/"
+  },
+  {
+    "id": "training-t16",
+    "category": "Troop training",
+    "question": "Can I calculate T16 troop training resources in Evony?",
+    "answer": "Yes. The Troop Training Calculator includes recorded per-troop resource, gold and power values for T1 through T16 across ground, ranged, cavalry and siege. Enter any quantity to see a total. Confirm the costs in-game before spending resources.",
+    "relatedTool": "/training/"
+  },
+  {
+    "id": "training-all",
+    "category": "Troop training",
+    "question": "How do I add up training costs for several troop types?",
+    "answer": "Enter the required troop count in each type-and-tier row of the Troop Training Calculator. The grand total combines all entered rows, even when a filter hides some rows. Gold is calculated separately from food, wood, stone and ore.",
+    "relatedTool": "/training/"
+  },
+  {
+    "id": "training-power",
+    "category": "Troop training",
+    "question": "Does troop power count as a resource cost in Evony?",
+    "answer": "No. The Troop Training Calculator displays power as an estimated gain from training, not as a resource you spend. Food, wood, stone, ore and, where recorded, gold are the costs.",
+    "relatedTool": "/training/"
+  },
+  {
+    "id": "march-preset",
+    "category": "March presets",
+    "question": "How do I build a march preset in Evony?",
+    "answer": "Start with your march capacity, pick a formation such as ranged, cavalry, ground or siege, and select only the upper troop tiers you have unlocked. The March Preset Calculator then shows a layer allocation to review before saving your own preset in-game.",
+    "relatedTool": "/troops/"
+  },
+  {
+    "id": "march-layers",
+    "category": "March presets",
+    "question": "How many troops should I put in each Evony PvP march layer?",
+    "answer": "There is no single troop layer count that fits every player or opponent. The answer depends on your march size, unlocked tiers, buffs and battle situation. Use the March Preset Calculator to generate a starting composition, then check the result against your actual troops.",
+    "relatedTool": "/troops/"
+  },
+  {
+    "id": "march-tiers",
+    "category": "March presets",
+    "question": "Should I select T14, T15 or T16 in my Evony march preset?",
+    "answer": "Only select the upper troop tiers you have unlocked and can actually field. The March Preset Calculator includes built-in lower-tier layers and lets you change the available T14, T15 and T16 options. Watch for warnings about march capacity or unallocated troops.",
+    "relatedTool": "/troops/"
+  },
+  {
+    "id": "march-types",
+    "category": "March presets",
+    "question": "What march preset types are available on EvonyMasters?",
+    "answer": "The March Preset Calculator includes six planning configurations: Ranged, Cavalry, Ground, BIG Siege, Small Siege and Solo Siege. These are editable planning aids rather than guaranteed winning formations.",
+    "relatedTool": "/troops/"
+  },
+  {
+    "id": "monster-drops",
+    "category": "Monster rewards",
+    "question": "How can I find which Evony boss drops an item?",
+    "answer": "Search for the item in Item Finder and switch to the Bosses filter. Recorded results distinguish possible rewards from other sources. You can also open the monster detail page to review its documented rewards and chest contents. Possible drops are not guaranteed.",
+    "relatedTool": "/resources/"
+  },
+  {
+    "id": "ymir-rewards",
+    "category": "Monster rewards",
+    "question": "Where can I see Ymir rewards in Evony?",
+    "answer": "Use Item Finder to search for resources or items and compare recorded boss rewards, or explore the relevant Ymir monster page for listed chest contents. Some rewards are possible drops and others depend on opening a chest, so review the source details.",
+    "relatedTool": "/resources/"
+  },
+  {
+    "id": "chest-contents",
+    "category": "Chests and events",
+    "question": "How do I find out what's inside an Evony chest?",
+    "answer": "Open Chest Finder to browse recorded chest contents and their sources. Some chests contain possible rewards rather than a guaranteed full list of items, so check the chest details and any notes before planning around a particular drop.",
+    "relatedTool": "/chests/"
+  },
+  {
+    "id": "calendar",
+    "category": "Chests and events",
+    "question": "How can I check when an Evony event or boss is available?",
+    "answer": "Use the EvonyMasters Event Calendar for recorded schedules and upcoming activities. Calendar information is a planning aid; confirm the current event schedule inside the game.",
+    "relatedTool": "/calendar/"
+  },
+  {
+    "id": "farming",
+    "category": "Resources",
+    "question": "Where can I find more food, wood, stone and ore for Evony upgrades?",
+    "answer": "Use Item Finder to look up resources and see recorded bosses, events or other sources. Then compare the amounts against the totals in the Building Upgrade Calculator. Availability and random drops can affect what you actually earn.",
+    "relatedTool": "/resources/"
+  }
+]

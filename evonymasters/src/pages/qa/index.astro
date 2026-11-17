@@ -1,12 +1,14 @@
 ---
 import SeoMetadata from '../../components/SeoMetadata.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
+import curatedQuestions from '../../data/curated-qa.json';
 ---
 <!doctype html>
 <html lang="en">
 <head>
-<SeoMetadata title="Evony Questions & Answers | EvonyMasters Q&A" description="Explore answers to Evony gameplay questions, learn about rewards, monsters, events and troop planning, or send a question to EvonyMasters."/>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<SeoMetadata title="Evony Questions & Answers | EvonyMasters Q&A" description="Answers to Evony building upgrade costs, wood and lumber requirements, march presets, PvP troop layers, T1–T16 training costs, boss rewards and events."/>
+<meta charset="utf-8"/>
+<meta name="description" content="Answers to Evony building upgrade costs, wood and lumber requirements, march presets, PvP troop layers, T1–T16 training costs, boss rewards and events."/><meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="icon" href="/favicon.svg"/>
 <style is:global>
 :root{font:16px Inter,system-ui,sans-serif;color:#eef3f9;background:#091624}
@@ -57,21 +59,26 @@ footer{margin-top:42px;border-top:1px solid #39566d;padding:22px 0;color:#bdccd8
 <section class="hero"><div class="wrap">
 <div class="eyebrow">EvonyMasters Knowledge Base</div>
 <h1>Evony questions, answered.</h1>
-<p>Clear answers to common player questions, reviewed before publication. Search the knowledge base, explore a topic, or ask us something new.</p>
+<p>Find answers about building costs, troop training, march presets, monster rewards and events. Search by question or browse a topic.</p>
 </div></section>
 <div class="wrap content">
 <section class="intro" aria-labelledby="browse-heading">
 <div class="eyebrow">Find what you need</div>
 <h2 id="browse-heading">Explore questions & answers</h2>
-<p>Answers come from our moderated Q&A collection. Only approved entries are shown here.</p>
+<p>Browse our curated gameplay answers alongside approved community questions. Each answer links to a relevant EvonyMasters tool where available.</p>
 </section>
 <div class="controls">
-<label for="qa-search">Search questions or answers<input id="qa-search" type="search" autocomplete="off" placeholder="Try ‘monster rewards’, ‘troops’ or ‘events’"/></label>
+<label for="qa-search">Search questions or answers<input id="qa-search" type="search" autocomplete="off" placeholder="Try ‘how much wood’, ‘march layers’ or ‘T15 costs’"/></label>
 <label for="qa-category">Category<select id="qa-category"><option value="">All categories</option></select></label>
 </div>
-<p class="results-count" id="qa-count" aria-live="polite">Loading approved questions…</p>
-<div class="state" id="qa-state" role="status">Loading questions from EvonyMasters…</div>
-<div class="qa-list" id="qa-list"></div>
+<p class="results-count" id="qa-count" aria-live="polite">{curatedQuestions.length} answers available</p>
+<div class="state" id="qa-state" role="status" hidden></div>
+<div class="qa-list" id="qa-list">
+{curatedQuestions.map(q=><details class="qa-card" id={'question-'+q.id} data-category={q.category} data-origin="curated">
+<summary><div class="heading"><span class="category">{q.category}</span><h3>{q.question}</h3></div><span class="chevron" aria-hidden="true">⌄</span></summary>
+<div class="qa-answer">{q.answer}<div class="qa-meta"><span>EvonyMasters guide · based on recorded tool data</span></div><a class="tool-link" href={q.relatedTool}>Explore related tool</a></div>
+</details>)}
+</div>
 <section class="ask-panel"><div><div class="eyebrow">Didn't find your answer?</div><h2>Ask the EvonyMasters team</h2><p>Submit a question using our secure feedback form. We review submissions, and helpful answers may be added here without your private details.</p></div><a href="/contact/">Ask a question</a></section>
 <footer><a href="/">Home</a> · <a href="/contact/">Feedback</a> · <a href="/privacy/">Privacy</a></footer>
 </div>
@@ -80,59 +87,67 @@ footer{margin-top:42px;border-top:1px solid #39566d;padding:22px 0;color:#bdccd8
 (()=>{
 "use strict";
 const API="https://evonymasters-feedback.jaynmegepicadventure.workers.dev/api/qa";
-const list=document.getElementById("qa-list"),state=document.getElementById("qa-state"),counter=document.getElementById("qa-count"),
- search=document.getElementById("qa-search"),category=document.getElementById("qa-category");
-let entries=[];
-function text(tag,value,className){const el=document.createElement(tag);el.textContent=value||"";if(className)el.className=className;return el}
+const list=document.getElementById("qa-list"),state=document.getElementById("qa-state"),counter=document.getElementById("qa-count");
+const search=document.getElementById("qa-search"),category=document.getElementById("qa-category");
+const safeUrl=/^\/(?!\/)[A-Za-z0-9/_-]*\/?(?:#[A-Za-z0-9_-]+)?$/;
+function text(tag,value,className){const node=document.createElement(tag);node.textContent=value||"";if(className)node.className=className;return node}
+function refreshCategories(){
+ const current=category.value;
+ const names=[...new Set([...list.children].map(card=>card.dataset.category||"General"))].sort((a,b)=>a.localeCompare(b));
+ category.replaceChildren(new Option("All categories",""),...names.map(name=>new Option(name,name)));
+ category.value=names.includes(current)?current:"";
+}
 function render(){
- const query=search.value.trim().toLocaleLowerCase();
- const selected=category.value;
- const matches=entries.filter(q=>(!selected||q.category===selected)&&(!query||[q.question,q.answer,q.category].some(v=>String(v||"").toLocaleLowerCase().includes(query))));
- list.replaceChildren();
- for(const q of matches){
-  const card=document.createElement("details");card.className="qa-card";card.id="question-"+q.id.replace(/[^a-zA-Z0-9_-]/g,"").slice(0,100);
-  const summary=document.createElement("summary");
-  const heading=document.createElement("div");heading.className="heading";
-  heading.append(text("span",q.category||"General","category"),text("h3",q.question));
-  summary.append(heading,text("span","⌄","chevron"));
-  card.append(summary);
-  const answer=text("div",q.answer,"qa-answer");
-  const meta=document.createElement("div");meta.className="qa-meta";
-  if(q.source)meta.append(text("span","Source: "+q.source));
-  if(q.lastUpdated)meta.append(text("span","Updated: "+q.lastUpdated));
-  answer.append(meta);
-  if(q.relatedTool&&/^\/(?!\/)[A-Za-z0-9/_-]*\/?(?:#[A-Za-z0-9_-]+)?$/.test(q.relatedTool)){
-   const link=document.createElement("a");link.className="tool-link";link.href=q.relatedTool;link.textContent="Explore related tool";
-   answer.append(link);
-  }
-  card.append(answer);list.append(card);
+ const query=search.value.trim().toLocaleLowerCase(),selected=category.value;
+ let visible=0;
+ for(const card of list.children){
+  const match=(!selected||card.dataset.category===selected)&&(!query||card.textContent.toLocaleLowerCase().includes(query));
+  card.hidden=!match;if(match)visible++;
  }
- counter.textContent=matches.length+" approved "+(matches.length===1?"answer":"answers")+(query||selected?" found":" available");
- if(entries.length===0){state.hidden=false;state.textContent="No published questions yet. Have a question? Send it through our feedback form."}
- else if(matches.length===0){state.hidden=false;state.textContent="No matches found. Try another search, change the category, or ask us a question."}
- else state.hidden=true;
+ counter.textContent=visible+" "+(visible===1?"answer":"answers")+(query||selected?" found":" available");
+ state.hidden=visible!==0;
+ if(!visible)state.textContent="No matches found. Try another search, change the category, or ask us a question.";
+}
+function addApproved(q){
+ const card=document.createElement("details");card.className="qa-card";
+ card.id="question-"+String(q.id||"").replace(/[^a-zA-Z0-9_-]/g,"").slice(0,100);
+ card.dataset.category=q.category||"General";card.dataset.origin="approved";
+ const summary=document.createElement("summary"),heading=document.createElement("div");heading.className="heading";
+ heading.append(text("span",card.dataset.category,"category"),text("h3",q.question));
+ summary.append(heading,text("span","⌄","chevron"));card.append(summary);
+ const answer=text("div",q.answer,"qa-answer"),meta=document.createElement("div");meta.className="qa-meta";
+ if(q.source)meta.append(text("span","Source: "+q.source));
+ if(q.lastUpdated)meta.append(text("span","Updated: "+q.lastUpdated));
+ answer.append(meta);
+ if(q.relatedTool&&safeUrl.test(q.relatedTool)){
+  const link=document.createElement("a");link.className="tool-link";link.href=q.relatedTool;link.textContent="Explore related tool";answer.append(link);
+ }
+ card.append(answer);list.append(card);
+}
+function openHash(){
+ if(!location.hash.startsWith("#question-"))return;
+ const card=document.getElementById(location.hash.slice(1));
+ if(card){card.hidden=false;card.open=true;card.scrollIntoView({block:"center"});}
 }
 search.addEventListener("input",render);category.addEventListener("change",render);
-async function init(){
+refreshCategories();render();openHash();
+(async()=>{
  try{
   const response=await fetch(API,{cache:"no-store"});
-  if(!response.ok)throw Error("Could not connect to the approved Q&A feed.");
+  if(!response.ok)throw Error("Q&A feed unavailable");
   const data=await response.json();
-  if(!data.ok||!Array.isArray(data.questions))throw Error("Questions are temporarily unavailable.");
-  entries=data.questions.filter(q=>q&&typeof q==="object"&&typeof q.question==="string"&&typeof q.answer==="string");
-  const categories=[...new Set(entries.map(q=>q.category||"General"))].sort((a,b)=>a.localeCompare(b));
-  for(const value of categories){const option=document.createElement("option");option.value=value;option.textContent=value;category.append(option)}
-  render();
-  if(location.hash.startsWith("#question-")){
-    const item=document.getElementById(location.hash.slice(1));if(item){item.open=true;item.scrollIntoView({block:"center"})}
+  if(!data.ok||!Array.isArray(data.questions))throw Error("Invalid Q&A feed");
+  const known=new Set([...list.children].map(card=>card.querySelector("h3")?.textContent.trim().toLocaleLowerCase()));
+  for(const q of data.questions){
+   if(!q||typeof q.question!=="string"||typeof q.answer!=="string")continue;
+   const key=q.question.trim().toLocaleLowerCase();
+   if(known.has(key))continue;known.add(key);addApproved(q);
   }
+  refreshCategories();render();openHash();
  }catch{
-  counter.textContent="Answers are temporarily unavailable";
-  state.hidden=false;
-  state.textContent="We're having trouble loading approved questions right now. Please try again later or submit your question through the Feedback page.";
+  // The curated Q&A is rendered on the server and remains usable offline.
  }
-}
-init();
+})();
 })();
 </script>
 </body></html>
