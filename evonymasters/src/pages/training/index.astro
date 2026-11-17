@@ -63,7 +63,7 @@ tfoot th{text-align:left;color:#f2cd89}tfoot tr+tr th,tfoot tr+tr td{background:
 .training-guide a{color:#f2ce8b;text-underline-offset:3px}
 </style></head>
 <body><SiteHeader active="training" /><main>
-<div class="banner-hero banner-troop-training"><h1>Train an army. Count every resource.</h1>
+<div class="banner-hero banner-troop-training"><h1>Evony Troop Training Costs Calculator (T1–T16)</h1>
 <p class="lead">From a few fresh recruits to a full-scale army, know the price before you train. Pick any mix of troop types and tiers, enter your target numbers and see the Food, Wood, Stone, Ore, Gold and Power totals update instantly.</p></div>
 <div class="controls">
 <div class="control"><span>Troop type</span>
@@ -103,6 +103,18 @@ tfoot th{text-align:left;color:#f2cd89}tfoot tr+tr th,tfoot tr+tr td{background:
 </table>
 </div>
 
+<section class="training-guide" aria-labelledby="troop-cost-search-guide">
+<h2 id="troop-cost-search-guide">Evony troop building costs: How much food, wood, stone and ore does training take?</h2>
+<p>Troop training costs in Evony depend on the troop type, troop tier (T1 through T16), and number trained. The training table above includes recorded per-troop resource costs for Ground, Ranged (Archers), Cavalry (Mounted) and Siege units. Enter your troop quantity to calculate the total food, wood (lumber), stone, ore and gold required.</p>
+<h3>Example resource costs for training 1,000 troops</h3>
+<p>These examples are calculated directly from the per-troop costs in our recorded training dataset. Gold is listed separately from the four building resources; troop power gained is not a cost.</p>
+<div class="table-wrap"><table aria-label="Examples of Evony troop training costs for one thousand troops"><thead><tr><th>Troop</th><th>Food</th><th>Wood</th><th>Stone</th><th>Ore</th><th>Gold</th></tr></thead>
+<tbody>{TROOP_TRAINING_COSTS.filter(t=>[14,15,16].includes(t.tier)).map(t=><tr><th scope="row">{t.type} T{t.tier}</th><td>{format(t.food*1000)}</td><td>{format(t.wood*1000)}</td><td>{format(t.stone*1000)}</td><td>{format(t.ore*1000)}</td><td>{format(t.gold*1000)}</td></tr>)}</tbody></table></div>
+<h3>How do I calculate the cost to train millions of troops?</h3>
+<p>Choose the troop type and tier, enter the count in the calculator above, then review the resource and gold totals. For mixed troops or a complete army, enter quantities on multiple rows. The grand total combines all entered quantities even when filters hide individual rows.</p>
+<p>Use the <a href="/troops/">March Preset and Troop Layer Calculator</a> to plan a march composition first. If you're preparing barracks or other buildings to unlock training, see the <a href="/building-costs/">Evony building upgrade costs by level</a>.</p>
+<p>Training costs are based on the saved source spreadsheet and should be checked against current in-game values before spending resources.</p>
+</section>
 <section class="training-guide" aria-labelledby="training-guide-title">
 <h2 id="training-guide-title">How to calculate Evony troop training costs</h2>
 <p>Use this calculator to estimate the resources and Gold needed to train Evony ground, ranged, cavalry and siege troops from T1 through T16. Enter the number of troops you plan to train, and the totals update automatically.</p>
