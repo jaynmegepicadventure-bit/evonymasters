@@ -58,7 +58,7 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 .march-guide a{color:#f2cc89;text-underline-offset:3px}
 </style></head>
 <body><SiteHeader active="troops"/><main>
-<div class="top banner-hero banner-march-preset"><h1>Build the march. Own the battle.</h1><p>Put your march capacity to work. Enter your march size, tick any upper tiers you've unlocked and see a ready-to-use troop layer breakdown. Lower tiers are built into the plan automatically.</p></div>
+<div class="top banner-hero banner-march-preset"><h1>Evony March Preset & Troop Layer Calculator</h1><p>Put your march capacity to work. Enter your march size, tick any upper tiers you've unlocked and see a ready-to-use troop layer breakdown. Lower tiers are built into the plan automatically.</p></div>
 <div class="toolbar"><button type="button" id="clear">Clear march sizes</button><button type="button" id="print">Print results</button></div>
 <div class="scroller"><div class="cols">{types.map(t=><section class="card" data-type={t.id}>
 <h2>{t.icon} {t.label}</h2>
@@ -71,6 +71,22 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 <div class="summary"><span>Total march</span><output class="total">0</output></div></div>
 </section>)}</div></div>
 
+<section class="march-guide" aria-labelledby="march-preset-search-guide">
+<h2 id="march-preset-search-guide">Evony march presets for PvP: Ranged, Mounted, Ground and Siege troop layering</h2>
+<p>An Evony march preset is a troop composition you plan to reuse. The best layer allocation depends on your march capacity, unlocked troop tiers, opponent, buffs and intended attack or defense. This calculator provides six editable formations so you can compare the layer counts before saving a march preset in-game.</p>
+<h3>Which march preset should I choose?</h3>
+<ul>
+<li><strong>Ranged / Archer:</strong> Use the Ranged preset to review ranged-focused layers and supporting troops.</li>
+<li><strong>Cavalry / Mounted:</strong> Use Cavalry for a mounted-focused march plan.</li>
+<li><strong>Ground:</strong> Review a ground-focused layer allocation.</li>
+<li><strong>BIG Siege, Small Siege, Solo Siege:</strong> Compare three separate siege allocations instead of assuming one size fits every battle.</li>
+</ul>
+<h3>What do T14, T15 and T16 selections change?</h3>
+<p>The upper-tier checkboxes allow the calculator to allocate troops to tiers you have unlocked. T3 through T13 layers are already part of the preset logic. If you do not have T15 or T16 troops, leave those tiers unchecked. Check the result for any unallocated troops or march-capacity warnings.</p>
+<h3>How many troops should each Evony march layer contain?</h3>
+<p>There is no universal number that works for all players. Enter your actual march capacity, select unlocked tiers, and use the displayed counts for a starting plan. The calculator's built-in preset percentages are planning assumptions, not a guarantee of victory or a universal best PvP march.</p>
+<p>Once you know the troop counts you want to build, use the <a href="/training/">Troop Training Cost Calculator</a> to estimate food, lumber, stone, ore and gold. To unlock higher-level military buildings, see the <a href="/building-costs/">Building Upgrade Cost Guide</a>.</p>
+</section>
 <section class="march-guide" aria-labelledby="march-guide-title">
 <h2 id="march-guide-title">How to calculate Evony march presets and troop layers</h2>
 <p>Use the Evony March Preset calculator to plan troop-layer distributions for ranged, cavalry, ground and siege formations. Each formation has its own march-size field and calculated troop allocation, so you can compare several setups before using them in-game.</p>
