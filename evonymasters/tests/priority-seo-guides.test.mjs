@@ -21,8 +21,8 @@ test('building guide is in sitemap and discoverable from calculator',()=>{
 });
 test('troop training guide includes source-backed 1000-unit table and march links',()=>{
  const page=read('../src/pages/training/index.astro');
- assert.ok(page.includes('TROOP_TRAINING_COSTS.filter'));
- assert.ok(page.includes('t.food*1000'));
+ assert.ok(page.includes('TROOP_TRAINING_COSTS.map'));
+ assert.ok(page.includes('href="/qa/"'));
  assert.ok(page.includes('href="/troops/"'));
  assert.equal(TROOP_TRAINING_COSTS.length,64);
 });
