@@ -34,7 +34,7 @@ test('Cloudflare automatic analytics does not duplicate a manual beacon',()=>{
  assert.ok(!shared.includes('data-cf-beacon'));
  const privacy=read('../src/pages/privacy/index.astro');
  assert.ok(privacy.includes('Cloudflare Web Analytics is enabled'));
- assert.ok(privacy.includes('Advertising is planned'));
+ assert.ok(privacy.includes('Google AdSense verification code is installed'));
 });
 
 test('production canonical and sitemap use the verified custom domain',()=>{
