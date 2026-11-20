@@ -20,7 +20,7 @@ test('public trust pages accurately describe the independent site and secure fee
  const privacy=read('../src/pages/privacy/index.astro');
  const contact=read('../src/pages/contact/index.astro');
  assert.match(about,/not affiliated with/);
- assert.match(privacy,/Advertising is planned/);
+ assert.match(privacy,/Google AdSense verification code is installed/);
  assert.match(privacy,/Cloudflare/);
  assert.match(contact,/Turnstile|turnstile/i);
  assert.match(contact,/feedback/i);
