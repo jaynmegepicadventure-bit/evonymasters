@@ -9,6 +9,21 @@ const selected=example=>[...base,...example.tiers.filter(t=>t>=14)];
 const siege=['bigSiege','smallSiege','soloSiege'];
 const combat=['ranged','mounted','ground'];
 
+
+test('regression snapshots compare original reference march sizes with new distributions',()=>{
+ const checks=[
+  ['ranged',7393200,[14,15],{14:2653467,15:2653466,13:1516267}],
+  ['mounted',7480700,[14],{14:3861500,13:1930750,12:1158450}],
+  ['ground',7500000,[14,15],{14:3850000,15:1925000,13:1155000}]
+ ];
+ for(const [type,size,upper,expected] of checks){
+  const result=calculateFormation(type,size,[...base,...upper]);
+  const layers=byTier(result);
+  for(const [tier,count] of Object.entries(expected))assert.equal(layers[tier],count,`${type} T${tier}`);
+  assert.equal(result.total,size);
+ }
+});
+
 test('adaptive thresholds include exactly 4M and 6M boundaries',()=>{
  for(const [size,want] of [[1,1000],[3999999,1000],[4000000,5000],[6000000,5000],[6000001,10000],[7500000,10000]])
   assert.equal(combatLayerSize(size),want);
