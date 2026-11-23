@@ -4,10 +4,10 @@ import SiteHeader from '../../components/SiteHeader.astro';
 const types=[
  {id:'ranged',label:'Ranged',icon:'🏹',defaultSize:7393200,base:10000},
  {id:'mounted',label:'Cavalry',icon:'🐎',defaultSize:7480700,base:10000},
- {id:'ground',label:'Ground',icon:'🛡️',defaultSize:7500000,base:10000},
- {id:'bigSiege',label:'BIG Siege',icon:'🏰',defaultSize:6013200,base:1000},
- {id:'smallSiege',label:'Small Siege',icon:'🏰',defaultSize:5749450,base:1000},
- {id:'soloSiege',label:'Solo Siege',icon:'🏰',defaultSize:5549800,base:1000}
+ {id:'ground',label:'Ground',icon:'⚔️',defaultSize:7500000,base:10000},
+ {id:'bigSiege',label:'Big Siege',icon:'🏰',defaultSize:6013200,base:1000},
+ {id:'smallSiege',label:'Small Siege',icon:'💣',defaultSize:5749450,base:1000},
+ {id:'soloSiege',label:'Solo Siege',icon:'🎯',defaultSize:5549800,base:1000}
 ];
 const tiers=[14,15,16];
 ---
@@ -42,7 +42,7 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 :global(.result-row .value){display:block;text-align:right;justify-self:end;font-variant-numeric:tabular-nums;font-weight:800;color:#f4eedb;white-space:nowrap}
 .rows{border:1px solid #30485d;border-radius:9px;overflow:hidden}
 :global(.result-row:last-child){border-bottom:0}
-.summary{margin-top:11px;display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:.93rem}
+.summary{margin:0 0 10px;display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:.93rem}
 .summary output{color:#f3c678;font-variant-numeric:tabular-nums}
 .stat{color:#b3c8d9;font-size:.74rem;margin:9px 0 0}.stat strong{color:#eaf1f8}.warn{color:#ffd38b;font-size:.78rem;padding:8px;border:1px solid #a9844c;border-radius:6px}
 .tip{font-size:.78rem;color:#a9bccf}
@@ -67,10 +67,9 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 <label class="field">March size<input class="march" type="text" inputmode="numeric" autocomplete="off" value="" aria-label={t.label+' march size'}/></label>
 <div class="tiers-head"><strong>Upper troop tiers</strong><span>T3–T13 included</span></div>
 <div class="tiers">{tiers.map(tier=><label class="tier"><input type="checkbox" class="tier-input" value={tier} checked={false}/><span>T{tier}</span></label>)}</div>
-<div class="results"><h3>Calculated layers</h3><div class="rows" aria-live="polite"></div>
-<div class="stat">Own T1–T9 defaults: <strong class="own-base">0</strong></div><div class="stat">Other 3 troop types: <strong class="reserved">0</strong></div><div class="stat">Extra fixed layers: <strong class="extra-fixed">0</strong></div><div class="stat excel-adjustment-row" hidden>Additional Excel layer reserve: <strong class="excel-adjustment">0</strong></div><p class="warn" hidden></p>
-<div class="stat">Main formation troops: <strong class="remaining">0</strong></div>
-<div class="summary"><span>Total march</span><output class="total">0</output></div></div>
+<div class="results"><div class="summary"><span>Main troop formation</span><output class="formation-total">0</output></div>
+<div class="summary"><span>Other troop layers</span><output class="other-per-layer">0 each</output></div>
+<h3>Calculated layers</h3><div class="rows" aria-live="polite"></div><p class="warn" hidden></p></div>
 </section>)}</div></div>
 
 <p class="compact-help-link">More Evony march preset answers: <a href="/qa/">March layering questions &amp; answers</a></p>
@@ -78,7 +77,7 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 <h2 id="march-guide-title">How to calculate Evony march presets and troop layers</h2>
 <p>Use the Evony March Preset calculator to plan troop-layer distributions for ranged, cavalry, ground and siege formations. Each formation has its own march-size field and calculated troop allocation, so you can compare several setups before using them in-game.</p>
 <ol>
-<li><strong>Choose a formation.</strong> Review the ranged, cavalry, ground, BIG Siege, Small Siege or Solo Siege preset.</li>
+<li><strong>Choose a formation.</strong> Review the ranged, cavalry, ground, Big Siege, Small Siege or Solo Siege preset.</li>
 <li><strong>Enter your march capacity.</strong> Type the total number of troops your march can carry for that formation.</li>
 <li><strong>Select unlocked upper tiers.</strong> Tick T14, T15 and T16 only when those troops are available to you. The calculator also includes its built-in lower-tier layers.</li>
 <li><strong>Review the allocation.</strong> Check the calculated layers, reserved troops and total march before copying the composition into the game.</li>
@@ -107,17 +106,13 @@ function calculate(card){
   const value=document.createElement('strong');value.className='value';value.textContent=format(item.count);
   row.append(label,value);rows.append(row);
  }
- card.querySelector('.reserved').textContent=format(presentation.otherSupport);
- card.querySelector('.own-base').textContent=format(result.ownLayers);
- card.querySelector('.extra-fixed').textContent=format(result.extraFixed);
- const excelRow=card.querySelector('.excel-adjustment-row');
- excelRow.hidden=!result.excelAdjustment;
- card.querySelector('.excel-adjustment').textContent=format(result.excelAdjustment);
+ const mainTroops=result.rows.reduce((sum,row)=>sum+row.count,0);
+ card.querySelector('.formation-total').textContent=format(mainTroops);
+ const perLayer=result.march?result.otherLayers/(3*Math.max(9,...result.tiers)):0;
+ card.querySelector('.other-per-layer').textContent=format(perLayer)+' each';
  const warning=card.querySelector('.warn');
  warning.hidden=!result.unallocated;
  warning.textContent=result.total>result.march?'March too small for the required layers by '+format(result.total-result.march):'Cannot allocate '+format(result.unallocated)+' troops without an available top tier.';
- card.querySelector('.remaining').textContent=format(result.remaining);
- card.querySelector('.total').textContent=format(result.total);
 }
 function formatMarch(input){
  const before=input.value,caret=input.selectionStart??before.length;
