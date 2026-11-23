@@ -38,6 +38,53 @@ function allocateWeighted(count,tiers,weights,counts){
  for(let i=0;i<unallocated;i++)portions[i%portions.length].quantity++;
  for(const part of portions)counts.set(part.tier,(counts.get(part.tier)||0)+part.quantity);
 }
+
+/**
+ * Adaptive layers for combat formations. The admin percentage configuration's
+ * first three weights are applied to the three principal available tiers.
+ * Prefer T14 for the leading troop block when owned, then T15/T16, then
+ * remaining lower tiers. This prevents a T16 unlock from displacing T14.
+ * Siege formations deliberately continue using the workbook rules below.
+ */
+export const COMBAT_WEIGHTS = Object.freeze({
+ ranged:[35,35,20], mounted:[50,25,15], ground:[50,25,15]
+});
+export function combatLayerSize(march){
+ return march<4000000?1000:march<=6000000?5000:10000;
+}
+function calculateCombatFormation(result){
+ const {type,march,tiers}=result;
+ const highest=tiers[0];
+ const layer=combatLayerSize(march);
+ result.layerSize=layer;
+ const counts=new Map();
+ const priority=[14,15,16,...tiers.filter(t=>t!==14&&t!==15&&t!==16)];
+ const main=[...new Set(priority)].filter(t=>tiers.includes(t)&&t>=10).slice(0,3);
+ const leading=new Set(main);
+ for(let tier=1;tier<=9;tier++)counts.set(tier,layer);
+ for(const tier of tiers){
+  if(tier>=10&&!leading.has(tier))counts.set(tier,layer);
+ }
+ result.ownLayers=9*layer;
+ result.otherLayers=3*highest*layer;
+ result.extraFixed=[...counts.keys()].filter(t=>t>=10).length*layer;
+ result.baseLayers=result.ownLayers+result.otherLayers;
+ const reserve=result.baseLayers+result.extraFixed;
+ result.support=reserve;
+ if(march<reserve){
+  result.unallocated=reserve-march;
+  result.rows=[...counts.entries()].sort((a,b)=>b[0]-a[0]).map(([tier,count])=>({tier,count}));
+  result.total=reserve;
+  return result;
+ }
+ result.remaining=march-reserve;
+ if(main.length)allocateWeighted(result.remaining,main,COMBAT_WEIGHTS[type].slice(0,main.length),counts);
+ else result.unallocated=result.remaining;
+ result.rows=[...counts.entries()].sort((a,b)=>b[0]-a[0]).map(([tier,count])=>({tier,count}));
+ result.total=result.otherLayers+result.rows.reduce((sum,row)=>sum+row.count,0);
+ return result;
+}
+
 export function calculateFormation(type,marchInput,selectedTiers){
  const cfg=FORMATIONS[type];if(!cfg)throw Error('Unknown formation');
  const value=Number(String(marchInput).replace(/,/g,''));
@@ -46,6 +93,7 @@ export function calculateFormation(type,marchInput,selectedTiers){
  const highest=tiers[0]||0;
  const result={type,march,tiers,rows:[],ownLayers:0,otherLayers:0,baseLayers:0,extraFixed:0,excelAdjustment:0,support:0,remaining:0,total:0,unallocated:0};
  if(!march||!highest)return result;
+ if(cfg.troopType!=='siege')return calculateCombatFormation(result);
  const ownDefault=DEFAULT_LAYERS[cfg.troopType];
  const counts=new Map();
  // The spreadsheet applies the selected formation's Default Layer Size to
