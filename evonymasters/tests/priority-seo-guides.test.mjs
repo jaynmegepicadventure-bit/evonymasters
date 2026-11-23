@@ -29,6 +29,6 @@ test('troop training guide includes source-backed 1000-unit table and march link
 test('march preset guide covers all existing preset types',()=>{
  const page=read('../src/pages/troops/index.astro');
  assert.ok(page.includes('Evony March Preset & Troop Layer Calculator</h1>'));
- for(const name of ['Ranged','Cavalry','Ground','BIG Siege','Small Siege','Solo Siege'])assert.ok(page.includes(name));
+ for(const name of ['Ranged','Cavalry','Ground','Big Siege','Small Siege','Solo Siege'])assert.ok(page.includes(name));
  assert.ok(page.includes('href="/training/"'));
 });
