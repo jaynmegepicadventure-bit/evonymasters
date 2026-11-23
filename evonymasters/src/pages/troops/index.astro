@@ -60,7 +60,7 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 .compact-help-link{font-size:.86rem;margin:12px 0;color:#b9cbdc}.compact-help-link a{color:#f2ce8b}
 </style></head>
 <body><SiteHeader active="troops"/><main>
-<div class="top banner-hero banner-march-preset"><h1>Evony March Preset & Troop Layer Calculator</h1><p>Put your march capacity to work. Enter your march size, tick any upper tiers you've unlocked and see a ready-to-use troop layer breakdown. Lower tiers are built into the plan automatically.</p></div>
+<div class="top banner-hero banner-march-preset"><h1>Evony March Preset & Troop Layer Calculator</h1><p>Put your march capacity to work. Enter your march size, tick any upper tiers you've unlocked and see a ready-to-use troop layer breakdown. Lower tiers are built into the plan automatically. Ranged, cavalry and ground layers adjust to your march capacity; siege presets keep their separate rules.</p></div>
 <div class="toolbar"><button type="button" id="clear">Clear march sizes</button><button type="button" id="print">Print results</button></div>
 <div class="scroller"><div class="cols">{types.map(t=><section class="card" data-type={t.id}>
 <h2>{t.icon} {t.label}</h2>
@@ -78,7 +78,7 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 <p>Use the Evony March Preset calculator to plan troop-layer distributions for ranged, cavalry, ground and siege formations. Each formation has its own march-size field and calculated troop allocation, so you can compare several setups before using them in-game.</p>
 <ol>
 <li><strong>Choose a formation.</strong> Review the ranged, cavalry, ground, Big Siege, Small Siege or Solo Siege preset.</li>
-<li><strong>Enter your march capacity.</strong> Type the total number of troops your march can carry for that formation.</li>
+<li><strong>Enter your march capacity.</strong> Type the total number of troops your march can carry for that formation. Ranged, cavalry and ground use 1,000 per support layer below 4M, 5,000 from 4M through 6M, and 10,000 above 6M. Siege retains its own presets.</li>
 <li><strong>Select unlocked upper tiers.</strong> Tick T14, T15 and T16 only when those troops are available to you. The calculator also includes its built-in lower-tier layers.</li>
 <li><strong>Review the allocation.</strong> Check the calculated layers, reserved troops and total march before copying the composition into the game.</li>
 </ol>
