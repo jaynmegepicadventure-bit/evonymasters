@@ -58,7 +58,7 @@ function calculateCombatFormation(result){
  const layer=combatLayerSize(march);
  result.layerSize=layer;
  const counts=new Map();
- const priority=[14,15,16,...tiers.filter(t=>t!==14&&t!==15&&t!==16)];
+ const priority=[14,15,16,...tiers.filter(t=>t!==14&&t!==15&&t!==16).sort((a,b)=>b-a)];
  const main=[...new Set(priority)].filter(t=>tiers.includes(t)&&t>=10).slice(0,3);
  const leading=new Set(main);
  for(let tier=1;tier<=9;tier++)counts.set(tier,layer);
@@ -78,7 +78,15 @@ function calculateCombatFormation(result){
   return result;
  }
  result.remaining=march-reserve;
- if(main.length)allocateWeighted(result.remaining,main,COMBAT_WEIGHTS[type].slice(0,main.length),counts);
+ if(main.length){
+  allocateWeighted(result.remaining,main,COMBAT_WEIGHTS[type].slice(0,main.length),counts);
+  // A rounding remainder should not give T15 more troops than equally weighted T14.
+  if(main.includes(14)&&main.includes(15)&&(counts.get(15)||0)>(counts.get(14)||0)){
+   const shift=Math.ceil(((counts.get(15)||0)-(counts.get(14)||0))/2);
+   counts.set(15,counts.get(15)-shift);
+   counts.set(14,counts.get(14)+shift);
+  }
+ }
  else result.unallocated=result.remaining;
  result.rows=[...counts.entries()].sort((a,b)=>b[0]-a[0]).map(([tier,count])=>({tier,count}));
  result.total=result.otherLayers+result.rows.reduce((sum,row)=>sum+row.count,0);
