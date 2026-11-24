@@ -36,6 +36,37 @@ test('T13-max ranged PvP allocates 30/50/20 across T13/T12/T11',()=>{
  assert.equal(result.total,4000000);
  assert.equal(displayFormationLayers(result).displayed+displayFormationLayers(result).otherSupport,4000000);
 });
+test('T13-max ranged stays T12-heavy from 2M to 7M with fixed supports at 6.5M',()=>{
+ const snapshots=[
+  [2000000,2000,570600,951000,380400,2000,2000,78000],
+  [4000000,4000,1141200,1902000,760800,4000,4000,156000],
+  [6500000,6000,1835400,3059000,1223600,50000,50000,234000],
+  [7000000,10000,1929000,3215000,1286000,50000,50000,390000]
+ ];
+ for(const [size,layer,t13,t12,t11,t10,t9,other] of snapshots){
+  const x=calculateFormation('ranged',size,base);
+  const r=byTier(x);
+  assert.equal(x.layerSize,layer);
+  assert.equal(r[13],t13);
+  assert.equal(r[12],t12);
+  assert.equal(r[11],t11);
+  assert.equal(r[10],t10);
+  assert.equal(r[9],t9);
+  assert.equal(x.otherLayers,other);
+  assert.ok(r[12]>r[13]&&r[13]>r[11]);
+  assert.equal(x.unallocated,0);
+  assert.equal(x.total,size);
+  assert.equal(displayFormationLayers(x).displayed+displayFormationLayers(x).otherSupport,size);
+ }
+ const before=calculateFormation('ranged',6499999,base);
+ const at=calculateFormation('ranged',6500000,base);
+ assert.equal(byTier(before)[10],6000);
+ assert.equal(byTier(at)[10],50000);
+ const before7=calculateFormation('ranged',6999999,base);
+ const at7=calculateFormation('ranged',7000000,base);
+ assert.equal(before7.layerSize,6000);
+ assert.equal(at7.layerSize,10000);
+});
 test('T14 ranged uses tier-specific 20/30/50 preference (T12 > T13 > T14)',()=>{
  const x=calculateFormation('ranged',4000000,[...base,14]);
  const r=byTier(x);
