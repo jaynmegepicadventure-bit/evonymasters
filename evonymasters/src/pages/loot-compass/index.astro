@@ -81,7 +81,7 @@ table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 10p
 import {normalise,parseAmount,dayUTC,dayAdd,liveIndex,eligibleRecord,periodBreakdown} from '../../lib/reward-planner.mjs';
 const SHEET="https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev";
 const CALENDAR="https://evonymasters-calendar.jaynmegepicadventure.workers.dev/api/events";
-const displayResourceName=value=>String(value??"").replace(/^safe wood$/i,"Safe Lumber").replace(/^wood(?:\\s*\\/\\s*lumber)?$/i,"Lumber");
+const displayResourceName=value=>String(value??"").replace(/^safe wood$/i,"Safe Lumber").replace(/^wood(?:\s*\/\s*lumber)?$/i,"Lumber");
 const $=id=>document.getElementById(id),fmt=n=>n===null||n===undefined?"—":new Intl.NumberFormat("en-US",{maximumFractionDigits:0}).format(n);
 const line=(container,name,reward,detail)=>{
  const row=document.createElement("div");row.className="opportunity";
