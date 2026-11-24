@@ -1,0 +1,128 @@
+---
+import SeoMetadata from '../../components/SeoMetadata.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import monsters from '../../data/monsters.json';
+
+const sorted=[...monsters].sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true})||(a.level??0)-(b.level??0));
+const counts={Boss:monsters.filter(m=>m.type==='Boss').length,Event:monsters.filter(m=>m.type==='Event').length,Regular:monsters.filter(m=>m.type==='Regular').length};
+const title='Evony Boss & Monster Directory: Levels, Power and Rewards | EvonyMasters';
+const description='Browse every recorded Evony boss, event boss and regular monster. Search by name, filter monster type, compare recorded levels, power and stamina, and open detailed reward and chest pages.';
+const format=n=>n==null?'Not verified':new Intl.NumberFormat('en-US').format(n);
+const label=type=>type==='Event'?'Event Boss':type==='Regular'?'Regular Monster':'Boss';
+---
+<!doctype html>
+<html lang="en">
+<head>
+ <SeoMetadata title={title} description={description}/>
+ <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+ <meta name="description" content={description}/><link rel="icon" href="/favicon.svg"/><title>{title}</title>
+ <style is:global>
+  :root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#091523;color:#eaf0f8}
+  *{box-sizing:border-box}body{margin:0;background:#091523}a{color:inherit}
+  .wrap{max-width:1260px;margin:0 auto;padding:0 22px}
+  .directory-hero{padding:54px 0 44px;border-bottom:1px solid #3a5871;background:radial-gradient(circle at 83% 24%,#31445c 0%,transparent 48%),linear-gradient(125deg,#10283f,#081a2c)}
+  .eyebrow{text-transform:uppercase;letter-spacing:.15em;color:#eebf74;font-size:.77rem;font-weight:850}
+  h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.15rem,4.2vw,3.75rem);margin:13px 0 14px;color:#f7d59d;line-height:1.15}
+  .intro{line-height:1.7;color:#cad8e5;max-width:780px;font-size:1.05rem}
+  .hero-stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+  .hero-stats span{border:1px solid #4a6178;background:#1c344e;border-radius:100px;padding:8px 14px;font-size:.84rem;color:#e7eff8}
+  main{padding:30px 0 76px}
+  .directory-note{max-width:980px;color:#c5d3df;font-size:.92rem;line-height:1.65;margin:0 0 24px}
+  .filters{display:flex;flex-wrap:wrap;align-items:end;gap:13px;padding:19px;border:1px solid #405d75;background:#132b42;border-radius:15px;margin-bottom:18px}
+  .filters label{display:flex;flex-direction:column;gap:6px;font-size:.81rem;color:#f0d49f;font-weight:800;flex:1 1 230px}
+  .filters input,.filters select{width:100%;background:#f4f7fb;color:#12253a;border:1px solid #879fb1;border-radius:9px;padding:12px 13px;font:inherit}
+  .filters button{border:1px solid #af8a56;border-radius:9px;padding:12px 17px;color:#172c41;background:#edc77e;cursor:pointer;font-weight:800;font:inherit}
+  .filters button:focus-visible,.filters input:focus-visible,.filters select:focus-visible,a:focus-visible{outline:3px solid #f5d18d;outline-offset:3px}
+  .results-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:9px;margin:18px 0}
+  #result-count{font-weight:750;color:#e8d1a2;margin:0}
+  .results-top small{color:#aebdca}
+  .boss-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+  .boss-card{background:linear-gradient(160deg,#19334d,#10253a);border:1px solid #4a657c;border-radius:14px;padding:20px;min-width:0;display:flex;flex-direction:column;gap:13px}
+  .boss-card:hover{border-color:#efc77e}
+  .card-top{display:flex;align-items:start;justify-content:space-between;gap:10px}
+  .boss-type{font-weight:800;font-size:.7rem;letter-spacing:.035em;color:#f3ce90;background:#61492340;border:1px solid #89704d;border-radius:99px;padding:5px 9px;white-space:nowrap}
+  .boss-card h2{font-size:1.19rem;line-height:1.3;margin:0;color:#fff0d5;overflow-wrap:anywhere}
+  .boss-card h2 a{text-decoration:none}.boss-card h2 a:hover{text-decoration:underline;text-decoration-color:#efc57d}
+  .boss-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 9px;margin:0}
+  .boss-meta div{min-width:0}.boss-meta dt{text-transform:uppercase;font-size:.66rem;font-weight:800;letter-spacing:.07em;color:#a6bbcd;margin-bottom:4px}
+  .boss-meta dd{font-size:.9rem;font-weight:700;color:#edf3f9;margin:0;overflow-wrap:anywhere}
+  .boss-link{margin-top:auto;display:inline-flex;gap:6px;align-items:center;color:#f3cd84;font-weight:800;font-size:.86rem;text-decoration:none;padding-top:4px}
+  .boss-link:hover{text-decoration:underline}
+  .empty{background:#152c42;border:1px solid #48647c;padding:25px;border-radius:12px;margin-top:20px;color:#e8d5b4}
+  [hidden]{display:none!important}
+  .bottom-note{margin:35px 0 0;color:#adc1d4;font-size:.87rem;line-height:1.7}
+  @media(max-width:900px){.boss-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:580px){.boss-grid{grid-template-columns:1fr}.directory-hero{padding:39px 0 35px}.filters{padding:15px}.boss-card{padding:17px}}
+ </style>
+</head>
+<body>
+ <SiteHeader active="bosses"/>
+ <header class="directory-hero"><div class="wrap">
+  <div class="eyebrow">Player tools / Monster catalog</div>
+  <h1>Evony Boss &amp; Monster Directory</h1>
+  <p class="intro">Find Evony bosses, event bosses and regular monsters in one place. Compare documented levels, power and stamina, then open each monster's page to explore recorded rewards and chest drops.</p>
+  <div class="hero-stats">
+   <span><strong>{monsters.length}</strong> recorded monsters</span>
+   <span><strong>{counts.Boss}</strong> bosses</span>
+   <span><strong>{counts.Event}</strong> event bosses</span>
+   <span><strong>{counts.Regular}</strong> regular monsters</span>
+  </div>
+ </div></header>
+ <main class="wrap">
+  <p class="directory-note">This directory uses the existing EvonyMasters monster catalog. Values marked “Not verified” are missing from our records, not zero. Use the individual monster pages to check the source data and recorded drops.</p>
+  <div class="filters" role="search" aria-label="Find a monster">
+   <label for="boss-search">Search boss or monster<input id="boss-search" type="search" placeholder="e.g. Hydra, Ymir, Behemoth" autocomplete="off"/></label>
+   <label for="boss-type-filter">Monster type<select id="boss-type-filter"><option value="all">All monster types</option><option value="Boss">Bosses</option><option value="Event">Event bosses</option><option value="Regular">Regular monsters</option></select></label>
+   <label for="boss-sort">Sort by<select id="boss-sort"><option value="name">Name A–Z</option><option value="level-asc">Level: lowest first</option><option value="level-desc">Level: highest first</option><option value="power-desc">Power: highest first</option></select></label>
+   <button id="boss-reset" type="button">Clear filters</button>
+  </div>
+  <div class="results-top"><p id="result-count" role="status" aria-live="polite">Showing all {monsters.length} monsters</p><small>Every monster has a dedicated detail link</small></div>
+  <div class="boss-grid" id="boss-results">
+   {sorted.map(monster=><article class="boss-card" data-name={monster.name.toLowerCase()} data-type={monster.type} data-level={monster.level??''} data-power={monster.power??''}>
+    <div class="card-top"><h2><a href={'/bosses/'+encodeURIComponent(monster.id)+'/'}>{monster.name}</a></h2><span class="boss-type">{label(monster.type)}</span></div>
+    <dl class="boss-meta">
+     <div><dt>Level</dt><dd>{monster.level==null?'Not verified':monster.level}</dd></div>
+     <div><dt>Stamina</dt><dd>{format(monster.stamina)}</dd></div>
+     <div><dt>Power</dt><dd>{format(monster.power)}</dd></div>
+     <div><dt>Recorded chests</dt><dd>{monster.chests?.length??0}</dd></div>
+    </dl>
+    <a class="boss-link" href={'/bosses/'+encodeURIComponent(monster.id)+'/'} aria-label={'View rewards and chests for '+monster.name}>View rewards &amp; chests →</a>
+   </article>)}
+  </div>
+  <p class="empty" id="no-boss-results" hidden>No monsters match these filters. Try another name or clear the filters.</p>
+  <p class="bottom-note">The directory links directly to the complete static boss pages. These links remain in the page HTML even when JavaScript is unavailable, so players and search engines can navigate the entire catalog.</p>
+ </main>
+ <script is:inline>
+ (()=>{
+  const search=document.getElementById('boss-search'),type=document.getElementById('boss-type-filter');
+  const sort=document.getElementById('boss-sort'),reset=document.getElementById('boss-reset');
+  const grid=document.getElementById('boss-results'),cards=Array.from(grid.querySelectorAll('.boss-card'));
+  const counter=document.getElementById('result-count'),empty=document.getElementById('no-boss-results');
+  const nameSort=(a,b)=>a.dataset.name.localeCompare(b.dataset.name,undefined,{numeric:true});
+  const number=(card,attr)=>{const raw=card.getAttribute('data-'+attr);return raw===''?-1:Number(raw)};
+  function update(){
+   const query=search.value.trim().toLocaleLowerCase(),kind=type.value;
+   const visible=[];
+   for(const card of cards){
+    const matches=card.dataset.name.includes(query)&&(kind==='all'||card.dataset.type===kind);
+    card.hidden=!matches;if(matches)visible.push(card);
+   }
+   visible.sort((a,b)=>{
+    if(sort.value==='level-asc')return (number(a,'level')<0?Infinity:number(a,'level'))-(number(b,'level')<0?Infinity:number(b,'level'))||nameSort(a,b);
+    if(sort.value==='level-desc')return number(b,'level')-number(a,'level')||nameSort(a,b);
+    if(sort.value==='power-desc')return number(b,'power')-number(a,'power')||nameSort(a,b);
+    return nameSort(a,b);
+   });
+   for(const card of visible)grid.appendChild(card);
+   counter.textContent='Showing '+visible.length+' of '+cards.length+' monsters';
+   empty.hidden=visible.length!==0;
+  }
+  search.addEventListener('input',update);
+  type.addEventListener('change',update);
+  sort.addEventListener('change',update);
+  reset.addEventListener('click',()=>{search.value='';type.value='all';sort.value='name';update();search.focus()});
+  update();
+ })();
+ </script>
+</body>
+</html>
