@@ -34,5 +34,13 @@ jobs:
               console.log('PAGE',item,'count',await p.$eval('#count',el=>el.textContent),'status',await p.$eval('#status',el=>el.textContent),'cards',await p.$$eval('.chest',x=>x.length));
             }catch(e){console.log('PAGE FAIL',item,String(e));}
           }
+          await p.$eval('#live-filter',el=>{el.checked=true;el.dispatchEvent(new Event('change',{bubbles:true}));});
+          await new Promise(r=>setTimeout(r,900));
+          for(const item of ['Lumber','Food','Stone','Ore']){
+            await p.$eval('#q',(el,value)=>el.value=value,item);
+            await p.click('#add-item-search');
+            await new Promise(r=>setTimeout(r,2300));
+            console.log('LIVE FILTER',item,'count',await p.$eval('#count',el=>el.textContent),'status',await p.$eval('#status',el=>el.textContent),'cards',await p.$eval('.chest',x=>x.length));
+          }
           await b.close();
           JS
