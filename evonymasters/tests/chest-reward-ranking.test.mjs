@@ -41,7 +41,7 @@ test('rarity breaks otherwise equal or unknown recorded reward scores',()=>{
 });
 test('single-reward sorting remains local to explicitly loaded results',()=>{
  assert.doesNotMatch(page,/verifyFullRewards/);
- assert.match(page,/visible\.sort\(\(a,b\)=>compareRewardChests\(a,b,terms\(\)\)\)/);
+ assert.match(page,/visible\.sort\(\(a,b\)=>sortOrder\.value==="live"/);
  assert.match(page,/chest-reward-amount/);
  assert.match(page,/Highest recorded amounts first among loaded results/);
 });
