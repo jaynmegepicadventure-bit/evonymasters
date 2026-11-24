@@ -28,7 +28,6 @@ const label=type=>type==='Event'?'Event Boss':type==='Regular'?'Regular Monster'
   .hero-stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
   .hero-stats span{border:1px solid #4a6178;background:#1c344e;border-radius:100px;padding:8px 14px;font-size:.84rem;color:#e7eff8}
   main{padding:30px 0 76px}
-  .directory-note{max-width:980px;color:#c5d3df;font-size:.92rem;line-height:1.65;margin:0 0 24px}
   .filters{display:flex;flex-wrap:wrap;align-items:end;gap:13px;padding:19px;border:1px solid #405d75;background:#132b42;border-radius:15px;margin-bottom:18px}
   .filters label{display:flex;flex-direction:column;gap:6px;font-size:.81rem;color:#f0d49f;font-weight:800;flex:1 1 230px}
   .filters input,.filters select{width:100%;background:#f4f7fb;color:#12253a;border:1px solid #879fb1;border-radius:9px;padding:12px 13px;font:inherit}
@@ -70,7 +69,6 @@ const label=type=>type==='Event'?'Event Boss':type==='Regular'?'Regular Monster'
   </div>
  </div></header>
  <main class="wrap">
-  <p class="directory-note">This directory is sourced from the EVONYMASTERS Google spreadsheet's MONSTER tab. Values marked “Not verified” are missing from our records, not zero. Use the individual monster pages to check the source data and recorded drops.</p>
   <div class="filters" role="search" aria-label="Find a monster">
    <label for="boss-search">Search boss or monster<input id="boss-search" type="search" placeholder="e.g. Hydra, Ymir, Behemoth" autocomplete="off"/></label>
    <label for="boss-type-filter">Monster type<select id="boss-type-filter"><option value="all">All monster types</option><option value="Boss">Bosses</option><option value="Event">Event bosses</option><option value="Regular">Regular monsters</option></select></label>
@@ -90,7 +88,7 @@ const label=type=>type==='Event'?'Event Boss':type==='Regular'?'Regular Monster'
    </article>)}
   </div>
   <p class="empty" id="no-boss-results" hidden>No monsters match these filters. Try another name or clear the filters.</p>
-  <p class="bottom-note">Monster names, levels, power and stamina come from the MONSTER tab of your EVONYMASTERS spreadsheet. Each listed monster has its own spreadsheet-backed reward-detail page. Spreadsheet updates are loaded through the reward sync service when connected; the static listing remains available as a fallback.</p>
+
  </main>
  <script is:inline>
  (()=>{
