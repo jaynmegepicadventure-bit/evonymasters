@@ -44,3 +44,20 @@ test('Chest Finder shows search results before fetching detailed reward quantiti
  assert.match(page,/if\(!phrases\.some\(Boolean\)\)return true/);
  assert.match(page,/Results shown\. Some reward amounts could not be verified/);
 });
+
+test('Legacy Wood searches use Lumber without changing the user input label',()=>{
+ const start=page.indexOf('const resourceSearchTerm=');
+ const end=page.indexOf('function terms()',start);
+ assert.ok(start>=0&&end>start);
+ const resolver=new Function(page.slice(start,end)+'return resourceSearchTerm;')();
+ for(const name of ['Wood','WOOD','Wood / Lumber'])assert.equal(resolver(name),'Lumber');
+ assert.equal(resolver('Safe Wood'),'Safe Lumber');
+ assert.equal(resolver('Lumber'),'Lumber');
+ assert.equal(resolver('Refining Stone'),'Refining Stone');
+});
+test('Chest search retries transient errors and bypasses cached API replies',()=>{
+ assert.match(page,/async function fetchChestPage\(params,signal\)/);
+ assert.match(page,/cache:"no-store"/);
+ assert.match(page,/for\(let attempt=0;attempt<2;attempt\+\+\)/);
+ assert.match(page,/const data=await fetchChestPage\(params,request\.signal\)/);
+});
