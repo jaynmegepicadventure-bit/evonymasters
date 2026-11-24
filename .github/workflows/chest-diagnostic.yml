@@ -1,0 +1,44 @@
+name: Chest Finder runtime diagnostics
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/chest-diagnostic.yml'
+  workflow_dispatch:
+jobs:
+  runtime:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser automation client
+        run: npm install --no-save puppeteer-core
+      - name: Test live Chest Finder and Worker
+        run: |
+          node --input-type=module <<'JS'
+          import puppeteer from 'puppeteer-core';
+          const browser=await puppeteer.launch({executablePath:'/usr/bin/google-chrome',headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
+          for(const host of ['https://www.evonymasters.com','https://evonymasters.com']){
+            const page=await browser.newPage();
+            page.on('pageerror',e=>console.log('PAGE ERROR',host,e.stack||String(e)));
+            page.on('console',m=>{if(m.type()==='error'||m.type()==='warning')console.log('CONSOLE',host,m.type(),m.text().slice(0,500));});
+            page.on('requestfailed',r=>console.log('FAILED REQUEST',host,r.url(),r.failure()?.errorText));
+            page.on('response',r=>{if(r.url().includes('sheet-sync')&&r.url().includes('/v4/chests'))console.log('API RESPONSE',host,r.status(),r.url().slice(0,200));});
+            try{
+              await page.goto(host+'/chests/?q=Lumber',{waitUntil:'domcontentloaded',timeout:30000});
+              await new Promise(r=>setTimeout(r,5000));
+              console.log('INITIAL',host,await page.$eval('#count',e=>e.textContent),await page.$eval('#status',e=>e.textContent));
+              await page.$eval('#q',e=>e.value='Ore');
+              await page.click('#add-item-search');
+              await new Promise(r=>setTimeout(r,5000));
+              console.log('ORE',host,await page.$eval('#count',e=>e.textContent),await page.$eval('#status',e=>e.textContent));
+              await page.$eval('#q',e=>e.value='Lumber');
+              await page.click('#add-item-search');
+              await new Promise(r=>setTimeout(r,5000));
+              console.log('LUMBER AGAIN',host,await page.$eval('#count',e=>e.textContent),await page.$eval('#status',e=>e.textContent));
+            }catch(e){console.log('BROWSER TEST ERROR',host,e.stack||String(e));}
+            await page.close();
+          }
+          await browser.close();
+          JS
