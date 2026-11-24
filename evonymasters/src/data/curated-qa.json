@@ -3,14 +3,14 @@
     "id": "building-wood",
     "category": "Building upgrades",
     "question": "How much lumber does it take to upgrade buildings in Evony?",
-    "answer": "The amount of lumber, also called lumber, depends on the building and the level you are upgrading to. Compare the Lumber column for the specific target level in our building cost tables. To estimate multiple upgrades and any missing prerequisite buildings, use the Building Upgrade Calculator.",
+    "answer": "The Lumber cost depends on the building and the target level. Check the Lumber column in our building cost tables, or use the Building Upgrade Calculator for multi-level plans and prerequisites.",
     "relatedTool": "/building-costs/"
   },
   {
     "id": "building-wood-same",
     "category": "Building upgrades",
     "question": "Are wood and lumber the same resource in Evony?",
-    "answer": "Yes. Evony players commonly use lumber and lumber to describe the same resource. Our building cost tables label that column Lumber so you can find the amount required alongside food, stone and ore.",
+    "answer": "Yes. Lumber is the in-game name for the resource some guides call wood. Our building cost tables use Lumber alongside Food, Stone and Ore.",
     "relatedTool": "/building-costs/"
   },
   {
@@ -38,7 +38,7 @@
     "id": "building-keep",
     "category": "Building upgrades",
     "question": "Where can I find Evony Keep upgrade resource costs by level?",
-    "answer": "Open the Building Upgrade Costs guide and expand Keep. Each recorded target level lists food, Lumber, stone and ore. For a complete Keep plan that includes required building upgrades, use the Building Upgrade Calculator.",
+    "answer": "Open the Building Upgrade Costs guide and expand Keep. Each recorded target level lists food, lumber, stone and ore. For a complete Keep plan that includes required building upgrades, use the Building Upgrade Calculator.",
     "relatedTool": "/building-costs/"
   },
   {
