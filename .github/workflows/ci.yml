@@ -38,6 +38,22 @@ jobs:
             timeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=12000 --dump-dom 'https://www.evonymasters.com/chests/?q=Lumber' > /tmp/chest-dom.txt 2>/tmp/chrome-errors.txt || true
             echo '--- Chest Finder visible status ---'
             grep -oE 'Chest data service is unavailable[^<]*|Chest Finder is temporarily unavailable[^<]*|[0-9]+ matching chests|Finding your best matches[^<]*|Some reward amounts could not be verified[^<]*' /tmp/chest-dom.txt | tail -20 || true
+            echo '--- Actual rendered status and count ---'
+            python3 - <<'PY'
+            from html.parser import HTMLParser
+            class Extract(HTMLParser):
+                def __init__(self): super().__init__(); self.stack=[]; self.values={}
+                def handle_starttag(self,tag,attrs):
+                    attrs=dict(attrs); self.stack.append((tag,attrs.get('id')))
+                def handle_endtag(self,tag):
+                    if self.stack: self.stack.pop()
+                def handle_data(self,data):
+                    for tag,key in self.stack:
+                        if key in ('count','status'):
+                            self.values[key]=self.values.get(key,'')+data.strip()
+                            break
+            p=Extract();p.feed(open('/tmp/chest-dom.txt').read());print(p.values)
+            PY
             echo '--- Browser console errors ---'
             grep -Ei 'console|uncaught|failed to load|error' /tmp/chrome-errors.txt | tail -18 || true
           else echo 'Chrome not installed on runner'; fi
