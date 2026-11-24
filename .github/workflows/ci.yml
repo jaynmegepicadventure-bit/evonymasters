@@ -22,7 +22,7 @@ jobs:
         run: |
           node --input-type=module - <<'JS'
           const base='https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev';
-          for(const route of ['/health','/v4/chests?q=Lumber&page=0','/v4/chests?q=Lumber&page=1']){
+          for(const route of ['/health','/v4/chests?page=0','/v4/chests?q=Wood&page=0','/v4/chests?q=Lumber&page=0','/v4/chests?q=Lumber&page=1']){
             try{
               const res=await fetch(base+route,{signal:AbortSignal.timeout(15000),headers:{Origin:'https://www.evonymasters.com'}});
               const text=(await res.text()).slice(0,350);
