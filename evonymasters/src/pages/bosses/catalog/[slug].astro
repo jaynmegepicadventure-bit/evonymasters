@@ -1,0 +1,83 @@
+---
+import SeoMetadata from '../../../components/SeoMetadata.astro';
+import SiteHeader from '../../../components/SiteHeader.astro';
+import records from '../../../data/monster-rewards-sheet.json';
+import {monsterSlug} from '../../../lib/monster-slug.mjs';
+
+export function getStaticPaths(){
+ return records.map(monster=>({params:{slug:monsterSlug(monster)},props:{monster}}));
+}
+const {monster}=Astro.props;
+const title=monster.name+' Evony '+(monster.level?'Level '+monster.level+' ':'')+'Rewards & Drops | EvonyMasters';
+const description='Evony '+monster.name+(monster.level?' level '+monster.level:'')+' '+(monster.type==='Event'?'event boss':monster.type==='Regular'?'regular monster':'boss')+' rewards, '+(monster.power||'unverified')+' power, '+(monster.stamina||'unverified')+' stamina. Find recorded guaranteed and possible drops from the EvonyMasters master sheet.';
+const rewards=monster.rewards||[];
+const guaranteed=rewards.filter(r=>r.classification.toLowerCase()==='guaranteed');
+const other=rewards.filter(r=>r.classification.toLowerCase()!=='guaranteed');
+const related=records.filter(x=>x!==monster&&x.type===monster.type).sort((a,b)=>Math.abs(Number(a.level||0)-Number(monster.level||0))-Math.abs(Number(b.level||0)-Number(monster.level||0))||a.name.localeCompare(b.name)).slice(0,6);
+const typeLabel=monster.type==='Event'?'Event Boss':monster.type==='Regular'?'Regular Monster':'Boss';
+---
+<!doctype html>
+<html lang="en"><head>
+<SeoMetadata title={title} description={description}/>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content={description}/><link rel="icon" href="/favicon.svg"/><title>{title}</title>
+<style is:global>
+:root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#081522;color:#eaf0f8}
+*{box-sizing:border-box}body{margin:0;background:#081522}a{color:#f4c779}
+.wrap{max-width:1050px;margin:auto;padding:0 22px}
+.hero{padding:46px 0 40px;background:linear-gradient(125deg,#172f47,#0b1b2f);border-bottom:1px solid #577087}
+.eyebrow{color:#e9b86d;font-size:.8rem;text-transform:uppercase;letter-spacing:.12em;font-weight:850}
+h1{font:700 clamp(2rem,4vw,3.4rem)/1.15 Georgia,serif;color:#f4d393;margin:13px 0}
+.intro{line-height:1.65;color:#c6d7e3;max-width:760px}
+main{padding:34px 22px 76px!important}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:24px 0}
+.metric{border:1px solid #4c667c;border-radius:12px;background:#172f47;padding:17px}
+.metric small{display:block;font-size:.74rem;color:#b5c8d7;margin-bottom:7px}.metric strong{font-size:1.07rem;color:#f5e3be;overflow-wrap:anywhere}
+.panel{background:#12293e;border:1px solid #436078;border-radius:14px;padding:24px;margin:22px 0}
+.panel h2{font:700 1.55rem Georgia,serif;color:#f1ce8c;margin:0 0 14px}
+.panel p{color:#bdcfe0;line-height:1.6}
+.reward-table{width:100%;border-collapse:collapse;text-align:left}
+.reward-table th{color:#e1b96f;text-transform:uppercase;font-size:.73rem;letter-spacing:.08em;background:#223d55}
+.reward-table th,.reward-table td{padding:13px 12px;border-bottom:1px solid #38556c}
+.reward-table td{color:#ebf0f7;vertical-align:top}
+.reward-table td:nth-child(2){white-space:nowrap}
+.tag{display:inline-block;border:1px solid #63788b;border-radius:99px;padding:4px 9px;font-size:.77rem;color:#d5e4f0}
+.note{font-size:.88rem;color:#afc6d7;line-height:1.7}
+.related{display:flex;flex-wrap:wrap;gap:9px;list-style:none;padding:0}
+.related a{display:inline-block;border-radius:9px;border:1px solid #60788c;padding:10px 12px;background:#1a364f;text-decoration:none}
+.related a:hover{text-decoration:underline}
+.back{display:inline-block;padding:11px 0;font-weight:850}
+@media(max-width:650px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.panel{padding:16px}.reward-table th,.reward-table td{padding:10px 7px;font-size:.82rem}}
+</style>
+</head><body>
+<SiteHeader active="bosses"/>
+<header class="hero"><div class="wrap">
+<a class="back" href="/bosses/">← Boss Directory</a>
+<p class="eyebrow">Evony monster rewards · {typeLabel}</p>
+<h1>{monster.name}{monster.level?' · Level '+monster.level:''}</h1>
+<p class="intro">Recorded rewards for {monster.name} from the EVONYMASTERS master spreadsheet. Guaranteed rewards and possible drops are listed separately. Chest items are listed as drops, not as guaranteed contents of an opened chest.</p>
+</div></header>
+<main class="wrap">
+<section class="metrics" aria-label="Monster statistics">
+<div class="metric"><small>Monster type</small><strong>{typeLabel}</strong></div>
+<div class="metric"><small>Level</small><strong>{monster.level||'Not verified'}</strong></div>
+<div class="metric"><small>Power</small><strong>{monster.power||'Not verified'}</strong></div>
+<div class="metric"><small>Stamina</small><strong>{monster.stamina||'Not verified'}</strong></div>
+</section>
+{monster.event&&<p>Associated event: <strong>{monster.event}</strong></p>}
+<section class="panel"><h2>Guaranteed rewards</h2>
+{guaranteed.length?<table class="reward-table"><thead><tr><th>Item</th><th>Quantity</th><th>Category</th></tr></thead><tbody>
+{guaranteed.map(r=><tr><td>{r.item}</td><td>{r.quantity||'Not specified'}</td><td>{r.rewardType||'Reward'}</td></tr>)}
+</tbody></table>:<p>No guaranteed rewards are recorded for this monster in the spreadsheet.</p>}
+</section>
+<section class="panel"><h2>Possible drops and other classifications</h2>
+{other.length?<table class="reward-table"><thead><tr><th>Item</th><th>Quantity</th><th>Classification</th></tr></thead><tbody>
+{other.map(r=><tr><td>{r.item}</td><td>{r.quantity||'Not specified'}</td><td><span class="tag">{r.classification||'Not specified'}</span></td></tr>)}
+</tbody></table>:<p>No additional possible drops are recorded for this monster in the spreadsheet.</p>}
+</section>
+<p class="note">Source: EVONYMASTERS Google spreadsheet, MONSTER tab. Values are displayed as recorded; blank fields mean not yet documented. These pages use the most recently published website snapshot. For updated reward sourcing, also visit the <a href="/resources/">Item Finder</a> or <a href="/chests/">Chest Finder</a>.</p>
+{related.length>0&&<section class="panel"><h2>Compare related monsters</h2><ul class="related">
+{related.map(m=><li><a href={'/bosses/catalog/'+monsterSlug(m)+'/'}>{m.name}{m.level?' · Lv '+m.level:''}</a></li>)}
+</ul></section>}
+<p><a class="back" href="/bosses/">← Back to all bosses and monsters</a></p>
+</main></body></html>
