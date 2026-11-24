@@ -1,0 +1,38 @@
+name: Diagnose Chest Resource Searches
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/chest-resource-diagnostics.yml'
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save puppeteer-core
+      - name: Check four resources in API and page
+        run: |
+          node --input-type=module <<'JS'
+          import puppeteer from 'puppeteer-core';
+          const host='https://www.evonymasters.com';
+          for(const item of ['Lumber','Food','Stone','Ore']){
+            const url=host+'/api/chests?'+new URLSearchParams({q:item,source:'all',event:'',participation:'all',rank:'',page:0});
+            try{const r=await fetch(url,{signal:AbortSignal.timeout(18000)}),text=await r.text();let j;try{j=JSON.parse(text)}catch{};console.log('API',item,r.status,'bytes',text.length,'total',j?.total,'shown',j?.chests?.length,'error',j?.error,'first',j?.chests?.[0]?.name);}catch(e){console.log('API FAIL',item,String(e));}
+          }
+          const b=await puppeteer.launch({executablePath:'/usr/bin/google-chrome',headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
+          const p=await b.newPage();
+          p.on('pageerror',e=>console.log('PAGE ERROR',e.stack||String(e)));
+          p.on('requestfailed',r=>console.log('REQUEST FAIL',r.url().slice(0,200),r.failure()?.errorText));
+          p.on('response',r=>{if(r.url().includes('/api/chests?'))console.log('PAGE API',r.status(),r.url().slice(0,200));});
+          for(const item of ['Lumber','Food','Stone','Ore','Lumber']){
+            try{
+              if(item==='Lumber'&&!(await p.url()).includes('chests'))await p.goto(host+'/chests/?q=Lumber',{waitUntil:'domcontentloaded',timeout:30000});
+              else {await p.$eval('#q',(el,value)=>el.value=value,item);await p.click('#add-item-search');}
+              await new Promise(r=>setTimeout(r,3500));
+              console.log('PAGE',item,'count',await p.$eval('#count',el=>el.textContent),'status',await p.$eval('#status',el=>el.textContent),'cards',await p.$$eval('.chest',x=>x.length));
+            }catch(e){console.log('PAGE FAIL',item,String(e));}
+          }
+          await b.close();
+          JS
