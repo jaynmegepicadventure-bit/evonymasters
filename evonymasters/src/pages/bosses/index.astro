@@ -147,7 +147,7 @@ const label=type=>type==='Event'?'Event Boss':type==='Regular'?'Regular Monster'
     for(const [caption,value] of [['Level',level],['Stamina',m.stamina],['Power',m.power],['Rewards','See reward data']]){
      const group=document.createElement('div'),dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=caption;dd.textContent=String(value??'').trim()||'Not verified';group.append(dt,dd);dl.appendChild(group);
     }card.appendChild(dl);
-    if(detail){const reward=dl.querySelector('dd:last-child');if(reward){const link=document.createElement('a');link.href=detail;link.textContent='See reward data →';reward.replaceChildren(link)}const a=document.createElement('a');a.className='boss-link';a.href=detail;a.textContent='View rewards & chests →';card.appendChild(a)}
+    if(detail){const reward=dl.querySelectorAll('dd')[3];if(reward){const link=document.createElement('a');link.href=detail;link.textContent='See reward data →';reward.replaceChildren(link)}const a=document.createElement('a');a.className='boss-link';a.href=detail;a.textContent='View rewards & chests →';card.appendChild(a)}
     else {const span=document.createElement('span');span.className='boss-link unavailable';span.textContent='Reward page pending publication';card.appendChild(span)}
     fragment.appendChild(card);
    }
