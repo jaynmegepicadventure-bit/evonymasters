@@ -2,6 +2,7 @@
 import SeoMetadata from '../../components/SeoMetadata.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import monsters from '../../data/monster-directory-sheet.json';
+import {monsterSlug} from '../../lib/monster-slug.mjs';
 
 const sorted=[...monsters].sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true})||(Number(a.level)||0)-(Number(b.level)||0));
 const counts={Boss:monsters.filter(m=>m.type==='Boss').length,Event:monsters.filter(m=>m.type==='Event').length,Regular:monsters.filter(m=>m.type==='Regular').length};
@@ -76,21 +77,21 @@ const label=type=>type==='Event'?'Event Boss':type==='Regular'?'Regular Monster'
    <label for="boss-sort">Sort by<select id="boss-sort"><option value="name">Name A–Z</option><option value="level-asc">Level: lowest first</option><option value="level-desc">Level: highest first</option><option value="power-desc">Power: highest first</option></select></label>
    <button id="boss-reset" type="button">Clear filters</button>
   </div>
-  <div class="results-top"><p id="result-count" role="status" aria-live="polite">Showing all {monsters.length} monsters</p><small>Monster details link where available</small></div>
+  <div class="results-top"><p id="result-count" role="status" aria-live="polite">Showing all {monsters.length} monsters</p><small>All monsters have reward details</small></div>
   <div class="boss-grid" id="boss-results">
    {sorted.map(monster=><article class="boss-card" data-name={monster.name.toLowerCase()} data-type={monster.type} data-level={monster.level??''} data-power={monster.power??''}>
-    <div class="card-top"><h2>{monster.detailId?<a href={'/bosses/'+encodeURIComponent(monster.detailId)+'/'}>{monster.name}</a>:monster.name}</h2><span class="boss-type">{label(monster.type)}</span></div>
+    <div class="card-top"><h2><a href={'/bosses/catalog/'+monsterSlug(monster)+'/'}>{monster.name}</a></h2><span class="boss-type">{label(monster.type)}</span></div>
     <dl class="boss-meta">
      <div><dt>Level</dt><dd>{format(monster.level)}</dd></div>
      <div><dt>Stamina</dt><dd>{format(monster.stamina)}</dd></div>
      <div><dt>Power</dt><dd>{format(monster.power)}</dd></div>
-     <div><dt>Rewards</dt><dd><span>See reward data</span></dd></div>
+     <div><dt>Rewards</dt><dd><a href={'/bosses/catalog/'+monsterSlug(monster)+'/'}>See reward data →</a></dd></div>
     </dl>
-    {monster.detailId?<a class="boss-link" href={'/bosses/'+encodeURIComponent(monster.detailId)+'/'} aria-label={'View rewards and chests for '+monster.name}>View rewards &amp; chests →</a>:<span class="boss-link unavailable">Reward detail page not yet available</span>}
+    <a class="boss-link" href={'/bosses/catalog/'+monsterSlug(monster)+'/'} aria-label={'View rewards and chests for '+monster.name}>View rewards &amp; chests →</a>
    </article>)}
   </div>
   <p class="empty" id="no-boss-results" hidden>No monsters match these filters. Try another name or clear the filters.</p>
-  <p class="bottom-note">Monster names, levels, power and stamina come from the MONSTER tab of your EVONYMASTERS spreadsheet. Existing compatible reward-detail pages are linked where available. Spreadsheet updates are loaded through the reward sync service when connected; the static listing remains available as a fallback.</p>
+  <p class="bottom-note">Monster names, levels, power and stamina come from the MONSTER tab of your EVONYMASTERS spreadsheet. Each listed monster has its own spreadsheet-backed reward-detail page. Spreadsheet updates are loaded through the reward sync service when connected; the static listing remains available as a fallback.</p>
  </main>
  <script is:inline>
  (()=>{
@@ -139,15 +140,15 @@ const label=type=>type==='Event'?'Event Boss':type==='Regular'?'Regular Monster'
     const card=document.createElement('article');card.className='boss-card';
     card.dataset.name=name.toLowerCase();card.dataset.type=m.type;card.dataset.level=level;card.dataset.power=String(rawNumber(m.power));
     const top=document.createElement('div');top.className='card-top';const h=document.createElement('h2');
-    const detail=details.get(key);if(detail){const a=document.createElement('a');a.href=detail;a.textContent=name;h.appendChild(a)}else h.textContent=name;
+    const detail=details.get(key)||'';const a=document.createElement('a');a.href=detail||'/bosses/';a.textContent=name;h.appendChild(a);
     const badge=document.createElement('span');badge.className='boss-type';badge.textContent=m.type==='Event'?'Event Boss':m.type==='Regular'?'Regular Monster':'Boss';
     top.append(h,badge);card.appendChild(top);
     const dl=document.createElement('dl');dl.className='boss-meta';
     for(const [caption,value] of [['Level',level],['Stamina',m.stamina],['Power',m.power],['Rewards','See reward data']]){
      const group=document.createElement('div'),dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=caption;dd.textContent=String(value??'').trim()||'Not verified';group.append(dt,dd);dl.appendChild(group);
     }card.appendChild(dl);
-    if(detail){const a=document.createElement('a');a.className='boss-link';a.href=detail;a.textContent='View rewards & chests →';card.appendChild(a)}
-    else {const span=document.createElement('span');span.className='boss-link unavailable';span.textContent='Reward detail page not yet available';card.appendChild(span)}
+    if(detail){const reward=dl.querySelector('dd:last-child');if(reward){const link=document.createElement('a');link.href=detail;link.textContent='See reward data →';reward.replaceChildren(link)}const a=document.createElement('a');a.className='boss-link';a.href=detail;a.textContent='View rewards & chests →';card.appendChild(a)}
+    else {const span=document.createElement('span');span.className='boss-link unavailable';span.textContent='Reward page pending publication';card.appendChild(span)}
     fragment.appendChild(card);
    }
    if(!dedupe.size)return;
