@@ -19,7 +19,7 @@ test('Chest Finder searches one reward and fetches only one page at a time',()=>
  assert.doesNotMatch(page,/verifyFullRewards/);
  assert.match(page,/function terms\(\)\{return \[activeQuery\];\}/);
  assert.match(page,/const data=await fetchChestPage\(params,request\.signal\)/);
- assert.match(page,/if\(hasMore\)page\+\+/);
+ assert.match(page,/page=hasMore\?requestedPage\+1:requestedPage/);
  assert.match(page,/more\.addEventListener\("click",\(\)=>\{if\(hasMore\)load\(true\);\}\)/);
  assert.doesNotMatch(page,/while\(morePages/);
  assert.doesNotMatch(page,/Promise\.all\(list\.map/);
@@ -59,4 +59,19 @@ test('Chest search retries transient errors and bypasses cached API replies',()=
  assert.match(page,/cache:"no-store"/);
  assert.match(page,/for\(let attempt=0;attempt<2;attempt\+\+\)/);
  assert.match(page,/const data=await fetchChestPage\(params,request\.signal\)/);
+});
+
+test('Chest Finder retains previous results and reports actual request failure details',()=>{
+ assert.match(page,/const requestedPage=append\?page:0/);
+ assert.match(page,/const nextResults=append\?new Map\(allFound\):new Map\(\)/);
+ assert.match(page,/allFound=nextResults/);
+ assert.match(page,/const reason=\/HTTP \[0-9\]\{3\}\//);
+ assert.match(page,/Previous results are still shown/);
+ assert.match(page,/Chest request failed/);
+ assert.doesNotMatch(page,/Chest reward data could not be loaded\. Please retry/);
+});
+test('Event dropdown is loaded only on demand',()=>{
+ assert.match(page,/let eventChoicesLoaded=false,eventChoicesLoading=false/);
+ assert.match(page,/if\(show\)loadEventChoices\(\)/);
+ assert.doesNotMatch(page,/activeQuery=resourceSearchTerm\(q.value\);loadEventChoices\(\)/);
 });

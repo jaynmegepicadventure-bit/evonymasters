@@ -375,29 +375,34 @@ async function fetchChestPage(params,signal){
 async function load(append=false){
  const my=++serial;
  if(request)request.abort();request=new AbortController();
- if(!append){page=0;allFound=new Map();hasMore=false;cards.replaceChildren();more.hidden=true;panel.hidden=true;}
- status.textContent="Finding matching chests…";
+ const requestedPage=append?page:0;
+ status.textContent=append?"Loading more chests…":"Finding matching chests…";
  try{
-  // Exactly one bounded API page per search or Show more click.
+  // Keep the last successful page until a replacement search actually succeeds.
   const params=new URLSearchParams({q:terms()[0],source:source.value,event:eventFilter.value,
-   participation:participationFilter.value,rank:rankFilter.value.trim(),page:String(page)});
+   participation:participationFilter.value,rank:rankFilter.value.trim(),page:String(requestedPage)});
   const data=await fetchChestPage(params,request.signal);
   if(my!==serial||request.signal.aborted)return;
-  if(!append)allFound=new Map();
-  for(const chest of data.chests||[]){
+  if(!Array.isArray(data.chests))throw Error("Unexpected chest response");
+  const nextResults=append?new Map(allFound):new Map();
+  for(const chest of data.chests){
    const term=terms()[0];
-   allFound.set(chest.id,{...chest,_matchedItems:term&&matchReward(chest,term)?[term]:[]});
+   nextResults.set(chest.id,{...chest,_matchedItems:term&&matchReward(chest,term)?[term]:[]});
   }
+  allFound=nextResults;
   hasMore=Boolean(data.hasMore);
-  if(hasMore)page++;
+  page=hasMore?requestedPage+1:requestedPage;
+  if(!append)panel.hidden=true;
   renderResults();
  }catch(error){
   if(error.name!=="AbortError"){
    console.warn("Chest Finder search failed",error);
-   status.textContent=allFound.size
-    ?"Previous results remain visible. Couldn't load more chests. Try again."
-    :"Chest reward data could not be loaded. Please retry.";
-   more.hidden=true;
+   const message=String(error.message||error.name||"Unknown error");
+   const reason=/HTTP [0-9]{3}/.exec(message)?.[0]
+    ||(/failed to fetch|load failed|network/i.test(message)?"browser network request failed":message.slice(0,100));
+   status.textContent=(allFound.size?"Previous results are still shown. ":"")
+    +"Chest request failed ("+reason+"). Try Search again.";
+   more.hidden=!hasMore;
   }
  }
 }
@@ -422,6 +427,7 @@ function selectTab(tab){
 function setEventMode(){
  const show=currentTab==="events"||currentTab==="all"&&["events","activities"].includes(source.value);
  eventSearch.hidden=!show;
+ if(show)loadEventChoices();
  if(!show){eventFilter.value="";participationFilter.value="all";rankFilter.value="";}
 }
 tabStrip.addEventListener("click",event=>{
@@ -436,19 +442,24 @@ document.getElementById("clear-filters").addEventListener("click",()=>{
  liveFilter.checked=false;monsterLevel.value="all";dropType.value="all";eventFilter.value="";
  participationFilter.value="all";rankFilter.value="";schedule();
 });
+let eventChoicesLoaded=false,eventChoicesLoading=false;
 async function loadEventChoices(){
+ if(eventChoicesLoaded||eventChoicesLoading)return;
+ eventChoicesLoading=true;
  try{
   const result=await fetch(API+"/v4/chests/events");
   if(!result.ok)return;
   const data=await result.json();
+  eventChoicesLoaded=true;
   for(const entry of data.events||[]){
    const option=document.createElement("option");option.value=entry.name;option.textContent=entry.name+" ("+entry.count+")";eventFilter.append(option);
   }
   const initial=new URLSearchParams(location.search),requested=initial.get("event");
   if(requested&&[...eventFilter.options].some(option=>option.value===requested)){
-   eventFilter.value=requested;load();
+   eventFilter.value=requested;schedule();
   }
- }catch{/* The main chest search remains functional if event suggestions are unavailable. */}
+ }catch{/* Event suggestions are optional; keep chest search available. */}
+ finally{eventChoicesLoading=false;}
 }
 
 source.addEventListener("change",()=>{setEventMode();schedule()});
@@ -490,7 +501,7 @@ compare.addEventListener("click",async()=>{
 const initial=new URLSearchParams(location.search);q.value=initial.get("q")||"";
 const requestedSource=initial.get("source"),requestedEvent=initial.get("event");
 const initialTab=requestedEvent||["events","activities"].includes(requestedSource)?"events":requestedSource==="bosses"?"monsters":"all";
-activeQuery=resourceSearchTerm(q.value);loadEventChoices();refreshSelected();selectTab(initialTab);
+activeQuery=resourceSearchTerm(q.value);refreshSelected();selectTab(initialTab);
 if(requestedSource==="unlinked"){source.value="unlinked";schedule();}
 loadAvailability();
 })();
