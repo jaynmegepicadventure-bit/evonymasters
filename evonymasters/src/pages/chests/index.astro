@@ -71,6 +71,7 @@ footer{margin-top:30px;border-top:1px solid #334f69;padding:25px 0;color:#b5c8d9
 .chest .sub{font-size:.76rem}
 .chest h3{font-size:1.02rem;line-height:1.4}
 .chest-matches{display:inline-block;margin:7px 0 0;padding:4px 8px;border:1px solid #70aa83;background:#1d4639;border-radius:7px;color:#b4f6c6;font-size:.77rem}
+.chest-reward-amount{font-size:.78rem;color:#f2d391;font-weight:750;margin-top:5px}
 .chest-matches.best-match{background:#f1d28a;color:#152d40;border-color:#f1d28a}
 .chest-expanded{overflow-x:auto}
 .chest-expanded .reward-table{min-width:425px}
@@ -114,7 +115,7 @@ main.wrap{padding-bottom:120px}
 <label for="rank-filter">Ranking position<input id="rank-filter" type="search" placeholder="e.g. 1 or 11–20" autocomplete="off"/></label>
 </div></div></header>
 <main class="wrap">
-<div class="controls"><div><h2>Matching chests</h2><p id="count">Loading recorded chests…</p><span class="chest-results-order">Best matches first, based on your selected rewards</span></div></div>
+<div class="controls"><div><h2>Matching chests</h2><p id="count">Loading recorded chests…</p><span class="chest-results-order">Best reward matches first: most items, then highest recorded amounts</span></div></div>
 <div id="status" class="status" role="status"></div>
 <div class="chest-list" id="chests"></div>
 <button id="more" class="pill more" hidden>Show more chests</button>
@@ -201,6 +202,14 @@ function card(c){
  const matches=el("div","chest-matches"+(c._matchedItems.length===terms().filter(Boolean).length&&terms().filter(Boolean).length>1?" best-match":""),c._matchedItems.length+" of "+terms().filter(Boolean).length+" rewards matched");
  labels.append(matches);
 }
+const selectedRewards=terms().filter(Boolean);
+if(selectedRewards.length===1){
+ const score=rewardRank(c,selectedRewards);
+ if(score.known){
+  const amount=new Intl.NumberFormat("en-US",{maximumFractionDigits:0}).format(score.total);
+  labels.append(el("div","chest-reward-amount",displayResourceName(selectedRewards[0])+": "+amount+" recorded"));
+ }
+}
  top.append(pic,labels);article.append(top);paintAvailability(article,c);
  const list=el("ul","items");
  for(const item of sortedRewards(c.items).slice(0,5)){
@@ -280,17 +289,60 @@ function card(c){
  return article;
 }
 const matchCount=chest=>(chest._matchedItems||[]).length;
+// Reward-based sorting uses recorded quantities. Unknown amounts are never guessed.
+const quantityValue=text=>{
+ const match=toText(text).replace(/,/g,"").match(/^\s*(?:x\s*)?(\d+(?:\.\d+)?)\s*([KMBT]?)\b/i);
+ if(!match)return null;
+ const value=Number(match[1])*({K:1e3,M:1e6,B:1e9,T:1e12}[match[2].toUpperCase()]||1);
+ return Number.isFinite(value)?value:null;
+};
+const rewardAmount=item=>{
+ const quantity=quantityValue(item.quantity);
+ if(quantity===null)return null;
+ // A named resource pack (for example, 500K Lumber Box x2) has an explicit denomination.
+ const denomination=toText(item.item).match(/^(\d+(?:[.,]\d+)?)\s*([KMBT])\s+(?:Lumber|Wood)(?:\s+Box|\s+Chest)?$/i);
+ return denomination?quantity*quantityValue(denomination[1]+denomination[2]):quantity;
+};
+const rewardRank=(chest,selected)=>{
+ let total=0,known=0;
+ const terms=selected.filter(Boolean).map(term=>term.toLowerCase());
+ // Use direct reward quantities first. Nested chest contents can have unknown
+ // parent chest multipliers, so only use nested amounts as a fallback.
+ for(const term of terms){
+  const direct=(chest.items||[]).filter(item=>toText(item.item).toLowerCase().includes(term));
+  const nested=(chest.nestedItems||[]).filter(item=>toText(item.item).toLowerCase().includes(term));
+  const scored=direct.length?direct:nested;
+  for(const item of scored){
+   const amount=rewardAmount(item);
+   if(amount!==null){total+=amount;known++;}
+  }
+ }
+ return {total,known};
+};
+const rarityRank=name=>{
+ const rarity=toText(name).match(/^(Legendary|Epic|Super Rare|Rare|Uncommon|Common)\b/i)?.[1].toLowerCase();
+ return ({legendary:6,epic:5,"super rare":4,rare:3,uncommon:2,common:1})[rarity]||0;
+};
+const compareRewardChests=(a,b,selected)=>{
+ const matches=matchCount(b)-matchCount(a);
+ if(matches)return matches;
+ const left=rewardRank(a,selected),right=rewardRank(b,selected);
+ // Prefer chests with a verified numeric amount; then sort larger to smaller.
+ if(left.known!==right.known&&(!left.known||!right.known))return right.known-left.known;
+ if(left.total!==right.total)return right.total-left.total;
+ return rarityRank(b.name)-rarityRank(a.name)||compareChest(a,b);
+};
 const matchReward=(chest,term)=>{
  const phrase=term.trim().toLowerCase();
  return [...(chest.items||[]),...(chest.nestedItems||[])].some(item=>toText(item.item).toLowerCase().includes(phrase));
 };
 async function verifyFullRewards(merged,phrases,signal){
- if(phrases.filter(Boolean).length<2)return true;
+ if(!phrases.some(Boolean))return true;
  const all=[...merged.values()],batches=[];
  for(let i=0;i<all.length;i+=4)batches.push(all.slice(i,i+4));
  let complete=true;
  // The compact search endpoint exposes only the first 12 direct rewards.
- // Use the full contents endpoint for multi-reward ranking, so a reward
+ // Verify full contents for quantity ranking even with a single searched reward, so a reward
  // further down the list cannot be overlooked.
  for(let index=0;index<batches.length;index+=4){
   const chunk=batches.slice(index,index+4);
@@ -341,9 +393,9 @@ function availableNow(chest){
 function renderResults(){
  const all=[...allFound.values()];
  const visible=all.filter(chest=>sourceMatchesTab(chest)&&passesLevel(chest)&&passesDrop(chest)&&(!liveFilter.checked||availableNow(chest)));
- // The first ranking key is the number of DISTINCT selected reward items
- // actually found inside the chest (directly or in nested chests).
- visible.sort((a,b)=>matchCount(b)-matchCount(a)||compareChest(a,b));
+ // Rank by number of distinct matching items, then by recorded reward quantities.
+ // Use chest rarity only when the quantities are tied or unknown.
+ visible.sort((a,b)=>compareRewardChests(a,b,terms()));
  cards.replaceChildren();
  for(const chest of visible)cards.append(card(chest));
  count.textContent=visible.length+" matching "+(visible.length===1?"chest":"chests")+
@@ -396,7 +448,7 @@ async function load(append=false){
   hasMore=batches.some(x=>x.morePages);
   if(hasMore)page+=Math.max(...batches.map(x=>x.pages));
   renderResults();
-  if(!verified)status.textContent="Some full chest details could not be verified; match rankings may be incomplete.";
+  if(!verified)status.textContent="Some full chest details could not be verified; reward amount rankings may be incomplete.";
  }catch(error){
   if(error.name!=="AbortError")status.textContent="Chest Finder is temporarily unavailable. Please try again.";
  }
