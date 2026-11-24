@@ -25,7 +25,7 @@ test('Chest Finder searches one reward and fetches only one page at a time',()=>
  assert.doesNotMatch(page,/Promise\.all\(list\.map/);
 });
 test('Filters, full reward table, comparison dock and autocomplete are available',()=>{
- for(const id of ['monster-level','drop-type','live-filter','comparison-dock','compare','reset'])
+ for(const id of ['drop-type','live-filter','comparison-dock','compare','reset'])
   assert.match(page,new RegExp('id="'+id+'"'));
  assert.doesNotMatch(page,/id="search-items"/);
  assert.match(page,/View chest contents/);
@@ -85,11 +85,21 @@ test('Chest Finder restores item dropdown without additional API requests',()=>{
  assert.doesNotMatch(page,/\/v2\/suggest\?q=/);
  assert.doesNotMatch(page,/selectedItems/);
 });
-test('Chest Finder can sort currently loaded results with live sources first',()=>{
+test('Chest Finder removes redundant controls while retaining Live only',()=>{
+ assert.match(page,/id="live-filter"/);
+ assert.doesNotMatch(page,/<option value="live">Live first<\/option>/);
+ assert.doesNotMatch(page,/id="monster-level"/);
+ assert.doesNotMatch(page,/class="source-control"/);
+ assert.match(page,/id="source" type="hidden" value="all"/);
  assert.match(page,/id="sort-order"/);
- assert.match(page,/<option value="live">Live first<\/option>/);
- assert.match(page,/sortOrder\.value==="live"/);
- assert.match(page,/Number\(availableNow\(b\)\)-Number\(availableNow\(a\)\)/);
- assert.match(page,/sortOrder\.addEventListener\("change",renderResults\)/);
- assert.match(page,/sortOrder\.value="reward"/);
+ assert.match(page,/sortOrder\.value==="name"/);
+});
+test('Live only matches calendar monster names as well as scheduled events',()=>{
+ const start=page.indexOf('const sourceKey=value=>'),end=page.indexOf('function paintAvailability(',start);
+ assert.ok(start>=0&&end>start);
+ assert.match(page,/entry\.kind==="Event Boss"&&entry\.live&&type==="Event"/);
+ assert.match(page,/compatibleSource\(entry\.kind,type\)/);
+ assert.match(page,/availableNow\(chest\)\{return liveMatches\(chest\)\.length>0/);
+ assert.match(page,/Live calendar unavailable/);
+ assert.match(page,/No recorded live sources match these chests today/);
 });
