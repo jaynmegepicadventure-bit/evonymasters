@@ -9,7 +9,7 @@ import {chestMatches} from '../lib/monster-chests.mjs';
 
 const {monster}=Astro.props;
 const title=monster.name+' Evony'+(monster.level?' Level '+monster.level:'')+' Rewards & Chests | EvonyMasters';
-const description='Evony '+monster.name+(monster.level?' level '+monster.level:'')+' '+(monster.type==='Event'?'event boss':monster.type==='Regular'?'regular monster':'boss')+' rewards, '+(monster.power||'unverified')+' power, '+(monster.stamina||'unverified')+' stamina. Find recorded guaranteed and possible drops from the EvonyMasters master sheet.';
+const description='Evony '+monster.name+(monster.level?' level '+monster.level:'')+' '+(monster.type==='Event'?'event boss':monster.type==='Regular'?'regular monster':'boss')+' rewards, '+(monster.power||'unverified')+' power, '+(monster.stamina||'unverified')+' stamina. Find recorded guaranteed rewards, possible drops and chest contents.';
 const rewards=monster.rewards||[];
 const guaranteed=rewards.filter(r=>r.classification.toLowerCase()==='guaranteed');
 const possible=rewards.filter(r=>r.classification.toLowerCase()!=='guaranteed');
@@ -69,7 +69,7 @@ main{padding:34px 22px 76px!important}
 <section class="panel"><h2>Guaranteed rewards</h2>
 {guaranteed.length?<table class="reward-table"><thead><tr><th>Item</th><th>Quantity</th><th>Category</th></tr></thead><tbody>
 {guaranteed.map(r=><tr><td>{r.item}</td><td>{r.quantity||'Not specified'}</td><td>{r.rewardType||'Reward'}</td></tr>)}
-</tbody></table>:<p>No guaranteed rewards are recorded for this monster in the spreadsheet.</p>}
+</tbody></table>:<p>No guaranteed rewards are recorded for this monster.</p>}
 </section>
 <section class="panel"><h2>Possible rewards</h2>
 {possible.length?<table class="reward-table"><thead><tr><th>Item</th><th>Quantity</th><th>Classification</th></tr></thead><tbody>
@@ -82,10 +82,10 @@ main{padding:34px 22px 76px!important}
 <table class="reward-table"><thead><tr><th>Item</th><th>Quantity</th><th>Drop type</th><th>Tier / Source</th></tr></thead><tbody>
 {chest.contents.map(r=><tr><td>{r.item}</td><td>{r.quantity||'Not specified'}</td><td><span class="tag">{r.classification||'Not specified'}</span></td><td>{[r.tier,r.source].filter(Boolean).join(' · ')||'Not specified'}</td></tr>)}
 </tbody></table>
-</section>):<p>No matching chest contents have been recorded in the IN THE BOXES tab.</p>}
+</section>):<p>No matching chest contents have been documented for this monster.</p>}
 {missingChests.length>0&&<p class="note">Contents not documented for: {missingChests.join(', ')}.</p>}
 </section>
-<p class="note">Values are displayed as recorded; blank fields mean not yet documented. These pages use the most recently published website snapshot. For updated reward sourcing, also visit the <a href="/resources/">Item Finder</a> or <a href="/chests/">Chest Finder</a>.</p>
+<p class="note">Values marked “Not specified” are not yet documented. You can also explore the <a href="/resources/">Item Finder</a> or <a href="/chests/">Chest Finder</a>.</p>
 {related.length>0&&<section class="panel"><h2>Compare related monsters</h2><ul class="related">
 {related.map(m=><li><a href={bossPagePath(m,directory)}>{m.name}{m.level?' · Lv '+m.level:''}</a></li>)}
 </ul></section>}
