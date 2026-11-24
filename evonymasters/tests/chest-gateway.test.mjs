@@ -5,14 +5,26 @@ import gateway from '../integrations/chest-gateway/worker.mjs';
 
 const site=readFileSync(new URL('../src/pages/chests/index.astro',import.meta.url),'utf8');
 
-test('Chest Finder uses the same-origin gateway before direct Worker requests',()=>{
+test('Chest Finder uses same-origin gateway only with no cross-origin fallback',()=>{
  assert.match(site,/fetch\("\/api\/chests"\+path\+query/);
- assert.match(site,/fetch\(API\+"\/v4\/chests"\+path\+query/);
- assert.match(site,/let chestGatewayAvailable=null/);
- assert.match(site,/chestGatewayAvailable=false/);
+ assert.doesNotMatch(site,/fetch\(API\+"\/v4\/chests"\+path\+query/);
+ assert.doesNotMatch(site,/chestGatewayAvailable/);
  assert.match(site,/fetchChestRoute\("",params,signal\)/);
  assert.match(site,/fetchChestRoute\("\/compare",params\)/);
  assert.match(site,/fetchChestRoute\("\/events"\)/);
+});
+test('Gateway HTTP errors do not cause a cross-origin retry',async()=>{
+ const start=site.indexOf('async function fetchChestRoute(');
+ const end=site.indexOf('async function load(append=false)',start);
+ assert.ok(start>=0&&end>start);
+ const urls=[];
+ const client=new Function('fetch','URLSearchParams','AbortSignal',site.slice(start,end)+'\nreturn fetchChestPage;')(
+  async url=>{urls.push(url);return {ok:false,status:503};},
+  URLSearchParams,AbortSignal
+ );
+ await assert.rejects(client(new URLSearchParams({q:'Lumber'}),new AbortController().signal),/HTTP 503/);
+ assert.ok(urls.length>0);
+ assert.ok(urls.every(url=>url.startsWith('/api/chests?')));
 });
 test('Gateway forwards only approved GET paths through a service binding',async()=>{
  const observed=[];
