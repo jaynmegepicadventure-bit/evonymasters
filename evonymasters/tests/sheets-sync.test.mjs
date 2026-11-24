@@ -424,3 +424,16 @@ test('v3 availability sorting and live-only filter cover every matching source b
  const notConfigured=await worker.fetch(requestUrl('/v3/search?q=refining%20stone&liveOnly=true'),env);
  assert.equal(notConfigured.status,503);
 });
+
+test('v4 monster directory returns unique names, levels, power and stamina from validated snapshot',async()=>{
+ const {env}=runtime();
+ const source=payload();source.tabs.monsters.push(['Event','3','Ymir','1.2B','40','','Gems','5','Possible']);
+ assert.equal((await worker.fetch(await signedRequest(source),env)).status,200);
+ const response=await worker.fetch(new Request(API+'/v4/monsters',{headers:{origin:sites.allowed}}),env);
+ assert.equal(response.status,200);
+ const output=await response.json();
+ assert.equal(output.monsters.length,2);
+ assert.deepEqual(output.monsters.find(m=>m.name==='Zombie'),{name:'Zombie',type:'Boss',level:'1',power:'36500',stamina:'15'});
+ assert.deepEqual(output.monsters.find(m=>m.name==='Ymir'),{name:'Ymir',type:'Event',level:'3',power:'1.2B',stamina:'40'});
+ assert.equal(response.headers.get('access-control-allow-origin'),sites.allowed);
+});
