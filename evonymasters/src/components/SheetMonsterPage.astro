@@ -6,13 +6,14 @@ import directory from '../data/monster-directory-sheet.json';
 import {bossPagePath} from '../lib/boss-page-path.mjs';
 
 const {monster}=Astro.props;
-const title=monster.name+' Evony '+(monster.level?'Level '+monster.level+' ':'')+'Rewards & Drops | EvonyMasters';
+const title=monster.name+' Evony'+(monster.level?' Level '+monster.level:'')+' Rewards & Chests | EvonyMasters';
 const description='Evony '+monster.name+(monster.level?' level '+monster.level:'')+' '+(monster.type==='Event'?'event boss':monster.type==='Regular'?'regular monster':'boss')+' rewards, '+(monster.power||'unverified')+' power, '+(monster.stamina||'unverified')+' stamina. Find recorded guaranteed and possible drops from the EvonyMasters master sheet.';
 const rewards=monster.rewards||[];
 const guaranteed=rewards.filter(r=>r.classification.toLowerCase()==='guaranteed');
 const other=rewards.filter(r=>r.classification.toLowerCase()!=='guaranteed');
 const related=records.filter(x=>x!==monster&&x.type===monster.type).sort((a,b)=>Math.abs(Number(a.level||0)-Number(monster.level||0))-Math.abs(Number(b.level||0)-Number(monster.level||0))||a.name.localeCompare(b.name)).slice(0,6);
-const typeLabel=monster.type==='Event'?'Event Boss':monster.type==='Regular'?'Regular Monster':'Boss';
+const typeLabel=monster.type==='Event'?'Event Boss':monster.type==='Regular'?'Regular Monster':'Boss Monster';
+const chestRewards=rewards.filter(r=>r.rewardType.toLowerCase()==='chest');
 ---
 <!doctype html>
 <html lang="en"><head>
@@ -52,7 +53,7 @@ main{padding:34px 22px 76px!important}
 <header class="hero"><div class="wrap">
 <a class="back" href="/bosses/">← Boss Directory</a>
 <p class="eyebrow">Evony monster rewards · {typeLabel}</p>
-<h1>{monster.name}{monster.level?' · Level '+monster.level:''}</h1>
+<h1>{monster.name} Evony {typeLabel} Rewards</h1>
 <p class="intro">Recorded rewards for {monster.name} from the EVONYMASTERS master spreadsheet. Guaranteed rewards and possible drops are listed separately. Chest items are listed as drops, not as guaranteed contents of an opened chest.</p>
 </div></header>
 <main class="wrap">
@@ -68,11 +69,16 @@ main{padding:34px 22px 76px!important}
 {guaranteed.map(r=><tr><td>{r.item}</td><td>{r.quantity||'Not specified'}</td><td>{r.rewardType||'Reward'}</td></tr>)}
 </tbody></table>:<p>No guaranteed rewards are recorded for this monster in the spreadsheet.</p>}
 </section>
+<section class="panel"><h2>Monster chests</h2>
+{chestRewards.length?<ul class="related">{chestRewards.map(r=><li><span class="tag">{r.item}{r.quantity?' · '+r.quantity:''}</span></li>)}</ul>:<p>No chest drops are identified as such in the current MONSTER sheet.</p>}
+<p>These are chest rewards listed for the monster, not verified contents of each chest. For chest contents and availability use the <a href="/chests/">Chest Finder</a>.</p>
+</section>
 <section class="panel"><h2>Possible drops and other classifications</h2>
 {other.length?<table class="reward-table"><thead><tr><th>Item</th><th>Quantity</th><th>Classification</th></tr></thead><tbody>
 {other.map(r=><tr><td>{r.item}</td><td>{r.quantity||'Not specified'}</td><td><span class="tag">{r.classification||'Not specified'}</span></td></tr>)}
 </tbody></table>:<p>No additional possible drops are recorded for this monster in the spreadsheet.</p>}
 </section>
+<section class="panel" aria-labelledby="understand-rewards"><h2 id="understand-rewards">Understanding {monster.name} rewards</h2><p>Guaranteed rewards and possible drops are kept separate. Rewards shown inside chests require obtaining and opening the chest first. Missing quantities are not zero, and records may change with in-game events.</p></section>
 <p class="note">Source: EVONYMASTERS Google spreadsheet, MONSTER tab. Values are displayed as recorded; blank fields mean not yet documented. These pages use the most recently published website snapshot. For updated reward sourcing, also visit the <a href="/resources/">Item Finder</a> or <a href="/chests/">Chest Finder</a>.</p>
 {related.length>0&&<section class="panel"><h2>Compare related monsters</h2><ul class="related">
 {related.map(m=><li><a href={bossPagePath(m,directory)}>{m.name}{m.level?' · Lv '+m.level:''}</a></li>)}
