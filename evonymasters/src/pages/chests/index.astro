@@ -71,6 +71,7 @@ footer{margin-top:30px;border-top:1px solid #334f69;padding:25px 0;color:#b5c8d9
 .chest .sub{font-size:.76rem}
 .chest h3{font-size:1.02rem;line-height:1.4}
 .chest-matches{display:inline-block;margin:7px 0 0;padding:4px 8px;border:1px solid #70aa83;background:#1d4639;border-radius:7px;color:#b4f6c6;font-size:.77rem}
+.chest-reward-amount{font-size:.78rem;color:#f2d391;font-weight:750;margin-top:5px}
 .chest-matches.best-match{background:#f1d28a;color:#152d40;border-color:#f1d28a}
 .chest-expanded{overflow-x:auto}
 .chest-expanded .reward-table{min-width:425px}
@@ -200,6 +201,14 @@ function card(c){
  if(c._matchedItems?.length){
  const matches=el("div","chest-matches"+(c._matchedItems.length===terms().filter(Boolean).length&&terms().filter(Boolean).length>1?" best-match":""),c._matchedItems.length+" of "+terms().filter(Boolean).length+" rewards matched");
  labels.append(matches);
+}
+const selectedRewards=terms().filter(Boolean);
+if(selectedRewards.length===1){
+ const score=rewardRank(c,selectedRewards);
+ if(score.known){
+  const amount=new Intl.NumberFormat("en-US",{maximumFractionDigits:0}).format(score.total);
+  labels.append(el("div","chest-reward-amount",displayResourceName(selectedRewards[0])+": "+amount+" recorded"));
+ }
 }
  top.append(pic,labels);article.append(top);paintAvailability(article,c);
  const list=el("ul","items");
