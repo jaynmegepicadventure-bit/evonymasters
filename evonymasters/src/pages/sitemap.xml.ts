@@ -12,6 +12,7 @@ export const GET:APIRoute=({site})=>{
  const base=site||new URL('https://www.evonymasters.com');
  const paths=new Set(pages);
  for(const monster of monsters)paths.add('/bosses/'+encodeURIComponent(monster.id)+'/');
+ for(const monster of sheetMonsters)paths.add('/bosses/catalog/'+monsterSlug(monster)+'/');
  for(const item of items.filter(item=>/^lv\d+-boss-monster-chest$/.test(item.id)))
   paths.add('/items/'+encodeURIComponent(item.id)+'/');
  const links=[...paths].sort().map(path=>'<url><loc>'+escapeXml(new URL(path,base).toString())+'</loc></url>').join('');
