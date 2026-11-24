@@ -23,3 +23,12 @@ test('summary shows own troop sum and one other-type layer size',()=>{
  assert.match(page,/result\.rows\.reduce\(\(sum,row\)=>sum\+row\.count,0\)/);
  assert.match(page,/result\.otherLayers\/\(3\*Math\.max\(9,\.\.\.result\.tiers\)\)/);
 });
+
+test('Enki_007 pro tip sits beneath quick tips and before calculator controls',()=>{
+ const quick=page.indexOf('class="preset-tips"');
+ const pro=page.indexOf('class="enki-pro-tip"');
+ const mode=page.indexOf('class="mode-selector"');
+ assert.ok(quick>=0&&quick<pro&&pro<mode);
+ for(const text of ['Enki_007','Sea Rush','Kingdom Arena','Everything left','300K','200K','10K layers','maximum allowed layers'])
+  assert.ok(page.includes(text),text);
+});

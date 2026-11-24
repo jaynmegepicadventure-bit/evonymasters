@@ -32,6 +32,16 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 .preset-tip span:not(.tip-symbol){display:block;color:#c3d5e3;font-size:.78rem;line-height:1.45}
 .tip-symbol{display:grid;place-items:center;flex:none;width:32px;height:32px;border-radius:9px;background:#213e55;font-size:1.1rem}
 @media(max-width:900px){.preset-tips{grid-template-columns:1fr}.preset-tip{padding:11px 13px}}
+.enki-pro-tip{display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap;padding:11px 15px;margin:10px 0 4px;border:1px solid #48627a;border-radius:11px;background:linear-gradient(105deg,#173249,#10283a)}
+.enki-pro-heading{display:flex;align-items:center;gap:7px;flex:none;color:#f0c77c;font-size:.85rem;white-space:nowrap}
+.enki-credit{color:#adc7d8;font-size:.74rem;font-weight:500}
+.enki-pro-body{flex:1;min-width:260px}
+.enki-pro-body p{color:#c9d9e7;font-size:.78rem;line-height:1.5;margin:0 0 7px}
+.enki-pro-body p:last-child{margin-bottom:0}
+.enki-tier-chips{display:flex;gap:6px;flex-wrap:wrap;margin:5px 0 8px}
+.enki-tier-chips span{display:inline-flex;align-items:center;gap:7px;border:1px solid #526a7f;border-radius:7px;padding:5px 8px;background:#203c50;color:#e9f1fa;font-size:.77rem}
+.enki-tier-chips b{color:#f0c77c}
+@media(max-width:900px){.enki-pro-tip{gap:8px}.enki-pro-body{min-width:0;width:100%}}
 .custom-layer-field{margin-top:12px}.custom-layer-field[hidden]{display:none}
 .layer-size-row{border:1px solid #536b7e;background:#1a354d;border-radius:8px;padding:10px 12px;display:flex;justify-content:space-between;gap:10px;margin:12px 0 8px;font-size:.85rem;font-weight:750}
 .layer-size-row output{color:#f3c678;font-variant-numeric:tabular-nums}
@@ -78,6 +88,12 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
  <div class="preset-tip"><span class="tip-symbol" aria-hidden="true">📈</span><div><strong>Layers grow with your march</strong><span>Minimum 1K, then +1K per full million (4M = 4K). From 7M, use 10K. Larger T7–T11 layers can still apply.</span></div></div>
  <div class="preset-tip"><span class="tip-symbol" aria-hidden="true">🏹</span><div><strong>Still below T13?</strong><span>No problem. The calculator builds around your highest available tiers. Treat lower-tier PvP presets as a starting point and adjust for your roster.</span></div></div>
 </div>
+<aside class="enki-pro-tip" aria-label="March setting pro tip from Enki_007">
+ <div class="enki-pro-heading"><span aria-hidden="true">💡</span><strong>March Setting Pro Tip</strong><span class="enki-credit">from Enki_007</span></div>
+ <div class="enki-pro-body"><p>For <strong>Sea Rush</strong>, use the event's maximum allowed layers, then build around your top tier:</p>
+ <div class="enki-tier-chips" aria-label="Example with T15 unlocked"><span><b>T15</b> Everything left</span><span><b>T14</b> 300K</span><span><b>T13</b> 200K</span></div>
+ <p>Or simply fill the event's maximum layers and give <strong>all remaining troops to T15</strong>. The same approach works for <strong>Kingdom Arena</strong>, where Enki_007 uses <strong>10K layers</strong>.</p></div>
+</aside>
 <div class="mode-selector" role="group" aria-label="Troop layer calculator mode"><strong>Layer mode:</strong><button type="button" id="mode-recommended" aria-pressed="true">Recommended</button><button type="button" id="mode-custom" aria-pressed="false">Custom layers</button></div>
 <div class="toolbar"><button type="button" id="clear">Clear march sizes</button><button type="button" id="print">Print results</button></div>
 <div class="scroller"><div class="cols">{types.map(t=><section class="card" data-type={t.id}>
