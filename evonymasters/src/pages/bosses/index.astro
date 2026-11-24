@@ -70,7 +70,7 @@ const label=type=>type==='Event'?'Event Boss':type==='Regular'?'Regular Monster'
   </div>
  </div></header>
  <main class="wrap">
-  <p class="directory-note">This directory is sourced from the EVONYMASTERS Google spreadsheet's MONSTER tab. Values marked “Not verified” are missing from our records, not zero. Use the individual monster pages to check the source data and recorded drops.</p>
+  <p class="directory-note">Values marked “Not verified” are not yet documented. Select a monster to view recorded rewards and chest contents.</p>
   <div class="filters" role="search" aria-label="Find a monster">
    <label for="boss-search">Search boss or monster<input id="boss-search" type="search" placeholder="e.g. Hydra, Ymir, Behemoth" autocomplete="off"/></label>
    <label for="boss-type-filter">Monster type<select id="boss-type-filter"><option value="all">All monster types</option><option value="Boss">Bosses</option><option value="Event">Event bosses</option><option value="Regular">Regular monsters</option></select></label>
@@ -90,7 +90,7 @@ const label=type=>type==='Event'?'Event Boss':type==='Regular'?'Regular Monster'
    </article>)}
   </div>
   <p class="empty" id="no-boss-results" hidden>No monsters match these filters. Try another name or clear the filters.</p>
-  <p class="bottom-note">Monster names, levels, power and stamina come from the MONSTER tab of your EVONYMASTERS spreadsheet. Each listed monster has its own spreadsheet-backed reward-detail page. Spreadsheet updates are loaded through the reward sync service when connected; the static listing remains available as a fallback.</p>
+
  </main>
  <script is:inline>
  (()=>{
