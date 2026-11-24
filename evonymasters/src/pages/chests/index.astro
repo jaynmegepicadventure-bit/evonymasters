@@ -152,7 +152,7 @@ const selectedItems=[],itemChips=document.getElementById("search-items"),addItem
 let shownChestIds=new Set(),totalChests=0;
 const resourceSearchTerm=value=>{
  const raw=String(value??"").trim();
- return /^wood(?:\\s*\\/\\s*lumber)?$/i.test(raw)?"Lumber":/^safe wood$/i.test(raw)?"Safe Lumber":raw;
+ return /^wood(?:\s*\/\s*lumber)?$/i.test(raw)?"Lumber":/^safe wood$/i.test(raw)?"Safe Lumber":raw;
 };
 function terms(){
  const value=resourceSearchTerm(q.value),list=selectedItems.map(resourceSearchTerm);
