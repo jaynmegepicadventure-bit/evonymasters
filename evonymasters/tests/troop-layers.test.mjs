@@ -24,6 +24,18 @@ test('custom support sizes override recommendations and validate bounds',()=>{
  assert.throws(()=>calculateFormation('ranged',4000000,[...base,14],{layerSize:0}));
  assert.throws(()=>calculateFormation('ranged',4000000,[...base,14],{layerSize:1000001}));
 });
+test('T13-max ranged PvP allocates 30/50/20 across T13/T12/T11',()=>{
+ const result=calculateFormation('ranged',4000000,base);
+ const r=byTier(result);
+ assert.equal(result.layerSize,4000);
+ assert.equal(r[13],1141200);
+ assert.equal(r[12],1902000);
+ assert.equal(r[11],760800);
+ assert.equal(r[10],4000);
+ assert.equal(result.otherLayers,156000);
+ assert.equal(result.total,4000000);
+ assert.equal(displayFormationLayers(result).displayed+displayFormationLayers(result).otherSupport,4000000);
+});
 test('T14 ranged uses tier-specific 20/30/50 preference (T12 > T13 > T14)',()=>{
  const x=calculateFormation('ranged',4000000,[...base,14]);
  const r=byTier(x);
