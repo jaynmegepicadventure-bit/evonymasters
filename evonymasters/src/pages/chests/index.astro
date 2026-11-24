@@ -138,7 +138,7 @@ main.wrap{padding-bottom:120px}
 <script is:inline>
 (()=>{
 "use strict";
-const displayResourceName=value=>String(value??"").replace(/^safe wood$/i,"Safe Lumber").replace(/^wood(?:\\s*\\/\\s*lumber)?$/i,"Lumber");
+const displayResourceName=value=>String(value??"").replace(/^safe wood$/i,"Safe Lumber").replace(/^wood(?:\s*\/\s*lumber)?$/i,"Lumber");
 const API="https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev";
 const q=document.getElementById("q"),source=document.getElementById("source"),eventFilter=document.getElementById("event-filter"),participationFilter=document.getElementById("participation-filter"),rankFilter=document.getElementById("rank-filter"),eventSearch=document.getElementById("event-search"),cards=document.getElementById("chests"),more=document.getElementById("more"),status=document.getElementById("status"),count=document.getElementById("count"),compare=document.getElementById("compare"),reset=document.getElementById("reset"),selection=document.getElementById("selected-count"),panel=document.getElementById("comparison-panel"),head=document.getElementById("compare-head"),body=document.getElementById("compare-body");
 const selected=new Map();let page=0,hasMore=false,serial=0,timer=null,request=null,availability=null;
