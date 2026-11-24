@@ -1,6 +1,7 @@
 ---
 import SeoMetadata from '../../components/SeoMetadata.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
+import itemCatalog from '../../data/items.json';
 ---
 <!doctype html>
 <html lang="en"><head><SeoMetadata title="Evony Chest Finder: Rewards & Contents | EvonyMasters" description="Search Evony reward chests, explore recorded contents and compare rewards from boss monsters and events. Find chest sources and item quantities."/><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
@@ -103,11 +104,11 @@ main.wrap{padding-bottom:120px}
 <button type="button" class="finder-tab" role="tab" aria-selected="true" data-tab="all">📦 All Chests</button>
 </div>
 <p class="finder-help" id="tab-description">Find boss and monster chests, then check which rewards they contain.</p>
-<div class="search"><label for="q" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden">Chest or reward item</label><input id="q" type="search" placeholder="Search a chest or reward…" autocomplete="off"/>
+<div class="search"><label for="q" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden">Chest or reward item</label><input id="q" type="search" placeholder="Search a chest or reward…" autocomplete="off" list="chest-suggestions"/><datalist id="chest-suggestions">{itemCatalog.map(item => <option value={item.name} />)}</datalist>
 <button type="button" id="add-item-search" class="search-add">Search</button>
 <label for="source" class="source-control" hidden>Source <select id="source"><option value="all">All sources</option><option value="bosses">Bosses</option><option value="events">Events</option><option value="activities">Activities</option><option value="unlinked">Source not recorded</option></select></label></div><p class="search-help">Search one chest or reward at a time. Press Enter or Search to view results.</p>
 <div class="finder-filters"><label><input type="checkbox" id="live-filter"/> Live sources only</label>
-<label id="monster-level-wrap">Monster level <select id="monster-level"><option value="all">All levels</option><option value="1-10">1–10</option><option value="11-20">11–20</option><option value="21+">21+</option></select></label><label>Drop type <select id="drop-type"><option value="all">All drops</option><option value="guaranteed">Guaranteed</option><option value="possible">Possible / chance</option></select></label>
+<label for="sort-order">Sort by <select id="sort-order"><option value="reward">Best reward</option><option value="live">Live first</option><option value="name">Chest name A–Z</option></select></label><label id="monster-level-wrap">Monster level <select id="monster-level"><option value="all">All levels</option><option value="1-10">1–10</option><option value="11-20">11–20</option><option value="21+">21+</option></select></label><label>Drop type <select id="drop-type"><option value="all">All drops</option><option value="guaranteed">Guaranteed</option><option value="possible">Possible / chance</option></select></label>
 <button type="button" class="pill secondary" id="clear-filters">Clear filters</button></div>
 <div class="advanced" id="event-search" hidden>
 <label for="event-filter">Event name<select id="event-filter"><option value="">All events</option></select></label>
@@ -144,11 +145,11 @@ const API="https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev";
 const q=document.getElementById("q"),source=document.getElementById("source"),eventFilter=document.getElementById("event-filter"),participationFilter=document.getElementById("participation-filter"),rankFilter=document.getElementById("rank-filter"),eventSearch=document.getElementById("event-search"),cards=document.getElementById("chests"),more=document.getElementById("more"),status=document.getElementById("status"),count=document.getElementById("count"),compare=document.getElementById("compare"),reset=document.getElementById("reset"),selection=document.getElementById("selected-count"),panel=document.getElementById("comparison-panel"),head=document.getElementById("compare-head"),body=document.getElementById("compare-body");
 const selected=new Map();let page=0,hasMore=false,serial=0,timer=null,request=null,availability=null;
 const tabStrip=document.getElementById("finder-tabs"),tabHelp=document.getElementById("tab-description"),dock=document.getElementById("comparison-dock");
-const liveFilter=document.getElementById("live-filter"),monsterLevel=document.getElementById("monster-level"),monsterLevelWrap=document.getElementById("monster-level-wrap"),dropType=document.getElementById("drop-type");
+const sortOrder=document.getElementById("sort-order"),liveFilter=document.getElementById("live-filter"),monsterLevel=document.getElementById("monster-level"),monsterLevelWrap=document.getElementById("monster-level-wrap"),dropType=document.getElementById("drop-type");
 
 let currentTab="all",allFound=new Map();
 
-const searchButton=document.getElementById("add-item-search");
+const searchButton=document.getElementById("add-item-search"),suggestions=document.getElementById("chest-suggestions");
 const resourceSearchTerm=value=>{
  const raw=String(value??"").trim();
  return /^wood(?:\s*\/\s*lumber)?$/i.test(raw)?"Lumber":/^safe wood$/i.test(raw)?"Safe Lumber":raw;
@@ -343,7 +344,11 @@ function renderResults(){
  const all=[...allFound.values()];
  const visible=all.filter(chest=>sourceMatchesTab(chest)&&passesLevel(chest)&&passesDrop(chest)&&(!liveFilter.checked||availableNow(chest)));
  // Rank loaded chests by recorded reward quantity; request more only on demand.
- visible.sort((a,b)=>compareRewardChests(a,b,terms()));
+ visible.sort((a,b)=>sortOrder.value==="live"
+  ?Number(availableNow(b))-Number(availableNow(a))||compareRewardChests(a,b,terms())
+  :sortOrder.value==="name"
+   ?collator.compare(a.name,b.name)||compareRewardChests(a,b,terms())
+   :compareRewardChests(a,b,terms()));
  cards.replaceChildren();
  for(const chest of visible)cards.append(card(chest));
  count.textContent=visible.length+" matching "+(visible.length===1?"chest":"chests")+
@@ -410,6 +415,14 @@ async function load(append=false){
    nextResults.set(chest.id,{...chest,_matchedItems:term&&matchReward(chest,term)?[term]:[]});
   }
   allFound=nextResults;
+  // Offer chest names from already loaded results without any extra API calls.
+  const suggestionsSeen=new Set([...suggestions.options].map(option=>option.value.toLowerCase()));
+  for(const chest of allFound.values()){
+   const name=String(chest.name||"").trim();
+   if(!name||suggestionsSeen.has(name.toLowerCase()))continue;
+   const option=document.createElement("option");option.value=name;suggestions.append(option);
+   suggestionsSeen.add(name.toLowerCase());
+  }
   hasMore=Boolean(data.hasMore);
   page=hasMore?requestedPage+1:requestedPage;
   if(!append)panel.hidden=true;
@@ -455,11 +468,12 @@ tabStrip.addEventListener("click",event=>{
  if(button)selectTab(button.dataset.tab);
 });
 liveFilter.addEventListener("change",renderResults);
+sortOrder.addEventListener("change",renderResults);
 monsterLevel.addEventListener("change",renderResults);
 dropType.addEventListener("change",renderResults);
 document.getElementById("clear-filters").addEventListener("click",()=>{
  q.value="";activeQuery="";
- liveFilter.checked=false;monsterLevel.value="all";dropType.value="all";eventFilter.value="";
+ sortOrder.value="reward";liveFilter.checked=false;monsterLevel.value="all";dropType.value="all";eventFilter.value="";
  participationFilter.value="all";rankFilter.value="";schedule();
 });
 let eventChoicesLoaded=false,eventChoicesLoading=false;
