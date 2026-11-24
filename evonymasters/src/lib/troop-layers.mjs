@@ -49,7 +49,7 @@ export function combatLayerSize(march){
 // Main-tier percentages are relative weights applied AFTER support is reserved.
 // Ranged T14-and-below favors T12 over T13 over T14.
 export const COMBAT_WEIGHTS = Object.freeze({
- ranged:Object.freeze({low:[20,30,50],high:[40,30,20]}),
+ ranged:Object.freeze({low:[20,30,50],t13:[30,50,20],high:[40,30,20]}),
  mounted:Object.freeze({low:[50,25,15],high:[50,25,15]}),
  ground:Object.freeze({low:[50,25,15],high:[50,25,15]})
 });
@@ -94,7 +94,8 @@ function calculateCombatFormation(result,customLayer){
   return result;
  }
  result.remaining=march-reserve;
- const weights=COMBAT_WEIGHTS[type][highest<=14?'low':'high'].slice(0,main.length);
+ const profile=type==='ranged'&&highest===13?'t13':highest<=14?'low':'high';
+ const weights=COMBAT_WEIGHTS[type][profile].slice(0,main.length);
  if(main.length){
   allocateWeighted(result.remaining,main,weights,counts);
   // The main tier with the largest weight receives the rounding remainder
