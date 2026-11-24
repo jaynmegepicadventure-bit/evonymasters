@@ -37,3 +37,8 @@ test('directory and all boss pages are linked for crawling',()=>{
  assert.match(detail,/<a href="\/bosses\/">← Boss Directory<\/a>/);
  assert.match(directory,/<SeoMetadata title=\{title\} description=\{description\}\/>/);
 });
+
+test('unverified Airavata entry is absent from catalog, directory and generated routes',()=>{
+ assert.equal(monsters.some(monster=>monster.id==='airavata'),false);
+ assert.equal(monsters.length,155);
+});
