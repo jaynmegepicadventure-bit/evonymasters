@@ -70,7 +70,9 @@ function calculateCombatFormation(result,customLayer){
  for(const tier of topTiers)if(!mainSet.has(tier))counts.set(tier,layer);
  // Preserve existing large-march T7–T11 special layers; custom mode changes
  // ordinary layers, not these larger formation-specific allocations.
- if(march>=7000000){
+ // Special spreadsheet support allocations start at 6.5M; the 10K
+ // standard-layer threshold remains independently set at 7M.
+ if(march>=6500000){
   for(const [tierText,fixedAmount] of Object.entries(cfg.fixed)){
    const tier=Number(tierText);
    if(tier>highest||tier>=10&&!tiers.includes(tier)||mainSet.has(tier))continue;
