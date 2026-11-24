@@ -137,6 +137,7 @@ footer{border-top:1px solid #314c66;color:#abc1d4;font-size:.82rem;padding:23px 
 <script is:inline>
 (()=>{
 "use strict";
+const displayResourceName=value=>String(value??"").replace(/^safe wood$/i,"Safe Lumber").replace(/^wood(?:\\s*\\/\\s*lumber)?$/i,"Lumber");
 const API="https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev";
 const query=document.getElementById("query"),clear=document.getElementById("clear-search"),tabs=document.getElementById("tabs"),
 frame=document.getElementById("table-frame"),tbody=document.getElementById("results"),heading=document.getElementById("results-heading"),
@@ -183,7 +184,7 @@ async function refreshCalendar(){
 function renderChips(){
  selectedBox.replaceChildren();
  for(const item of selectedItems){
-  const chip=document.createElement("span");chip.className="item-chip";chip.append(document.createTextNode(item));
+  const chip=document.createElement("span");chip.className="item-chip";chip.append(document.createTextNode(displayResourceName(item)));
   const remove=document.createElement("button");remove.type="button";remove.textContent="×";remove.setAttribute("aria-label","Remove "+item);
   remove.addEventListener("click",()=>{selectedItems=selectedItems.filter(v=>v!==item);renderChips();schedule();});
   chip.append(remove);selectedBox.append(chip);
@@ -238,7 +239,7 @@ function detailedRow(row){
  for(const item of items){
   const tr=node("tr"),activity=item.details?.activity||item.details?.subEvent||c.rewardActivity||c.activity||"—";
   const cl=toText(item.classification);
-  for(const val of [item.item,toText(item.quantity)||"—",cl&&cl!=="Unspecified"?cl:"—",activity])tr.append(node("td","",val));
+  for(const val of [displayResourceName(item.item),toText(item.quantity)||"—",cl&&cl!=="Unspecified"?cl:"—",activity])tr.append(node("td","",val));
   body.append(tr);
  }
  table.append(body);wrapper.append(table);
@@ -253,8 +254,8 @@ function resultRow(row){
  const source=node("td");
  const sourceLine=node("div","source");
  const img=document.createElement("img");img.src=artwork(row);img.alt="";img.loading="lazy";img.width=74;img.height=54;
- const info=node("div");info.append(node("div","name",row.title));
- if(row._matchedItems?.length>1)info.append(node("span","match-pill","Matches "+row._matchedItems.length+" items: "+row._matchedItems.join(", ")));
+ const info=node("div");info.append(node("div","name",displayResourceName(row.title)));
+ if(row._matchedItems?.length>1)info.append(node("span","match-pill","Matches "+row._matchedItems.length+" items: "+row._matchedItems.map(displayResourceName).join(", ")));
  const level=toText(row.context?.level),event=toText(row.context?.event);
  if(level||event)info.append(node("div","sub",[level?"Lv "+level:"",event].filter(Boolean).join(" · ")));
  const toggle=node("button","link-detail","Details");toggle.type="button";toggle.setAttribute("aria-expanded","false");
@@ -351,7 +352,7 @@ query.addEventListener("input",()=>{
    if(!r.ok)return;
    const data=await r.json();
    if(query.value.trim()!==term)return;
-   suggestions.replaceChildren(...(data.items||[]).map(v=>{const opt=document.createElement("option");opt.value=v;return opt;}));
+   suggestions.replaceChildren(...(data.items||[]).map(v=>{const opt=document.createElement("option");opt.value=displayResourceName(v);return opt;}));
   }catch{}
  },320);
 });
