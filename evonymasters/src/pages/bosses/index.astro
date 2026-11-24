@@ -84,7 +84,7 @@ const label=type=>type==='Event'?'Event Boss':type==='Regular'?'Regular Monster'
      <div><dt>Level</dt><dd>{format(monster.level)}</dd></div>
      <div><dt>Stamina</dt><dd>{format(monster.stamina)}</dd></div>
      <div><dt>Power</dt><dd>{format(monster.power)}</dd></div>
-     <div><dt>Recorded chests</dt><dd><span>See reward data</span></dd></div>
+     <div><dt>Rewards</dt><dd><span>See reward data</span></dd></div>
     </dl>
     {monster.detailId?<a class="boss-link" href={'/bosses/'+encodeURIComponent(monster.detailId)+'/'} aria-label={'View rewards and chests for '+monster.name}>View rewards &amp; chests →</a>:<span class="boss-link unavailable">Reward detail page not yet available</span>}
    </article>)}
@@ -99,7 +99,7 @@ const label=type=>type==='Event'?'Event Boss':type==='Regular'?'Regular Monster'
   const grid=document.getElementById('boss-results'),cards=Array.from(grid.querySelectorAll('.boss-card'));
   const counter=document.getElementById('result-count'),empty=document.getElementById('no-boss-results');
   const nameSort=(a,b)=>a.dataset.name.localeCompare(b.dataset.name,undefined,{numeric:true});
-  const number=(card,attr)=>{const raw=card.getAttribute('data-'+attr);return raw===''?-1:Number(raw)};
+  const number=(card,attr)=>{const raw=(card.getAttribute('data-'+attr)||'').replace(/,/g,'').trim().toUpperCase();const m=raw.match(/^([0-9]+(?:\\.[0-9]+)?)([KMBT])?$/);return m?Number(m[1])*({K:1e3,M:1e6,B:1e9,T:1e12}[m[2]]||1):-1};
   function update(){
    const query=search.value.trim().toLocaleLowerCase(),kind=type.value;
    const visible=[];
@@ -128,7 +128,6 @@ const label=type=>type==='Event'?'Event Boss':type==='Regular'?'Regular Monster'
    const link=c.querySelector('h2 a');return [[c.dataset.name,c.dataset.type,c.dataset.level].join('|'),link?.getAttribute('href')||''];
   }));
   const rawNumber=s=>{const t=String(s||'').replace(/,/g,'').trim().toUpperCase();const m=t.match(/^([0-9]+(?:\\.[0-9]+)?)([KMBT])?$/);return m?Number(m[1])*({K:1e3,M:1e6,B:1e9,T:1e12}[m[2]]||1):-1;};
-  const previous=update;
   // Keep client-side filter semantics consistent even for compact spreadsheet power values like 1.1B.
   function refreshCards(rows){
    const knownTypes=new Set(['Boss','Event','Regular']),dedupe=new Set();
