@@ -12,12 +12,14 @@ test('boss template uses individual SEO metadata and standard description',()=>{
  assert.ok(page.includes('Rewards & Chests | EvonyMasters'));
 });
 
-test('boss template includes useful explanatory copy and links to related boss pages',()=>{
- assert.ok(page.includes('Understanding {monster.name} rewards'));
- assert.ok(page.includes('A possible drop is not guaranteed'));
+test('boss template has ordered reward sections and links to related boss pages',()=>{
+ assert.ok(!page.includes('Understanding {monster.name} rewards'));
+ assert.ok(page.indexOf('<h2>Guaranteed rewards</h2>') < page.indexOf('<h2>Possible rewards</h2>'));
+ assert.ok(page.indexOf('<h2>Possible rewards</h2>') < page.indexOf('<h2>Chest contents</h2>'));
+ assert.ok(page.includes('chestMatches(chestNames,boxes)'));
  assert.ok(page.includes('href={\'/bosses/\'+encodeURIComponent(other.id)+\'/\'}'));
  assert.ok(page.includes('Related Evony monsters'));
- assert.ok(page.includes('Recorded stamina cost'));
+ assert.ok(page.includes('monster-availability'));
 });
 
 test('all retained monster pages have a unique slug and valid data',()=>{
