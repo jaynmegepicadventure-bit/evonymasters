@@ -1,5 +1,7 @@
 import type {APIRoute} from 'astro';
 import monsters from '../data/monsters.json';
+import sheetMonsters from '../data/monster-rewards-sheet.json';
+import {monsterSlug} from '../lib/monster-slug.mjs';
 import items from '../data/items.json';
 
 // Keep this in sync with static routes. Do not index legacy redirects,
