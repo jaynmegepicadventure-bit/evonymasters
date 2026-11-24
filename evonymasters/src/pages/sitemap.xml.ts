@@ -1,7 +1,8 @@
 import type {APIRoute} from 'astro';
 import monsters from '../data/monsters.json';
 import sheetMonsters from '../data/monster-rewards-sheet.json';
-import {monsterSlug} from '../lib/monster-slug.mjs';
+import directory from '../data/monster-directory-sheet.json';
+import {bossPagePath} from '../lib/boss-page-path.mjs';
 import items from '../data/items.json';
 
 // Keep this in sync with static routes. Do not index legacy redirects,
@@ -12,7 +13,7 @@ export const GET:APIRoute=({site})=>{
  const base=site||new URL('https://www.evonymasters.com');
  const paths=new Set(pages);
  for(const monster of monsters)paths.add('/bosses/'+encodeURIComponent(monster.id)+'/');
- for(const monster of sheetMonsters)paths.add('/bosses/catalog/'+monsterSlug(monster)+'/');
+ for(const monster of sheetMonsters)paths.add(bossPagePath(monster,directory));
  for(const item of items.filter(item=>/^lv\d+-boss-monster-chest$/.test(item.id)))
   paths.add('/items/'+encodeURIComponent(item.id)+'/');
  const links=[...paths].sort().map(path=>'<url><loc>'+escapeXml(new URL(path,base).toString())+'</loc></url>').join('');
