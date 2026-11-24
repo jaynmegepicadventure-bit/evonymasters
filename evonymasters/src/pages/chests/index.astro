@@ -103,9 +103,9 @@ main.wrap{padding-bottom:120px}
 <button type="button" class="finder-tab" role="tab" aria-selected="true" data-tab="all">📦 All Chests</button>
 </div>
 <p class="finder-help" id="tab-description">Find boss and monster chests, then check which rewards they contain.</p>
-<div class="search"><label for="q" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden">Chest or reward item</label><input id="q" type="search" placeholder="Search chest names or rewards…" autocomplete="off" list="chest-suggestions"/><datalist id="chest-suggestions"></datalist>
-<button type="button" id="add-item-search" class="search-add">+ Add item</button>
-<label for="source" class="source-control" hidden>Source <select id="source"><option value="all">All sources</option><option value="bosses">Bosses</option><option value="events">Events</option><option value="activities">Activities</option><option value="unlinked">Source not recorded</option></select></label></div><div id="search-items" class="search-chips" aria-live="polite"></div><p class="search-help">Select up to 3 items to find chests and activities that offer your rewards.</p>
+<div class="search"><label for="q" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden">Chest or reward item</label><input id="q" type="search" placeholder="Search a chest or reward…" autocomplete="off"/>
+<button type="button" id="add-item-search" class="search-add">Search</button>
+<label for="source" class="source-control" hidden>Source <select id="source"><option value="all">All sources</option><option value="bosses">Bosses</option><option value="events">Events</option><option value="activities">Activities</option><option value="unlinked">Source not recorded</option></select></label></div><p class="search-help">Search one chest or reward at a time. Press Enter or Search to view results.</p>
 <div class="finder-filters"><label><input type="checkbox" id="live-filter"/> Live sources only</label>
 <label id="monster-level-wrap">Monster level <select id="monster-level"><option value="all">All levels</option><option value="1-10">1–10</option><option value="11-20">11–20</option><option value="21+">21+</option></select></label><label>Drop type <select id="drop-type"><option value="all">All drops</option><option value="guaranteed">Guaranteed</option><option value="possible">Possible / chance</option></select></label>
 <button type="button" class="pill secondary" id="clear-filters">Clear filters</button></div>
@@ -115,7 +115,7 @@ main.wrap{padding-bottom:120px}
 <label for="rank-filter">Ranking position<input id="rank-filter" type="search" placeholder="e.g. 1 or 11–20" autocomplete="off"/></label>
 </div></div></header>
 <main class="wrap">
-<div class="controls"><div><h2>Matching chests</h2><p id="count">Loading recorded chests…</p><span class="chest-results-order">Best reward matches first: most items, then highest recorded amounts</span></div></div>
+<div class="controls"><div><h2>Matching chests</h2><p id="count">Loading recorded chests…</p><span class="chest-results-order">Highest recorded amounts first among loaded results</span></div></div>
 <div id="status" class="status" role="status"></div>
 <div class="chest-list" id="chests"></div>
 <button id="more" class="pill more" hidden>Show more chests</button>
@@ -145,42 +145,20 @@ const q=document.getElementById("q"),source=document.getElementById("source"),ev
 const selected=new Map();let page=0,hasMore=false,serial=0,timer=null,request=null,availability=null;
 const tabStrip=document.getElementById("finder-tabs"),tabHelp=document.getElementById("tab-description"),dock=document.getElementById("comparison-dock");
 const liveFilter=document.getElementById("live-filter"),monsterLevel=document.getElementById("monster-level"),monsterLevelWrap=document.getElementById("monster-level-wrap"),dropType=document.getElementById("drop-type");
-const suggest=document.getElementById("chest-suggestions");
-let currentTab="all",allFound=new Map(),searchComplete=true;
 
-const selectedItems=[],itemChips=document.getElementById("search-items"),addItemButton=document.getElementById("add-item-search");
-let shownChestIds=new Set(),totalChests=0;
+let currentTab="all",allFound=new Map();
+
+const searchButton=document.getElementById("add-item-search");
 const resourceSearchTerm=value=>{
  const raw=String(value??"").trim();
  return /^wood(?:\s*\/\s*lumber)?$/i.test(raw)?"Lumber":/^safe wood$/i.test(raw)?"Safe Lumber":raw;
 };
-function terms(){
- const value=resourceSearchTerm(q.value),list=selectedItems.map(resourceSearchTerm);
- if(value.length>=2&&list.length<3&&!list.some(item=>item.toLowerCase()===value.toLowerCase()))list.push(value);
- return list.length?list:[""];
-}
-function renderItemChips(){
- itemChips.replaceChildren();
- for(const item of [...selectedItems]){
-  const chip=document.createElement("span");chip.className="search-chip";chip.append(document.createTextNode(displayResourceName(item)));
-  const remove=document.createElement("button");remove.type="button";remove.textContent="×";remove.setAttribute("aria-label","Remove "+item);
-  remove.addEventListener("click",()=>{
-   const idx=selectedItems.indexOf(item);if(idx>=0)selectedItems.splice(idx,1);
-   renderItemChips();schedule();
-  });
-  chip.append(remove);itemChips.append(chip);
- }
- addItemButton.disabled=selectedItems.length===3;q.disabled=selectedItems.length===3;
- addItemButton.textContent=selectedItems.length===3?"3 items selected":"+ Add item";
-}
-function addSearchItem(){
- const value=q.value.trim();
- if(value.length<2||selectedItems.length>=3||selectedItems.some(v=>v.toLowerCase()===value.toLowerCase()))return;
- selectedItems.push(value);q.value="";renderItemChips();schedule();
-}
-addItemButton.addEventListener("click",addSearchItem);
-q.addEventListener("keydown",event=>{if(event.key==="Enter"){event.preventDefault();addSearchItem();}});
-
+let activeQuery="";
+function terms(){return [activeQuery];}
+searchButton.addEventListener("click",()=>{activeQuery=resourceSearchTerm(q.value);schedule();});
+q.addEventListener("keydown",event=>{
+ if(event.key==="Enter"){event.preventDefault();activeQuery=resourceSearchTerm(q.value);schedule();}
+});
 const sourceKey=v=>String(v??"").trim().toLowerCase().replace(/\s*·\s*lv\s*\d+$/i,"").replace(/\s+/g," ");
 function paintAvailability(article,c){const badge=article.querySelector(".source-availability");if(!badge)return;if(!availability){badge.textContent="Source availability: checking…";return}const matches=(c.sources||[]).map(src=>availability.get(sourceKey(src.name))).filter(Boolean);const live=matches.some(v=>v.live),upcoming=matches.map(v=>v.next).filter(Boolean).sort()[0];badge.classList.toggle("live",live);badge.textContent=live?"● Source LIVE":upcoming?"Source upcoming · "+upcoming+" UTC":"Source schedule not recorded";}
 async function loadAvailability(){try{const today=new Date().toISOString().slice(0,10),to=new Date(Date.parse(today+"T00:00:00Z")+92*86400000).toISOString().slice(0,10);const r=await fetch("https://evonymasters-calendar.jaynmegepicadventure.workers.dev/api/events?"+new URLSearchParams({from:today,to,kind:"all",includeAlways:"true"}));if(!r.ok)throw Error("Calendar unavailable");const d=await r.json(),next=new Map();for(const e of d.events||[]){const key=sourceKey(e.name),old=next.get(key)||{live:false,next:""};if(e.date===today)old.live=true;else if(!old.next||e.date<old.next)old.next=e.date;next.set(key,old);}availability=next;renderResults()}catch{availability=new Map();renderResults()}}
@@ -340,36 +318,6 @@ const matchReward=(chest,term)=>{
  const phrase=term.trim().toLowerCase();
  return [...(chest.items||[]),...(chest.nestedItems||[])].some(item=>toText(item.item).toLowerCase().includes(phrase));
 };
-async function verifyFullRewards(merged,phrases,signal){
- if(!phrases.some(Boolean))return true;
- // Verify only a bounded shortlist, avoiding hundreds of expensive requests
- // while still refreshing the leading results with full recorded quantities.
- const matching=[...merged.values()].filter(chest=>(chest._matchedItems||[]).length);
- matching.sort((a,b)=>matchCount(b)-matchCount(a)||compareChest(a,b));
- const shortlist=matching.slice(0,24);
- let complete=matching.length<=shortlist.length;
- for(let index=0;index<shortlist.length;index+=4){
-  if(signal.aborted)return false;
-  const batch=shortlist.slice(index,index+4),params=new URLSearchParams();
-  for(const chest of batch)params.append("id",chest.id);
-  try{
-   const response=await fetch(API+"/v4/chests/compare?"+params,{signal});
-   if(!response.ok)throw Error("Chest details unavailable: "+response.status);
-   const data=await response.json();
-   for(const full of data.chests||[]){
-    const found=merged.get(full.id);
-    if(!found)continue;
-    found._matchedItems=phrases.filter(term=>term&&matchReward(full,term));
-    found.items=full.items;found.nestedItems=full.nestedItems;
-    found.itemCount=full.items.length;found.nestedCount=full.nestedItems.length;
-   }
-  }catch(error){
-   if(error.name==="AbortError")return false;
-   complete=false;
-  }
- }
- return complete;
-}
 function sourceMatchesTab(chest){
  // The sheet-sync endpoint already performs the source filter against ALL
  // source records. A chest may have more than 12 links, so checking the
@@ -394,14 +342,13 @@ function availableNow(chest){
 function renderResults(){
  const all=[...allFound.values()];
  const visible=all.filter(chest=>sourceMatchesTab(chest)&&passesLevel(chest)&&passesDrop(chest)&&(!liveFilter.checked||availableNow(chest)));
- // Rank by number of distinct matching items, then by recorded reward quantities.
- // Use chest rarity only when the quantities are tied or unknown.
+ // Rank loaded chests by recorded reward quantity; request more only on demand.
  visible.sort((a,b)=>compareRewardChests(a,b,terms()));
  cards.replaceChildren();
  for(const chest of visible)cards.append(card(chest));
  count.textContent=visible.length+" matching "+(visible.length===1?"chest":"chests")+
   (hasMore?" shown · more to load":"")+
-  (terms().filter(Boolean).length>1?" · most matched rewards first":"");
+  (hasMore?" · Load more to expand rankings":"");
  more.hidden=!hasMore;
  status.textContent=visible.length?"":liveFilter.checked&&!availability?"Checking live schedules…":
    "No matching chests for these filters. Try another reward, level or source.";
@@ -428,58 +375,33 @@ async function fetchChestPage(params,signal){
 async function load(append=false){
  const my=++serial;
  if(request)request.abort();request=new AbortController();
- if(!append){page=0;allFound=new Map();shownChestIds=new Set();hasMore=false;cards.replaceChildren();more.hidden=true;panel.hidden=true;}
- status.textContent="Finding your best matches…";
- const list=terms(),searching=list.some(Boolean),maxPages=searching?50:1;
+ if(!append){page=0;allFound=new Map();hasMore=false;cards.replaceChildren();more.hidden=true;panel.hidden=true;}
+ status.textContent="Finding matching chests…";
  try{
-  // Read all available result pages for a reward query BEFORE ranking. Sorting
-  // only the first 15 results would hide three-item matches on later pages.
-  const batches=await Promise.all(list.map(async term=>{
-   const records=[];
-   let offset=append?page:0,morePages=false,passes=0;
-   do{
-    const params=new URLSearchParams({q:term,source:source.value,event:eventFilter.value,
-      participation:participationFilter.value,rank:rankFilter.value.trim(),page:String(offset)});
-    const data=await fetchChestPage(params,request.signal);
-    records.push(...data.chests||[]);
-    morePages=Boolean(data.hasMore);
-    offset++;passes++;
-   }while(morePages&&passes<maxPages);
-   return {term,records,morePages,pages:passes};
-  }));
-  if(my!==serial)return;
-  const merged=append?new Map(allFound):new Map();
-  for(const {term,records} of batches){
-   for(const chest of records){
-    const old=merged.get(chest.id);
-    if(old){
-     if(term&&matchReward(chest,term)&&!old._matchedItems.includes(term))old._matchedItems.push(term);
-    }else{
-     merged.set(chest.id,{...chest,_matchedItems:term&&matchReward(chest,term)?[term]:[]});
-    }
-   }
-  }
-  if(my!==serial)return;
-  allFound=merged;
-  hasMore=batches.some(x=>x.morePages);
-  if(hasMore)page+=Math.max(...batches.map(x=>x.pages));
-  // Show the primary search results immediately. Detailed quantity checks
-  // must never block Chest Finder availability.
-  renderResults();
-  const verified=await verifyFullRewards(merged,list,request.signal);
+  // Exactly one bounded API page per search or Show more click.
+  const params=new URLSearchParams({q:terms()[0],source:source.value,event:eventFilter.value,
+   participation:participationFilter.value,rank:rankFilter.value.trim(),page:String(page)});
+  const data=await fetchChestPage(params,request.signal);
   if(my!==serial||request.signal.aborted)return;
+  if(!append)allFound=new Map();
+  for(const chest of data.chests||[]){
+   const term=terms()[0];
+   allFound.set(chest.id,{...chest,_matchedItems:term&&matchReward(chest,term)?[term]:[]});
+  }
+  hasMore=Boolean(data.hasMore);
+  if(hasMore)page++;
   renderResults();
-  if(!verified&&list.some(Boolean))status.textContent="Results shown. Some reward amounts could not be verified; the ranking may be incomplete.";
  }catch(error){
   if(error.name!=="AbortError"){
    console.warn("Chest Finder search failed",error);
    status.textContent=allFound.size
-    ?"Results shown, but the latest update could not be completed. Try searching again."
-    :"Could not reach chest reward data. Please retry or check whether your browser is blocking the reward-data service.";
+    ?"Previous results remain visible. Couldn't load more chests. Try again."
+    :"Chest reward data could not be loaded. Please retry.";
+   more.hidden=true;
   }
  }
 }
-const schedule=()=>{clearTimeout(timer);if(request)request.abort();timer=setTimeout(()=>load(),280)};
+const schedule=()=>{clearTimeout(timer);if(request)request.abort();timer=setTimeout(()=>load(),300)};
 const tabSettings={
  monsters:{source:"bosses",help:"Explore monster and boss chests. Filter by monster level and see exactly what they can drop."},
  events:{source:"events",help:"Find chests from events, milestones and rankings. Focus on the rewards worth pursuing."},
@@ -510,23 +432,9 @@ liveFilter.addEventListener("change",renderResults);
 monsterLevel.addEventListener("change",renderResults);
 dropType.addEventListener("change",renderResults);
 document.getElementById("clear-filters").addEventListener("click",()=>{
- selectedItems.splice(0);q.value="";renderItemChips();
+ q.value="";activeQuery="";
  liveFilter.checked=false;monsterLevel.value="all";dropType.value="all";eventFilter.value="";
  participationFilter.value="all";rankFilter.value="";schedule();
-});
-let suggestionTimer;
-q.addEventListener("input",()=>{
- clearTimeout(suggestionTimer);
- const term=q.value.trim();if(term.length<2)return;
- suggestionTimer=setTimeout(async()=>{
-  try{
-   const response=await fetch(API+"/v2/suggest?q="+encodeURIComponent(term));
-   if(!response.ok)return;
-   const data=await response.json();
-   if(q.value.trim()!==term)return;
-   suggest.replaceChildren(...(data.items||[]).map(item=>{const option=document.createElement("option");option.value=item;return option;}));
-  }catch{}
- },300);
 });
 async function loadEventChoices(){
  try{
@@ -542,7 +450,7 @@ async function loadEventChoices(){
   }
  }catch{/* The main chest search remains functional if event suggestions are unavailable. */}
 }
-q.addEventListener("input",schedule);
+
 source.addEventListener("change",()=>{setEventMode();schedule()});
 eventFilter.addEventListener("change",schedule);
 participationFilter.addEventListener("change",schedule);
@@ -582,8 +490,8 @@ compare.addEventListener("click",async()=>{
 const initial=new URLSearchParams(location.search);q.value=initial.get("q")||"";
 const requestedSource=initial.get("source"),requestedEvent=initial.get("event");
 const initialTab=requestedEvent||["events","activities"].includes(requestedSource)?"events":requestedSource==="bosses"?"monsters":"all";
-loadEventChoices();renderItemChips();refreshSelected();selectTab(initialTab);
-if(requestedSource==="unlinked")source.value="unlinked";
+activeQuery=resourceSearchTerm(q.value);loadEventChoices();refreshSelected();selectTab(initialTab);
+if(requestedSource==="unlinked"){source.value="unlinked";schedule();}
 loadAvailability();
 })();
 </script></body></html>
