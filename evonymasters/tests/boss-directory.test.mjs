@@ -63,3 +63,12 @@ test('all 195 directory rows have unique static reward pages with matching sprea
  assert.ok(directory.includes("'/bosses/catalog/'+monsterSlug(monster)+'/'"));
  assert.ok(sitemap.includes("'/bosses/catalog/'+monsterSlug(monster)+'/'"));
 });
+
+test('directory cards have only one gold reward link in both static and live cards',()=>{
+ assert.ok(directory.includes('.boss-meta dd a{color:#f3cd84'));
+ assert.ok(directory.includes('See reward data →'));
+ assert.ok(!directory.includes('View rewards & chests →'));
+ assert.ok(!directory.includes('Reward page pending publication'));
+ assert.ok(!directory.includes('Reward detail page not yet available'));
+ assert.ok(directory.includes("const reward=dl.querySelectorAll('dd')[3]"));
+});
