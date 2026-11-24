@@ -97,7 +97,7 @@ test('insufficient capacity is explicitly identified rather than silently overfi
 });
 test('the public page retains empty defaults and no restore button',()=>{
  const page=readFileSync(new URL('../src/pages/troops/index.astro',import.meta.url),'utf8');
- assert.match(page,/checked=\\{false\\}/);
+ assert.match(page,/checked=\{false\}/);
  assert.match(page,/value=""/);
  assert.doesNotMatch(page,/Restore Excel examples/);
 });
