@@ -137,7 +137,7 @@ footer{border-top:1px solid #314c66;color:#abc1d4;font-size:.82rem;padding:23px 
 <script is:inline>
 (()=>{
 "use strict";
-const displayResourceName=value=>String(value??"").replace(/^safe wood$/i,"Safe Lumber").replace(/^wood(?:\\s*\\/\\s*lumber)?$/i,"Lumber");
+const displayResourceName=value=>String(value??"").replace(/^safe wood$/i,"Safe Lumber").replace(/^wood(?:\s*\/\s*lumber)?$/i,"Lumber");
 const API="https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev";
 const query=document.getElementById("query"),clear=document.getElementById("clear-search"),tabs=document.getElementById("tabs"),
 frame=document.getElementById("table-frame"),tbody=document.getElementById("results"),heading=document.getElementById("results-heading"),
