@@ -39,21 +39,7 @@ jobs:
             echo '--- Chest Finder visible status ---'
             grep -oE 'Chest data service is unavailable[^<]*|Chest Finder is temporarily unavailable[^<]*|[0-9]+ matching chests|Finding your best matches[^<]*|Some reward amounts could not be verified[^<]*' /tmp/chest-dom.txt | tail -20 || true
             echo '--- Actual rendered status and count ---'
-            python3 - <<'PY'
-            from html.parser import HTMLParser
-            class Extract(HTMLParser):
-                def __init__(self): super().__init__(); self.stack=[]; self.values={}
-                def handle_starttag(self,tag,attrs):
-                    attrs=dict(attrs); self.stack.append((tag,attrs.get('id')))
-                def handle_endtag(self,tag):
-                    if self.stack: self.stack.pop()
-                def handle_data(self,data):
-                    for tag,key in self.stack:
-                        if key in ('count','status'):
-                            self.values[key]=self.values.get(key,'')+data.strip()
-                            break
-            p=Extract();p.feed(open('/tmp/chest-dom.txt').read());print(p.values)
-            PY
+            grep -oP '<p id="count"[^>]*>[^<]*|<div id="status"[^>]*>[^<]*' /tmp/chest-dom.txt | tail -10 || true
             echo '--- Browser console errors ---'
             grep -Ei 'console|uncaught|failed to load|error' /tmp/chrome-errors.txt | tail -18 || true
           else echo 'Chrome not installed on runner'; fi
