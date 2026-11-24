@@ -103,3 +103,22 @@ test('Live only matches calendar monster names as well as scheduled events',()=>
  assert.match(page,/Live calendar unavailable/);
  assert.match(page,/No recorded live sources match these chests today/);
 });
+
+test('Live sources match actual event, boss and event-boss calendar records',()=>{
+ const start=page.indexOf('const sourceKey=value=>'),end=page.indexOf('function paintAvailability(',start);
+ const makeMatcher=new Function('availability',page.slice(start,end)+'\nreturn liveMatches;');
+ const calendar=new Map([
+  ['explore sunken treasure',[{kind:'Event',live:true}]],
+  ['epic hydra',[{kind:'Event Boss',live:true}]],
+  ['lv3 ymir',[{kind:'Event Boss',live:true}]],
+  ['behemoth',[{kind:'Boss',live:true}]],
+  ['inactive event',[{kind:'Event',live:false,next:'2026-11-30'}]]
+ ]);
+ const match=makeMatcher(calendar);
+ assert.equal(match({name:'Sunken Chest',sources:[{name:'Explore Sunken Treasure',type:'Event'}]}).length,1);
+ assert.equal(match({name:'Epic Hydra Chest',sources:[{name:'Hydra Invasion',type:'Event'}]}).length,1);
+ assert.equal(match({name:'Grand Ymir Chest',sources:[{name:'Lv3 Ymir',type:'Boss'}]}).length,1);
+ assert.equal(match({name:'Behemoth Chest',sources:[{name:'Behemoth',type:'Boss'}]}).length,2);
+ assert.equal(match({name:'Inactive Chest',sources:[{name:'Inactive Event',type:'Event'}]}).length,0);
+ assert.equal(match({name:'Unknown Chest',sources:[{name:'Missing Event',type:'Event'}]}).length,0);
+});
