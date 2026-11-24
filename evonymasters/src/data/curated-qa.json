@@ -2,15 +2,15 @@
   {
     "id": "building-wood",
     "category": "Building upgrades",
-    "question": "How much wood does it take to upgrade buildings in Evony?",
-    "answer": "The amount of wood, also called lumber, depends on the building and the level you are upgrading to. Compare the wood/lumber column for the specific target level in our building cost tables. To estimate multiple upgrades and any missing prerequisite buildings, use the Building Upgrade Calculator.",
+    "question": "How much lumber does it take to upgrade buildings in Evony?",
+    "answer": "The amount of lumber, also called lumber, depends on the building and the level you are upgrading to. Compare the Lumber column for the specific target level in our building cost tables. To estimate multiple upgrades and any missing prerequisite buildings, use the Building Upgrade Calculator.",
     "relatedTool": "/building-costs/"
   },
   {
     "id": "building-wood-same",
     "category": "Building upgrades",
     "question": "Are wood and lumber the same resource in Evony?",
-    "answer": "Yes. Evony players commonly use wood and lumber to describe the same resource. Our building cost tables label that column Wood / Lumber so you can find the amount required alongside food, stone and ore.",
+    "answer": "Yes. Evony players commonly use lumber and lumber to describe the same resource. Our building cost tables label that column Lumber so you can find the amount required alongside food, stone and ore.",
     "relatedTool": "/building-costs/"
   },
   {
@@ -38,21 +38,21 @@
     "id": "building-keep",
     "category": "Building upgrades",
     "question": "Where can I find Evony Keep upgrade resource costs by level?",
-    "answer": "Open the Building Upgrade Costs guide and expand Keep. Each recorded target level lists food, wood/lumber, stone and ore. For a complete Keep plan that includes required building upgrades, use the Building Upgrade Calculator.",
+    "answer": "Open the Building Upgrade Costs guide and expand Keep. Each recorded target level lists food, Lumber, stone and ore. For a complete Keep plan that includes required building upgrades, use the Building Upgrade Calculator.",
     "relatedTool": "/building-costs/"
   },
   {
     "id": "training-costs",
     "category": "Troop training",
     "question": "How much does it cost to train troops in Evony?",
-    "answer": "Troop training cost depends on troop type, tier and the number you train. Our Troop Training Calculator covers T1 through T16 ground, ranged, cavalry and siege troops, with food, wood, stone, ore and gold shown separately. Enter your planned troop counts to calculate totals.",
+    "answer": "Troop training cost depends on troop type, tier and the number you train. Our Troop Training Calculator covers T1 through T16 ground, ranged, cavalry and siege troops, with food, lumber, stone, ore and gold shown separately. Enter your planned troop counts to calculate totals.",
     "relatedTool": "/training/"
   },
   {
     "id": "training-t15",
     "category": "Troop training",
     "question": "How much does it cost to train 1,000 T15 ranged troops in Evony?",
-    "answer": "In the recorded training dataset, each T15 ranged troop costs 7,500 food, 22,500 wood and 7,500 stone, with no ore cost, plus 800 gold. For 1,000 troops this is 7,500,000 food, 22,500,000 wood, 7,500,000 stone, zero ore and 800,000 gold before any in-game adjustments.",
+    "answer": "In the recorded training dataset, each T15 ranged troop costs 7,500 food, 22,500 lumber and 7,500 stone, with no ore cost, plus 800 gold. For 1,000 troops this is 7,500,000 food, 22,500,000 lumber, 7,500,000 stone, zero ore and 800,000 gold before any in-game adjustments.",
     "relatedTool": "/training/"
   },
   {
@@ -66,14 +66,14 @@
     "id": "training-all",
     "category": "Troop training",
     "question": "How do I add up training costs for several troop types?",
-    "answer": "Enter the required troop count in each type-and-tier row of the Troop Training Calculator. The grand total combines all entered rows, even when a filter hides some rows. Gold is calculated separately from food, wood, stone and ore.",
+    "answer": "Enter the required troop count in each type-and-tier row of the Troop Training Calculator. The grand total combines all entered rows, even when a filter hides some rows. Gold is calculated separately from food, lumber, stone and ore.",
     "relatedTool": "/training/"
   },
   {
     "id": "training-power",
     "category": "Troop training",
     "question": "Does troop power count as a resource cost in Evony?",
-    "answer": "No. The Troop Training Calculator displays power as an estimated gain from training, not as a resource you spend. Food, wood, stone, ore and, where recorded, gold are the costs.",
+    "answer": "No. The Troop Training Calculator displays power as an estimated gain from training, not as a resource you spend. Food, lumber, stone, ore and, where recorded, gold are the costs.",
     "relatedTool": "/training/"
   },
   {
@@ -135,7 +135,7 @@
   {
     "id": "farming",
     "category": "Resources",
-    "question": "Where can I find more food, wood, stone and ore for Evony upgrades?",
+    "question": "Where can I find more food, lumber, stone and ore for Evony upgrades?",
     "answer": "Use Item Finder to look up resources and see recorded bosses, events or other sources. Then compare the amounts against the totals in the Building Upgrade Calculator. Availability and random drops can affect what you actually earn.",
     "relatedTool": "/resources/"
   }
