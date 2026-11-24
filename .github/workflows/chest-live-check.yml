@@ -36,3 +36,26 @@ jobs:
           }
           await browser.close();
           JS
+
+      - name: Verify same-origin gateway in WebKit
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps webkit
+          node --input-type=module <<'JS'
+          import {webkit} from 'playwright';
+          const b=await webkit.launch();
+          const p=await b.newPage();
+          p.on('pageerror',e=>console.log('WEBKIT PAGE ERROR',String(e)));
+          p.on('requestfailed',r=>console.log('WEBKIT FAILED',r.url(),r.failure()));
+          p.on('response',r=>{if(r.url().includes('/api/chests'))console.log('WEBKIT GATEWAY',r.status(),r.url().slice(0,140));});
+          try{
+            await p.goto('https://www.evonymasters.com/chests/?q=Lumber',{waitUntil:'domcontentloaded'});
+            await p.waitForTimeout(5000);
+            console.log('WEBKIT INITIAL',await p.locator('#count').innerText(),await p.locator('#status').innerText(),await p.locator('.chest').count());
+            await p.locator('#q').fill('Ore');
+            await p.locator('#add-item-search').click();
+            await p.waitForTimeout(4000);
+            console.log('WEBKIT ORE',await p.locator('#count').innerText(),await p.locator('#status').innerText(),await p.locator('.chest').count());
+          }catch(e){console.log('WEBKIT DIAG ERROR',String(e));}
+          await b.close();
+          JS
