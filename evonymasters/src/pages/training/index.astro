@@ -6,9 +6,9 @@ const format = n => n.toLocaleString('en-US',{maximumFractionDigits:2});
 ---
 <!doctype html>
 <html lang="en">
-<head><SeoMetadata title="Evony Troop Training Calculator (T1–T16) | EvonyMasters" description="Calculate Evony troop training costs for T1–T16 ground, ranged, cavalry and siege troops. Plan Food, Wood, Stone, Ore, Gold and total Power."/>
+<head><SeoMetadata title="Evony Troop Training Calculator (T1–T16) | EvonyMasters" description="Calculate Evony troop training costs for T1–T16 ground, ranged, cavalry and siege troops. Plan Food, Lumber, Stone, Ore, Gold and total Power."/>
 <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<meta name="description" content="Calculate Evony troop training costs for T1–T16 ground, ranged, cavalry and siege troops. Plan Food, Wood, Stone, Ore, Gold and total Power."/>
+<meta name="description" content="Calculate Evony troop training costs for T1–T16 ground, ranged, cavalry and siege troops. Plan Food, Lumber, Stone, Ore, Gold and total Power."/>
 <link rel="icon" href="/favicon.svg"/>
 <title>Evony Troop Training Calculator (T1–T16) | EvonyMasters</title>
 <style is:global>
@@ -66,7 +66,7 @@ tfoot th{text-align:left;color:#f2cd89}tfoot tr+tr th,tfoot tr+tr td{background:
 </style></head>
 <body><SiteHeader active="training" /><main>
 <div class="banner-hero banner-troop-training"><h1>Evony Troop Training Costs Calculator (T1–T16)</h1>
-<p class="lead">From a few fresh recruits to a full-scale army, know the price before you train. Pick any mix of troop types and tiers, enter your target numbers and see the Food, Wood, Stone, Ore, Gold and Power totals update instantly.</p></div>
+<p class="lead">From a few fresh recruits to a full-scale army, know the price before you train. Pick any mix of troop types and tiers, enter your target numbers and see the Food, Lumber, Stone, Ore, Gold and Power totals update instantly.</p></div>
 <div class="controls">
 <div class="control"><span>Troop type</span>
 <details class="filter" id="type-filter"><summary><span class="filter-caption">All troop types</span><span aria-hidden="true">▾</span></summary>
@@ -83,13 +83,13 @@ tfoot th{text-align:left;color:#f2cd89}tfoot tr+tr th,tfoot tr+tr td{background:
 </div>
 <div class="summary">
 <div class="summary-item"><span>Total troops required</span><strong id="summary-troops">0</strong></div>
-<div class="summary-item"><span>Total resources (Food + Wood + Stone + Ore)</span><strong id="summary-resources">0</strong></div>
+<div class="summary-item"><span>Total resources (Food + Lumber + Stone + Ore)</span><strong id="summary-resources">0</strong></div>
 <div class="summary-item"><span>Total Gold needed</span><strong id="summary-gold">0</strong></div>
 <div class="summary-item"><span>Total Power gained</span><strong id="summary-power">0</strong></div>
 </div>
 <div class="table-wrap">
 <table aria-label="Troop training calculator">
-<thead><tr><th scope="col">Level</th><th scope="col">Troop type</th><th scope="col">Troops Required</th><th scope="col">Food</th><th scope="col">Wood</th><th scope="col">Stone</th><th scope="col">Ore</th><th scope="col">Gold</th><th scope="col">Power</th><th scope="col">Total resources</th></tr></thead>
+<thead><tr><th scope="col">Level</th><th scope="col">Troop type</th><th scope="col">Troops Required</th><th scope="col">Food</th><th scope="col">Lumber</th><th scope="col">Stone</th><th scope="col">Ore</th><th scope="col">Gold</th><th scope="col">Power</th><th scope="col">Total resources</th></tr></thead>
 <tbody id="training-rows">
 {TROOP_TRAINING_COSTS.map(t=><tr data-id={t.id} data-tier={t.tier} data-type={t.type}>
 <td class="tier-cell">T{t.tier}</td><td class="type-cell">{t.type}</td>
@@ -112,7 +112,7 @@ tfoot th{text-align:left;color:#f2cd89}tfoot tr+tr th,tfoot tr+tr td{background:
 <ol>
 <li><strong>Choose troop types and tiers.</strong> Use the filters to focus on the units you want to train, or leave all troop types and levels visible.</li>
 <li><strong>Enter your target troop counts.</strong> Fill in the Troops Required field for each selected type and tier.</li>
-<li><strong>Review the totals.</strong> Compare Food, Wood, Stone, Ore, Gold, total resources and Power. The filtered subtotal reflects visible rows; the grand total includes all entered rows, even when filtered out.</li>
+<li><strong>Review the totals.</strong> Compare Food, Lumber, Stone, Ore, Gold, total resources and Power. The filtered subtotal reflects visible rows; the grand total includes all entered rows, even when filtered out.</li>
 </ol>
 <p>These are planning estimates based on the calculator's recorded troop costs. Confirm any in-game discounts, buffs or changing training mechanics before committing resources.</p>
 <h3>Plan your troop layers and rewards</h3>

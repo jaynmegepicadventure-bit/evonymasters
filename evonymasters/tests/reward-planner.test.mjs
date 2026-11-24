@@ -12,7 +12,7 @@ test('quantity input supports suffixes but ignores unverified amounts',()=>{
 });
 test('super and super safe chests are 1M each resource type',()=>{
  for(const chest of ['Super Resources Chest','Super Safe Resource Chest','Super Safe Resources Chest']){
-  assert.deepEqual(resourcesFor(chest,2),{Food:2e6,Wood:2e6,Stone:2e6,Ore:2e6});
+  assert.deepEqual(resourcesFor(chest,2),{Food:2e6,Lumber:2e6,Stone:2e6,Ore:2e6});
   assert.equal(valueFor(chest,15,'Combined Resources'),60e6);
   assert.equal(valueFor(chest,15,'Ore'),15e6);
  }
@@ -109,7 +109,7 @@ test('5B Food goal includes regular and Safe Food, but only food share of resour
  assert.equal(remainingTarget('5B','250M'),4_750_000_000);
 });
 test('safe and standard single-resource rewards count toward their own targets',()=>{
- for(const [name,target] of [['Safe Food','Food'],['Safe Wood','Wood'],['Safe Lumber','Wood'],['Safe Stone','Stone'],['Safe Ore','Ore']]){
+ for(const [name,target] of [['Safe Food','Food'],['Safe Wood','Lumber'],['Safe Lumber','Lumber'],['Safe Stone','Stone'],['Safe Ore','Ore']]){
   assert.equal(valueFor(name,'25M',target),25_000_000);
   assert.equal(valueFor(name,'25M','Combined Resources'),25_000_000);
  }

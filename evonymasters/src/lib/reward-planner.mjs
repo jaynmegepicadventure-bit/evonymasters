@@ -1,10 +1,10 @@
 // Reward Planner calculation primitives. No guessed drop rates or chest contents.
-export const RESOURCE_TYPES = ["Food","Wood","Stone","Ore"];
+export const RESOURCE_TYPES = ["Food","Lumber","Stone","Ore"];
 export const MILLION = 1000000;
 // Safe resources contribute to the same resource target as their regular versions.
 export const RESOURCE_ALIASES = Object.freeze({
   food:"Food", "safe food":"Food", "food safe":"Food",
-  wood:"Wood", lumber:"Wood", "safe wood":"Wood", "safe lumber":"Wood", "wood safe":"Wood", "lumber safe":"Wood",
+  wood:"Lumber", lumber:"Lumber", "wood lumber":"Lumber", "safe wood":"Lumber", "safe lumber":"Lumber", "wood safe":"Lumber", "lumber safe":"Lumber",
   stone:"Stone", "safe stone":"Stone", "stone safe":"Stone",
   ore:"Ore", "safe ore":"Ore", "ore safe":"Ore"
 });
