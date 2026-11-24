@@ -10,23 +10,34 @@ const siege=['bigSiege','smallSiege','soloSiege'];
 const combat=['ranged','mounted','ground'];
 
 
-test('regression snapshots compare original reference march sizes with new distributions',()=>{
- const checks=[
-  ['ranged',7393200,[14,15],{14:2653467,15:2653466,13:1516267}],
-  ['mounted',7480700,[14],{14:3861500,13:1930750,12:1158450}],
-  ['ground',7500000,[14,15],{14:3850000,15:1925000,13:1155000}]
- ];
- for(const [type,size,upper,expected] of checks){
-  const result=calculateFormation(type,size,[...base,...upper]);
-  const layers=byTier(result);
-  for(const [tier,count] of Object.entries(expected))assert.equal(layers[tier],count,`${type} T${tier}`);
-  assert.equal(result.total,size);
- }
-});
-
-test('adaptive thresholds include exactly 4M and 6M boundaries',()=>{
- for(const [size,want] of [[1,1000],[3999999,1000],[4000000,5000],[6000000,5000],[6000001,10000],[7500000,10000]])
+test('adaptive layer sizes increase each million and become 10K at 7M',()=>{
+ for(const [size,want] of [[1,1000],[1999999,1000],[2000000,2000],[3000000,3000],[3999999,3000],[4000000,4000],[5000000,5000],[6000000,6000],[6999999,6000],[7000000,10000],[7500000,10000]])
   assert.equal(combatLayerSize(size),want);
+});
+test('custom support sizes override recommendations and validate bounds',()=>{
+ for(const type of combat){
+  const x=calculateFormation(type,4000000,[...base,14],{layerSize:3000});
+  assert.equal(x.layerSize,3000);
+  assert.equal(x.otherLayers,3*14*3000);
+  assert.equal(x.total,4000000);
+ }
+ assert.throws(()=>calculateFormation('ranged',4000000,[...base,14],{layerSize:0}));
+ assert.throws(()=>calculateFormation('ranged',4000000,[...base,14],{layerSize:1000001}));
+});
+test('T14 ranged uses tier-specific 20/30/50 preference (T12 > T13 > T14)',()=>{
+ const x=calculateFormation('ranged',4000000,[...base,14]);
+ const r=byTier(x);
+ assert.ok(r[12]>r[13]&&r[13]>r[14]);
+ assert.equal(r[9],4000);
+ assert.equal(x.total,4000000);
+});
+test('large march fixed T9-T11 and special ground T12 allocations survive',()=>{
+ const ranged=byTier(calculateFormation('ranged',7500000,[...base,14,15]));
+ for(const t of [9,10,11])assert.equal(ranged[t],50000);
+ const mounted=byTier(calculateFormation('mounted',7500000,[...base,14]));
+ assert.equal(mounted[9],25000);assert.equal(mounted[10],25000);assert.equal(mounted[11],100000);
+ const ground=byTier(calculateFormation('ground',7500000,[...base,14,15]));
+ assert.equal(ground[9],25000);assert.equal(ground[11],25000);assert.equal(ground[12],500000);
 });
 for(const type of combat){
  test(type+' reconciles reference examples and adaptive march sizes',()=>{
@@ -41,7 +52,7 @@ for(const type of combat){
     assert.equal(x.otherLayers,3*highest*layer);
     assert.equal(x.total,size,`${type} ${size} ${highest}`);
     assert.equal(d.displayed+d.otherSupport,size);
-    for(let tier=1;tier<=9;tier++)assert.equal(byTier(x)[tier],layer,`${type} T${tier}`);
+    for(let tier=1;tier<=6;tier++)assert.equal(byTier(x)[tier],layer,`${type} T${tier}`);
     assert.ok(x.rows.every(row=>Number.isInteger(row.count)&&row.count>=0));
    }
   }
@@ -58,7 +69,7 @@ for(const type of combat){
   const x=calculateFormation(type,3500000,base);
   const r=byTier(x);
   assert.equal(x.tiers[0],13);
-  assert.ok(r[13]>r[12]||type==='ranged');
+  assert.ok(r[13]>0&&r[12]>0);
   assert.ok(r[11]>0);
   assert.equal(r[14],undefined);
   assert.equal(x.total,3500000);
@@ -100,4 +111,14 @@ test('the public page retains empty defaults and no restore button',()=>{
  assert.match(page,/checked=\{false\}/);
  assert.match(page,/value=""/);
  assert.doesNotMatch(page,/Restore Excel examples/);
+});
+
+test('PvP guidance and custom toggle are present without enabling siege custom inputs',()=>{
+ const page=readFileSync(new URL('../src/pages/troops/index.astro',import.meta.url),'utf8');
+ assert.match(page,/Recommended PvP march presets/);
+ assert.match(page,/mode-recommended/);
+ assert.match(page,/mode-custom/);
+ assert.match(page,/custom-layer-field/);
+ assert.match(page,/layer-size-row/);
+ assert.match(page,/t.base!==1000/);
 });
