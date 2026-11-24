@@ -1,0 +1,38 @@
+name: Inspect Live Chest Gateway
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/chest-live-check.yml'
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save puppeteer-core
+      - name: Check API bodies and real page requests
+        run: |
+          node --input-type=module <<'JS'
+          import puppeteer from 'puppeteer-core';
+          const hosts=['https://www.evonymasters.com','https://evonymasters.com'];
+          for(const host of hosts)for(const route of ['/api/chests?q=Lumber&source=all&event=&participation=all&rank=&page=0','/api/chests/events','/api/chests/compare?id=common%2520hydra%2520chest%257C%257C%257C']){
+            try{const r=await fetch(host+route,{signal:AbortSignal.timeout(12000)});const body=await r.text(); console.log('BODY',host,route.slice(0,100),'HTTP',r.status,'CT',r.headers.get('content-type'),'LEN',body.length,'PREFIX',body.slice(0,420));}catch(e){console.log('BODY ERROR',host,route.slice(0,100),String(e));}
+          }
+          const browser=await puppeteer.launch({executablePath:'/usr/bin/google-chrome',headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
+          for(const host of hosts){
+            const page=await browser.newPage();
+            page.on('pageerror',e=>console.log('PAGE ERROR',host,e.stack||String(e)));
+            page.on('console',m=>{if(['error','warning'].includes(m.type()))console.log('CONSOLE',host,m.type(),m.text().slice(0,500));});
+            page.on('response',async r=>{if(r.url().includes('/api/chests')){try{const txt=(await r.text()).slice(0,220);console.log('BROWSER API',host,r.status(),r.url().slice(0,165),txt);}catch(e){console.log('RESPONSE READ ERROR',String(e));}}});
+            page.on('requestfailed',r=>console.log('FAILED',host,r.url(),r.failure()?.errorText));
+            try{
+              await page.goto(host+'/chests/?q=Lumber',{waitUntil:'domcontentloaded',timeout:30000});
+              await new Promise(r=>setTimeout(r,4500));
+              console.log('PAGE STATE',host,await page.$eval('#count',x=>x.textContent),await page.$eval('#status',x=>x.textContent),await page.$$eval('.chest',x=>x.length));
+            }catch(e){console.log('PAGE TEST ERROR',host,String(e));}
+            await page.close();
+          }
+          await browser.close();
+          JS
