@@ -42,3 +42,24 @@ jobs:
           }
           await browser.close();
           JS
+
+      - name: Test live WebKit browser
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps webkit
+          node --input-type=module <<'JS'
+          import { webkit } from 'playwright';
+          const b=await webkit.launch({headless:true});
+          const p=await b.newPage();
+          p.on('pageerror',e=>console.log('WEBKIT ERROR',String(e)));
+          p.on('requestfailed',r=>console.log('WEBKIT REQUEST FAIL',r.url(),r.failure()));
+          p.on('response',r=>{if(r.url().includes('/v4/chests'))console.log('WEBKIT API',r.status(),r.url());});
+          await p.goto('https://www.evonymasters.com/chests/?q=Lumber',{waitUntil:'domcontentloaded'});
+          await p.waitForTimeout(4000);
+          console.log('WEBKIT STATUS 1',await p.locator('#count').innerText(),await p.locator('#status').innerText());
+          await p.locator('#q').fill('Ore');
+          await p.locator('#add-item-search').click();
+          await p.waitForTimeout(4000);
+          console.log('WEBKIT STATUS 2',await p.locator('#count').innerText(),await p.locator('#status').innerText());
+          await b.close();
+          JS
