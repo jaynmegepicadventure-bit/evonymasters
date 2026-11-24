@@ -19,7 +19,7 @@ test('Chest Finder searches one reward and fetches only one page at a time',()=>
  assert.doesNotMatch(page,/verifyFullRewards/);
  assert.match(page,/function terms\(\)\{return \[activeQuery\];\}/);
  assert.match(page,/const data=await fetchChestPage\(params,request\.signal\)/);
- assert.match(page,/if\(hasMore\)page\+\+/);
+ assert.match(page,/page=hasMore\?requestedPage\+1:requestedPage/);
  assert.match(page,/more\.addEventListener\("click",\(\)=>\{if\(hasMore\)load\(true\);\}\)/);
  assert.doesNotMatch(page,/while\(morePages/);
  assert.doesNotMatch(page,/Promise\.all\(list\.map/);
