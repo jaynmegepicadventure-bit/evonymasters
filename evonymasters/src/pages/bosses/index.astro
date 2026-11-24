@@ -47,8 +47,8 @@ const label=type=>type==='Event'?'Event Boss':type==='Regular'?'Regular Monster'
   .boss-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 9px;margin:0}
   .boss-meta div{min-width:0}.boss-meta dt{text-transform:uppercase;font-size:.66rem;font-weight:800;letter-spacing:.07em;color:#a6bbcd;margin-bottom:4px}
   .boss-meta dd{font-size:.9rem;font-weight:700;color:#edf3f9;margin:0;overflow-wrap:anywhere}
-  .boss-link{margin-top:auto;display:inline-flex;gap:6px;align-items:center;color:#f3cd84;font-weight:800;font-size:.86rem;text-decoration:none;padding-top:4px}
-  .boss-link:hover{text-decoration:underline}.unavailable{color:#b6c9d6;font-size:.78rem;font-weight:650}
+  .boss-meta dd a{color:#f3cd84;font-weight:850;text-decoration:none}
+  .boss-meta dd a:hover{text-decoration:underline;text-underline-offset:3px}
   .empty{background:#152c42;border:1px solid #48647c;padding:25px;border-radius:12px;margin-top:20px;color:#e8d5b4}
   [hidden]{display:none!important}
   .bottom-note{margin:35px 0 0;color:#adc1d4;font-size:.87rem;line-height:1.7}
@@ -87,7 +87,6 @@ const label=type=>type==='Event'?'Event Boss':type==='Regular'?'Regular Monster'
      <div><dt>Power</dt><dd>{format(monster.power)}</dd></div>
      <div><dt>Rewards</dt><dd><a href={'/bosses/catalog/'+monsterSlug(monster)+'/'}>See reward data →</a></dd></div>
     </dl>
-    <a class="boss-link" href={'/bosses/catalog/'+monsterSlug(monster)+'/'} aria-label={'View rewards and chests for '+monster.name}>View rewards &amp; chests →</a>
    </article>)}
   </div>
   <p class="empty" id="no-boss-results" hidden>No monsters match these filters. Try another name or clear the filters.</p>
@@ -147,8 +146,7 @@ const label=type=>type==='Event'?'Event Boss':type==='Regular'?'Regular Monster'
     for(const [caption,value] of [['Level',level],['Stamina',m.stamina],['Power',m.power],['Rewards','See reward data']]){
      const group=document.createElement('div'),dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=caption;dd.textContent=String(value??'').trim()||'Not verified';group.append(dt,dd);dl.appendChild(group);
     }card.appendChild(dl);
-    if(detail){const reward=dl.querySelectorAll('dd')[3];if(reward){const link=document.createElement('a');link.href=detail;link.textContent='See reward data →';reward.replaceChildren(link)}const a=document.createElement('a');a.className='boss-link';a.href=detail;a.textContent='View rewards & chests →';card.appendChild(a)}
-    else {const span=document.createElement('span');span.className='boss-link unavailable';span.textContent='Reward page pending publication';card.appendChild(span)}
+    const reward=dl.querySelectorAll('dd')[3];if(reward&&detail){const link=document.createElement('a');link.href=detail;link.textContent='See reward data →';reward.replaceChildren(link)}
     fragment.appendChild(card);
    }
    if(!dedupe.size)return;
