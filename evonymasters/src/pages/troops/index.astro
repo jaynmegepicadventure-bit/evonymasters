@@ -26,8 +26,12 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 .mode-selector{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:16px 0}
 .mode-selector button{padding:10px 16px;border:1px solid #607994;border-radius:8px;background:#12283c;color:#e4ecf4;font-weight:800}
 .mode-selector button[aria-pressed="true"]{background:#f0c77c;color:#091a2b;border-color:#f0c77c}
-.pvp-note{padding:13px 16px;border-left:3px solid #f0c77c;background:#12283c;border-radius:8px;margin-top:12px;color:#e6edf5}
-.layer-tip{font-size:.88rem;margin:10px 0 0;color:#c3d5e3}
+.preset-tips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0 4px}
+.preset-tip{display:flex;gap:10px;align-items:flex-start;padding:12px 13px;border-radius:11px;background:#132b40;border:1px solid #36536b;min-width:0}
+.preset-tip strong{display:block;color:#f0c77c;font-size:.84rem;margin-bottom:4px}
+.preset-tip span:not(.tip-symbol){display:block;color:#c3d5e3;font-size:.78rem;line-height:1.45}
+.tip-symbol{display:grid;place-items:center;flex:none;width:32px;height:32px;border-radius:9px;background:#213e55;font-size:1.1rem}
+@media(max-width:900px){.preset-tips{grid-template-columns:1fr}.preset-tip{padding:11px 13px}}
 .custom-layer-field{margin-top:12px}.custom-layer-field[hidden]{display:none}
 .layer-size-row{border:1px solid #536b7e;background:#1a354d;border-radius:8px;padding:10px 12px;display:flex;justify-content:space-between;gap:10px;margin:12px 0 8px;font-size:.85rem;font-weight:750}
 .layer-size-row output{color:#f3c678;font-variant-numeric:tabular-nums}
@@ -69,8 +73,11 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 </style></head>
 <body><SiteHeader active="troops"/><main>
 <div class="top banner-hero banner-march-preset"><h1>Evony March Preset & Troop Layer Calculator</h1><p>Put your march capacity to work. Enter your march size, tick any upper tiers you've unlocked and see a ready-to-use troop layer breakdown. Lower tiers are built into the plan automatically. Ranged, cavalry and ground layers adjust to your march capacity; siege presets keep their separate rules.</p></div>
-<div class="pvp-note"><strong>Recommended PvP march presets.</strong> These formations are starting points for player-versus-player battles, not guaranteed wins. Adjust them for your troops, buffs and opponent.</div>
-<p class="layer-tip"><strong>Layer tip:</strong> Start with at least 1,000 troops per support layer. For ranged, cavalry and ground, add 1,000 per layer for each full million march capacity (3M = 3K, 5M = 5K); at 7M and above, use 10K layers. Certain T7–T11 layers remain larger in high-capacity presets. Siege uses separate rules.</p>
+<div class="preset-tips" aria-label="Quick PvP march tips">
+ <div class="preset-tip"><span class="tip-symbol" aria-hidden="true">⚔️</span><div><strong>Recommended PvP march presets</strong><span>A smart starting point, not a guaranteed win. Tune for your buffs and opponent.</span></div></div>
+ <div class="preset-tip"><span class="tip-symbol" aria-hidden="true">📈</span><div><strong>Layers grow with your march</strong><span>Minimum 1K, then +1K per full million (4M = 4K). From 7M, use 10K. Larger T7–T11 layers can still apply.</span></div></div>
+ <div class="preset-tip"><span class="tip-symbol" aria-hidden="true">🏹</span><div><strong>Still below T13?</strong><span>No problem. The calculator builds around your highest available tiers. Treat lower-tier PvP presets as a starting point and adjust for your roster.</span></div></div>
+</div>
 <div class="mode-selector" role="group" aria-label="Troop layer calculator mode"><strong>Layer mode:</strong><button type="button" id="mode-recommended" aria-pressed="true">Recommended</button><button type="button" id="mode-custom" aria-pressed="false">Custom layers</button></div>
 <div class="toolbar"><button type="button" id="clear">Clear march sizes</button><button type="button" id="print">Print results</button></div>
 <div class="scroller"><div class="cols">{types.map(t=><section class="card" data-type={t.id}>
