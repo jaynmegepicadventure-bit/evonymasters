@@ -8,7 +8,7 @@ export function bossPageId(monster, directory) {
     String(row.level || '') === String(monster.level || '') &&
     row.name.trim().toLocaleLowerCase('en') === monster.name.trim().toLocaleLowerCase('en')
   );
-  return match?.detailId || monsterSlug(monster);
+  // Two spreadsheet aliases can point at one old detail page. Keep that URL\n  // for the first record only so every generated path stays unique.\n  const firstWithId = match?.detailId && directory.find(row => row.detailId === match.detailId);\n  return match?.detailId && firstWithId === match ? match.detailId : monsterSlug(monster);
 }
 export function bossPagePath(monster, directory) {
   return '/bosses/' + encodeURIComponent(bossPageId(monster, directory)) + '/';
