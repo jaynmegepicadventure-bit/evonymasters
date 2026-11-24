@@ -24,7 +24,13 @@ export default {
     "cache-control":"no-store",
     "x-content-type-options":"nosniff"
    }});
-  }catch{
+  }catch(error){
+   // Log the internal error so Cloudflare Observability can identify the
+   // service-binding failure. Do not expose implementation details to visitors.
+   console.error("Chest gateway upstream failure",{
+    name:error?.name||"Unknown",
+    message:String(error?.message||error).slice(0,400)
+   });
    return new Response(JSON.stringify({error:"Chest data service temporarily unavailable"}),{status:502,headers:{"content-type":"application/json; charset=utf-8","cache-control":"no-store"}});
   }
  }
