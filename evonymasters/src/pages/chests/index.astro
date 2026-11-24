@@ -421,34 +421,25 @@ function renderResults(){
 }
 // Retry transient API failures, including Safari network interruptions.
 // No retry may bypass a user-triggered cancellation.
-// Prefer a same-origin chest API when its Cloudflare gateway is installed.
-// Fall back to the existing Worker until that route has been configured.
-let chestGatewayAvailable=null;
+// Chest Finder uses the same-origin Cloudflare gateway exclusively.
+// Never fall back to the cross-origin sheet-sync Worker: that masks gateway
+// errors as browser network failures, particularly with privacy protections.
 async function fetchChestRoute(path="",params=null,signal){
  const query=params?"?"+params:"";
- if(chestGatewayAvailable!==false){
-  try{
-   const local=await fetch("/api/chests"+path+query,{signal,cache:"no-store"});
-   if(local.ok&&local.headers.get("content-type")?.includes("application/json")){
-    chestGatewayAvailable=true;
-    return local;
-   }
-   if(local.status===404||!local.headers.get("content-type")?.includes("application/json"))
-    chestGatewayAvailable=false;
-   else if(local.status<500)return local;
-  }catch(error){
-   if(signal?.aborted)throw error;
-  }
- }
- return fetch(API+"/v4/chests"+path+query,{signal,cache:"no-store"});
+ return fetch("/api/chests"+path+query,{signal,cache:"no-store"});
 }
 async function fetchChestPage(params,signal){
  for(let attempt=0;attempt<2;attempt++){
   try{
    const response=await fetchChestRoute("",params,signal);
-   if(response.ok)return response.json();
+   if(response.ok){
+    const payload=await response.json();
+    if(!payload||!Array.isArray(payload.chests))
+     throw Error("Chest gateway returned an invalid response");
+    return payload;
+   }
    if(attempt===1||response.status<500&&response.status!==429)
-    throw Error("Reward data service returned HTTP "+response.status);
+    throw Error("Chest gateway returned HTTP "+response.status);
   }catch(error){
    if(signal.aborted||attempt===1||/returned HTTP/.test(error.message))throw error;
   }
@@ -492,7 +483,7 @@ async function load(append=false){
    console.warn("Chest Finder search failed",error);
    const message=String(error.message||error.name||"Unknown error");
    const reason=/HTTP [0-9]{3}/.exec(message)?.[0]
-    ||(/failed to fetch|load failed|network/i.test(message)?"browser network request failed":message.slice(0,100));
+    ||(/failed to fetch|load failed|network/i.test(message)?"same-origin gateway connection failed":message.slice(0,100));
    status.textContent=(allFound.size?"Previous results are still shown. ":"")
     +"Chest request failed ("+reason+"). Try Search again.";
    more.hidden=!hasMore;
