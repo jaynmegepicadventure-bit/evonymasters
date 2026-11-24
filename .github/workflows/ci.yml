@@ -30,3 +30,14 @@ jobs:
             }catch(error){console.log(route,'FETCH ERROR:',String(error));}
           }
           JS
+
+      - name: Diagnose live Chest Finder in headless browser
+        run: |
+          if command -v google-chrome >/dev/null; then
+            google-chrome --version
+            timeout 45s google-chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=12000 --dump-dom 'https://www.evonymasters.com/chests/?q=Lumber' > /tmp/chest-dom.txt 2>/tmp/chrome-errors.txt || true
+            echo '--- Chest Finder visible status ---'
+            grep -oE 'Chest data service is unavailable[^<]*|Chest Finder is temporarily unavailable[^<]*|[0-9]+ matching chests|Finding your best matches[^<]*|Some reward amounts could not be verified[^<]*' /tmp/chest-dom.txt | tail -20 || true
+            echo '--- Browser console errors ---'
+            grep -Ei 'console|uncaught|failed to load|error' /tmp/chrome-errors.txt | tail -18 || true
+          else echo 'Chrome not installed on runner'; fi
