@@ -67,6 +67,33 @@ test('T13-max ranged stays T12-heavy from 2M to 7M with fixed supports at 6.5M',
  assert.equal(before7.layerSize,6000);
  assert.equal(at7.layerSize,10000);
 });
+test('T15 ranged maintains the four main tiers at 6.5M and 7M',()=>{
+ const checks=[
+  [6500000,6000,904800,1206400,1809600,2111200],
+  [7000000,10000,948000,1264000,1896000,2212000]
+ ];
+ for(const [size,layer,t15,t14,t13,t12] of checks){
+  const x=calculateFormation('ranged',size,[...base,14,15]);
+  const r=byTier(x);
+  assert.equal(x.layerSize,layer);
+  assert.equal(r[15],t15);
+  assert.equal(r[14],t14);
+  assert.equal(r[13],t13);
+  assert.equal(r[12],t12);
+  assert.ok(r[12]>r[13]&&r[13]>r[14]&&r[14]>r[15]);
+  for(const tier of [9,10,11])assert.equal(r[tier],50000);
+  assert.equal(x.total,size);
+  assert.equal(displayFormationLayers(x).displayed+displayFormationLayers(x).otherSupport,size);
+ }
+});
+test('players below T13 receive valid T12-max ranged allocations',()=>{
+ const x=calculateFormation('ranged',2000000,base.filter(t=>t<=12));
+ const r=byTier(x);
+ assert.equal(x.tiers[0],12);
+ assert.equal(x.layerSize,2000);
+ assert.ok(r[12]>0&&r[11]>0&&r[10]>0);
+ assert.equal(x.total,2000000);
+});
 test('T14 ranged uses tier-specific 20/30/50 preference (T12 > T13 > T14)',()=>{
  const x=calculateFormation('ranged',4000000,[...base,14]);
  const r=byTier(x);
@@ -178,5 +205,7 @@ test('PvP guidance and custom toggle are present without enabling siege custom i
  assert.match(page,/mode-custom/);
  assert.match(page,/custom-layer-field/);
  assert.match(page,/layer-size-row/);
+ assert.match(page,/Still below T13/);
+ assert.match(page,/preset-tip/);
  assert.match(page,/t.base!==1000/);
 });
