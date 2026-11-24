@@ -106,9 +106,9 @@ main.wrap{padding-bottom:120px}
 <p class="finder-help" id="tab-description">Find boss and monster chests, then check which rewards they contain.</p>
 <div class="search"><label for="q" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden">Chest or reward item</label><input id="q" type="search" placeholder="Search a chest or reward…" autocomplete="off" list="chest-suggestions"/><datalist id="chest-suggestions">{itemCatalog.map(item => <option value={item.name} />)}</datalist>
 <button type="button" id="add-item-search" class="search-add">Search</button>
-<label for="source" class="source-control" hidden>Source <select id="source"><option value="all">All sources</option><option value="bosses">Bosses</option><option value="events">Events</option><option value="activities">Activities</option><option value="unlinked">Source not recorded</option></select></label></div><p class="search-help">Search one chest or reward at a time. Press Enter or Search to view results.</p>
+<input id="source" type="hidden" value="all"/></div><p class="search-help">Search one chest or reward at a time. Press Enter or Search to view results.</p>
 <div class="finder-filters"><label><input type="checkbox" id="live-filter"/> Live sources only</label>
-<label for="sort-order">Sort by <select id="sort-order"><option value="reward">Best reward</option><option value="live">Live first</option><option value="name">Chest name A–Z</option></select></label><label id="monster-level-wrap">Monster level <select id="monster-level"><option value="all">All levels</option><option value="1-10">1–10</option><option value="11-20">11–20</option><option value="21+">21+</option></select></label><label>Drop type <select id="drop-type"><option value="all">All drops</option><option value="guaranteed">Guaranteed</option><option value="possible">Possible / chance</option></select></label>
+<label for="sort-order">Sort by <select id="sort-order"><option value="reward">Best reward</option><option value="name">Chest name A–Z</option></select></label><label>Drop type <select id="drop-type"><option value="all">All drops</option><option value="guaranteed">Guaranteed</option><option value="possible">Possible / chance</option></select></label>
 <button type="button" class="pill secondary" id="clear-filters">Clear filters</button></div>
 <div class="advanced" id="event-search" hidden>
 <label for="event-filter">Event name<select id="event-filter"><option value="">All events</option></select></label>
@@ -145,7 +145,7 @@ const API="https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev";
 const q=document.getElementById("q"),source=document.getElementById("source"),eventFilter=document.getElementById("event-filter"),participationFilter=document.getElementById("participation-filter"),rankFilter=document.getElementById("rank-filter"),eventSearch=document.getElementById("event-search"),cards=document.getElementById("chests"),more=document.getElementById("more"),status=document.getElementById("status"),count=document.getElementById("count"),compare=document.getElementById("compare"),reset=document.getElementById("reset"),selection=document.getElementById("selected-count"),panel=document.getElementById("comparison-panel"),head=document.getElementById("compare-head"),body=document.getElementById("compare-body");
 const selected=new Map();let page=0,hasMore=false,serial=0,timer=null,request=null,availability=null;
 const tabStrip=document.getElementById("finder-tabs"),tabHelp=document.getElementById("tab-description"),dock=document.getElementById("comparison-dock");
-const sortOrder=document.getElementById("sort-order"),liveFilter=document.getElementById("live-filter"),monsterLevel=document.getElementById("monster-level"),monsterLevelWrap=document.getElementById("monster-level-wrap"),dropType=document.getElementById("drop-type");
+const sortOrder=document.getElementById("sort-order"),liveFilter=document.getElementById("live-filter"),dropType=document.getElementById("drop-type");
 
 let currentTab="all",allFound=new Map();
 
@@ -160,9 +160,79 @@ searchButton.addEventListener("click",()=>{activeQuery=resourceSearchTerm(q.valu
 q.addEventListener("keydown",event=>{
  if(event.key==="Enter"){event.preventDefault();activeQuery=resourceSearchTerm(q.value);schedule();}
 });
-const sourceKey=v=>String(v??"").trim().toLowerCase().replace(/\s*·\s*lv\s*\d+$/i,"").replace(/\s+/g," ");
-function paintAvailability(article,c){const badge=article.querySelector(".source-availability");if(!badge)return;if(!availability){badge.textContent="Source availability: checking…";return}const matches=(c.sources||[]).map(src=>availability.get(sourceKey(src.name))).filter(Boolean);const live=matches.some(v=>v.live),upcoming=matches.map(v=>v.next).filter(Boolean).sort()[0];badge.classList.toggle("live",live);badge.textContent=live?"● Source LIVE":upcoming?"Source upcoming · "+upcoming+" UTC":"Source schedule not recorded";}
-async function loadAvailability(){try{const today=new Date().toISOString().slice(0,10),to=new Date(Date.parse(today+"T00:00:00Z")+92*86400000).toISOString().slice(0,10);const r=await fetch("https://evonymasters-calendar.jaynmegepicadventure.workers.dev/api/events?"+new URLSearchParams({from:today,to,kind:"all",includeAlways:"true"}));if(!r.ok)throw Error("Calendar unavailable");const d=await r.json(),next=new Map();for(const e of d.events||[]){const key=sourceKey(e.name),old=next.get(key)||{live:false,next:""};if(e.date===today)old.live=true;else if(!old.next||e.date<old.next)old.next=e.date;next.set(key,old);}availability=next;renderResults()}catch{availability=new Map();renderResults()}}
+const sourceKey=value=>String(value??"").trim().toLowerCase()
+ .replace(/\s*·\s*lv\s*\d+$/i,"").replace(/\s+/g," ");
+const chestBaseName=value=>sourceKey(value)
+ .replace(/^(?:common|uncommon|rare|super rare|epic|legendary|excellent|junior|medium|senior|grand)\s+/,"")
+ .replace(/\s+(?:reward\s+)?(?:chest|bag|box)$/,"").trim();
+const compatibleSource=(kind,type)=>type==="Boss"
+ ?["Boss","Event Boss","Regular Monster"].includes(kind)
+ :type==="Event"
+  ?["Event","Event Boss"].includes(kind)
+  :false;
+function liveMatches(chest){
+ if(!availability)return [];
+ const results=[];
+ const chestName=sourceKey(chest.name).replace(/\s+(?:reward\s+)?(?:chest|bag|box)$/,"").trim();
+ const family=chestBaseName(chest.name);
+ for(const src of chest.sources||[]){
+  const type=String(src.type||"");
+  const byName=availability.get(sourceKey(src.name))||[];
+  for(const entry of byName)if(compatibleSource(entry.kind,type)&&entry.live)results.push(entry);
+  // Event-boss chest names can name the scheduled boss while their source
+  // metadata names its parent event (e.g. "Hydra Invasion").
+  const byChestName=availability.get(chestName)||[];
+  for(const entry of byChestName){
+   if(entry.kind==="Event Boss"&&entry.live&&type==="Event")results.push(entry);
+  }
+  // An explicitly attributed monster chest may use "Lv3 Ymir" as its
+  // source and "Grand Ymir Chest" as its display name.
+  if(type==="Boss"){
+   const byFamily=availability.get(family)||[];
+   for(const entry of byFamily)if(compatibleSource(entry.kind,type)&&entry.live)results.push(entry);
+  }
+ }
+ return results;
+}
+function paintAvailability(article,chest){
+ const badge=article.querySelector(".source-availability");if(!badge)return;
+ if(!availability){badge.textContent="Source availability: checking…";return;}
+ if(availabilityError){badge.textContent="Live schedule unavailable";return;}
+ const live=liveMatches(chest).length>0;
+ const candidates=(chest.sources||[]).flatMap(src=>(availability.get(sourceKey(src.name))||[])
+  .filter(entry=>compatibleSource(entry.kind,src.type)));
+ const upcoming=candidates.filter(entry=>!entry.live&&entry.next).map(entry=>entry.next).sort()[0];
+ badge.classList.toggle("live",live);
+ badge.textContent=live?"● Source LIVE":upcoming?"Source upcoming · "+upcoming+" UTC":"Source schedule not recorded";
+}
+let availabilityError=false;
+async function loadAvailability(){
+ try{
+  const today=new Date().toISOString().slice(0,10);
+  const to=new Date(Date.parse(today+"T00:00:00Z")+92*86400000).toISOString().slice(0,10);
+  const r=await fetch("https://evonymasters-calendar.jaynmegepicadventure.workers.dev/api/events?"+
+   new URLSearchParams({from:today,to,kind:"all",includeAlways:"true"}));
+  if(!r.ok)throw Error("Calendar HTTP "+r.status);
+  const d=await r.json();
+  if(!Array.isArray(d.events))throw Error("Calendar response missing events");
+  const next=new Map();
+  for(const e of d.events){
+   const key=sourceKey(e.name),entries=next.get(key)||[];
+   const live=e.date===today,kind=String(e.kind||"");
+   const prior=entries.find(entry=>entry.kind===kind);
+   if(prior){
+    if(live)prior.live=true;
+    if(!live&&(!prior.next||e.date<prior.next))prior.next=e.date;
+   }else entries.push({kind,live,next:live?"":e.date});
+   next.set(key,entries);
+  }
+  availability=next;availabilityError=false;
+ }catch(error){
+  console.warn("Chest live schedule unavailable",error);
+  availability=new Map();availabilityError=true;
+ }
+ renderResults();
+}
 const toText=x=>String(x??"").trim();
 const collator=new Intl.Collator("en",{numeric:true,sensitivity:"base"});
 const sortedRewards=rows=>[...rows].sort((a,b)=>collator.compare(a.item,b.item)
@@ -325,38 +395,28 @@ function sourceMatchesTab(chest){
  // shortened card metadata here would incorrectly hide valid matches.
  return true;
 }
-function passesLevel(chest){
- if(currentTab!=="monsters"||monsterLevel.value==="all")return true;
- const values=(chest.sources||[]).filter(s=>/boss|monster/i.test(s.type||""))
-  .map(s=>Number.parseInt(toText(s.level).replace(/,/g,""),10)).filter(Number.isFinite);
- if(!values.length)return false;
- return values.some(n=>monsterLevel.value==="1-10"?n>=1&&n<=10:monsterLevel.value==="11-20"?n>=11&&n<=20:n>=21);
-}
 function passesDrop(chest){
  if(dropType.value==="all")return true;
  return [...(chest.items||[]),...(chest.nestedItems||[])].some(item=>toText(item.classification).toLowerCase()===dropType.value);
 }
-function availableNow(chest){
- if(!availability)return false;
- return (chest.sources||[]).some(src=>availability.get(sourceKey(src.name))?.live);
-}
+function availableNow(chest){return liveMatches(chest).length>0;}
 function renderResults(){
  const all=[...allFound.values()];
- const visible=all.filter(chest=>sourceMatchesTab(chest)&&passesLevel(chest)&&passesDrop(chest)&&(!liveFilter.checked||availableNow(chest)));
+ const visible=all.filter(chest=>sourceMatchesTab(chest)&&passesDrop(chest)&&(!liveFilter.checked||!availability||availabilityError||availableNow(chest)));
  // Rank loaded chests by recorded reward quantity; request more only on demand.
- visible.sort((a,b)=>sortOrder.value==="live"
-  ?Number(availableNow(b))-Number(availableNow(a))||compareRewardChests(a,b,terms())
-  :sortOrder.value==="name"
-   ?collator.compare(a.name,b.name)||compareRewardChests(a,b,terms())
-   :compareRewardChests(a,b,terms()));
+ visible.sort((a,b)=>sortOrder.value==="name"
+  ?collator.compare(a.name,b.name)||compareRewardChests(a,b,terms())
+  :compareRewardChests(a,b,terms()));
  cards.replaceChildren();
  for(const chest of visible)cards.append(card(chest));
  count.textContent=visible.length+" matching "+(visible.length===1?"chest":"chests")+
   (hasMore?" shown · more to load":"")+
   (hasMore?" · Load more to expand rankings":"");
  more.hidden=!hasMore;
- status.textContent=visible.length?"":liveFilter.checked&&!availability?"Checking live schedules…":
-   "No matching chests for these filters. Try another reward, level or source.";
+ status.textContent=liveFilter.checked&&!availability?"Checking live schedules…":
+  liveFilter.checked&&availabilityError?"Live calendar unavailable. Showing all recorded chests until schedules can be checked.":
+  visible.length?"":liveFilter.checked?"No recorded live sources match these chests today.":
+   "No matching chests for these filters. Try another reward or drop type.";
  refreshSelected();
 }
 // Retry transient API failures, including Safari network interruptions.
@@ -451,14 +511,11 @@ function selectTab(tab){
   button.setAttribute("aria-selected",String(button.dataset.tab===tab));
  tabHelp.textContent=tabSettings[tab].help;
  source.value=tabSettings[tab].source;
- document.querySelector(".source-control").hidden=tab!=="all";
- monsterLevelWrap.hidden=tab!=="monsters";
- if(tab!=="monsters")monsterLevel.value="all";
  setEventMode();
  schedule();
 }
 function setEventMode(){
- const show=currentTab==="events"||currentTab==="all"&&["events","activities"].includes(source.value);
+ const show=currentTab==="events";
  eventSearch.hidden=!show;
  if(show)loadEventChoices();
  if(!show){eventFilter.value="";participationFilter.value="all";rankFilter.value="";}
@@ -469,11 +526,10 @@ tabStrip.addEventListener("click",event=>{
 });
 liveFilter.addEventListener("change",renderResults);
 sortOrder.addEventListener("change",renderResults);
-monsterLevel.addEventListener("change",renderResults);
 dropType.addEventListener("change",renderResults);
 document.getElementById("clear-filters").addEventListener("click",()=>{
  q.value="";activeQuery="";
- sortOrder.value="reward";liveFilter.checked=false;monsterLevel.value="all";dropType.value="all";eventFilter.value="";
+ sortOrder.value="reward";liveFilter.checked=false;dropType.value="all";eventFilter.value="";
  participationFilter.value="all";rankFilter.value="";schedule();
 });
 let eventChoicesLoaded=false,eventChoicesLoading=false;
@@ -496,7 +552,6 @@ async function loadEventChoices(){
  finally{eventChoicesLoading=false;}
 }
 
-source.addEventListener("change",()=>{setEventMode();schedule()});
 eventFilter.addEventListener("change",schedule);
 participationFilter.addEventListener("change",schedule);
 rankFilter.addEventListener("input",schedule);
@@ -536,7 +591,7 @@ const initial=new URLSearchParams(location.search);q.value=initial.get("q")||"";
 const requestedSource=initial.get("source"),requestedEvent=initial.get("event");
 const initialTab=requestedEvent||["events","activities"].includes(requestedSource)?"events":requestedSource==="bosses"?"monsters":"all";
 activeQuery=resourceSearchTerm(q.value);refreshSelected();selectTab(initialTab);
-if(requestedSource==="unlinked"){source.value="unlinked";schedule();}
+
 loadAvailability();
 })();
 </script></body></html>
