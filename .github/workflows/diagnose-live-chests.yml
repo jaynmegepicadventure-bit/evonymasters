@@ -1,0 +1,29 @@
+name: Diagnose Chest Live Source Matching
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/diagnose-live-chests.yml'
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Compare live calendar entries and chest source metadata
+        run: |
+          node --input-type=module <<'JS'
+          const today='2026-11-24',to='2026-11-25';
+          const urls=[
+            'https://evonymasters-calendar.jaynmegepicadventure.workers.dev/api/events?'+new URLSearchParams({from:today,to,kind:'all',includeAlways:'true'}),
+            'https://www.evonymasters.com/api/chests?'+new URLSearchParams({q:'Lumber',source:'all',page:'0'})];
+          for(const url of urls){
+            try{
+              const r=await fetch(url,{signal:AbortSignal.timeout(14000)}),body=await r.json();
+              console.log('API',r.status,url,'keys',Object.keys(body),'total',body.total,'events',body.events?.length,'chests',body.chests?.length);
+              if(body.events)console.log('CALENDAR SAMPLE',JSON.stringify(body.events.slice(0,25).map(x=>({name:x.name,kind:x.kind,date:x.date,rule:x.rule}))));
+              if(body.chests)console.log('CHEST SOURCES',JSON.stringify(body.chests.slice(0,15).map(x=>({name:x.name,sources:x.sources?.map(y=>({name:y.name,type:y.type,level:y.level}))}))));
+            }catch(e){console.log('FETCH ERROR',String(e))}
+          }
+          JS
