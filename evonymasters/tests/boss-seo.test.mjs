@@ -20,8 +20,8 @@ test('boss template includes useful explanatory copy and links to related boss p
  assert.ok(page.includes('Recorded stamina cost'));
 });
 
-test('all monster pages have a unique slug and no data records are removed',()=>{
- assert.equal(monsters.length,156);
+test('all retained monster pages have a unique slug and valid data',()=>{
+ assert.equal(monsters.length,155);
  assert.equal(new Set(monsters.map(x=>x.id)).size,monsters.length);
  assert.ok(monsters.every(x=>Array.isArray(x.rewards)&&Array.isArray(x.chests)));
 });

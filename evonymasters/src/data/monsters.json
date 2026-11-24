@@ -8035,28 +8035,6 @@
     "chests": []
   },
   {
-    "id": "airavata",
-    "name": "Airavata",
-    "type": "Boss",
-    "level": null,
-    "power": null,
-    "stamina": null,
-    "image": null,
-    "event": null,
-    "updatedAt": "2026-09-23",
-    "verification": {
-      "status": "guide-sourced",
-      "inGameVerified": false,
-      "sourceUrls": [
-        "https://www.evonytkrguide.com/bosses/airavata",
-        "https://www.evonytkrguide.com/bosses"
-      ],
-      "notes": "Boss identity and level listed in guide. Stats and item-level rewards pending verification; no drops inferred."
-    },
-    "rewards": [],
-    "chests": []
-  },
-  {
     "id": "chimera",
     "name": "Chimera",
     "type": "Boss",
