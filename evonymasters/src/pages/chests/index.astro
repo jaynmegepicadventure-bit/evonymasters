@@ -219,7 +219,7 @@ if(selectedRewards.length===1){
   expanded.replaceChildren();expanded.append(el("p","chest-note","Loading all recorded rewards…"));expanded.hidden=false;expand.disabled=true;
   try{
    const params=new URLSearchParams();params.append("id",c.id);
-   const response=await fetch(API+"/v4/chests/compare?"+params);
+   const response=await fetchChestRoute("/compare",params);
    if(!response.ok)throw Error("Detail lookup unavailable");
    const payload=await response.json(),chest=payload.chests?.[0];
    if(!chest)throw Error("No chest data");
@@ -356,11 +356,31 @@ function renderResults(){
 }
 // Retry transient API failures, including Safari network interruptions.
 // No retry may bypass a user-triggered cancellation.
+// Prefer a same-origin chest API when its Cloudflare gateway is installed.
+// Fall back to the existing Worker until that route has been configured.
+let chestGatewayAvailable=null;
+async function fetchChestRoute(path="",params=null,signal){
+ const query=params?"?"+params:"";
+ if(chestGatewayAvailable!==false){
+  try{
+   const local=await fetch("/api/chests"+path+query,{signal,cache:"no-store"});
+   if(local.ok&&local.headers.get("content-type")?.includes("application/json")){
+    chestGatewayAvailable=true;
+    return local;
+   }
+   if(local.status===404||!local.headers.get("content-type")?.includes("application/json"))
+    chestGatewayAvailable=false;
+   else if(local.status<500)return local;
+  }catch(error){
+   if(signal?.aborted)throw error;
+  }
+ }
+ return fetch(API+"/v4/chests"+path+query,{signal,cache:"no-store"});
+}
 async function fetchChestPage(params,signal){
- const url=API+"/v4/chests?"+params;
  for(let attempt=0;attempt<2;attempt++){
   try{
-   const response=await fetch(url,{signal,cache:"no-store"});
+   const response=await fetchChestRoute("",params,signal);
    if(response.ok)return response.json();
    if(attempt===1||response.status<500&&response.status!==429)
     throw Error("Reward data service returned HTTP "+response.status);
@@ -447,7 +467,7 @@ async function loadEventChoices(){
  if(eventChoicesLoaded||eventChoicesLoading)return;
  eventChoicesLoading=true;
  try{
-  const result=await fetch(API+"/v4/chests/events");
+  const result=await fetchChestRoute("/events");
   if(!result.ok)return;
   const data=await result.json();
   eventChoicesLoaded=true;
@@ -472,7 +492,7 @@ compare.addEventListener("click",async()=>{
  const ids=[...selected.keys()],params=new URLSearchParams();ids.forEach(id=>params.append("id",id));
  status.textContent="Preparing comparison…";
  try{
-  const r=await fetch(API+"/v4/chests/compare?"+params);
+  const r=await fetchChestRoute("/compare",params);
   if(!r.ok)throw Error("Compare "+r.status);
   const data=await r.json();data.chests.sort(compareChest);head.replaceChildren();body.replaceChildren();
   const hr=el("tr"),first=el("th","","Reward item");first.scope="col";hr.append(first);
