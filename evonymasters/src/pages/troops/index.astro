@@ -23,6 +23,18 @@ main{max-width:1590px;padding:32px 20px 70px;margin:auto}h1{margin:0 0 8px;font-
 p{line-height:1.55;color:#b9cbdc}.top{margin-bottom:21px}.top p{max-width:960px;margin:8px 0}
 .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:19px 0}
 button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;background:#1a354d;color:#ffe2ac;border-radius:8px;padding:10px 14px;font-weight:750}
+.mode-selector{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:16px 0}
+.mode-selector button{padding:10px 16px;border:1px solid #607994;border-radius:8px;background:#12283c;color:#e4ecf4;font-weight:800}
+.mode-selector button[aria-pressed="true"]{background:#f0c77c;color:#091a2b;border-color:#f0c77c}
+.preset-tips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0 4px}
+.preset-tip{display:flex;gap:10px;align-items:flex-start;padding:12px 13px;border-radius:11px;background:#132b40;border:1px solid #36536b;min-width:0}
+.preset-tip strong{display:block;color:#f0c77c;font-size:.84rem;margin-bottom:4px}
+.preset-tip span:not(.tip-symbol){display:block;color:#c3d5e3;font-size:.78rem;line-height:1.45}
+.tip-symbol{display:grid;place-items:center;flex:none;width:32px;height:32px;border-radius:9px;background:#213e55;font-size:1.1rem}
+@media(max-width:900px){.preset-tips{grid-template-columns:1fr}.preset-tip{padding:11px 13px}}
+.custom-layer-field{margin-top:12px}.custom-layer-field[hidden]{display:none}
+.layer-size-row{border:1px solid #536b7e;background:#1a354d;border-radius:8px;padding:10px 12px;display:flex;justify-content:space-between;gap:10px;margin:12px 0 8px;font-size:.85rem;font-weight:750}
+.layer-size-row output{color:#f3c678;font-variant-numeric:tabular-nums}
 .scroller{overflow-x:auto;padding-bottom:14px;scrollbar-color:#648099 #102338}
 .cols{display:grid;grid-template-columns:repeat(6,minmax(245px,1fr));gap:12px;min-width:1510px;align-items:stretch}
 .card{background:#12283c;border:1px solid #3c5871;border-radius:14px;padding:15px;min-width:0;display:flex;flex-direction:column}
@@ -60,14 +72,21 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 .compact-help-link{font-size:.86rem;margin:12px 0;color:#b9cbdc}.compact-help-link a{color:#f2ce8b}
 </style></head>
 <body><SiteHeader active="troops"/><main>
-<div class="top banner-hero banner-march-preset"><h1>Evony March Preset & Troop Layer Calculator</h1><p>Put your march capacity to work. Enter your march size, tick any upper tiers you've unlocked and see a ready-to-use troop layer breakdown. Lower tiers are built into the plan automatically.</p></div>
+<div class="top banner-hero banner-march-preset"><h1>Evony March Preset & Troop Layer Calculator</h1><p>Put your march capacity to work. Enter your march size, tick any upper tiers you've unlocked and see a ready-to-use troop layer breakdown. Lower tiers are built into the plan automatically. Ranged, cavalry and ground layers adjust to your march capacity; siege presets keep their separate rules.</p></div>
+<div class="preset-tips" aria-label="Quick PvP march tips">
+ <div class="preset-tip"><span class="tip-symbol" aria-hidden="true">⚔️</span><div><strong>Recommended PvP march presets</strong><span>A smart starting point, not a guaranteed win. Tune for your buffs and opponent.</span></div></div>
+ <div class="preset-tip"><span class="tip-symbol" aria-hidden="true">📈</span><div><strong>Layers grow with your march</strong><span>Minimum 1K, then +1K per full million (4M = 4K). From 7M, use 10K. Larger T7–T11 layers can still apply.</span></div></div>
+ <div class="preset-tip"><span class="tip-symbol" aria-hidden="true">🏹</span><div><strong>Still below T13?</strong><span>No problem. The calculator builds around your highest available tiers. Treat lower-tier PvP presets as a starting point and adjust for your roster.</span></div></div>
+</div>
+<div class="mode-selector" role="group" aria-label="Troop layer calculator mode"><strong>Layer mode:</strong><button type="button" id="mode-recommended" aria-pressed="true">Recommended</button><button type="button" id="mode-custom" aria-pressed="false">Custom layers</button></div>
 <div class="toolbar"><button type="button" id="clear">Clear march sizes</button><button type="button" id="print">Print results</button></div>
 <div class="scroller"><div class="cols">{types.map(t=><section class="card" data-type={t.id}>
 <h2>{t.icon} {t.label}</h2>
 <label class="field">March size<input class="march" type="text" inputmode="numeric" autocomplete="off" value="" aria-label={t.label+' march size'}/></label>
+{t.base!==1000&&<label class="field custom-layer-field" hidden>Custom support troops per layer<input class="march custom-layer" type="text" inputmode="numeric" value="1000" aria-label={t.label+' custom support layer size'}/></label>}
 <div class="tiers-head"><strong>Upper troop tiers</strong><span>T3–T13 included</span></div>
 <div class="tiers">{tiers.map(tier=><label class="tier"><input type="checkbox" class="tier-input" value={tier} checked={false}/><span>T{tier}</span></label>)}</div>
-<div class="results"><div class="summary"><span>Main troop formation</span><output class="formation-total">0</output></div>
+<div class="results"><div class="layer-size-row"><span>Support layer size</span><output class="layer-size">0</output></div><div class="summary"><span>Main troop formation</span><output class="formation-total">0</output></div>
 <div class="summary"><span>Other troop layers</span><output class="other-per-layer">0 each</output></div>
 <h3>Calculated layers</h3><div class="rows" aria-live="polite"></div><p class="warn" hidden></p></div>
 </section>)}</div></div>
@@ -78,7 +97,8 @@ button{font:inherit;cursor:pointer}.toolbar button{border:1px solid #9f825d;back
 <p>Use the Evony March Preset calculator to plan troop-layer distributions for ranged, cavalry, ground and siege formations. Each formation has its own march-size field and calculated troop allocation, so you can compare several setups before using them in-game.</p>
 <ol>
 <li><strong>Choose a formation.</strong> Review the ranged, cavalry, ground, Big Siege, Small Siege or Solo Siege preset.</li>
-<li><strong>Enter your march capacity.</strong> Type the total number of troops your march can carry for that formation.</li>
+<li><strong>Enter your march capacity.</strong> Type the total number of troops your march can carry for that formation. Ranged, cavalry and ground use a minimum of 1,000 per support layer, increasing by 1,000 with every full million march size (e.g. 3M = 3,000), and 10,000 from 7M upward. High-capacity T7–T11 special allocations still apply. Siege retains its own presets.</li>
+<li><strong>Choose a layer mode.</strong> Recommended automatically sizes combat support layers; Custom layers lets you enter a support-layer size separately for each ranged, cavalry and ground formation. Siege is unaffected.</li>
 <li><strong>Select unlocked upper tiers.</strong> Tick T14, T15 and T16 only when those troops are available to you. The calculator also includes its built-in lower-tier layers.</li>
 <li><strong>Review the allocation.</strong> Check the calculated layers, reserved troops and total march before copying the composition into the game.</li>
 </ol>
@@ -92,13 +112,29 @@ import {calculateFormation, displayFormationLayers} from '../../lib/troop-layers
 const format=n=>n.toLocaleString('en-US');
 const baseTiers=Array.from({length:11},(_,i)=>i+3);
 const cards=[...document.querySelectorAll('.card')];
+let layerMode='recommended';
+function setLayerMode(mode){
+ layerMode=mode;
+ document.getElementById('mode-recommended').setAttribute('aria-pressed',String(mode==='recommended'));
+ document.getElementById('mode-custom').setAttribute('aria-pressed',String(mode==='custom'));
+ for(const card of cards){
+  const customField=card.querySelector('.custom-layer-field');
+  if(customField)customField.hidden=mode!=='custom';
+  calculate(card);
+ }
+}
+document.getElementById('mode-recommended').addEventListener('click',()=>setLayerMode('recommended'));
+document.getElementById('mode-custom').addEventListener('click',()=>setLayerMode('custom'));
 const parseMarch=value=>{const digits=String(value).replace(/[^0-9]/g,'');return digits?Math.min(1e10,Number(digits)):0;};
 const formatted=value=>format(parseMarch(value));
 function calculate(card){
  const type=card.dataset.type;
  const selected=[...baseTiers,...card.querySelectorAll('.tier-input:checked')].map(t=>typeof t==='number'?t:Number(t.value));
- const result=calculateFormation(type,parseMarch(card.querySelector('.march').value),selected);
+ const custom=card.querySelector('.custom-layer');
+ const selectedLayer=layerMode==='custom'&&custom?parseMarch(custom.value):undefined;
+ const result=calculateFormation(type,parseMarch(card.querySelector('.march').value),selected,selectedLayer===undefined?{}:{layerSize:Math.max(1000,Math.min(1000000,selectedLayer))});
  const presentation=displayFormationLayers(result);
+ card.querySelector('.layer-size').textContent=result.march?format(result.layerSize??1000)+' per layer': '0';
  const rows=card.querySelector('.rows');rows.replaceChildren();
  for(const item of presentation.rows){
   const row=document.createElement('div');row.className='result-row';
@@ -130,6 +166,8 @@ for(const card of cards){
  input.addEventListener('input',()=>{formatMarch(input);calculate(card);});
  input.addEventListener('blur',()=>{formatMarch(input);});
  card.querySelectorAll('.tier-input').forEach(box=>box.addEventListener('change',()=>calculate(card)));
+ const custom=card.querySelector('.custom-layer');
+ if(custom)custom.addEventListener('input',()=>{formatMarch(custom);calculate(card);});
  calculate(card);
 }
 document.getElementById('clear').addEventListener('click',()=>cards.forEach(c=>{c.querySelector('.march').value='0';calculate(c);}));

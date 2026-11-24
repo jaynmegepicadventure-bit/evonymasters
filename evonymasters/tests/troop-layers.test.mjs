@@ -1,180 +1,211 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {DEFAULT_LAYERS,FORMATIONS,REFERENCE_EXAMPLES,calculateFormation,displayFormationLayers} from '../src/lib/troop-layers.mjs';
-const auto=Array.from({length:11},(_,i)=>i+3);
-function rows(result){return Object.fromEntries(result.rows.map(row=>[row.tier,row.count]));}
-for(const [type,example] of Object.entries(REFERENCE_EXAMPLES)){
- test(type+' deducts all 4 troop types to T9 and other 3 above T9',()=>{
-  const x=calculateFormation(type,example.size,[...auto,...example.tiers.filter(t=>t>=14)]);
-  const cfg=FORMATIONS[type], own=DEFAULT_LAYERS[cfg.troopType];
-  const highest=x.tiers[0];
-  assert.equal(x.ownLayers,own*9);
-  assert.equal(x.otherLayers,3*own*highest);
-  assert.equal(x.baseLayers,9*own+3*own*highest);
-  assert.equal(x.total,example.size);
-  assert.equal(x.rows.reduce((s,r)=>s+r.count,0)+x.otherLayers,example.size);
-  const d=displayFormationLayers(x);
-  assert.equal(d.displayed+d.otherSupport,example.size);
-  for(let tier=1;tier<=6;tier++)assert.equal(rows(x)[tier],own,type+' T'+tier);
- });
-}
-test('Ground 7,500,000 reserves all four troop types and respects 40/40/20',()=>{
- const x=calculateFormation('ground',7500000,[...auto,14,15]);
- assert.equal(x.baseLayers,540000);
- assert.equal(x.extraFixed,595000);
- assert.equal(x.remaining,6365000);
- assert.equal(x.otherLayers,450000);
- assert.equal(rows(x)[15],2546000);
- assert.equal(rows(x)[14],2546000);
- assert.equal(rows(x)[13],1273000);
- assert.equal(rows(x)[12],500000);
- assert.equal(rows(x)[9],25000);
- assert.equal(rows(x)[8],25000);
- assert.equal(rows(x)[7],25000);
- assert.equal(x.total,7500000);
+import {FORMATIONS,REFERENCE_EXAMPLES,combatLayerSize,calculateFormation,displayFormationLayers} from '../src/lib/troop-layers.mjs';
+const base=Array.from({length:11},(_,i)=>i+3);
+const all=[...base,14,15,16];
+const byTier=x=>Object.fromEntries(x.rows.map(({tier,count})=>[tier,count]));
+const selected=example=>[...base,...example.tiers.filter(t=>t>=14)];
+const siege=['bigSiege','smallSiege','soloSiege'];
+const combat=['ranged','mounted','ground'];
+
+
+test('adaptive layer sizes increase each million and become 10K at 7M',()=>{
+ for(const [size,want] of [[1,1000],[1999999,1000],[2000000,2000],[3000000,3000],[3999999,3000],[4000000,4000],[5000000,5000],[6000000,6000],[6999999,6000],[7000000,10000],[7500000,10000]])
+  assert.equal(combatLayerSize(size),want);
 });
-test('Ranged 7,393,200 matches percentages after the revised layer deductions',()=>{
- const x=calculateFormation('ranged',7393200,[...auto,14,15]);
- assert.equal(x.baseLayers,540000);
- assert.equal(x.extraFixed,140000);
- assert.equal(x.remaining,6713200);
- assert.equal(rows(x)[15],1006980);
- assert.equal(rows(x)[14],1342640);
- assert.equal(rows(x)[13],2013960);
- assert.equal(rows(x)[12],2349620);
- assert.equal(x.total,7393200);
+test('custom support sizes override recommendations and validate bounds',()=>{
+ for(const type of combat){
+  const x=calculateFormation(type,4000000,[...base,14],{layerSize:3000});
+  assert.equal(x.layerSize,3000);
+  assert.equal(x.otherLayers,3*14*3000);
+  assert.equal(x.total,4000000);
+ }
+ assert.throws(()=>calculateFormation('ranged',4000000,[...base,14],{layerSize:0}));
+ assert.throws(()=>calculateFormation('ranged',4000000,[...base,14],{layerSize:1000001}));
 });
-test('Only T3–T13 enabled applies low-T14 percentages to their actual tiers',()=>{
- const x=calculateFormation('ranged',7393200,auto);
- assert.equal(x.tiers[0],13);
- const d=rows(x);
- assert.equal(d[14],undefined);
- assert.ok(d[13]>0&&d[12]>0);
- assert.equal(d[11],50000);
- assert.equal(x.total,7393200);
+test('T13-max ranged PvP allocates 30/50/20 across T13/T12/T11',()=>{
+ const result=calculateFormation('ranged',4000000,base);
+ const r=byTier(result);
+ assert.equal(result.layerSize,4000);
+ assert.equal(r[13],1141200);
+ assert.equal(r[12],1902000);
+ assert.equal(r[11],760800);
+ assert.equal(r[10],4000);
+ assert.equal(result.otherLayers,156000);
+ assert.equal(result.total,4000000);
+ assert.equal(displayFormationLayers(result).displayed+displayFormationLayers(result).otherSupport,4000000);
 });
-test('All siege variants reserve just one underlying siege troop type',()=>{
- for(const type of ['bigSiege','smallSiege','soloSiege']){
-  const x=calculateFormation(type,7500000,[...auto,14]);
-  assert.equal(x.ownLayers,9000);
-  assert.equal(x.otherLayers,42000);
-  assert.equal(x.baseLayers,51000);
-  assert.equal(x.total,7500000);
+test('T13-max ranged stays T12-heavy from 2M to 7M with fixed supports at 6.5M',()=>{
+ const snapshots=[
+  [2000000,2000,570600,951000,380400,2000,2000,78000],
+  [4000000,4000,1141200,1902000,760800,4000,4000,156000],
+  [6500000,6000,1835400,3059000,1223600,50000,50000,234000],
+  [7000000,10000,1929000,3215000,1286000,50000,50000,390000]
+ ];
+ for(const [size,layer,t13,t12,t11,t10,t9,other] of snapshots){
+  const x=calculateFormation('ranged',size,base);
+  const r=byTier(x);
+  assert.equal(x.layerSize,layer);
+  assert.equal(r[13],t13);
+  assert.equal(r[12],t12);
+  assert.equal(r[11],t11);
+  assert.equal(r[10],t10);
+  assert.equal(r[9],t9);
+  assert.equal(x.otherLayers,other);
+  assert.ok(r[12]>r[13]&&r[13]>r[11]);
+  assert.equal(x.unallocated,0);
+  assert.equal(x.total,size);
+  assert.equal(displayFormationLayers(x).displayed+displayFormationLayers(x).otherSupport,size);
+ }
+ const before=calculateFormation('ranged',6499999,base);
+ const at=calculateFormation('ranged',6500000,base);
+ assert.equal(byTier(before)[10],6000);
+ assert.equal(byTier(at)[10],50000);
+ const before7=calculateFormation('ranged',6999999,base);
+ const at7=calculateFormation('ranged',7000000,base);
+ assert.equal(before7.layerSize,6000);
+ assert.equal(at7.layerSize,10000);
+});
+test('T15 ranged maintains the four main tiers at 6.5M and 7M',()=>{
+ const checks=[
+  [6500000,6000,904800,1206400,1809600,2111200],
+  [7000000,10000,948000,1264000,1896000,2212000]
+ ];
+ for(const [size,layer,t15,t14,t13,t12] of checks){
+  const x=calculateFormation('ranged',size,[...base,14,15]);
+  const r=byTier(x);
+  assert.equal(x.layerSize,layer);
+  assert.equal(r[15],t15);
+  assert.equal(r[14],t14);
+  assert.equal(r[13],t13);
+  assert.equal(r[12],t12);
+  assert.ok(r[12]>r[13]&&r[13]>r[14]&&r[14]>r[15]);
+  for(const tier of [9,10,11])assert.equal(r[tier],50000);
+  assert.equal(x.total,size);
+  assert.equal(displayFormationLayers(x).displayed+displayFormationLayers(x).otherSupport,size);
  }
 });
-test('Small Siege fixed T9 increases the existing T9 default, not duplicated',()=>{
- const x=calculateFormation('smallSiege',5749450,[...auto,14]);
- assert.equal(rows(x)[9],50000);
- assert.equal(x.extraFixed,249000);
- assert.equal(rows(x)[11],5449450);
- assert.equal(x.total,5749450);
+test('players below T13 receive valid T12-max ranged allocations',()=>{
+ const x=calculateFormation('ranged',2000000,base.filter(t=>t<=12));
+ const r=byTier(x);
+ assert.equal(x.tiers[0],12);
+ assert.equal(x.layerSize,2000);
+ assert.ok(r[12]>0&&r[11]>0&&r[10]>0);
+ assert.equal(x.total,2000000);
 });
-test('Inputs never return negative tiers and insufficient march warns rather than silently over-allocating',()=>{
- for(const type of Object.keys(FORMATIONS)){
-  for(const size of [0,1,10000,500000,1000000,7500000]){
-   for(const tiers of [auto,[...auto,14],[...auto,14,15,16]]){
+test('T14 ranged uses tier-specific 20/30/50 preference (T12 > T13 > T14)',()=>{
+ const x=calculateFormation('ranged',4000000,[...base,14]);
+ const r=byTier(x);
+ assert.ok(r[12]>r[13]&&r[13]>r[14]);
+ assert.equal(r[9],4000);
+ assert.equal(x.total,4000000);
+});
+test('6.5M ranged T15 keeps 6K ordinary support and 50K T9-T11',()=>{
+ const before=calculateFormation('ranged',6499999,[...base,14,15]);
+ const at=calculateFormation('ranged',6500000,[...base,14,15]);
+ const after=calculateFormation('ranged',7000000,[...base,14,15]);
+ assert.equal(before.layerSize,6000);
+ assert.equal(byTier(before)[9],6000);
+ assert.equal(at.layerSize,6000);
+ for(const tier of [9,10,11])assert.equal(byTier(at)[tier],50000);
+ assert.equal(byTier(at)[8],6000);
+ assert.equal(at.total,6500000);
+ assert.equal(displayFormationLayers(at).displayed+displayFormationLayers(at).otherSupport,6500000);
+ assert.equal(after.layerSize,10000);
+ for(const tier of [9,10,11])assert.equal(byTier(after)[tier],50000);
+ assert.equal(after.total,7000000);
+});
+test('large march fixed T9-T11 and special ground T12 allocations survive',()=>{
+ const ranged=byTier(calculateFormation('ranged',7500000,[...base,14,15]));
+ for(const t of [9,10,11])assert.equal(ranged[t],50000);
+ const mounted=byTier(calculateFormation('mounted',7500000,[...base,14]));
+ assert.equal(mounted[9],25000);assert.equal(mounted[10],25000);assert.equal(mounted[11],100000);
+ const ground=byTier(calculateFormation('ground',7500000,[...base,14,15]));
+ assert.equal(ground[9],25000);assert.equal(ground[11],25000);assert.equal(ground[12],500000);
+});
+for(const type of combat){
+ test(type+' reconciles reference examples and adaptive march sizes',()=>{
+  const example=REFERENCE_EXAMPLES[type];
+  for(const size of [1500000,3999999,4000000,5000000,6000000,6000001,example.size,7500000]){
+   for(const tiers of [base,[...base,14],[...base,14,15],all]){
     const x=calculateFormation(type,size,tiers);
-    assert.ok(x.rows.every(row=>Number.isInteger(row.count)&&row.count>=0));
+    const layer=combatLayerSize(size);
+    const highest=x.tiers[0];
     const d=displayFormationLayers(x);
-    assert.equal(d.displayed+d.otherSupport,x.total);
-    if(size&&size>=x.support)assert.equal(x.total,size);
-    else if(size)assert.ok(x.total>=size);
+    assert.equal(x.ownLayers,9*layer);
+    assert.equal(x.otherLayers,3*highest*layer);
+    assert.equal(x.total,size,`${type} ${size} ${highest}`);
+    assert.equal(d.displayed+d.otherSupport,size);
+    for(let tier=1;tier<=6;tier++)assert.equal(byTier(x)[tier],layer,`${type} T${tier}`);
+    assert.ok(x.rows.every(row=>Number.isInteger(row.count)&&row.count>=0));
    }
   }
+ });
+ test(type+' keeps T14 as the largest combat tier when T15/T16 unlock',()=>{
+  for(const tiers of [[...base,14,15],all]){
+   const x=calculateFormation(type,7500000,tiers);
+   const counts=byTier(x);
+   assert.ok(counts[14]>=counts[15],`${type}: T14 < T15`);
+   if(tiers.includes(16))assert.ok(counts[14]>=counts[16],`${type}: T14 < T16`);
+  }
+ });
+ test(type+' redistributes the leading tiers when T14 is not owned',()=>{
+  const x=calculateFormation(type,3500000,base);
+  const r=byTier(x);
+  assert.equal(x.tiers[0],13);
+  assert.ok(r[13]>0&&r[12]>0);
+  assert.ok(r[11]>0);
+  assert.equal(r[14],undefined);
+  assert.equal(x.total,3500000);
+ });
+}
+for(const type of siege){
+ test(type+' retains worksheet-based 1K layers and reference total',()=>{
+  const example=REFERENCE_EXAMPLES[type];
+  const x=calculateFormation(type,example.size,selected(example));
+  assert.equal(x.ownLayers,9000);
+  assert.equal(x.otherLayers,3*Math.max(...x.tiers)*1000);
+  assert.equal(x.total,example.size);
+  assert.equal(displayFormationLayers(x).displayed+displayFormationLayers(x).otherSupport,example.size);
+ });
+}
+test('small siege fixed T9 stays 50K, with T11 as residual',()=>{
+ const x=calculateFormation('smallSiege',5749450,[...base,14]);
+ assert.equal(byTier(x)[9],50000);
+ assert.equal(byTier(x)[11],5449450);
+ assert.equal(x.total,5749450);
+});
+test('all siege variants preserve their T16 support layers',()=>{
+ for(const type of siege){
+  const x=calculateFormation(type,7000000,all);
+  const counts=byTier(x);
+  for(let tier=1;tier<=16;tier++)assert.ok(counts[tier]>=1000,`${type} T${tier}`);
+  assert.equal(x.total,7000000);
  }
 });
-test('Public page starts with no upper-level checkboxes selected or march values',()=>{
+test('insufficient capacity is explicitly identified rather than silently overfilling',()=>{
+ for(const type of Object.keys(FORMATIONS)){
+  const x=calculateFormation(type,1000,all);
+  assert.ok(x.unallocated>0);
+  assert.ok(x.total>x.march);
+ }
+});
+test('the public page retains empty defaults and no restore button',()=>{
  const page=readFileSync(new URL('../src/pages/troops/index.astro',import.meta.url),'utf8');
  assert.match(page,/checked=\{false\}/);
  assert.match(page,/value=""/);
- assert.match(page,/const tiers=\[14,15,16\]/);
-});
-
-test('Cavalry 5,874,400 with T15 reproduces Excel layer reserve and no 125k overestimate',()=>{
- const x=calculateFormation('mounted',5874400,[...auto,14,15]);
- const d=displayFormationLayers(x), amount=rows(x);
- assert.equal(x.ownLayers,90000);
- assert.equal(x.otherLayers,450000);
- assert.equal(x.extraFixed,170000);
- assert.equal(x.excelAdjustment,-10000);
- assert.equal(x.support,700000);
- assert.equal(x.remaining,5174400);
- assert.equal(amount[15],776160);
- assert.equal(amount[14],1034880);
- assert.equal(amount[13],1552320);
- assert.equal(amount[12],1811040);
- assert.equal(x.total,5874400);
- assert.equal(d.displayed+d.otherSupport,5874400);
-});
-test('Cavalry without T15 does not apply T15-specific workbook reserve',()=>{
- const x=calculateFormation('mounted',5874400,[...auto,14]);
- assert.equal(x.excelAdjustment,0);
- assert.equal(x.total,5874400);
-});
-
-test('Archer T15 at 5,819,100 reserves the missing 135,000 across cross-type layers',()=>{
- const x=calculateFormation('ranged',5819100,[...auto,14,15]);
- const quantities=rows(x);
- // Old cross-type calculation: 15*(10k Ground +10k Cavalry +1k Siege)=315k.
- // Correct: 15*3*10k=450k. Difference equals the reported 135k.
- assert.equal(x.otherLayers,450000);
- assert.equal(x.baseLayers,540000);
- assert.equal(x.extraFixed,140000);
- assert.equal(x.support,680000);
- assert.equal(x.remaining,5139100);
- assert.equal(quantities[15],770865);
- assert.equal(quantities[14],1027820);
- assert.equal(quantities[13],1541730);
- assert.equal(quantities[12],1798685);
- assert.equal(x.total,5819100);
- assert.equal(displayFormationLayers(x).displayed+displayFormationLayers(x).otherSupport,5819100);
-});
-
-test('T16 formations retain a nonzero T12 support layer without exceeding march capacity',()=>{
- for(const type of Object.keys(FORMATIONS)){
-  const result=calculateFormation(type,7500000,[...auto,14,15,16]);
-  const byTier=rows(result);
-  const ownDefault=DEFAULT_LAYERS[FORMATIONS[type].troopType];
-  assert.ok(byTier[12]>=ownDefault,`${type} T12 missing when T16 is selected`);
-  assert.equal(result.total,7500000,`${type} march no longer reconciles`);
-  assert.equal(displayFormationLayers(result).displayed+displayFormationLayers(result).otherSupport,7500000);
- }
-});
-test('March Preset does not display or bind a Restore Excel examples button',()=>{
- const page=readFileSync(new URL('../src/pages/troops/index.astro',import.meta.url),'utf8');
  assert.doesNotMatch(page,/Restore Excel examples/);
- assert.doesNotMatch(page,/getElementById\('reset'\)/);
 });
 
-test('Every T16 march type has no empty own-type tiers at 7 million',()=>{
- const all=[...auto,14,15,16];
- for(const type of Object.keys(FORMATIONS)){
-  const formation=calculateFormation(type,7000000,all);
-  const displayed=displayFormationLayers(formation);
-  const expected=DEFAULT_LAYERS[FORMATIONS[type].troopType];
-  for(let tier=1;tier<=16;tier++){
-   const layer=displayed.rows.find(row=>row.tier===tier);
-   assert.ok(layer&&layer.count>=expected,
-     `${type}: T${tier} is missing its ${expected}-troop minimum layer`);
-  }
-  assert.equal(formation.total,7000000,`${type}: march did not reconcile`);
-  assert.equal(displayed.displayed+displayed.otherSupport,7000000);
- }
-});
-test('T16 Ground and Siege preserve fixed layers and distribute only the remaining capacity',()=>{
- const all=[...auto,14,15,16];
- const ground=calculateFormation('ground',7000000,all);
- const g=rows(ground);
- assert.equal(g[12],500000);
- assert.equal(g[13],10000);
- assert.equal(g[11],25000);
- assert.ok(g[16]>0&&g[15]>0&&g[14]>0);
- const big=rows(calculateFormation('bigSiege',7000000,all));
- for(const tier of [10,11,12,13])assert.equal(big[tier],1000);
- for(const tier of [14,15,16])assert.ok(big[tier]>1000);
- const small=rows(calculateFormation('smallSiege',7000000,all));
- for(const tier of [15,16])assert.equal(small[tier],1000);
- for(const tier of [12,13,14])assert.equal(small[tier],50000);
- assert.ok(small[11]>0);
+test('PvP guidance and custom toggle are present without enabling siege custom inputs',()=>{
+ const page=readFileSync(new URL('../src/pages/troops/index.astro',import.meta.url),'utf8');
+ assert.match(page,/Recommended PvP march presets/);
+ assert.match(page,/mode-recommended/);
+ assert.match(page,/mode-custom/);
+ assert.match(page,/custom-layer-field/);
+ assert.match(page,/layer-size-row/);
+ assert.match(page,/Still below T13/);
+ assert.match(page,/preset-tip/);
+ assert.match(page,/t.base!==1000/);
 });

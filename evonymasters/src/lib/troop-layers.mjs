@@ -38,7 +38,77 @@ function allocateWeighted(count,tiers,weights,counts){
  for(let i=0;i<unallocated;i++)portions[i%portions.length].quantity++;
  for(const part of portions)counts.set(part.tier,(counts.get(part.tier)||0)+part.quantity);
 }
-export function calculateFormation(type,marchInput,selectedTiers){
+
+/**
+ * Recommended PvP support layers: at least 1K per tier, +1K at each full
+ * million march capacity, and 10K from 7M upward. Siege rules are separate.
+ */
+export function combatLayerSize(march){
+ return march>=7000000?10000:Math.max(1000,Math.floor(march/1000000)*1000);
+}
+// Main-tier percentages are relative weights applied AFTER support is reserved.
+// Ranged T14-and-below favors T12 over T13 over T14.
+export const COMBAT_WEIGHTS = Object.freeze({
+ ranged:Object.freeze({low:[20,30,50],t13:[30,50,20],t15:[15,20,30,35],high:[40,30,20]}),
+ mounted:Object.freeze({low:[50,25,15],high:[50,25,15]}),
+ ground:Object.freeze({low:[50,25,15],high:[50,25,15]})
+});
+function calculateCombatFormation(result,customLayer){
+ const {type,march,tiers}=result;
+ const cfg=FORMATIONS[type];
+ const highest=tiers[0];
+ const layer=customLayer===undefined?combatLayerSize(march):customLayer;
+ result.layerSize=layer;
+ const counts=new Map();
+ const topTiers=tiers.filter(t=>t>=10).sort((a,b)=>b-a);
+ // At T14 and below use the highest three unlocked tiers; from T15 up
+ // retain T14 as the baseline leading tier and then T15/T16 when owned.
+ const order=highest<=14?topTiers:[14,15,16,...topTiers.filter(t=>t!==14&&t!==15&&t!==16)];
+ const rangedT15=type==='ranged'&&highest===15;
+ // T15 ranged keeps T12 as its fourth meaningful attacking tier.
+ const main=rangedT15?[15,14,13,12].filter(t=>topTiers.includes(t)):[...new Set(order)].filter(t=>topTiers.includes(t)).slice(0,3);
+ const mainSet=new Set(main);
+ for(let tier=1;tier<=9;tier++)counts.set(tier,layer);
+ for(const tier of topTiers)if(!mainSet.has(tier))counts.set(tier,layer);
+ // Preserve existing large-march T7–T11 special layers; custom mode changes
+ // ordinary layers, not these larger formation-specific allocations.
+ // Special spreadsheet support allocations start at 6.5M; the 10K
+ // standard-layer threshold remains independently set at 7M.
+ if(march>=6500000){
+  for(const [tierText,fixedAmount] of Object.entries(cfg.fixed)){
+   const tier=Number(tierText);
+   if(tier>highest||tier>=10&&!tiers.includes(tier)||mainSet.has(tier))continue;
+   counts.set(tier,Math.max(layer,fixedAmount));
+  }
+  if(cfg.specialTier&&highest>=15&&tiers.includes(cfg.specialTier)&&!mainSet.has(cfg.specialTier))
+   counts.set(cfg.specialTier,Math.max(layer,cfg.specialAmount));
+ }
+ result.ownLayers=9*layer;
+ result.otherLayers=3*highest*layer;
+ result.baseLayers=result.ownLayers+result.otherLayers;
+ result.extraFixed=[...counts.entries()].reduce((sum,[tier,count])=>sum+(tier>=10?count:Math.max(0,count-layer)),0);
+ const reserve=result.otherLayers+[...counts.values()].reduce((sum,count)=>sum+count,0);
+ result.support=reserve;
+ if(march<reserve){
+  result.unallocated=reserve-march;
+  result.rows=[...counts.entries()].sort((a,b)=>b[0]-a[0]).map(([tier,count])=>({tier,count}));
+  result.total=reserve;
+  return result;
+ }
+ result.remaining=march-reserve;
+ const profile=type==='ranged'&&highest===13?'t13':rangedT15?'t15':highest<=14?'low':'high';
+ const weights=COMBAT_WEIGHTS[type][profile].slice(0,main.length);
+ if(main.length){
+  allocateWeighted(result.remaining,main,weights,counts);
+  // The main tier with the largest weight receives the rounding remainder
+  // when otherwise equally weighted levels would reverse their order.
+ }else result.unallocated=result.remaining;
+ result.rows=[...counts.entries()].sort((a,b)=>b[0]-a[0]).map(([tier,count])=>({tier,count}));
+ result.total=result.otherLayers+result.rows.reduce((sum,row)=>sum+row.count,0);
+ return result;
+}
+
+export function calculateFormation(type,marchInput,selectedTiers,options={}){
  const cfg=FORMATIONS[type];if(!cfg)throw Error('Unknown formation');
  const value=Number(String(marchInput).replace(/,/g,''));
  const march=Number.isFinite(value)?Math.max(0,Math.min(1e10,Math.floor(value))):0;
@@ -46,6 +116,12 @@ export function calculateFormation(type,marchInput,selectedTiers){
  const highest=tiers[0]||0;
  const result={type,march,tiers,rows:[],ownLayers:0,otherLayers:0,baseLayers:0,extraFixed:0,excelAdjustment:0,support:0,remaining:0,total:0,unallocated:0};
  if(!march||!highest)return result;
+ if(cfg.troopType!=='siege'){
+  const custom=options?.layerSize;
+  const amount=custom===undefined||custom===null?undefined:Number(custom);
+  if(amount!==undefined&&(!Number.isSafeInteger(amount)||amount<1000||amount>1000000))throw Error('Custom layer size must be between 1,000 and 1,000,000');
+  return calculateCombatFormation(result,amount);
+ }
  const ownDefault=DEFAULT_LAYERS[cfg.troopType];
  const counts=new Map();
  // The spreadsheet applies the selected formation's Default Layer Size to
