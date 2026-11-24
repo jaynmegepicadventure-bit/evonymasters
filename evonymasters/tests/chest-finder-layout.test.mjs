@@ -35,3 +35,12 @@ test('Inline browser scripts are valid JavaScript',()=>{
  for(const match of page.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g))
   assert.doesNotThrow(()=>new Script(match[1]));
 });
+
+test('Chest Finder shows search results before fetching detailed reward quantities',()=>{
+ const render=page.indexOf('renderResults();\n  const verified=await verifyFullRewards');
+ assert.ok(render>=0,'Results should render before full reward verification');
+ assert.match(page,/const shortlist=matching\.slice\(0,24\)/);
+ assert.match(page,/for\(let index=0;index<shortlist\.length;index\+=4\)/);
+ assert.match(page,/if\(!phrases\.some\(Boolean\)\)return true/);
+ assert.match(page,/Results shown\. Some reward amounts could not be verified/);
+});
