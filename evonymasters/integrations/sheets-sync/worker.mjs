@@ -338,6 +338,22 @@ function groupSearch(snapshot, {query,type="all",drop="all",page=0,sort="suggest
   return {total:visible.length,page,hasMore:offset+LIMIT<visible.length,groups:visible.slice(offset,offset+LIMIT),availabilityConfigured:calendarStates!==null};
 }
 
+
+// Public read-only metadata built from the same validated MONSTER sheet snapshot as rewards.
+function monsterDirectory(snapshot){
+ const seen=new Set(),monsters=[];
+ for(const row of snapshot.monsters){
+  const f=row.fields,name=clean(f["Monster Name"]),rawType=norm(f["Monster Type"]);
+  const type=rawType==="regular"?"Regular":rawType==="event"?"Event":rawType==="boss"?"Boss":null;
+  if(!name||!type)continue;
+  const level=clean(f["Monster Level"]),key=[norm(name),type,level].join("|");
+  if(seen.has(key))continue;seen.add(key);
+  monsters.push({name,type,level,power:clean(f.Power),stamina:clean(f.Stamina)});
+ }
+ monsters.sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true})||Number(a.level||0)-Number(b.level||0));
+ return {monsters,updatedAt:snapshot.importedAt};
+}
+
 // Stable identifiers derived from event and monster identity, never sheet row numbers.
 // The revised source workbook currently has blank EVENT ID and MONSTER ID cells.
 const calendarKey=x=>norm(x).replace(/\s+/g," ");
@@ -537,7 +553,12 @@ export default {
     await env.DATA.put("latest",JSON.stringify(snapshot));
     return reply({ok:true,counts:snapshot.counts});
   }
-  if(url.pathname==="/v4/calendar/catalog"&&request.method==="GET"){
+  if(url.pathname==="/v4/monsters"&&request.method==="GET"){
+     const raw=await env.DATA.get("latest");
+     if(!raw)return reply({error:"No validated data available"},503,publicHeaders(origin));
+     return reply(monsterDirectory(JSON.parse(raw)),200,publicHeaders(origin));
+   }
+   if(url.pathname==="/v4/calendar/catalog"&&request.method==="GET"){
     const raw=await env.DATA.get("latest");
     if(!raw)return reply({error:"No validated data available"},503,publicHeaders(origin));
     return reply(calendarCatalog(JSON.parse(raw)),200,publicHeaders(origin));
