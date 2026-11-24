@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 const read=p=>readFileSync(new URL(p,import.meta.url),'utf8');
-const page=read('../src/pages/bosses/[id].astro');
+const page=read('../src/components/LegacyMonsterPage.astro');
 const monsters=JSON.parse(read('../src/data/monsters.json'));
 
 test('boss template uses individual SEO metadata and standard description',()=>{
