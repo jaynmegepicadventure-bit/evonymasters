@@ -10,41 +10,40 @@ test('Chest Finder uses Monsters, Events, All Chests tabs',()=>{
  assert.match(page,/source:"events"/);
  assert.match(page,/source:"all"/);
 });
-test('Three reward items are matched by chest contents and globally ranked',()=>{
- assert.match(page,/selectedItems\.length===3/);
- assert.match(page,/const matchReward=\(chest,term\)=>/);
- assert.match(page,/chest\.nestedItems/);
- assert.match(page,/matchCount\(b\)-matchCount\(a\)/);
- assert.match(page,/maxPages=searching\?50:1/);
- assert.match(page,/do\{/);
- assert.match(page,/while\(morePages&&passes<maxPages\)/);
- assert.match(page,/allFound=merged/);
- assert.match(page,/most matched rewards first/);
+test('Chest Finder searches one reward and fetches only one page at a time',()=>{
+ assert.match(page,/Search one chest or reward at a time/);
+ assert.match(page,/id="add-item-search"[^>]*>Search<\/button>/);
+ assert.doesNotMatch(page,/id="search-items"/);
+ assert.doesNotMatch(page,/selectedItems/);
+ assert.doesNotMatch(page,/\/v2\/suggest\?q=/);
+ assert.doesNotMatch(page,/verifyFullRewards/);
+ assert.match(page,/function terms\(\)\{return \[activeQuery\];\}/);
+ assert.match(page,/const data=await fetchChestPage\(params,request\.signal\)/);
+ assert.match(page,/if\(hasMore\)page\+\+/);
+ assert.match(page,/more\.addEventListener\("click",\(\)=>\{if\(hasMore\)load\(true\);\}\)/);
+ assert.doesNotMatch(page,/while\(morePages/);
+ assert.doesNotMatch(page,/Promise\.all\(list\.map/);
 });
 test('Filters, full reward table, comparison dock and autocomplete are available',()=>{
- for(const id of ['monster-level','drop-type','live-filter','comparison-dock','chest-suggestions','compare','reset'])
+ for(const id of ['monster-level','drop-type','live-filter','comparison-dock','compare','reset'])
   assert.match(page,new RegExp('id="'+id+'"'));
- assert.match(page,/id="search-items"/);
+ assert.doesNotMatch(page,/id="search-items"/);
  assert.match(page,/View chest contents/);
  assert.match(page,/\["Reward","Quantity","Chance"\]/);
  assert.match(page,/Compare chests/);
  assert.match(page,/selected\.size>=4/);
- assert.match(page,/\/v2\/suggest\?q=/);
+ assert.doesNotMatch(page,/\/v2\/suggest\?q=/);
 });
 test('Inline browser scripts are valid JavaScript',()=>{
  for(const match of page.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g))
   assert.doesNotThrow(()=>new Script(match[1]));
 });
 
-test('Chest Finder shows search results before fetching detailed reward quantities',()=>{
- const render=page.indexOf('renderResults();\n  const verified=await verifyFullRewards');
- assert.ok(render>=0,'Results should render before full reward verification');
- assert.match(page,/const shortlist=matching\.slice\(0,24\)/);
- assert.match(page,/for\(let index=0;index<shortlist\.length;index\+=4\)/);
- assert.match(page,/if\(!phrases\.some\(Boolean\)\)return true/);
- assert.match(page,/Results shown\. Some reward amounts could not be verified/);
+test('Single page search renders without automatic detail verification',()=>{
+ assert.doesNotMatch(page,/verifyFullRewards/);
+ assert.match(page,/renderResults\(\);/);
+ assert.match(page,/Highest recorded amounts first among loaded results/);
 });
-
 test('Legacy Wood searches use Lumber without changing the user input label',()=>{
  const start=page.indexOf('const resourceSearchTerm=');
  const end=page.indexOf('function terms()',start);
