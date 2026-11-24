@@ -49,7 +49,7 @@ export function combatLayerSize(march){
 // Main-tier percentages are relative weights applied AFTER support is reserved.
 // Ranged T14-and-below favors T12 over T13 over T14.
 export const COMBAT_WEIGHTS = Object.freeze({
- ranged:Object.freeze({low:[20,30,50],t13:[30,50,20],high:[40,30,20]}),
+ ranged:Object.freeze({low:[20,30,50],t13:[30,50,20],t15:[15,20,30,35],high:[40,30,20]}),
  mounted:Object.freeze({low:[50,25,15],high:[50,25,15]}),
  ground:Object.freeze({low:[50,25,15],high:[50,25,15]})
 });
@@ -64,7 +64,9 @@ function calculateCombatFormation(result,customLayer){
  // At T14 and below use the highest three unlocked tiers; from T15 up
  // retain T14 as the baseline leading tier and then T15/T16 when owned.
  const order=highest<=14?topTiers:[14,15,16,...topTiers.filter(t=>t!==14&&t!==15&&t!==16)];
- const main=[...new Set(order)].filter(t=>topTiers.includes(t)).slice(0,3);
+ const rangedT15=type==='ranged'&&highest===15;
+ // T15 ranged keeps T12 as its fourth meaningful attacking tier.
+ const main=rangedT15?[15,14,13,12].filter(t=>topTiers.includes(t)):[...new Set(order)].filter(t=>topTiers.includes(t)).slice(0,3);
  const mainSet=new Set(main);
  for(let tier=1;tier<=9;tier++)counts.set(tier,layer);
  for(const tier of topTiers)if(!mainSet.has(tier))counts.set(tier,layer);
@@ -94,7 +96,7 @@ function calculateCombatFormation(result,customLayer){
   return result;
  }
  result.remaining=march-reserve;
- const profile=type==='ranged'&&highest===13?'t13':highest<=14?'low':'high';
+ const profile=type==='ranged'&&highest===13?'t13':rangedT15?'t15':highest<=14?'low':'high';
  const weights=COMBAT_WEIGHTS[type][profile].slice(0,main.length);
  if(main.length){
   allocateWeighted(result.remaining,main,weights,counts);
