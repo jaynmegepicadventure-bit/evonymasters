@@ -63,7 +63,9 @@ test('old catalog URLs are redirected to a single sitemap canonical, not re-gene
  assert.ok(!sitemap.includes("'/bosses/catalog/'"));
  assert.ok(!directory.includes("'/bosses/catalog/'"));
  assert.ok(rewardTemplate.includes('Rewards & Chests | EvonyMasters'));
- assert.ok(rewardTemplate.includes('Understanding {monster.name} rewards'));
+ assert.ok(!rewardTemplate.includes('Understanding {monster.name} rewards'));
+ assert.ok(rewardTemplate.indexOf('<h2>Guaranteed rewards</h2>')<rewardTemplate.indexOf('<h2>Possible rewards</h2>'));
+ assert.ok(rewardTemplate.indexOf('<h2>Possible rewards</h2>')<rewardTemplate.indexOf('<h2>Chest contents</h2>'));
 });
 test('directory links remain navigable and SEO metadata intact',()=>{
  assert.ok(sitemap.includes("'/bosses/'"));
