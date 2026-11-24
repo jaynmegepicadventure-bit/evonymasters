@@ -106,9 +106,9 @@ main.wrap{padding-bottom:120px}
 <p class="finder-help" id="tab-description">Find boss and monster chests, then check which rewards they contain.</p>
 <div class="search"><label for="q" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden">Chest or reward item</label><input id="q" type="search" placeholder="Search a chest or reward…" autocomplete="off" list="chest-suggestions"/><datalist id="chest-suggestions">{itemCatalog.map(item => <option value={item.name} />)}</datalist>
 <button type="button" id="add-item-search" class="search-add">Search</button>
-<label for="source" class="source-control" hidden>Source <select id="source"><option value="all">All sources</option><option value="bosses">Bosses</option><option value="events">Events</option><option value="activities">Activities</option><option value="unlinked">Source not recorded</option></select></label></div><p class="search-help">Search one chest or reward at a time. Press Enter or Search to view results.</p>
+<input id="source" type="hidden" value="all"/></div><p class="search-help">Search one chest or reward at a time. Press Enter or Search to view results.</p>
 <div class="finder-filters"><label><input type="checkbox" id="live-filter"/> Live sources only</label>
-<label for="sort-order">Sort by <select id="sort-order"><option value="reward">Best reward</option><option value="live">Live first</option><option value="name">Chest name A–Z</option></select></label><label id="monster-level-wrap">Monster level <select id="monster-level"><option value="all">All levels</option><option value="1-10">1–10</option><option value="11-20">11–20</option><option value="21+">21+</option></select></label><label>Drop type <select id="drop-type"><option value="all">All drops</option><option value="guaranteed">Guaranteed</option><option value="possible">Possible / chance</option></select></label>
+<label for="sort-order">Sort by <select id="sort-order"><option value="reward">Best reward</option><option value="name">Chest name A–Z</option></select></label><label>Drop type <select id="drop-type"><option value="all">All drops</option><option value="guaranteed">Guaranteed</option><option value="possible">Possible / chance</option></select></label>
 <button type="button" class="pill secondary" id="clear-filters">Clear filters</button></div>
 <div class="advanced" id="event-search" hidden>
 <label for="event-filter">Event name<select id="event-filter"><option value="">All events</option></select></label>
@@ -145,7 +145,7 @@ const API="https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev";
 const q=document.getElementById("q"),source=document.getElementById("source"),eventFilter=document.getElementById("event-filter"),participationFilter=document.getElementById("participation-filter"),rankFilter=document.getElementById("rank-filter"),eventSearch=document.getElementById("event-search"),cards=document.getElementById("chests"),more=document.getElementById("more"),status=document.getElementById("status"),count=document.getElementById("count"),compare=document.getElementById("compare"),reset=document.getElementById("reset"),selection=document.getElementById("selected-count"),panel=document.getElementById("comparison-panel"),head=document.getElementById("compare-head"),body=document.getElementById("compare-body");
 const selected=new Map();let page=0,hasMore=false,serial=0,timer=null,request=null,availability=null;
 const tabStrip=document.getElementById("finder-tabs"),tabHelp=document.getElementById("tab-description"),dock=document.getElementById("comparison-dock");
-const sortOrder=document.getElementById("sort-order"),liveFilter=document.getElementById("live-filter"),monsterLevel=document.getElementById("monster-level"),monsterLevelWrap=document.getElementById("monster-level-wrap"),dropType=document.getElementById("drop-type");
+const sortOrder=document.getElementById("sort-order"),liveFilter=document.getElementById("live-filter"),dropType=document.getElementById("drop-type");
 
 let currentTab="all",allFound=new Map();
 
@@ -325,13 +325,6 @@ function sourceMatchesTab(chest){
  // shortened card metadata here would incorrectly hide valid matches.
  return true;
 }
-function passesLevel(chest){
- if(currentTab!=="monsters"||monsterLevel.value==="all")return true;
- const values=(chest.sources||[]).filter(s=>/boss|monster/i.test(s.type||""))
-  .map(s=>Number.parseInt(toText(s.level).replace(/,/g,""),10)).filter(Number.isFinite);
- if(!values.length)return false;
- return values.some(n=>monsterLevel.value==="1-10"?n>=1&&n<=10:monsterLevel.value==="11-20"?n>=11&&n<=20:n>=21);
-}
 function passesDrop(chest){
  if(dropType.value==="all")return true;
  return [...(chest.items||[]),...(chest.nestedItems||[])].some(item=>toText(item.classification).toLowerCase()===dropType.value);
@@ -342,13 +335,11 @@ function availableNow(chest){
 }
 function renderResults(){
  const all=[...allFound.values()];
- const visible=all.filter(chest=>sourceMatchesTab(chest)&&passesLevel(chest)&&passesDrop(chest)&&(!liveFilter.checked||availableNow(chest)));
+ const visible=all.filter(chest=>sourceMatchesTab(chest)&&passesDrop(chest)&&(!liveFilter.checked||availableNow(chest)));
  // Rank loaded chests by recorded reward quantity; request more only on demand.
- visible.sort((a,b)=>sortOrder.value==="live"
-  ?Number(availableNow(b))-Number(availableNow(a))||compareRewardChests(a,b,terms())
-  :sortOrder.value==="name"
-   ?collator.compare(a.name,b.name)||compareRewardChests(a,b,terms())
-   :compareRewardChests(a,b,terms()));
+ visible.sort((a,b)=>sortOrder.value==="name"
+  ?collator.compare(a.name,b.name)||compareRewardChests(a,b,terms())
+  :compareRewardChests(a,b,terms()));
  cards.replaceChildren();
  for(const chest of visible)cards.append(card(chest));
  count.textContent=visible.length+" matching "+(visible.length===1?"chest":"chests")+
@@ -451,14 +442,11 @@ function selectTab(tab){
   button.setAttribute("aria-selected",String(button.dataset.tab===tab));
  tabHelp.textContent=tabSettings[tab].help;
  source.value=tabSettings[tab].source;
- document.querySelector(".source-control").hidden=tab!=="all";
- monsterLevelWrap.hidden=tab!=="monsters";
- if(tab!=="monsters")monsterLevel.value="all";
  setEventMode();
  schedule();
 }
 function setEventMode(){
- const show=currentTab==="events"||currentTab==="all"&&["events","activities"].includes(source.value);
+ const show=currentTab==="events";
  eventSearch.hidden=!show;
  if(show)loadEventChoices();
  if(!show){eventFilter.value="";participationFilter.value="all";rankFilter.value="";}
@@ -469,11 +457,10 @@ tabStrip.addEventListener("click",event=>{
 });
 liveFilter.addEventListener("change",renderResults);
 sortOrder.addEventListener("change",renderResults);
-monsterLevel.addEventListener("change",renderResults);
 dropType.addEventListener("change",renderResults);
 document.getElementById("clear-filters").addEventListener("click",()=>{
  q.value="";activeQuery="";
- sortOrder.value="reward";liveFilter.checked=false;monsterLevel.value="all";dropType.value="all";eventFilter.value="";
+ sortOrder.value="reward";liveFilter.checked=false;dropType.value="all";eventFilter.value="";
  participationFilter.value="all";rankFilter.value="";schedule();
 });
 let eventChoicesLoaded=false,eventChoicesLoading=false;
@@ -496,7 +483,6 @@ async function loadEventChoices(){
  finally{eventChoicesLoading=false;}
 }
 
-source.addEventListener("change",()=>{setEventMode();schedule()});
 eventFilter.addEventListener("change",schedule);
 participationFilter.addEventListener("change",schedule);
 rankFilter.addEventListener("input",schedule);
@@ -536,7 +522,7 @@ const initial=new URLSearchParams(location.search);q.value=initial.get("q")||"";
 const requestedSource=initial.get("source"),requestedEvent=initial.get("event");
 const initialTab=requestedEvent||["events","activities"].includes(requestedSource)?"events":requestedSource==="bosses"?"monsters":"all";
 activeQuery=resourceSearchTerm(q.value);refreshSelected();selectTab(initialTab);
-if(requestedSource==="unlinked"){source.value="unlinked";schedule();}
+
 loadAvailability();
 })();
 </script></body></html>
