@@ -24,13 +24,13 @@ test('Item Finder has the new name in navigation and can select three rewards',(
  assert.match(page,/evonymasters-calendar\.jaynmegepicadventure\.workers\.dev/);
  for(const script of inlineScripts(page))assert.doesNotThrow(()=>new Script(script));
 });
-test('Chest Finder supports three item chips alongside four-chest comparison',()=>{
+test('Chest Finder uses one-item search with independent four-chest comparison',()=>{
  const page=file('../src/pages/chests/index.astro');
- assert.match(page,/id="add-item-search"/);
- assert.match(page,/id="search-items"/);
- assert.match(page,/selectedItems\.length===3/);
- assert.match(page,/Promise\.all\(list\.map/);
- assert.match(page,/shownChestIds/);
+ assert.match(page,/id="add-item-search"[^>]*>Search<\/button>/);
+ assert.doesNotMatch(page,/id="search-items"/);
+ assert.doesNotMatch(page,/selectedItems/);
+ assert.doesNotMatch(page,/Promise\.all\(list\.map/);
+ assert.match(page,/const data=await fetchChestPage\(params,request\.signal\)/);
  assert.match(page,/selected\.size>=4/);
  for(const script of inlineScripts(page))assert.doesNotThrow(()=>new Script(script));
 });
