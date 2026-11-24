@@ -31,6 +31,21 @@ test('T14 ranged uses tier-specific 20/30/50 preference (T12 > T13 > T14)',()=>{
  assert.equal(r[9],4000);
  assert.equal(x.total,4000000);
 });
+test('6.5M ranged T15 keeps 6K ordinary support and 50K T9-T11',()=>{
+ const before=calculateFormation('ranged',6499999,[...base,14,15]);
+ const at=calculateFormation('ranged',6500000,[...base,14,15]);
+ const after=calculateFormation('ranged',7000000,[...base,14,15]);
+ assert.equal(before.layerSize,6000);
+ assert.equal(byTier(before)[9],6000);
+ assert.equal(at.layerSize,6000);
+ for(const tier of [9,10,11])assert.equal(byTier(at)[tier],50000);
+ assert.equal(byTier(at)[8],6000);
+ assert.equal(at.total,6500000);
+ assert.equal(displayFormationLayers(at).displayed+displayFormationLayers(at).otherSupport,6500000);
+ assert.equal(after.layerSize,10000);
+ for(const tier of [9,10,11])assert.equal(byTier(after)[tier],50000);
+ assert.equal(after.total,7000000);
+});
 test('large march fixed T9-T11 and special ground T12 allocations survive',()=>{
  const ranged=byTier(calculateFormation('ranged',7500000,[...base,14,15]));
  for(const t of [9,10,11])assert.equal(ranged[t],50000);
