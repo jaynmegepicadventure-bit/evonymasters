@@ -2,11 +2,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {Script} from 'node:vm';
+import {monsterSlug} from '../src/lib/monster-slug.mjs';
 
 const read=path=>readFileSync(new URL(path,import.meta.url),'utf8');
 const directory=read('../src/pages/bosses/index.astro');
 const legacy=JSON.parse(read('../src/data/monsters.json'));
 const monsters=JSON.parse(read('../src/data/monster-directory-sheet.json'));
+const rewardPages=JSON.parse(read('../src/data/monster-rewards-sheet.json'));
+const rewardTemplate=read('../src/pages/bosses/catalog/[slug].astro');
 const sitemap=read('../src/pages/sitemap.xml.ts');
 const home=read('../src/pages/index.astro');
 const header=read('../src/components/SiteHeader.astro');
@@ -18,7 +21,8 @@ test('directory catalog is generated from EVONYMASTERS MONSTER tab',()=>{
  assert.ok(monsters.every(monster=>monster.name&&['Boss','Event','Regular'].includes(monster.type)));
  assert.ok(directory.includes("import monsters from '../../data/monster-directory-sheet.json'"));
  assert.ok(directory.includes('sorted.map(monster=><article'));
- assert.ok(directory.includes('monster.detailId'));
+ assert.ok(directory.includes('monsterSlug(monster)'));
+ assert.ok(directory.includes("See reward data →"));
  assert.ok(directory.includes('/v4/monsters'));
 });
 test('filters and static fallback work without requiring a live API response',()=>{
@@ -33,6 +37,9 @@ test('filters and static fallback work without requiring a live API response',()
 test('boss directory and detail pages remain linked through navigation and sitemap',()=>{
  assert.ok(sitemap.includes("'/bosses/'"));
  assert.ok(sitemap.includes('for(const monster of monsters)paths.add'));
+ assert.ok(sitemap.includes('for(const monster of sheetMonsters)paths.add'));
+ assert.ok(rewardTemplate.includes('monster.rewards'));
+ assert.ok(rewardTemplate.includes('getStaticPaths'));
  assert.ok(home.includes("href:'/bosses/'"));
  assert.ok(header.includes("label:'Boss Directory',key:'bosses'"));
  assert.ok(detail.includes('<a href="/bosses/">← Boss Directory</a>'));
@@ -41,4 +48,18 @@ test('boss directory and detail pages remain linked through navigation and sitem
 test('Airavata remains excluded from all monster sources',()=>{
  assert.ok(legacy.every(m=>m.id!=='airavata'));
  assert.equal(legacy.length,155);
+});
+
+test('all 195 directory rows have unique static reward pages with matching spreadsheet fields',()=>{
+ assert.equal(rewardPages.length,195);
+ const keys=records=>new Set(records.map(m=>[m.name.toLowerCase(),m.type,String(m.level)].join('|')));
+ assert.deepEqual(keys(monsters),keys(rewardPages));
+ const slugs=rewardPages.map(monsterSlug);
+ assert.equal(new Set(slugs).size,rewardPages.length);
+ assert.ok(slugs.every(slug=>slug&&!slug.includes('/')));
+ assert.ok(rewardPages.some(m=>m.rewards.length>0));
+ assert.ok(rewardPages.every(m=>Array.isArray(m.rewards)));
+ assert.ok(rewardTemplate.includes("import {monsterSlug} from '../../../lib/monster-slug.mjs'"));
+ assert.ok(directory.includes("'/bosses/catalog/'+monsterSlug(monster)+'/'"));
+ assert.ok(sitemap.includes("'/bosses/catalog/'+monsterSlug(monster)+'/'"));
 });
