@@ -150,8 +150,12 @@ let currentTab="all",allFound=new Map(),searchComplete=true;
 
 const selectedItems=[],itemChips=document.getElementById("search-items"),addItemButton=document.getElementById("add-item-search");
 let shownChestIds=new Set(),totalChests=0;
+const resourceSearchTerm=value=>{
+ const raw=String(value??"").trim();
+ return /^wood(?:\\s*\\/\\s*lumber)?$/i.test(raw)?"Lumber":/^safe wood$/i.test(raw)?"Safe Lumber":raw;
+};
 function terms(){
- const value=q.value.trim(),list=[...selectedItems];
+ const value=resourceSearchTerm(q.value),list=selectedItems.map(resourceSearchTerm);
  if(value.length>=2&&list.length<3&&!list.some(item=>item.toLowerCase()===value.toLowerCase()))list.push(value);
  return list.length?list:[""];
 }
@@ -403,6 +407,24 @@ function renderResults(){
    "No matching chests for these filters. Try another reward, level or source.";
  refreshSelected();
 }
+// Retry transient API failures, including Safari network interruptions.
+// No retry may bypass a user-triggered cancellation.
+async function fetchChestPage(params,signal){
+ const url=API+"/v4/chests?"+params;
+ for(let attempt=0;attempt<2;attempt++){
+  try{
+   const response=await fetch(url,{signal,cache:"no-store"});
+   if(response.ok)return response.json();
+   if(attempt===1||response.status<500&&response.status!==429)
+    throw Error("Reward data service returned HTTP "+response.status);
+  }catch(error){
+   if(signal.aborted||attempt===1||/returned HTTP/.test(error.message))throw error;
+  }
+  await new Promise(resolve=>setTimeout(resolve,300));
+  if(signal.aborted)throw new DOMException("Request cancelled","AbortError");
+ }
+ throw Error("Reward data service did not respond");
+}
 async function load(append=false){
  const my=++serial;
  if(request)request.abort();request=new AbortController();
@@ -418,9 +440,7 @@ async function load(append=false){
    do{
     const params=new URLSearchParams({q:term,source:source.value,event:eventFilter.value,
       participation:participationFilter.value,rank:rankFilter.value.trim(),page:String(offset)});
-    const response=await fetch(API+"/v4/chests?"+params,{signal:request.signal});
-    if(!response.ok)throw Error("Chest search unavailable");
-    const data=await response.json();
+    const data=await fetchChestPage(params,request.signal);
     records.push(...data.chests||[]);
     morePages=Boolean(data.hasMore);
     offset++;passes++;
@@ -455,7 +475,7 @@ async function load(append=false){
    console.warn("Chest Finder search failed",error);
    status.textContent=allFound.size
     ?"Results shown, but the latest update could not be completed. Try searching again."
-    :"Chest data service is unavailable right now. Please retry shortly.";
+    :"Could not reach chest reward data. Please retry or check whether your browser is blocking the reward-data service.";
   }
  }
 }
