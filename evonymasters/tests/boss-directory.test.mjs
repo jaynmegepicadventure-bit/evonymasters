@@ -15,6 +15,7 @@ const sitemap=read('../src/pages/sitemap.xml.ts');
 const home=read('../src/pages/index.astro');
 const header=read('../src/components/SiteHeader.astro');
 const detail=read('../src/pages/bosses/[id].astro');
+const legacyPage=read('../src/components/LegacyMonsterPage.astro');
 const redirects=read('../public/_redirects').trim().split('\n').filter(s=>!s.startsWith('#'));
 
 test('directory source is the master MONSTER sheet with no Airavata',()=>{
@@ -69,6 +70,6 @@ test('directory links remain navigable and SEO metadata intact',()=>{
  assert.ok(sitemap.includes('for(const monster of monsters)paths.add'));
  assert.ok(home.includes("href:'/bosses/'"));
  assert.ok(header.includes("label:'Boss Directory',key:'bosses'"));
- assert.ok(detail.includes('<a href="/bosses/">← Boss Directory</a>'));
+ assert.ok(legacyPage.includes('<a href="/bosses/">← Boss Directory</a>'));
  assert.ok(directory.includes('<SeoMetadata title={title} description={description}/>'));
 });
