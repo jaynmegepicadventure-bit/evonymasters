@@ -138,6 +138,7 @@ main.wrap{padding-bottom:120px}
 <script is:inline>
 (()=>{
 "use strict";
+const displayResourceName=value=>String(value??"").replace(/^safe wood$/i,"Safe Lumber").replace(/^wood(?:\\s*\\/\\s*lumber)?$/i,"Lumber");
 const API="https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev";
 const q=document.getElementById("q"),source=document.getElementById("source"),eventFilter=document.getElementById("event-filter"),participationFilter=document.getElementById("participation-filter"),rankFilter=document.getElementById("rank-filter"),eventSearch=document.getElementById("event-search"),cards=document.getElementById("chests"),more=document.getElementById("more"),status=document.getElementById("status"),count=document.getElementById("count"),compare=document.getElementById("compare"),reset=document.getElementById("reset"),selection=document.getElementById("selected-count"),panel=document.getElementById("comparison-panel"),head=document.getElementById("compare-head"),body=document.getElementById("compare-body");
 const selected=new Map();let page=0,hasMore=false,serial=0,timer=null,request=null,availability=null;
@@ -156,7 +157,7 @@ function terms(){
 function renderItemChips(){
  itemChips.replaceChildren();
  for(const item of [...selectedItems]){
-  const chip=document.createElement("span");chip.className="search-chip";chip.append(document.createTextNode(item));
+  const chip=document.createElement("span");chip.className="search-chip";chip.append(document.createTextNode(displayResourceName(item)));
   const remove=document.createElement("button");remove.type="button";remove.textContent="×";remove.setAttribute("aria-label","Remove "+item);
   remove.addEventListener("click",()=>{
    const idx=selectedItems.indexOf(item);if(idx>=0)selectedItems.splice(idx,1);
@@ -203,7 +204,7 @@ function card(c){
  top.append(pic,labels);article.append(top);paintAvailability(article,c);
  const list=el("ul","items");
  for(const item of sortedRewards(c.items).slice(0,5)){
-  const li=el("li");li.append(el("span","",item.item),el("span","",item.quantity||"Quantity missing"));list.append(li);
+  const li=el("li");li.append(el("span","",displayResourceName(item.item)),el("span","",item.quantity||"Quantity missing"));list.append(li);
  }
  if(c.itemCount>5)list.append(el("li","muted","+"+(c.itemCount-5)+" additional recorded items"));
  if(c.nestedCount)list.append(el("li","muted",c.nestedCount+" nested reward paths"));
@@ -482,7 +483,7 @@ compare.addEventListener("click",async()=>{
   head.append(hr);
   const names=[...new Set(data.chests.flatMap(c=>[...c.items,...(c.nestedItems||[])].map(i=>i.item)))].sort(collator.compare);
   for(const name of names){
-   const row=el("tr");row.append(el("td","",name));
+   const row=el("tr");row.append(el("td","",displayResourceName(name)));
    for(const chest of data.chests){
     const matches=[...chest.items,...(chest.nestedItems||[])].filter(i=>i.item===name),cell=el("td");
     if(!matches.length)cell.textContent="—";
