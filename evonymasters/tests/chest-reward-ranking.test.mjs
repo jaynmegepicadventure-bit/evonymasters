@@ -39,9 +39,9 @@ test('rarity breaks otherwise equal or unknown recorded reward scores',()=>{
  const epic=chest('Epic Hydra Chest',[{item:'Lumber',quantity:'100K'}]);
  assert.ok(rank.compareRewardChests(epic,common,['Lumber'])<0);
 });
-test('single-reward searches verify all chest contents before ranking',()=>{
- assert.match(page,/if\(!phrases\.some\(Boolean\)\)return true/);
+test('single-reward sorting remains local to explicitly loaded results',()=>{
+ assert.doesNotMatch(page,/verifyFullRewards/);
  assert.match(page,/visible\.sort\(\(a,b\)=>compareRewardChests\(a,b,terms\(\)\)\)/);
  assert.match(page,/chest-reward-amount/);
- assert.match(page,/highest recorded amounts/);
+ assert.match(page,/Highest recorded amounts first among loaded results/);
 });
