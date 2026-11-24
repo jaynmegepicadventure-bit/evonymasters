@@ -8,7 +8,7 @@ const buildings=JSON.parse(read('../src/data/building-upgrades.json'));
 test('building cost guide exposes source rows and links to upgrade calculator',()=>{
  const page=read('../src/pages/building-costs/index.astro');
  assert.ok(page.includes('data.rows.filter'));
- assert.ok(page.includes('Wood / Lumber'));
+ assert.ok(page.includes('Lumber</th>'));
  assert.ok(page.includes('from the previous level'));
  assert.ok(page.includes('/building-upgrades/'));
  assert.ok(page.includes('name="description"'));
