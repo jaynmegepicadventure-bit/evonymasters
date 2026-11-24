@@ -4,7 +4,7 @@ export const MILLION = 1000000;
 // Safe resources contribute to the same resource target as their regular versions.
 export const RESOURCE_ALIASES = Object.freeze({
   food:"Food", "safe food":"Food", "food safe":"Food",
-  wood:"Lumber", lumber:"Lumber", "safe wood":"Lumber", "safe lumber":"Lumber", "wood safe":"Lumber", "lumber safe":"Lumber",
+  wood:"Lumber", lumber:"Lumber", "wood lumber":"Lumber", "safe wood":"Lumber", "safe lumber":"Lumber", "wood safe":"Lumber", "lumber safe":"Lumber",
   stone:"Stone", "safe stone":"Stone", "stone safe":"Stone",
   ore:"Ore", "safe ore":"Ore", "ore safe":"Ore"
 });
