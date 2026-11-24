@@ -1,13 +1,13 @@
 ---
 import SeoMetadata from '../../components/SeoMetadata.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
-import monsters from '../../data/monsters.json';
+import monsters from '../../data/monster-directory-sheet.json';
 
-const sorted=[...monsters].sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true})||(a.level??0)-(b.level??0));
+const sorted=[...monsters].sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true})||(Number(a.level)||0)-(Number(b.level)||0));
 const counts={Boss:monsters.filter(m=>m.type==='Boss').length,Event:monsters.filter(m=>m.type==='Event').length,Regular:monsters.filter(m=>m.type==='Regular').length};
 const title='Evony Boss & Monster Directory: Levels, Power and Rewards | EvonyMasters';
 const description='Browse every recorded Evony boss, event boss and regular monster. Search by name, filter monster type, compare recorded levels, power and stamina, and open detailed reward and chest pages.';
-const format=n=>n==null?'Not verified':new Intl.NumberFormat('en-US').format(n);
+const format=n=>n==null||String(n).trim()===''?'Not verified':String(n);
 const label=type=>type==='Event'?'Event Boss':type==='Regular'?'Regular Monster':'Boss';
 ---
 <!doctype html>
@@ -47,7 +47,7 @@ const label=type=>type==='Event'?'Event Boss':type==='Regular'?'Regular Monster'
   .boss-meta div{min-width:0}.boss-meta dt{text-transform:uppercase;font-size:.66rem;font-weight:800;letter-spacing:.07em;color:#a6bbcd;margin-bottom:4px}
   .boss-meta dd{font-size:.9rem;font-weight:700;color:#edf3f9;margin:0;overflow-wrap:anywhere}
   .boss-link{margin-top:auto;display:inline-flex;gap:6px;align-items:center;color:#f3cd84;font-weight:800;font-size:.86rem;text-decoration:none;padding-top:4px}
-  .boss-link:hover{text-decoration:underline}
+  .boss-link:hover{text-decoration:underline}.unavailable{color:#b6c9d6;font-size:.78rem;font-weight:650}
   .empty{background:#152c42;border:1px solid #48647c;padding:25px;border-radius:12px;margin-top:20px;color:#e8d5b4}
   [hidden]{display:none!important}
   .bottom-note{margin:35px 0 0;color:#adc1d4;font-size:.87rem;line-height:1.7}
@@ -69,28 +69,28 @@ const label=type=>type==='Event'?'Event Boss':type==='Regular'?'Regular Monster'
   </div>
  </div></header>
  <main class="wrap">
-  <p class="directory-note">This directory uses the existing EvonyMasters monster catalog. Values marked “Not verified” are missing from our records, not zero. Use the individual monster pages to check the source data and recorded drops.</p>
+  <p class="directory-note">This directory is sourced from the EVONYMASTERS Google spreadsheet's MONSTER tab. Values marked “Not verified” are missing from our records, not zero. Use the individual monster pages to check the source data and recorded drops.</p>
   <div class="filters" role="search" aria-label="Find a monster">
    <label for="boss-search">Search boss or monster<input id="boss-search" type="search" placeholder="e.g. Hydra, Ymir, Behemoth" autocomplete="off"/></label>
    <label for="boss-type-filter">Monster type<select id="boss-type-filter"><option value="all">All monster types</option><option value="Boss">Bosses</option><option value="Event">Event bosses</option><option value="Regular">Regular monsters</option></select></label>
    <label for="boss-sort">Sort by<select id="boss-sort"><option value="name">Name A–Z</option><option value="level-asc">Level: lowest first</option><option value="level-desc">Level: highest first</option><option value="power-desc">Power: highest first</option></select></label>
    <button id="boss-reset" type="button">Clear filters</button>
   </div>
-  <div class="results-top"><p id="result-count" role="status" aria-live="polite">Showing all {monsters.length} monsters</p><small>Every monster has a dedicated detail link</small></div>
+  <div class="results-top"><p id="result-count" role="status" aria-live="polite">Showing all {monsters.length} monsters</p><small>Monster details link where available</small></div>
   <div class="boss-grid" id="boss-results">
    {sorted.map(monster=><article class="boss-card" data-name={monster.name.toLowerCase()} data-type={monster.type} data-level={monster.level??''} data-power={monster.power??''}>
-    <div class="card-top"><h2><a href={'/bosses/'+encodeURIComponent(monster.id)+'/'}>{monster.name}</a></h2><span class="boss-type">{label(monster.type)}</span></div>
+    <div class="card-top"><h2>{monster.detailId?<a href={'/bosses/'+encodeURIComponent(monster.detailId)+'/'}>{monster.name}</a>:monster.name}</h2><span class="boss-type">{label(monster.type)}</span></div>
     <dl class="boss-meta">
-     <div><dt>Level</dt><dd>{monster.level==null?'Not verified':monster.level}</dd></div>
+     <div><dt>Level</dt><dd>{format(monster.level)}</dd></div>
      <div><dt>Stamina</dt><dd>{format(monster.stamina)}</dd></div>
      <div><dt>Power</dt><dd>{format(monster.power)}</dd></div>
-     <div><dt>Recorded chests</dt><dd>{monster.chests?.length??0}</dd></div>
+     <div><dt>Rewards</dt><dd><span>See reward data</span></dd></div>
     </dl>
-    <a class="boss-link" href={'/bosses/'+encodeURIComponent(monster.id)+'/'} aria-label={'View rewards and chests for '+monster.name}>View rewards &amp; chests →</a>
+    {monster.detailId?<a class="boss-link" href={'/bosses/'+encodeURIComponent(monster.detailId)+'/'} aria-label={'View rewards and chests for '+monster.name}>View rewards &amp; chests →</a>:<span class="boss-link unavailable">Reward detail page not yet available</span>}
    </article>)}
   </div>
   <p class="empty" id="no-boss-results" hidden>No monsters match these filters. Try another name or clear the filters.</p>
-  <p class="bottom-note">The directory links directly to the complete static boss pages. These links remain in the page HTML even when JavaScript is unavailable, so players and search engines can navigate the entire catalog.</p>
+  <p class="bottom-note">Monster names, levels, power and stamina come from the MONSTER tab of your EVONYMASTERS spreadsheet. Existing compatible reward-detail pages are linked where available. Spreadsheet updates are loaded through the reward sync service when connected; the static listing remains available as a fallback.</p>
  </main>
  <script is:inline>
  (()=>{
@@ -99,7 +99,7 @@ const label=type=>type==='Event'?'Event Boss':type==='Regular'?'Regular Monster'
   const grid=document.getElementById('boss-results'),cards=Array.from(grid.querySelectorAll('.boss-card'));
   const counter=document.getElementById('result-count'),empty=document.getElementById('no-boss-results');
   const nameSort=(a,b)=>a.dataset.name.localeCompare(b.dataset.name,undefined,{numeric:true});
-  const number=(card,attr)=>{const raw=card.getAttribute('data-'+attr);return raw===''?-1:Number(raw)};
+  const number=(card,attr)=>{const raw=(card.getAttribute('data-'+attr)||'').replace(/,/g,'').trim().toUpperCase();const m=raw.match(/^([0-9]+(?:\\.[0-9]+)?)([KMBT])?$/);return m?Number(m[1])*({K:1e3,M:1e6,B:1e9,T:1e12}[m[2]]||1):-1};
   function update(){
    const query=search.value.trim().toLocaleLowerCase(),kind=type.value;
    const visible=[];
@@ -122,6 +122,45 @@ const label=type=>type==='Event'?'Event Boss':type==='Regular'?'Regular Monster'
   sort.addEventListener('change',update);
   reset.addEventListener('click',()=>{search.value='';type.value='all';sort.value='name';update();search.focus()});
   update();
+  // The same Cloudflare sheet-sync snapshot used by rewards powers live directory updates.
+  // Initial HTML is a build-time snapshot for crawler accessibility and service outages.
+  const details=new Map(Array.from(cards).map(c=>{
+   const link=c.querySelector('h2 a');return [[c.dataset.name,c.dataset.type,c.dataset.level].join('|'),link?.getAttribute('href')||''];
+  }));
+  const rawNumber=s=>{const t=String(s||'').replace(/,/g,'').trim().toUpperCase();const m=t.match(/^([0-9]+(?:\\.[0-9]+)?)([KMBT])?$/);return m?Number(m[1])*({K:1e3,M:1e6,B:1e9,T:1e12}[m[2]]||1):-1;};
+  // Keep client-side filter semantics consistent even for compact spreadsheet power values like 1.1B.
+  function refreshCards(rows){
+   const knownTypes=new Set(['Boss','Event','Regular']),dedupe=new Set();
+   const fragment=document.createDocumentFragment();
+   for(const m of rows){
+    if(!m||typeof m.name!=='string'||!knownTypes.has(m.type))continue;
+    const name=m.name.trim(),level=String(m.level??'').trim(),key=[name.toLowerCase(),m.type,level].join('|');
+    if(!name||dedupe.has(key))continue;dedupe.add(key);
+    const card=document.createElement('article');card.className='boss-card';
+    card.dataset.name=name.toLowerCase();card.dataset.type=m.type;card.dataset.level=level;card.dataset.power=String(rawNumber(m.power));
+    const top=document.createElement('div');top.className='card-top';const h=document.createElement('h2');
+    const detail=details.get(key);if(detail){const a=document.createElement('a');a.href=detail;a.textContent=name;h.appendChild(a)}else h.textContent=name;
+    const badge=document.createElement('span');badge.className='boss-type';badge.textContent=m.type==='Event'?'Event Boss':m.type==='Regular'?'Regular Monster':'Boss';
+    top.append(h,badge);card.appendChild(top);
+    const dl=document.createElement('dl');dl.className='boss-meta';
+    for(const [caption,value] of [['Level',level],['Stamina',m.stamina],['Power',m.power],['Rewards','See reward data']]){
+     const group=document.createElement('div'),dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=caption;dd.textContent=String(value??'').trim()||'Not verified';group.append(dt,dd);dl.appendChild(group);
+    }card.appendChild(dl);
+    if(detail){const a=document.createElement('a');a.className='boss-link';a.href=detail;a.textContent='View rewards & chests →';card.appendChild(a)}
+    else {const span=document.createElement('span');span.className='boss-link unavailable';span.textContent='Reward detail page not yet available';card.appendChild(span)}
+    fragment.appendChild(card);
+   }
+   if(!dedupe.size)return;
+   grid.replaceChildren(fragment);
+   cards.splice(0,cards.length,...grid.querySelectorAll('.boss-card'));
+   const summary=document.querySelector('.hero-stats');if(summary){const groups=['Boss','Event','Regular'];const values=[cards.length,...groups.map(k=>cards.filter(c=>c.dataset.type===k).length)];
+    for(const [index,el] of [...summary.querySelectorAll('strong')].entries())el.textContent=String(values[index]??0);}
+   update();
+  }
+  fetch('https://evonymasters-sheet-sync.jaynmegepicadventure.workers.dev/v4/monsters',{cache:'no-store'})
+   .then(r=>{if(!r.ok)throw Error('Monster directory not available');return r.json()})
+   .then(data=>{if(Array.isArray(data.monsters))refreshCards(data.monsters)})
+   .catch(()=>{/* Keep the spreadsheet-derived HTML snapshot when offline or before endpoint deployment. */});
  })();
  </script>
 </body>

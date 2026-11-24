@@ -1,0 +1,1562 @@
+[
+  {
+    "name": "Zombie",
+    "type": "Boss",
+    "level": "1",
+    "power": "36,500",
+    "stamina": "15",
+    "detailId": "zombie"
+  },
+  {
+    "name": "Redcap",
+    "type": "Boss",
+    "level": "2",
+    "power": "219,000",
+    "stamina": "15",
+    "detailId": "redcap"
+  },
+  {
+    "name": "Centaur",
+    "type": "Boss",
+    "level": "3",
+    "power": "328,500",
+    "stamina": "15",
+    "detailId": "centaur"
+  },
+  {
+    "name": "Skeleton Dragon",
+    "type": "Boss",
+    "level": "4",
+    "power": "787,200",
+    "stamina": "15",
+    "detailId": "skeleton-dragon"
+  },
+  {
+    "name": "Werewolf",
+    "type": "Boss",
+    "level": "5",
+    "power": "1,300,000",
+    "stamina": "20",
+    "detailId": "werewolf"
+  },
+  {
+    "name": "Manticore",
+    "type": "Boss",
+    "level": "6",
+    "power": "2,200,000",
+    "stamina": "20",
+    "detailId": "manticore"
+  },
+  {
+    "name": "Yasha",
+    "type": "Boss",
+    "level": "7",
+    "power": "3,400,000",
+    "stamina": "20",
+    "detailId": "yasha"
+  },
+  {
+    "name": "Peryton",
+    "type": "Boss",
+    "level": "8",
+    "power": "6,500,000",
+    "stamina": "20",
+    "detailId": "peryton"
+  },
+  {
+    "name": "Minotaur",
+    "type": "Boss",
+    "level": "9",
+    "power": "9,900,000",
+    "stamina": "20",
+    "detailId": "minotaur"
+  },
+  {
+    "name": "Griffin",
+    "type": "Boss",
+    "level": "10",
+    "power": "17,900,000",
+    "stamina": "20",
+    "detailId": "griffin"
+  },
+  {
+    "name": "Ifrit",
+    "type": "Boss",
+    "level": "11",
+    "power": "59,600,000",
+    "stamina": "30",
+    "detailId": "ifrit"
+  },
+  {
+    "name": "Kamaitachi",
+    "type": "Boss",
+    "level": "12",
+    "power": "89,400,000",
+    "stamina": "35",
+    "detailId": "kamaitachi"
+  },
+  {
+    "name": "Fafnir",
+    "type": "Boss",
+    "level": "13",
+    "power": "120,000,000",
+    "stamina": "40",
+    "detailId": "fafnir"
+  },
+  {
+    "name": "Behemoth",
+    "type": "Boss",
+    "level": "14",
+    "power": "187,700,000",
+    "stamina": "40",
+    "detailId": "behemoth"
+  },
+  {
+    "name": "Phoenix",
+    "type": "Boss",
+    "level": "15",
+    "power": "262,700,000",
+    "stamina": "40",
+    "detailId": "phoenix"
+  },
+  {
+    "name": "Jormungandr",
+    "type": "Boss",
+    "level": "16",
+    "power": "394,100,000",
+    "stamina": "50",
+    "detailId": "jormungandr"
+  },
+  {
+    "name": "Typhon",
+    "type": "Boss",
+    "level": "17",
+    "power": "551,800,000",
+    "stamina": "50",
+    "detailId": "typhon"
+  },
+  {
+    "name": "Ammit",
+    "type": "Boss",
+    "level": "18",
+    "power": "800,000,000",
+    "stamina": "50",
+    "detailId": null
+  },
+  {
+    "name": "Stymphalian Bird",
+    "type": "Boss",
+    "level": "19",
+    "power": "1.1B",
+    "stamina": "50",
+    "detailId": null
+  },
+  {
+    "name": "Kraken",
+    "type": "Boss",
+    "level": "20",
+    "power": "1.6B",
+    "stamina": "50",
+    "detailId": null
+  },
+  {
+    "name": "Azazel",
+    "type": "Boss",
+    "level": "21",
+    "power": "2.6B",
+    "stamina": "50",
+    "detailId": null
+  },
+  {
+    "name": "Leviathan",
+    "type": "Boss",
+    "level": "22",
+    "power": "3.3B",
+    "stamina": "50",
+    "detailId": null
+  },
+  {
+    "name": "Garmr",
+    "type": "Boss",
+    "level": "23",
+    "power": "4.7B",
+    "stamina": "50",
+    "detailId": null
+  },
+  {
+    "name": "Robber",
+    "type": "Regular",
+    "level": "1",
+    "power": "58",
+    "stamina": "6",
+    "detailId": "regular-robber-1"
+  },
+  {
+    "name": "Robber",
+    "type": "Regular",
+    "level": "2",
+    "power": "128",
+    "stamina": "6",
+    "detailId": "regular-robber-2"
+  },
+  {
+    "name": "Robber",
+    "type": "Regular",
+    "level": "3",
+    "power": "286",
+    "stamina": "6",
+    "detailId": "regular-robber-3"
+  },
+  {
+    "name": "Murderous Warrior",
+    "type": "Regular",
+    "level": "4",
+    "power": "780",
+    "stamina": "6",
+    "detailId": "regular-murderous-warrior-4"
+  },
+  {
+    "name": "Murderous Warrior",
+    "type": "Regular",
+    "level": "5",
+    "power": "1,300",
+    "stamina": "6",
+    "detailId": "regular-murderous-warrior-5"
+  },
+  {
+    "name": "Golden Skull Cup Warrior",
+    "type": "Regular",
+    "level": "6",
+    "power": "3,000",
+    "stamina": "6",
+    "detailId": "regular-golden-skull-cup-warrior-6"
+  },
+  {
+    "name": "Bandit",
+    "type": "Regular",
+    "level": "7",
+    "power": "4,500",
+    "stamina": "6",
+    "detailId": "regular-bandit-7"
+  },
+  {
+    "name": "Bandit",
+    "type": "Regular",
+    "level": "8",
+    "power": "7,800",
+    "stamina": "6",
+    "detailId": "regular-bandit-8"
+  },
+  {
+    "name": "Bandit",
+    "type": "Regular",
+    "level": "9",
+    "power": "12,200",
+    "stamina": "6",
+    "detailId": "regular-bandit-9"
+  },
+  {
+    "name": "Dark Warrior",
+    "type": "Regular",
+    "level": "10",
+    "power": "16,400",
+    "stamina": "6",
+    "detailId": "regular-dark-warrior-10"
+  },
+  {
+    "name": "Dark Warrior",
+    "type": "Regular",
+    "level": "11",
+    "power": "29,100",
+    "stamina": "6",
+    "detailId": "regular-dark-warrior-11"
+  },
+  {
+    "name": "Dark Warrior",
+    "type": "Regular",
+    "level": "12",
+    "power": "37,200",
+    "stamina": "6",
+    "detailId": "regular-dark-warrior-12"
+  },
+  {
+    "name": "Crafty Ranger",
+    "type": "Regular",
+    "level": "13",
+    "power": "46,900",
+    "stamina": "6",
+    "detailId": "regular-crafty-ranger-13"
+  },
+  {
+    "name": "Crafty Ranger",
+    "type": "Regular",
+    "level": "14",
+    "power": "78,500",
+    "stamina": "6",
+    "detailId": "regular-crafty-ranger-14"
+  },
+  {
+    "name": "Crafty Ranger",
+    "type": "Regular",
+    "level": "15",
+    "power": "95,700",
+    "stamina": "6",
+    "detailId": "regular-crafty-ranger-15"
+  },
+  {
+    "name": "Hypocritical Knight",
+    "type": "Regular",
+    "level": "16",
+    "power": "156,700",
+    "stamina": "6",
+    "detailId": "regular-hypocritical-knight-16"
+  },
+  {
+    "name": "Hypocritical Knight",
+    "type": "Regular",
+    "level": "17",
+    "power": "186,700",
+    "stamina": "6",
+    "detailId": "regular-hypocritical-knight-17"
+  },
+  {
+    "name": "Hypocritical Knight",
+    "type": "Regular",
+    "level": "18",
+    "power": "0.2M",
+    "stamina": "6",
+    "detailId": "regular-hypocritical-knight-18"
+  },
+  {
+    "name": "Barbarian/Renegade",
+    "type": "Regular",
+    "level": "19",
+    "power": "0.3M",
+    "stamina": "6",
+    "detailId": null
+  },
+  {
+    "name": "Barbarian/Renegade",
+    "type": "Regular",
+    "level": "20",
+    "power": "0.4M",
+    "stamina": "6",
+    "detailId": null
+  },
+  {
+    "name": "Barbarian/Renegade",
+    "type": "Regular",
+    "level": "21",
+    "power": "0.6M",
+    "stamina": "6",
+    "detailId": null
+  },
+  {
+    "name": "Invader",
+    "type": "Regular",
+    "level": "22",
+    "power": "0.7M",
+    "stamina": "6",
+    "detailId": "regular-invader-22"
+  },
+  {
+    "name": "Bloody Gladiator",
+    "type": "Regular",
+    "level": "23",
+    "power": "0.8M",
+    "stamina": "6",
+    "detailId": "regular-bloody-gladiator-23"
+  },
+  {
+    "name": "Invader/Bloody Gladiator",
+    "type": "Regular",
+    "level": "24",
+    "power": "1.3M",
+    "stamina": "6",
+    "detailId": null
+  },
+  {
+    "name": "Invader/Bloody Gladiator",
+    "type": "Regular",
+    "level": "25",
+    "power": "1.4M",
+    "stamina": "6",
+    "detailId": null
+  },
+  {
+    "name": "Furious Archer",
+    "type": "Regular",
+    "level": "26",
+    "power": "1.6M",
+    "stamina": "6",
+    "detailId": "regular-furious-archer-26"
+  },
+  {
+    "name": "Ferocious Knight",
+    "type": "Regular",
+    "level": "27",
+    "power": "1.8M",
+    "stamina": "6",
+    "detailId": "regular-ferocious-knight-27"
+  },
+  {
+    "name": "Dark Army",
+    "type": "Regular",
+    "level": "28",
+    "power": "1.9M",
+    "stamina": "6",
+    "detailId": "regular-dark-army-28"
+  },
+  {
+    "name": "Demon Crossbowman",
+    "type": "Regular",
+    "level": "29",
+    "power": "2.1M",
+    "stamina": "6",
+    "detailId": "regular-demon-crossbowman-29"
+  },
+  {
+    "name": "Evil Knight",
+    "type": "Regular",
+    "level": "30",
+    "power": "2,200,000",
+    "stamina": "6",
+    "detailId": "regular-evil-knight-30"
+  },
+  {
+    "name": "Evil Knight",
+    "type": "Regular",
+    "level": "31",
+    "power": "2,400,000",
+    "stamina": "6",
+    "detailId": "regular-evil-knight-31"
+  },
+  {
+    "name": "Evil Knight",
+    "type": "Regular",
+    "level": "32",
+    "power": "2,600,000",
+    "stamina": "6",
+    "detailId": "regular-evil-knight-32"
+  },
+  {
+    "name": "Evil Knight Lv32",
+    "type": "Regular",
+    "level": "32",
+    "power": "2,600,000",
+    "stamina": "6",
+    "detailId": "regular-evil-knight-32"
+  },
+  {
+    "name": "Inferno Warrior",
+    "type": "Regular",
+    "level": "33",
+    "power": "2.7M",
+    "stamina": "6",
+    "detailId": "regular-inferno-warrior-33"
+  },
+  {
+    "name": "Inferno Warrior",
+    "type": "Regular",
+    "level": "34",
+    "power": "2,900,000",
+    "stamina": "6",
+    "detailId": "regular-inferno-warrior-34"
+  },
+  {
+    "name": "Wraith Hunter",
+    "type": "Regular",
+    "level": "35",
+    "power": "3M",
+    "stamina": "6",
+    "detailId": "regular-wraith-hunter-35"
+  },
+  {
+    "name": "Teutonic Berserker",
+    "type": "Regular",
+    "level": "36",
+    "power": "3.2M",
+    "stamina": "6",
+    "detailId": "regular-teutonic-berserker-36"
+  },
+  {
+    "name": "Teutonic Berserker",
+    "type": "Regular",
+    "level": "37",
+    "power": "3.4M",
+    "stamina": "6",
+    "detailId": "regular-teutonic-berserker-37"
+  },
+  {
+    "name": "Teutonic Berserker",
+    "type": "Regular",
+    "level": "38",
+    "power": "3.5M",
+    "stamina": "6",
+    "detailId": "regular-teutonic-berserker-38"
+  },
+  {
+    "name": "Scythian Knight",
+    "type": "Regular",
+    "level": "39",
+    "power": "3.7M",
+    "stamina": "6",
+    "detailId": "regular-scythian-knight-39"
+  },
+  {
+    "name": "Scythian Knight",
+    "type": "Regular",
+    "level": "40",
+    "power": "3.9M",
+    "stamina": "6",
+    "detailId": "regular-scythian-knight-40"
+  },
+  {
+    "name": "Kheshig",
+    "type": "Regular",
+    "level": "41",
+    "power": "6M",
+    "stamina": "6",
+    "detailId": "regular-kheshig-41"
+  },
+  {
+    "name": "Kheshig",
+    "type": "Regular",
+    "level": "42",
+    "power": "9.3M",
+    "stamina": "6",
+    "detailId": "regular-kheshig-42"
+  },
+  {
+    "name": "Kheshig",
+    "type": "Regular",
+    "level": "43",
+    "power": "14.3M",
+    "stamina": "6",
+    "detailId": "regular-kheshig-43"
+  },
+  {
+    "name": "Kheshig",
+    "type": "Regular",
+    "level": "44",
+    "power": "22.2M",
+    "stamina": "6",
+    "detailId": "regular-kheshig-44"
+  },
+  {
+    "name": "Kheshig",
+    "type": "Regular",
+    "level": "45",
+    "power": "34.5M",
+    "stamina": "6",
+    "detailId": "regular-kheshig-45"
+  },
+  {
+    "name": "Takeda Fire Cavalry",
+    "type": "Regular",
+    "level": "46",
+    "power": "53.4M",
+    "stamina": "6",
+    "detailId": "regular-takeda-fire-cavalry-46"
+  },
+  {
+    "name": "Takeda Fire Cavalry",
+    "type": "Regular",
+    "level": "47",
+    "power": "82.8M",
+    "stamina": "6",
+    "detailId": "regular-takeda-fire-cavalry-47"
+  },
+  {
+    "name": "Takeda Fire Cavalry",
+    "type": "Regular",
+    "level": "48",
+    "power": "128.3M",
+    "stamina": "6",
+    "detailId": "regular-takeda-fire-cavalry-48"
+  },
+  {
+    "name": "Takeda Fire Cavalry",
+    "type": "Regular",
+    "level": "49",
+    "power": "198.8M",
+    "stamina": "6",
+    "detailId": "regular-takeda-fire-cavalry-49"
+  },
+  {
+    "name": "Takeda Fire Cavalry",
+    "type": "Regular",
+    "level": "50",
+    "power": "308.2M",
+    "stamina": "6",
+    "detailId": "regular-takeda-fire-cavalry-50"
+  },
+  {
+    "name": "Desert Bandit",
+    "type": "Event",
+    "level": "1",
+    "power": "3.5M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Desert Bandit",
+    "type": "Event",
+    "level": "2",
+    "power": "",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Desert Bandit",
+    "type": "Event",
+    "level": "3",
+    "power": "10.4M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Desert Bandit",
+    "type": "Event",
+    "level": "4",
+    "power": "19.5M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Desert Bandit",
+    "type": "Event",
+    "level": "5",
+    "power": "30.6M",
+    "stamina": "20",
+    "detailId": null
+  },
+  {
+    "name": "Desert Bandit",
+    "type": "Event",
+    "level": "6",
+    "power": "",
+    "stamina": "20",
+    "detailId": null
+  },
+  {
+    "name": "Desert Bandit",
+    "type": "Event",
+    "level": "7",
+    "power": "82.4M",
+    "stamina": "30",
+    "detailId": null
+  },
+  {
+    "name": "Desert Bandit",
+    "type": "Event",
+    "level": "8",
+    "power": "118.1M",
+    "stamina": "30",
+    "detailId": null
+  },
+  {
+    "name": "Desert Bandit",
+    "type": "Event",
+    "level": "9",
+    "power": "165.2M",
+    "stamina": "40",
+    "detailId": null
+  },
+  {
+    "name": "Desert Bandit",
+    "type": "Event",
+    "level": "10",
+    "power": "289M",
+    "stamina": "40",
+    "detailId": null
+  },
+  {
+    "name": "Junior Cerberus",
+    "type": "Event",
+    "level": "1",
+    "power": "68.2M",
+    "stamina": "20",
+    "detailId": "cerberus-1"
+  },
+  {
+    "name": "Medium Cerberus",
+    "type": "Event",
+    "level": "2",
+    "power": "153M",
+    "stamina": "30",
+    "detailId": "cerberus-2"
+  },
+  {
+    "name": "Senior Cerberus",
+    "type": "Event",
+    "level": "3",
+    "power": "234M",
+    "stamina": "40",
+    "detailId": "cerberus-3"
+  },
+  {
+    "name": "Legendary Cerberus",
+    "type": "Event",
+    "level": "4",
+    "power": "694M",
+    "stamina": "40",
+    "detailId": null
+  },
+  {
+    "name": "Epic Cerberus",
+    "type": "Event",
+    "level": "5",
+    "power": "1.5B",
+    "stamina": "50",
+    "detailId": null
+  },
+  {
+    "name": "Junior Garuda",
+    "type": "Event",
+    "level": "1",
+    "power": "1.3M",
+    "stamina": "15",
+    "detailId": null
+  },
+  {
+    "name": "Senior Garuda",
+    "type": "Event",
+    "level": "2",
+    "power": "1.7M",
+    "stamina": "20",
+    "detailId": null
+  },
+  {
+    "name": "Excellent Garuda",
+    "type": "Event",
+    "level": "3",
+    "power": "125M",
+    "stamina": "",
+    "detailId": null
+  },
+  {
+    "name": "Lv1 Sphinx",
+    "type": "Event",
+    "level": "1",
+    "power": "12.4M",
+    "stamina": "20",
+    "detailId": null
+  },
+  {
+    "name": "Lv2 Sphinx",
+    "type": "Event",
+    "level": "2",
+    "power": "22.3M",
+    "stamina": "30",
+    "detailId": null
+  },
+  {
+    "name": "Lv3 Sphinx",
+    "type": "Event",
+    "level": "3",
+    "power": "74.5M",
+    "stamina": "30",
+    "detailId": null
+  },
+  {
+    "name": "Lv4 Sphinx",
+    "type": "Event",
+    "level": "4",
+    "power": "147.5M",
+    "stamina": "40",
+    "detailId": null
+  },
+  {
+    "name": "Lv5 Sphinx",
+    "type": "Event",
+    "level": "5",
+    "power": "225.2M",
+    "stamina": "40",
+    "detailId": null
+  },
+  {
+    "name": "Lv6 Sphinx",
+    "type": "Event",
+    "level": "6",
+    "power": "472.9M",
+    "stamina": "50",
+    "detailId": null
+  },
+  {
+    "name": "Lv7 Sphinx",
+    "type": "Event",
+    "level": "7",
+    "power": "914.4M",
+    "stamina": "50",
+    "detailId": null
+  },
+  {
+    "name": "Lv8 Sphinx",
+    "type": "Event",
+    "level": "8",
+    "power": "2B",
+    "stamina": "60",
+    "detailId": null
+  },
+  {
+    "name": "Lv1 Ymir",
+    "type": "Event",
+    "level": "1",
+    "power": "22.3M",
+    "stamina": "20",
+    "detailId": null
+  },
+  {
+    "name": "Lv2 Ymir",
+    "type": "Event",
+    "level": "2",
+    "power": "70.8M",
+    "stamina": "30",
+    "detailId": null
+  },
+  {
+    "name": "Lv3 Ymir",
+    "type": "Event",
+    "level": "3",
+    "power": "102.2M",
+    "stamina": "30",
+    "detailId": null
+  },
+  {
+    "name": "Lv4 Ymir",
+    "type": "Event",
+    "level": "4",
+    "power": "206.4M",
+    "stamina": "40",
+    "detailId": null
+  },
+  {
+    "name": "Lv5 Ymir",
+    "type": "Event",
+    "level": "5",
+    "power": "361.3M",
+    "stamina": "40",
+    "detailId": null
+  },
+  {
+    "name": "Lv6 Ymir",
+    "type": "Event",
+    "level": "6",
+    "power": "722.6M",
+    "stamina": "40",
+    "detailId": null
+  },
+  {
+    "name": "Lv7 Ymir",
+    "type": "Event",
+    "level": "7",
+    "power": "1.8B",
+    "stamina": "50",
+    "detailId": null
+  },
+  {
+    "name": "Lv1 Warlord",
+    "type": "Event",
+    "level": "1",
+    "power": "13M",
+    "stamina": "20",
+    "detailId": null
+  },
+  {
+    "name": "Lv2 Warlord",
+    "type": "Event",
+    "level": "2",
+    "power": "24.6M",
+    "stamina": "30",
+    "detailId": null
+  },
+  {
+    "name": "Lv3 Warlord",
+    "type": "Event",
+    "level": "3",
+    "power": "85.6M",
+    "stamina": "30",
+    "detailId": null
+  },
+  {
+    "name": "Lv4 Warlord",
+    "type": "Event",
+    "level": "4",
+    "power": "154.8M",
+    "stamina": "40",
+    "detailId": null
+  },
+  {
+    "name": "Lv5 Warlord",
+    "type": "Event",
+    "level": "5",
+    "power": "225.2M",
+    "stamina": "40",
+    "detailId": null
+  },
+  {
+    "name": "Lv6 Warlord",
+    "type": "Event",
+    "level": "6",
+    "power": "668.1M",
+    "stamina": "40",
+    "detailId": null
+  },
+  {
+    "name": "Lv7 Warlord",
+    "type": "Event",
+    "level": "7",
+    "power": "1.5B",
+    "stamina": "50",
+    "detailId": null
+  },
+  {
+    "name": "Junior Hydra",
+    "type": "Event",
+    "level": "1",
+    "power": "84.9M",
+    "stamina": "20",
+    "detailId": "hydra-1"
+  },
+  {
+    "name": "Medium Hydra",
+    "type": "Event",
+    "level": "2",
+    "power": "120.6M",
+    "stamina": "30",
+    "detailId": "hydra-2"
+  },
+  {
+    "name": "Senior Hydra",
+    "type": "Event",
+    "level": "3",
+    "power": "198.9M",
+    "stamina": "40",
+    "detailId": "hydra-3"
+  },
+  {
+    "name": "Legeandary Hydra",
+    "type": "Event",
+    "level": "4",
+    "power": "328.4M",
+    "stamina": "45",
+    "detailId": null
+  },
+  {
+    "name": "Epic Hydra",
+    "type": "Event",
+    "level": "5",
+    "power": "678.8M",
+    "stamina": "60",
+    "detailId": null
+  },
+  {
+    "name": "Imperial Hydra",
+    "type": "Event",
+    "level": "5",
+    "power": "1.8B",
+    "stamina": "60",
+    "detailId": null
+  },
+  {
+    "name": "Agalope",
+    "type": "Event",
+    "level": "1",
+    "power": "120M",
+    "stamina": "30",
+    "detailId": null
+  },
+  {
+    "name": "Lv1 Pan",
+    "type": "Event",
+    "level": "1",
+    "power": "22.3M",
+    "stamina": "20",
+    "detailId": null
+  },
+  {
+    "name": "Lv2 Pan",
+    "type": "Event",
+    "level": "2",
+    "power": "42.8M",
+    "stamina": "30",
+    "detailId": null
+  },
+  {
+    "name": "Lv3 Pan",
+    "type": "Event",
+    "level": "3",
+    "power": "122.9M",
+    "stamina": "30",
+    "detailId": null
+  },
+  {
+    "name": "Lv4 Pan",
+    "type": "Event",
+    "level": "4",
+    "power": "206.4M",
+    "stamina": "40",
+    "detailId": null
+  },
+  {
+    "name": "Lv5 Pan",
+    "type": "Event",
+    "level": "5",
+    "power": "363.3M",
+    "stamina": "40",
+    "detailId": null
+  },
+  {
+    "name": "Lv6 Pan",
+    "type": "Event",
+    "level": "6",
+    "power": "711.7M",
+    "stamina": "40",
+    "detailId": null
+  },
+  {
+    "name": "Lv7 Pan",
+    "type": "Event",
+    "level": "7",
+    "power": "1.8B",
+    "stamina": "50",
+    "detailId": null
+  },
+  {
+    "name": "Legandary Knight's Bayard",
+    "type": "Boss",
+    "level": "4",
+    "power": "668.1M",
+    "stamina": "40",
+    "detailId": null
+  },
+  {
+    "name": "Epic Bayard Knight",
+    "type": "Boss",
+    "level": "5",
+    "power": "1.5B",
+    "stamina": "50",
+    "detailId": null
+  },
+  {
+    "name": "Junior Knight Bayard",
+    "type": "Boss",
+    "level": "1",
+    "power": "65.5M",
+    "stamina": "20",
+    "detailId": null
+  },
+  {
+    "name": "Excellent Bayar Knight",
+    "type": "Boss",
+    "level": "1",
+    "power": "225.2M",
+    "stamina": "40",
+    "detailId": null
+  },
+  {
+    "name": "Senior Bayar Knight",
+    "type": "Boss",
+    "level": "2",
+    "power": "147.5M",
+    "stamina": "30",
+    "detailId": null
+  },
+  {
+    "name": "Royal Thief",
+    "type": "Boss",
+    "level": "1",
+    "power": "13M",
+    "stamina": "20",
+    "detailId": null
+  },
+  {
+    "name": "Golem",
+    "type": "Event",
+    "level": "4",
+    "power": "147.5M",
+    "stamina": "40",
+    "detailId": null
+  },
+  {
+    "name": "Golem",
+    "type": "Event",
+    "level": "5",
+    "power": "225.2M",
+    "stamina": "40",
+    "detailId": null
+  },
+  {
+    "name": "Golem",
+    "type": "Event",
+    "level": "1",
+    "power": "12.4M",
+    "stamina": "20",
+    "detailId": null
+  },
+  {
+    "name": "Golem",
+    "type": "Event",
+    "level": "6",
+    "power": "668.1M",
+    "stamina": "40",
+    "detailId": null
+  },
+  {
+    "name": "Golem",
+    "type": "Event",
+    "level": "7",
+    "power": "1.5B",
+    "stamina": "50",
+    "detailId": null
+  },
+  {
+    "name": "Golem",
+    "type": "Event",
+    "level": "2",
+    "power": "22.3M",
+    "stamina": "30",
+    "detailId": null
+  },
+  {
+    "name": "Golem",
+    "type": "Event",
+    "level": "3",
+    "power": "74.5M",
+    "stamina": "30",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "1",
+    "power": "17.9M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "2",
+    "power": "19.5M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "3",
+    "power": "21.3M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "4",
+    "power": "23.3M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "5",
+    "power": "25.4M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "6",
+    "power": "27.8M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "7",
+    "power": "30.3M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "8",
+    "power": "33.1M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "9",
+    "power": "36.1M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "10",
+    "power": "39.5M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "11",
+    "power": "43.1M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "12",
+    "power": "47.1M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "13",
+    "power": "51.4M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "14",
+    "power": "56.1M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "15",
+    "power": "61.3M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "16",
+    "power": "66.9M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "17",
+    "power": "73.1M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "18",
+    "power": "79.8M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "19",
+    "power": "87.1M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "20",
+    "power": "95.1M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "21",
+    "power": "103.9M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "22",
+    "power": "113.5M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "23",
+    "power": "123.9M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "24",
+    "power": "135.3M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "25",
+    "power": "147.7M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "26",
+    "power": "161.3M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "27",
+    "power": "176.2M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "28",
+    "power": "192.4M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "29",
+    "power": "210.1M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "30",
+    "power": "229.4M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "31",
+    "power": "250.5M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "32",
+    "power": "273.5M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "33",
+    "power": "298.7M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "34",
+    "power": "326.2M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "35",
+    "power": "359.2M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "36",
+    "power": "377M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "37",
+    "power": "394.6M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "38",
+    "power": "407M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "39",
+    "power": "419M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "40",
+    "power": "431.9M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "41",
+    "power": "444.3M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "42",
+    "power": "461.8M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "43",
+    "power": "479.2M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "44",
+    "power": "496.6M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "45",
+    "power": "514.1M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "46",
+    "power": "531.5M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "47",
+    "power": "548.9M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "48",
+    "power": "582.8M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "49",
+    "power": "630.7M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking",
+    "type": "Event",
+    "level": "50",
+    "power": "716M",
+    "stamina": "10",
+    "detailId": null
+  },
+  {
+    "name": "Viking Icebreaker",
+    "type": "Event",
+    "level": "1",
+    "power": "",
+    "stamina": "10",
+    "detailId": "viking-1"
+  },
+  {
+    "name": "Viking Berserker",
+    "type": "Event",
+    "level": "2",
+    "power": "",
+    "stamina": "10",
+    "detailId": "viking-2"
+  },
+  {
+    "name": "Viking Chief",
+    "type": "Event",
+    "level": "3",
+    "power": "",
+    "stamina": "10",
+    "detailId": "viking-3"
+  },
+  {
+    "name": "King of Vikings",
+    "type": "Event",
+    "level": "4",
+    "power": "",
+    "stamina": "10",
+    "detailId": null
+  }
+]
