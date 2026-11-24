@@ -7,8 +7,17 @@ const routes=['index.astro','resources/index.astro','chests/index.astro','calend
 test('all indexable pages include centralized canonical metadata',()=>{
  for(const route of routes){
   const code=read('../src/pages/'+route);
-  assert.ok(code.includes('<SeoMetadata '),route);
-  assert.ok(code.includes('import SeoMetadata'),route);
+  if(route==='bosses/[id].astro'){
+   for(const component of ['LegacyMonsterPage','SheetMonsterPage']){
+    const child=read('../src/components/'+component+'.astro');
+    assert.ok(code.includes(component),route);
+    assert.ok(child.includes('<SeoMetadata '),component);
+    assert.ok(child.includes('import SeoMetadata'),component);
+   }
+  }else{
+   assert.ok(code.includes('<SeoMetadata '),route);
+   assert.ok(code.includes('import SeoMetadata'),route);
+  }
  }
 });
 

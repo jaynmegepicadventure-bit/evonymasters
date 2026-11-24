@@ -2,7 +2,7 @@
 import SeoMetadata from '../../components/SeoMetadata.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import monsters from '../../data/monster-directory-sheet.json';
-import {monsterSlug} from '../../lib/monster-slug.mjs';
+import {bossPagePath} from '../../lib/boss-page-path.mjs';
 
 const sorted=[...monsters].sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true})||(Number(a.level)||0)-(Number(b.level)||0));
 const counts={Boss:monsters.filter(m=>m.type==='Boss').length,Event:monsters.filter(m=>m.type==='Event').length,Regular:monsters.filter(m=>m.type==='Regular').length};
@@ -80,12 +80,12 @@ const label=type=>type==='Event'?'Event Boss':type==='Regular'?'Regular Monster'
   <div class="results-top"><p id="result-count" role="status" aria-live="polite">Showing all {monsters.length} monsters</p><small>All monsters have reward details</small></div>
   <div class="boss-grid" id="boss-results">
    {sorted.map(monster=><article class="boss-card" data-name={monster.name.toLowerCase()} data-type={monster.type} data-level={monster.level??''} data-power={monster.power??''}>
-    <div class="card-top"><h2><a href={'/bosses/catalog/'+monsterSlug(monster)+'/'}>{monster.name}</a></h2><span class="boss-type">{label(monster.type)}</span></div>
+    <div class="card-top"><h2><a href={bossPagePath(monster,monsters)}>{monster.name}</a></h2><span class="boss-type">{label(monster.type)}</span></div>
     <dl class="boss-meta">
      <div><dt>Level</dt><dd>{format(monster.level)}</dd></div>
      <div><dt>Stamina</dt><dd>{format(monster.stamina)}</dd></div>
      <div><dt>Power</dt><dd>{format(monster.power)}</dd></div>
-     <div><dt>Rewards</dt><dd><a href={'/bosses/catalog/'+monsterSlug(monster)+'/'}>See reward data →</a></dd></div>
+     <div><dt>Rewards</dt><dd><a href={bossPagePath(monster,monsters)}>See reward data →</a></dd></div>
     </dl>
    </article>)}
   </div>
