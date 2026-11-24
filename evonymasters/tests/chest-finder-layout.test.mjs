@@ -75,3 +75,21 @@ test('Event dropdown is loaded only on demand',()=>{
  assert.match(page,/if\(show\)loadEventChoices\(\)/);
  assert.doesNotMatch(page,/activeQuery=resourceSearchTerm\(q.value\);loadEventChoices\(\)/);
 });
+
+test('Chest Finder restores item dropdown without additional API requests',()=>{
+ assert.match(page,/import itemCatalog from '..\/..\/data\/items\.json'/);
+ assert.match(page,/id="chest-suggestions"/);
+ assert.match(page,/list="chest-suggestions"/);
+ assert.match(page,/itemCatalog\.map\(item => <option value=\{item\.name\} \/>\)/);
+ assert.match(page,/for\(const chest of allFound\.values\(\)\)/);
+ assert.doesNotMatch(page,/\/v2\/suggest\?q=/);
+ assert.doesNotMatch(page,/selectedItems/);
+});
+test('Chest Finder can sort currently loaded results with live sources first',()=>{
+ assert.match(page,/id="sort-order"/);
+ assert.match(page,/<option value="live">Live first<\/option>/);
+ assert.match(page,/sortOrder\.value==="live"/);
+ assert.match(page,/Number\(availableNow\(b\)\)-Number\(availableNow\(a\)\)/);
+ assert.match(page,/sortOrder\.addEventListener\("change",renderResults\)/);
+ assert.match(page,/sortOrder\.value="reward"/);
+});
